@@ -7,7 +7,7 @@
   "author": "TomasLight <art.ser.ignatiev@gmail.com>",
   "license": "MIT",
   "workspaces": [
-    "application/*"
+    "application/**"
   ],
   "scripts": {
     "start": "npm-run-all --parallel start:server start:ui",
@@ -16,8 +16,15 @@
     "test": "yarn workspaces run test"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "5.55.0",
+    "@typescript-eslint/parser": "5.55.0",
     "dotenv": "16.0.3",
     "eslint": "8.36.0",
+    "eslint-config-prettier": "8.7.0",
+    "eslint-import-resolver-typescript": "3.5.3",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-react": "7.32.2",
     "prettier": "2.8.4",
     "typescript": "5.0.2"
   },

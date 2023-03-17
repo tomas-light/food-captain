@@ -1,0 +1,6 @@
+{
+    local_certs
+}
+food-captain.localhost {
+    reverse_proxy food-captain.localhost:3000
+}
