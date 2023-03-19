@@ -1,0 +1,12 @@
+{
+  "name": "@food-captain/database",
+  "version": "0.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "@food-captain/server-utils": "0.0.0",
+    "pg": "8.10.0"
+  },
+  "devDependencies": {
+    "@types/pg": "8.6.6"
+  }
+}
