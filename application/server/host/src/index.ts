@@ -6,6 +6,4 @@ try {
   host.start();
 } catch (error) {
   console.error(error);
-} finally {
-  console.log('finally');
 }

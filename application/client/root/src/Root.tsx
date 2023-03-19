@@ -11,7 +11,7 @@ root.render(<Root />);
 
 function Root() {
   useEffect(() => {
-    fetch('/api/check');
+    fetch('https://api.food-captain.localhost/check');
   }, []);
 
   return <p>Hello Food Captain!</p>;
