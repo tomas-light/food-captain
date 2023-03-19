@@ -1,4 +1,6 @@
-export class ConsoleLogger {
+import { Logger } from '@food-captain/server-utils';
+
+export class ConsoleLogger extends Logger {
   log(message: string, eventKind: 'debug' | 'info' | 'warning' | 'error') {
     console.log(`\n${new Date().toISOString()}`);
 

@@ -1,7 +1,7 @@
+import { metadata } from '@food-captain/server-utils';
 import { Request, Response } from 'express';
 import { MvcController } from 'mvc-middleware';
 import { ConsoleLogger } from '../utils/ConsoleLogger';
-import { metadata } from '../utils/metadata';
 
 type UrlToMethodMap = {
   [url: string]: keyof CheckApiController;

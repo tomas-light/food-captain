@@ -1,12 +1,13 @@
 {
   "name": "@food-captain/api",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "start": "cross-env NODE_ENV=development ts-node src/index.ts",
     "serve": "ts-node src/index.ts"
   },
   "dependencies": {
+    "@food-captain/server-utils": "0.0.0",
     "cheap-di": "3.4.3",
     "cookie": "0.5.0",
     "cookie-parser": "1.4.6",
