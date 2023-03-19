@@ -4,3 +4,7 @@
 food-captain.localhost {
     reverse_proxy food-captain.localhost:3000
 }
+api.food-captain.localhost {
+    reverse_proxy food-captain.localhost:3001
+}
+

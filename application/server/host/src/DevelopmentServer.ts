@@ -14,7 +14,6 @@ export class DevelopmentServer extends BaseServer implements ServerStrategy {
   }
 
   async waitInitialization() {
-    console.log('start promise');
     const devConfig = await makeDevConfig();
     this.webpackDevConfig = devConfig;
   }
