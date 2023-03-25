@@ -5,7 +5,9 @@ import { container } from 'cheap-di';
 import cookieParser from 'cookie-parser';
 import express, { RequestHandler, Router } from 'express';
 import { MvcMiddleware } from 'mvc-middleware';
+import { registerDatabase } from '@food-captain/database';
 import CheckApiController from './controllers/CheckApiController';
+import { CONNECTION_STRING } from './environment';
 
 (async () => {
   container.registerType(CheckApiController);
@@ -22,6 +24,10 @@ import CheckApiController from './controllers/CheckApiController';
   });
 
   const controllersPath = path.join(__dirname, 'controllers');
+
+  registerDatabase(container, {
+    connectionString: CONNECTION_STRING,
+  });
 
   // todo: improve after mvc-middleware release 2.0.0
   new MvcMiddleware(app as any, Router as any, container)

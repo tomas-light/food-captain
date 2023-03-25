@@ -12,6 +12,7 @@ root.render(<Root />);
 function Root() {
   useEffect(() => {
     fetch('https://api.food-captain.localhost/check');
+    fetch('https://api.food-captain.localhost/users');
   }, []);
 
   return <p>Hello Food Captain!</p>;
