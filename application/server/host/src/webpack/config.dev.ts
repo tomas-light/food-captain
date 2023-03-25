@@ -9,10 +9,12 @@ import { paths } from './paths';
 class RunCaddyPlugin {
   apply(compiler: Compiler) {
     compiler.hooks.environment.tap('MyPlugin', () => {
-      exec('caddy start --config Caddyfile');
+      // is executing from "food-captain/application/server/host"
+      exec('"../../../caddy_windows_amd64.exe" start --config Caddyfile');
     });
     compiler.hooks.shutdown.tap('MyPlugin', () => {
-      exec('caddy stop');
+      // is executing from "food-captain/application/server/host"
+      exec('"../../../caddy_windows_amd64.exe" stop');
     });
   }
 }

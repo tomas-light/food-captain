@@ -1,21 +1,23 @@
-import { DimensionTable } from './DimensionTable';
-import { DishInMenuTable } from './DishInMenuTable';
-import { DishInSetTable } from './DishInSetTable';
-import { DishSetTable } from './DishSetTable';
-import { DishTable } from './DishTable';
-import { ImageTable } from './ImageTable';
-import { IngredientInRecipeTable } from './IngredientInRecipeTable';
-import { IngredientInSetTable } from './IngredientInSetTable';
-import { IngredientSetTable } from './IngredientSetTable';
-import { IngredientTable } from './IngredientTable';
-import { MenuInScheduleTable } from './MenuInScheduleTable';
-import { MenuTable } from './MenuTable';
-import { RecipeImageTable } from './RecipeImageTable';
-import { RecipeTable } from './RecipeTable';
-import { RoleTable } from './RoleTable';
-import { ScheduleTable } from './ScheduleTable';
-import { UserRoleTable } from './UserRoleTable';
-import { UserTable } from './UserTable';
+import {
+  DimensionTable,
+  DishInMenuTable,
+  DishInSetTable,
+  DishSetTable,
+  DishTable,
+  ImageTable,
+  IngredientInRecipeTable,
+  IngredientInSetTable,
+  IngredientSetTable,
+  IngredientTable,
+  MenuInScheduleTable,
+  MenuTable,
+  RecipeImageTable,
+  RecipeTable,
+  RoleTable,
+  ScheduleTable,
+  UserRoleTable,
+  UserTable,
+} from './tables';
 
 export abstract class Database {
   constructor(
