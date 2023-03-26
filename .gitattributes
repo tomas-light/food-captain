@@ -3,4 +3,15 @@
 /.yarn/plugins/**/*  binary
 /.pnp.*              binary linguist-generated
 
-text eol=lf
+# Autodetect text files
+* text=auto eol=lf
+
+# Definitively text files
+*ts text
+*tsx text
+*css text
+*js text
+*jsx text
+*yml text
+*json text
+*md text
