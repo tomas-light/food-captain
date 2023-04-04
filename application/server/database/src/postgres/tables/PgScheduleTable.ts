@@ -1,6 +1,5 @@
 import { QueryConfig } from 'pg';
 import { keyOf, MakePropertiesOptional } from '../../utils';
-
 import {
   MenuEntity,
   MenuInScheduleEntity,
@@ -23,21 +22,25 @@ export class PgScheduleTable
       text: `
         SELECT 
           _schedule.*, 
-          _ms.${keyOf<MenuInScheduleEntity>('date')}, 
-          _ms.${keyOf<MenuInScheduleEntity>('menu_id')}, 
+          _menu_in_schedule.${keyOf<MenuInScheduleEntity>('date')}, 
+          _menu_in_schedule.${keyOf<MenuInScheduleEntity>('menu_id')}, 
           _menu.${keyOf<MenuEntity>('name')} as ${keyOf<ScheduleWithMenuEntity>(
         'menu_name'
       )}, 
           _menu.${keyOf<MenuEntity>('create_date')}, 
           _menu.${keyOf<MenuEntity>('last_update')}, 
           _menu.${keyOf<MenuEntity>('author_id')} 
-        FROM ${this.tableName} _schedule 
-        LEFT JOIN menu_in_schedule _ms on _schedule.${keyOf<ScheduleEntity>(
-          'id'
-        )} = _ms.${keyOf<MenuInScheduleEntity>('schedule_id')} 
-        JOIN menu _menu on _ms.${keyOf<MenuInScheduleEntity>(
-          'menu_id'
-        )} = _menu.${keyOf<MenuEntity>('id')} 
+        FROM ${this.schema}.${this.tableName} _schedule 
+        LEFT JOIN ${
+          this.schema
+        }.menu_in_schedule _menu_in_schedule on _schedule.${keyOf<ScheduleEntity>(
+        'id'
+      )} = _menu_in_schedule.${keyOf<MenuInScheduleEntity>('schedule_id')} 
+        JOIN ${
+          this.schema
+        }.menu _menu on _menu_in_schedule.${keyOf<MenuInScheduleEntity>(
+        'menu_id'
+      )} = _menu.${keyOf<MenuEntity>('id')} 
         WHERE _schedule.${keyOf<ScheduleEntity>('id')} = $1;
       `,
       values: [id],
@@ -52,7 +55,7 @@ export class PgScheduleTable
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.tableName} (
+        INSERT INTO ${this.schema}.${this.tableName} (
           ${keyOf<ScheduleEntity>('author_id')}, 
           ${keyOf<ScheduleEntity>('name')}, 
         ) 

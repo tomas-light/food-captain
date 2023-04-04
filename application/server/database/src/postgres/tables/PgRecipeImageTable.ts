@@ -18,7 +18,7 @@ export class PgRecipeImageTable
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
-        FROM ${this.tableName} 
+        FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<RecipeImageEntity>('recipe_id')} = $1 
         AND ${keyOf<RecipeImageEntity>('image_id')} = $2;
       `,
@@ -32,7 +32,7 @@ export class PgRecipeImageTable
   async insertAsync(entity: RecipeImageEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.tableName} (
+        INSERT INTO ${this.schema}.${this.tableName} (
           ${keyOf<RecipeImageEntity>('recipe_id')}, 
           ${keyOf<RecipeImageEntity>('image_id')} 
         ) 
@@ -48,7 +48,7 @@ export class PgRecipeImageTable
   async deleteAsync(entity: RecipeImageEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.tableName} 
+        DELETE FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<RecipeImageEntity>('recipe_id')} = $1 
         AND ${keyOf<RecipeImageEntity>('image_id')} = $2;
       `,

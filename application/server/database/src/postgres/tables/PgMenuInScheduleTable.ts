@@ -1,5 +1,4 @@
 import { QueryConfig } from 'pg';
-
 import { MenuInScheduleEntity } from '../../entities';
 import { MenuInScheduleTable } from '../../tables/MenuInScheduleTable';
 import { keyOf } from '../../utils';
@@ -18,7 +17,7 @@ export class PgMenuInScheduleTable
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
-        FROM ${this.tableName} 
+        FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<MenuInScheduleEntity>('schedule_id')} = $1 
         AND ${keyOf<MenuInScheduleEntity>('menu_id')} = $2;
       `,
@@ -35,7 +34,7 @@ export class PgMenuInScheduleTable
     const queryConfig: QueryConfig = {
       text: `
         SELECT *
-        FROM ${this.tableName}
+        FROM ${this.schema}.${this.tableName}
         WHERE ${keyOf<MenuInScheduleEntity>('schedule_id')} = $1;
       `,
       values: [schedule_id],
@@ -49,7 +48,7 @@ export class PgMenuInScheduleTable
     const queryConfig: QueryConfig = {
       text: `
         SELECT *
-        FROM ${this.tableName}
+        FROM ${this.schema}.${this.tableName}
         WHERE ${keyOf<MenuInScheduleEntity>('menu_id')} = $1;
       `,
       values: [menu_id],
@@ -62,7 +61,7 @@ export class PgMenuInScheduleTable
   async insertAsync(entity: MenuInScheduleEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.tableName} (
+        INSERT INTO ${this.schema}.${this.tableName} (
           ${keyOf<MenuInScheduleEntity>('schedule_id')}, 
           ${keyOf<MenuInScheduleEntity>('menu_id')}, 
           ${keyOf<MenuInScheduleEntity>('date')} 
@@ -81,7 +80,7 @@ export class PgMenuInScheduleTable
   ): Promise<MenuInScheduleEntity | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        UPDATE ${this.tableName} 
+        UPDATE ${this.schema}.${this.tableName} 
         SET ${keyOf<MenuInScheduleEntity>('date')} = $1 
         WHERE ${keyOf<MenuInScheduleEntity>('schedule_id')} = $2 
         AND ${keyOf<MenuInScheduleEntity>('menu_id')} = $3;
@@ -98,7 +97,7 @@ export class PgMenuInScheduleTable
   ): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.tableName} 
+        DELETE FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<MenuInScheduleEntity>('schedule_id')} = $1 
         AND ${keyOf<MenuInScheduleEntity>('menu_id')} = $2;
       `,
@@ -112,7 +111,7 @@ export class PgMenuInScheduleTable
   async deleteByIdsAsync(menu_ids: number[]): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.tableName} 
+        DELETE FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<MenuInScheduleEntity>('schedule_id')} in ($1);
       `,
       values: menu_ids,
@@ -125,7 +124,7 @@ export class PgMenuInScheduleTable
   async deleteAllByScheduleIdAsync(schedule_id: number): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.tableName} 
+        DELETE FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<MenuInScheduleEntity>('schedule_id')} = $1;
       `,
       values: [schedule_id],
@@ -138,7 +137,7 @@ export class PgMenuInScheduleTable
   async deleteAllByMenuIdAsync(menu_id: number): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.tableName} 
+        DELETE FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<MenuInScheduleEntity>('menu_id')} = $1;
       `,
       values: [menu_id],

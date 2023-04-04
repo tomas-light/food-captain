@@ -42,7 +42,7 @@ VALUES
     (3,	'guest')
 ;
 
-INSERT INTO public.users (id, name, email, password)
+INSERT INTO public.user (id, name, email, password)
 VALUES
     (1,	'Артём Игнатьев', 'artem@fc.com', 'Qwerty!234')
 ;

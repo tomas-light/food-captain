@@ -19,7 +19,7 @@ export class PgDimensionTable
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.tableName} (
+        INSERT INTO ${this.schema}.${this.tableName} (
           ${keyOf<DimensionEntity>('name')} 
           ${keyOf<MyI>('prop3')} 
         ) 

@@ -4,11 +4,12 @@ import { Pool, QueryConfig, QueryResultRow } from 'pg';
 export class Query {
   constructor(private readonly logger: Logger, private readonly pool: Pool) {}
 
-  protected async query<Entity extends QueryResultRow>(
+  async query<Entity extends QueryResultRow>(
     queryTextOrConfig: string | QueryConfig
   ) {
     try {
       // await this.pool.connect();
+      this.logger.debug(queryTextOrConfig);
       const queryResult = await this.pool.query<Entity>(queryTextOrConfig);
       // await this.pool.end();
 

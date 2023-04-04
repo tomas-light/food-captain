@@ -5,8 +5,10 @@ services:
   postgres:
     image: postgres:latest
     environment:
+      - POSTGRES_DB=food-captain
       - POSTGRES_PASSWORD=postgrespw
     ports:
       - 5432:5432
     volumes:
       - data:/var/lib/postgresql
+      - ./initPostgresDatabase.sql:/docker-entrypoint-initdb.d/init.sql

@@ -17,7 +17,7 @@ export class PgIngredientInRecipeTable
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
-        FROM ${this.tableName} 
+        FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<IngredientInRecipeEntity>('recipe_id')} = $1 
         AND ${keyOf<IngredientInRecipeEntity>('ingredient_id')} = $2;
       `,
@@ -31,7 +31,7 @@ export class PgIngredientInRecipeTable
   async insertAsync(entity: IngredientInRecipeEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.tableName} (
+        INSERT INTO ${this.schema}.${this.tableName} (
           ${keyOf<IngredientInRecipeEntity>('recipe_id')}, 
           ${keyOf<IngredientInRecipeEntity>('ingredient_id')}, 
           ${keyOf<IngredientInRecipeEntity>('dimension_id')}, 
@@ -56,7 +56,7 @@ export class PgIngredientInRecipeTable
   ): Promise<IngredientInRecipeEntity | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        UPDATE ${this.tableName} 
+        UPDATE ${this.schema}.${this.tableName} 
         SET ${keyOf<IngredientInRecipeEntity>('dimension_id')} = $1, 
           ${keyOf<IngredientInRecipeEntity>('size')} = $2 
         WHERE ${keyOf<IngredientInRecipeEntity>('recipe_id')}  = $3 
@@ -79,7 +79,7 @@ export class PgIngredientInRecipeTable
   ): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.tableName} 
+        DELETE FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<IngredientInRecipeEntity>('recipe_id')} = $1 
         AND ${keyOf<IngredientInRecipeEntity>('ingredient_id')} = $2;
       `,

@@ -24,7 +24,12 @@ import {
 
 @metadata
 export class PostgresDatabase extends Database {
-  constructor(logger: Logger, pool: Pool) {
+  constructor(private readonly logger: Logger, private readonly pool: Pool) {
+    if (logger) {
+      console.log('has logger');
+    } else {
+      console.log('has NO logger');
+    }
     super(
       new PgDimensionTable(logger, pool),
       new PgDishTable(logger, pool),

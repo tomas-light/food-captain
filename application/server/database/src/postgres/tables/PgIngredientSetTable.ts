@@ -29,7 +29,7 @@ export class PgIngredientSetTable
           _image1.${keyOf<ImageEntity>(
             'content'
           )} as ${keyOf<IngredientSetWithIngredientsEntity>('image')},
-          _is.${keyOf<IngredientInSetEntity>('ingredient_id')}, 
+          _ingredient_in_set.${keyOf<IngredientInSetEntity>('ingredient_id')}, 
           _ingredient.${keyOf<IngredientEntity>(
             'name'
           )} as ${keyOf<IngredientSetWithIngredientsEntity>(
@@ -45,19 +45,28 @@ export class PgIngredientSetTable
           )} as ${keyOf<IngredientSetWithIngredientsEntity>(
         'ingredient_image'
       )} 
-        FROM ${this.tableName} _set 
-        LEFT JOIN image _image1 on _set.${keyOf<IngredientSetEntity>(
-          'image_id'
-        )} = _image1.${keyOf<ImageEntity>('id')} 
-        LEFT JOIN ingredient_in_set _is on _set.${keyOf<IngredientSetEntity>(
-          'id'
-        )} = _is.${keyOf<IngredientInSetEntity>('ingredient_set_id')} 
-        JOIN ingredient _ingredient on _is.${keyOf<IngredientInSetEntity>(
-          'ingredient_id'
-        )} = _ingredient.${keyOf<IngredientEntity>('id')} 
-        LEFT JOIN image _image2 on _ingredient.${keyOf<IngredientEntity>(
-          'image_id'
-        )} = _image2.${keyOf<ImageEntity>('id')} 
+        FROM ${this.schema}.${this.tableName} _set 
+        LEFT JOIN ${
+          this.schema
+        }.image _image1 on _set.${keyOf<IngredientSetEntity>(
+        'image_id'
+      )} = _image1.${keyOf<ImageEntity>('id')} 
+        LEFT JOIN ${
+          this.schema
+        }.ingredient_in_set _ingredient_in_set on _set.${keyOf<IngredientSetEntity>(
+        'id'
+      )} = _ingredient_in_set.${keyOf<IngredientInSetEntity>(
+        'ingredient_set_id'
+      )} JOIN ${
+        this.schema
+      }.ingredient _ingredient on _ingredient_in_set.${keyOf<IngredientInSetEntity>(
+        'ingredient_id'
+      )} = _ingredient.${keyOf<IngredientEntity>('id')} 
+        LEFT JOIN ${
+          this.schema
+        }.image _image2 on _ingredient.${keyOf<IngredientEntity>(
+        'image_id'
+      )} = _image2.${keyOf<ImageEntity>('id')} 
         WHERE _set.${keyOf<IngredientSetEntity>('id')} = $1;
       `,
       values: [id],
@@ -74,7 +83,7 @@ export class PgIngredientSetTable
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.tableName} (
+        INSERT INTO ${this.schema}.${this.tableName} (
           ${keyOf<IngredientSetEntity>('name')}, 
           ${keyOf<IngredientSetEntity>('image_id')}, 
         ) 

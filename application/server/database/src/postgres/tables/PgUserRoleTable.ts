@@ -18,7 +18,7 @@ export class PgUserRoleTable
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
-        FROM ${this.tableName} 
+        FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<UserRoleEntity>('user_id')} = $1 
         AND ${keyOf<UserRoleEntity>('role_id')} = $2;
       `,
@@ -33,7 +33,7 @@ export class PgUserRoleTable
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
-        FROM ${this.tableName} 
+        FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<UserRoleEntity>('user_id')} = $1;
       `,
       values: [user_id],
@@ -46,7 +46,7 @@ export class PgUserRoleTable
   async insertAsync(entity: UserRoleEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.tableName} (
+        INSERT INTO ${this.schema}.${this.tableName} (
           ${keyOf<UserRoleEntity>('user_id')}, 
           ${keyOf<UserRoleEntity>('role_id')} 
         ) 
@@ -62,7 +62,7 @@ export class PgUserRoleTable
   async deleteAsync(entity: UserRoleEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.tableName} 
+        DELETE FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<UserRoleEntity>('user_id')} = $1 
         AND ${keyOf<UserRoleEntity>('role_id')} = $2;
       `,

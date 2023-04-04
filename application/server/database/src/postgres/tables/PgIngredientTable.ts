@@ -1,8 +1,7 @@
 import { QueryConfig } from 'pg';
-import { keyOf, MakePropertiesOptional } from '../../utils';
-
 import { IngredientEntity } from '../../entities';
 import { IngredientTable } from '../../tables/IngredientTable';
+import { keyOf, MakePropertiesOptional } from '../../utils';
 import { PgTableBase } from '../base';
 
 export class PgIngredientTable
@@ -16,7 +15,7 @@ export class PgIngredientTable
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.tableName} (
+        INSERT INTO ${this.schema}.${this.tableName} (
           ${keyOf<IngredientEntity>('name')}, 
           ${keyOf<IngredientEntity>('image_id')} 
         ) 

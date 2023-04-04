@@ -18,7 +18,7 @@ export class PgDishInSetTable
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
-        FROM ${this.tableName} 
+        FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<DishInSetEntity>('dish_set_id')} = $1 
         AND ${keyOf<DishInSetEntity>('dish_id')} = $2;
       `,
@@ -32,7 +32,7 @@ export class PgDishInSetTable
   async insertAsync(entity: DishInSetEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.tableName} (
+        INSERT INTO ${this.schema}.${this.tableName} (
           ${keyOf<DishInSetEntity>('dish_set_id')}, 
           ${keyOf<DishInSetEntity>('dish_id')} 
         ) 
@@ -48,7 +48,7 @@ export class PgDishInSetTable
   async deleteAsync(entity: DishInSetEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.tableName} 
+        DELETE FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<DishInSetEntity>('dish_set_id')} = $1 
         AND ${keyOf<DishInSetEntity>('dish_id')} = $2;
       `,

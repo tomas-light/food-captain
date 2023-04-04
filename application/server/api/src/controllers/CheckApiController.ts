@@ -1,7 +1,6 @@
-import { metadata } from '@food-captain/server-utils';
+import { Logger, metadata } from '@food-captain/server-utils';
 import { Request, Response } from 'express';
 import { MvcController } from 'mvc-middleware';
-import { ConsoleLogger } from '../utils/ConsoleLogger';
 
 type UrlToMethodMap = {
   [url: string]: keyof CheckApiController;
@@ -10,7 +9,7 @@ type UrlToMethodMap = {
 @metadata
 export default class CheckApiController extends MvcController {
   constructor(
-    protected readonly logger: ConsoleLogger,
+    protected readonly logger: Logger,
     request: Request,
     response: Response
   ) {
