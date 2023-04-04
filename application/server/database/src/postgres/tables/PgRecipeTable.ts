@@ -1,6 +1,4 @@
 import { QueryConfig } from 'pg';
-import { keyOf, MakePropertiesOptional } from '../../utils';
-
 import {
   ImageEntity,
   IngredientEntity,
@@ -12,6 +10,7 @@ import {
   RecipeWithImageEntity,
   RecipeWithIngredientsEntity,
 } from '../../tables/RecipeTable';
+import { keyOf, MakePropertiesOptional } from '../../utils';
 import { PgTableBase } from '../base';
 
 export class PgRecipeTable
@@ -28,24 +27,34 @@ export class PgRecipeTable
         SELECT 
           _recipe.*, 
           _image1.${keyOf<ImageEntity>('content')} as image,
-          _ip.${keyOf<IngredientInRecipeEntity>('ingredient_id')}, 
-          _ip.${keyOf<IngredientInRecipeEntity>('dimension_id')}, 
-          _ip.${keyOf<IngredientInRecipeEntity>('size')}, 
+          _ingredient_in_recipe.${keyOf<IngredientInRecipeEntity>(
+            'ingredient_id'
+          )}, 
+          _ingredient_in_recipe.${keyOf<IngredientInRecipeEntity>(
+            'dimension_id'
+          )}, 
+          _ingredient_in_recipe.${keyOf<IngredientInRecipeEntity>('size')}, 
           _ingredient.${keyOf<IngredientEntity>('name')} as ingredient_name, 
           _ingredient.${keyOf<IngredientEntity>(
             'image_id'
           )} as ingredient_image_id, 
           _image2.${keyOf<ImageEntity>('content')} as ingredient_image 
-        FROM ${this.tableName} _recipe 
-        LEFT JOIN image _image1 on _recipe.${keyOf<RecipeEntity>(
-          'image_id'
-        )} = _image1.${keyOf<ImageEntity>('id')} 
-        LEFT JOIN ingredient_in_recipe _ip on _recipe.${keyOf<RecipeEntity>(
-          'id'
-        )} = _ip.${keyOf<IngredientInRecipeEntity>('recipe_id')} 
-        JOIN ingredient _ingredient on _ip.${keyOf<IngredientInRecipeEntity>(
-          'ingredient_id'
-        )} = _ingredient.${keyOf<IngredientEntity>('id')} 
+        FROM ${this.schema}.${this.tableName} _recipe 
+        LEFT JOIN ${this.schema}.image _image1 on _recipe.${keyOf<RecipeEntity>(
+        'image_id'
+      )} = _image1.${keyOf<ImageEntity>('id')} 
+        LEFT JOIN ${
+          this.schema
+        }.ingredient_in_recipe _ingredient_in_recipe on _recipe.${keyOf<RecipeEntity>(
+        'id'
+      )} = _ingredient_in_recipe.${keyOf<IngredientInRecipeEntity>(
+        'recipe_id'
+      )} 
+        JOIN ${
+          this.schema
+        }.ingredient _ingredient on _ingredient_in_recipe.${keyOf<IngredientInRecipeEntity>(
+        'ingredient_id'
+      )} = _ingredient.${keyOf<IngredientEntity>('id')} 
         LEFT JOIN image _image2 on _ingredient.${keyOf<IngredientEntity>(
           'image_id'
         )} = _image2.${keyOf<ImageEntity>('id')} 
@@ -65,7 +74,7 @@ export class PgRecipeTable
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.tableName} (
+        INSERT INTO ${this.schema}.${this.tableName} (
           ${keyOf<RecipeEntity>('name')}, 
           ${keyOf<RecipeEntity>('description')}, 
           ${keyOf<RecipeEntity>('dish_id')}, 

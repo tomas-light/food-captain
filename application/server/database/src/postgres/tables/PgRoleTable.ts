@@ -12,7 +12,7 @@ export class PgRoleTable extends PgTableBase<RoleEntity> implements RoleTable {
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.tableName} (
+        INSERT INTO ${this.schema}.${this.tableName} (
           ${keyOf<RoleEntity>('name')} 
         ) 
         VALUES($1) RETURNING ${keyOf<RoleEntity>('id')};

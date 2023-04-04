@@ -11,13 +11,15 @@ export class PgDishTable extends PgTableBase<DishEntity> implements DishTable {
     const queryConfig: QueryConfig = {
       text: `
         SELECT 
-          _dm.${keyOf<DishInMenuEntity>('menu_id')},
+          _dish_in_menu.${keyOf<DishInMenuEntity>('menu_id')},
           _dish.*, 
-          _dm.${keyOf<DishInMenuEntity>('order_number')} 
-        FROM ${this.tableName} _dish
-        JOIN dish_in_menu _dm on _dish.${keyOf<DishEntity>(
-          'id'
-        )} = _dm.${keyOf<DishInMenuEntity>('dish_id')}
+          _dish_in_menu.${keyOf<DishInMenuEntity>('order_number')} 
+        FROM ${this.schema}.${this.tableName} _dish
+        JOIN ${
+          this.schema
+        }.dish_in_menu _dish_in_menu on _dish.${keyOf<DishEntity>(
+        'id'
+      )} = _dish_in_menu.${keyOf<DishInMenuEntity>('dish_id')}
         WHERE ${keyOf<DishInMenuEntity>('menu_id')} == $1;
       `,
       values: [menuId],
@@ -31,13 +33,15 @@ export class PgDishTable extends PgTableBase<DishEntity> implements DishTable {
     const queryConfig: QueryConfig = {
       text: `
         SELECT 
-          _dm.${keyOf<DishInMenuEntity>('menu_id')},
+          _dish_in_menu.${keyOf<DishInMenuEntity>('menu_id')},
           _dish.*, 
-          _dm.${keyOf<DishInMenuEntity>('order_number')} 
-        FROM ${this.tableName} _dish
-        JOIN dish_in_menu _dm on _dish.${keyOf<DishEntity>(
-          'id'
-        )} = _dm.${keyOf<DishInMenuEntity>('dish_id')}
+          _dish_in_menu.${keyOf<DishInMenuEntity>('order_number')} 
+        FROM ${this.schema}.${this.tableName} _dish
+        JOIN ${
+          this.schema
+        }.dish_in_menu _dish_in_menu on _dish.${keyOf<DishEntity>(
+        'id'
+      )} = _dish_in_menu.${keyOf<DishInMenuEntity>('dish_id')}
         WHERE ${keyOf<DishInMenuEntity>('menu_id')} in ($1);
       `,
       values: menuIds,
@@ -52,7 +56,7 @@ export class PgDishTable extends PgTableBase<DishEntity> implements DishTable {
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.tableName} (
+        INSERT INTO ${this.schema}.${this.tableName} (
           ${keyOf<DishEntity>('name')}, 
           ${keyOf<DishEntity>('description')}, 
           ${keyOf<DishEntity>('image_id')} 

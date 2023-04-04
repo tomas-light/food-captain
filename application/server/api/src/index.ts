@@ -1,15 +1,25 @@
 import http from 'http';
 import path from 'path';
+import { registerDatabase } from '@food-captain/database';
+import { Logger } from '@food-captain/server-utils';
 import { json } from 'body-parser';
 import { container } from 'cheap-di';
 import cookieParser from 'cookie-parser';
 import express, { RequestHandler, Router } from 'express';
 import { MvcMiddleware } from 'mvc-middleware';
-import { registerDatabase } from '@food-captain/database';
 import CheckApiController from './controllers/CheckApiController';
-import { CONNECTION_STRING } from './environment';
+import {
+  POSTGRES_CONNECTION_STRING,
+  POSTGRES_DATABASE,
+  POSTGRES_HOST,
+  POSTGRES_PASSWORD,
+  POSTGRES_PORT,
+  POSTGRES_USER,
+} from './environment';
+import { ConsoleLogger } from './utils/ConsoleLogger';
 
 (async () => {
+  container.registerType(ConsoleLogger).as(Logger);
   container.registerType(CheckApiController);
 
   const app = express();
@@ -26,7 +36,12 @@ import { CONNECTION_STRING } from './environment';
   const controllersPath = path.join(__dirname, 'controllers');
 
   registerDatabase(container, {
-    connectionString: CONNECTION_STRING,
+    host: POSTGRES_HOST,
+    port: POSTGRES_PORT ? parseInt(POSTGRES_PORT, 10) : undefined,
+    user: POSTGRES_USER,
+    password: POSTGRES_PASSWORD,
+    database: POSTGRES_DATABASE,
+    connectionString: POSTGRES_CONNECTION_STRING,
   });
 
   // todo: improve after mvc-middleware release 2.0.0

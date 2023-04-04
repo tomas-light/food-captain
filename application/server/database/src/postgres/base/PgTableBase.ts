@@ -2,18 +2,19 @@ import { QueryConfig, QueryResultRow } from 'pg';
 import { Query } from './Query';
 
 export class PgTableBase<TEntity extends QueryResultRow> extends Query {
+  protected schema = 'public';
   protected tableName?: string;
 
   allAsync = async (): Promise<TEntity[]> => {
     const queryResult = await this.query<TEntity>(
-      `SELECT * from ${this.tableName}`
+      `SELECT * from ${this.schema}.${this.tableName}`
     );
     return queryResult?.rows ?? [];
   };
 
   byIdAsync = async (id: number): Promise<TEntity | undefined> => {
     const queryResult = await this.query<TEntity>({
-      text: `SELECT * FROM ${this.tableName} WHERE id = $1;`,
+      text: `SELECT * FROM ${this.schema}.${this.tableName} WHERE id = $1;`,
       values: [id],
     });
     return queryResult?.rows[0];
@@ -38,14 +39,16 @@ export class PgTableBase<TEntity extends QueryResultRow> extends Query {
     });
 
     return {
-      text: `UPDATE ${this.tableName} SET ${params.join(', ')} WHERE id = $1;`,
+      text: `UPDATE ${this.schema}.${this.tableName} SET ${params.join(
+        ', '
+      )} WHERE id = $1;`,
       values,
     };
   }
 
   deleteByIdAsync = async (id: number): Promise<boolean> => {
     const queryResult = await this.query({
-      text: `DELETE FROM ${this.tableName} WHERE id = $1;`,
+      text: `DELETE FROM ${this.schema}.${this.tableName} WHERE id = $1;`,
       values: [id],
     });
     return (queryResult?.rowCount ?? 0) > 0;

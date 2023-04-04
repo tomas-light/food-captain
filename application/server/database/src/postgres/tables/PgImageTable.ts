@@ -15,7 +15,7 @@ export class PgImageTable
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.tableName} (
+        INSERT INTO ${this.schema}.${this.tableName} (
           ${keyOf<ImageEntity>('content')} 
         ) 
         VALUES($1) RETURNING ${keyOf<ImageEntity>('id')};

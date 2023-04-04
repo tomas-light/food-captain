@@ -18,7 +18,7 @@ export class PgIngredientInSetTable
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
-        FROM ${this.tableName} 
+        FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<IngredientInSetEntity>('ingredient_set_id')} = $1 
         AND ${keyOf<IngredientInSetEntity>('ingredient_id')} = $2;
       `,
@@ -32,7 +32,7 @@ export class PgIngredientInSetTable
   async insertAsync(entity: IngredientInSetEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.tableName} (
+        INSERT INTO ${this.schema}.${this.tableName} (
           ${keyOf<IngredientInSetEntity>('ingredient_set_id')}, 
           ${keyOf<IngredientInSetEntity>('ingredient_id')} 
         ) 
@@ -48,7 +48,7 @@ export class PgIngredientInSetTable
   async deleteAsync(entity: IngredientInSetEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.tableName} 
+        DELETE FROM ${this.schema}.${this.tableName} 
         WHERE ${keyOf<IngredientInSetEntity>('ingredient_id')} = $1 
         AND ${keyOf<IngredientInSetEntity>('ingredient_set_id')} = $2;
       `,
