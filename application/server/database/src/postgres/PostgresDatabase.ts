@@ -1,4 +1,4 @@
-import { Logger, metadata } from '@food-captain/server-utils';
+import { Logger } from '@food-captain/server-utils';
 import { Pool } from 'pg';
 import { Database } from '../Database';
 import {
@@ -22,19 +22,8 @@ import {
   PgUserTable,
 } from './tables';
 
-@metadata
 export class PostgresDatabase extends Database {
   constructor(private readonly logger: Logger, private readonly pool: Pool) {
-    if (logger) {
-      console.log('has logger');
-    } else {
-      console.log('has NO logger');
-    }
-    if (pool) {
-      console.log('has pool');
-    } else {
-      console.log('has NO pool');
-    }
     super(
       new PgDimensionTable(logger, pool),
       new PgDishTable(logger, pool),

@@ -1,10 +1,11 @@
-import { DependencyRegistrator } from 'cheap-di';
+import { Logger } from '@food-captain/server-utils';
+import { Container } from 'cheap-di';
 import { ClientConfig, Pool } from 'pg';
 import { Database } from './Database';
 import { PostgresDatabase } from './postgres';
 
 export function registerDatabase(
-  container: DependencyRegistrator,
+  container: Container,
   dbConfig: Pick<
     ClientConfig,
     'connectionString' | 'database' | 'host' | 'port' | 'user' | 'password'
@@ -34,7 +35,11 @@ export function registerDatabase(
       'Has no credentials to establish connection to the Database'
     );
   }
-  container.registerInstance(pool);
-  container.registerType(PostgresDatabase).as(Database);
-  const db = (container as any).resolve(Database);
+
+  const logger = container.resolve(Logger);
+  if (!logger) {
+    throw new Error('Logger cannot be resolved');
+  }
+  const db = new PostgresDatabase(logger, pool);
+  container.registerInstance(db).as(Database);
 }

@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import express, { RequestHandler, Router } from 'express';
 import { MvcMiddleware } from 'mvc-middleware';
 import CheckApiController from './controllers/CheckApiController';
+import UserApiController from './controllers/UserApiController';
 import {
   POSTGRES_CONNECTION_STRING,
   POSTGRES_DATABASE,
@@ -23,6 +24,7 @@ import { ConsoleLogger } from './utils/ConsoleLogger';
 (async () => {
   container.registerType(ConsoleLogger).as(Logger);
   container.registerType(CheckApiController);
+  container.registerType(UserApiController);
 
   const app = express();
   app.use(json({ limit: '50mb' }) as RequestHandler);
