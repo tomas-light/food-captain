@@ -5,7 +5,7 @@ import { collectTsConfigPaths } from './collectTsConfigPaths';
 import { getSubDirectories } from './getSubDirectories';
 import { SharedModule } from './types';
 
-function getSharedModules() {
+export function getSharedModules() {
   return getSharedModulesForFolder(paths.client);
 }
 
@@ -62,5 +62,3 @@ function makeSharedModule(params: {
 
   return sharedModule;
 }
-
-export { getSharedModules };

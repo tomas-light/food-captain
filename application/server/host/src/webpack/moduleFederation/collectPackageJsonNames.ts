@@ -3,7 +3,7 @@ import { join } from 'path';
 import { mapArrayAsync } from './mapArrayAsync';
 import { SharedModuleConfigsMap } from './types';
 
-async function collectPackageJsonNames(
+export async function collectPackageJsonNames(
   pathToFolder: string,
   folderNames: string[]
 ): Promise<SharedModuleConfigsMap> {
@@ -38,5 +38,3 @@ async function collectPackageJsonNames(
 
   return modulesMap;
 }
-
-export { collectPackageJsonNames };
