@@ -5,14 +5,14 @@ interface MenuWithDateEntity extends MenuEntity {
   date: Date;
 }
 
-interface ScheduleWithMenuEntity
+export interface ScheduleWithMenuEntity
   extends ScheduleEntity,
     Omit<MenuWithDateEntity, 'id' | 'name'> {
   menu_id: number;
   menu_name?: string;
 }
 
-interface ScheduleTable {
+export interface ScheduleTable {
   allAsync(): Promise<ScheduleEntity[]>;
 
   byIdAsync(id: number): Promise<ScheduleEntity | undefined>;
@@ -27,5 +27,3 @@ interface ScheduleTable {
 
   deleteByIdAsync(id: number): Promise<boolean>;
 }
-
-export { ScheduleTable, ScheduleWithMenuEntity };

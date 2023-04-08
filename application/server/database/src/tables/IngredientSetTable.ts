@@ -1,11 +1,11 @@
 import { MakePropertiesOptional } from '../utils';
 import { IngredientEntity, IngredientSetEntity } from '../entities';
 
-interface IngredientSetWithImageEntity extends IngredientSetEntity {
+export interface IngredientSetWithImageEntity extends IngredientSetEntity {
   image?: string;
 }
 
-interface IngredientSetWithIngredientsEntity
+export interface IngredientSetWithIngredientsEntity
   extends IngredientSetWithImageEntity,
     Omit<IngredientEntity, 'id' | 'name'> {
   ingredient_id: number;
@@ -14,7 +14,7 @@ interface IngredientSetWithIngredientsEntity
   ingredient_image?: string;
 }
 
-interface IngredientSetTable {
+export interface IngredientSetTable {
   allAsync(): Promise<IngredientSetWithImageEntity[]>;
 
   byIdAsync(id: number): Promise<IngredientSetWithImageEntity | undefined>;
@@ -33,9 +33,3 @@ interface IngredientSetTable {
 
   deleteByIdAsync(id: number): Promise<boolean>;
 }
-
-export {
-  IngredientSetTable,
-  IngredientSetWithImageEntity,
-  IngredientSetWithIngredientsEntity,
-};

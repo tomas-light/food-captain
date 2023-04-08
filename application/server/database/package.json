@@ -9,7 +9,6 @@
   },
   "devDependencies": {
     "@types/pg": "8.6.6",
-    "cheap-di": "3.4.3",
-    "typescript": "5.0.2"
+    "cheap-di": "3.4.0-alpha-0.1"
   }
 }

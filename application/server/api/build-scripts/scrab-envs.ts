@@ -9,6 +9,12 @@ async function scrabEnvs() {
 
   await writeFile(
     // is executing from "food-captain/application/server/api" folder
+    path.join('..', '..', 'client', 'api', 'src', 'environment.ts'),
+    apiVariables,
+    'utf-8'
+  );
+  await writeFile(
+    // is executing from "food-captain/application/server/api" folder
     path.join('src', 'environment.ts'),
     apiVariables + databaseVariables,
     'utf-8'

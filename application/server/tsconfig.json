@@ -9,6 +9,6 @@
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
-    "target": "ESNext"
+    "target": "ES2022"
   }
 }

@@ -1,7 +1,7 @@
 import { MakePropertiesOptional } from '../utils';
 import { DishEntity, DishSetEntity } from '../entities';
 
-interface DishSetWithDishesEntity
+export interface DishSetWithDishesEntity
   extends DishSetEntity,
     Omit<DishEntity, 'id' | 'name'> {
   dish_id: number;
@@ -9,7 +9,7 @@ interface DishSetWithDishesEntity
   image?: string;
 }
 
-interface DishSetTable {
+export interface DishSetTable {
   allAsync(): Promise<DishSetEntity[]>;
 
   byIdAsync(id: number): Promise<DishSetEntity | undefined>;
@@ -26,5 +26,3 @@ interface DishSetTable {
 
   deleteByIdAsync(id: number): Promise<boolean>;
 }
-
-export { DishSetTable, DishSetWithDishesEntity };
