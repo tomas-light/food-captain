@@ -1,5 +1,6 @@
 import http from 'http';
 import { Express } from 'express';
+import { HOST_HOST, HOST_PORT } from './environment';
 
 interface BaseServerStrategy {
   createAndRunServer: () => void;
@@ -20,9 +21,8 @@ export abstract class BaseServer implements BaseServerStrategy {
   createAndRunServer = () => {
     const server = http.createServer(this.app);
 
-    // const host = '0.0.0.0';
-    const host = 'food-captain.localhost';
-    const port = 3000;
+    const host = HOST_HOST ?? '0.0.0.0';
+    const port = HOST_PORT ? parseInt(HOST_PORT, 10) : 80;
 
     return new Promise<void>((resolve) => {
       server.listen(port, host, () => {
