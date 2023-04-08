@@ -1,6 +1,7 @@
 import { Database } from '@food-captain/database';
+import { UserWithRoleEntity } from '@food-captain/database/src/tables';
 import { Logger, metadata } from '@food-captain/server-utils';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { MvcController } from 'mvc-middleware';
 
 type UrlToMethodMap = {
@@ -30,3 +31,5 @@ export default class UserApiController extends MvcController {
     return this.ok(result);
   }
 }
+
+export interface UserWithRoleDto extends UserWithRoleEntity {}

@@ -1,11 +1,11 @@
 import { MakePropertiesOptional } from '../utils';
 import { DishEntity, MenuEntity } from '../entities';
 
-interface MenuWithDateEntity extends MenuEntity {
+export interface MenuWithDateEntity extends MenuEntity {
   date: Date;
 }
 
-interface MenuWithDishesEntity
+export interface MenuWithDishesEntity
   extends MenuEntity,
     Omit<DishEntity, 'id' | 'name'> {
   dish_id: number;
@@ -14,7 +14,7 @@ interface MenuWithDishesEntity
   image?: string;
 }
 
-interface MenuTable {
+export interface MenuTable {
   allAsync(): Promise<MenuEntity[]>;
 
   byIdAsync(id: number): Promise<MenuEntity | undefined>;
@@ -34,5 +34,3 @@ interface MenuTable {
 
   deleteByIdAsync(id: number): Promise<boolean>;
 }
-
-export { MenuTable, MenuWithDateEntity, MenuWithDishesEntity };

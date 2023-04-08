@@ -2,6 +2,9 @@
   "name": "@food-captain/client-root",
   "version": "0.0.0",
   "dependencies": {
+    "@food-captain/client-api": "0.0.0",
+    "cheap-di": "3.4.0-alpha-0.1",
+    "cheap-di-react": "4.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

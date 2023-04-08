@@ -59,7 +59,7 @@ module.exports = {
     'react/display-name': 'warn',
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/ban-ts-comment': 'warn',
-    '@typescript-eslint/no-empty-interface': 'warn',
+    '@typescript-eslint/no-empty-interface': 'off',
     'react/no-unescaped-entities': 'off',
     quotes: [1, 'single', 'avoid-escape'], // TODO: check the options
     'spaced-comment': ['error', 'always'],
