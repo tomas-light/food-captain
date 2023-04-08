@@ -1,6 +1,6 @@
 import { readdir } from 'fs/promises';
 
-async function getSubDirectories(directoryPath: string) {
+export async function getSubDirectories(directoryPath: string) {
   const folderContent = await readdir(directoryPath, { withFileTypes: true });
   const directories = folderContent.filter((directoryEntry) =>
     directoryEntry.isDirectory()
@@ -11,5 +11,3 @@ async function getSubDirectories(directoryPath: string) {
 
   return pagesFolderNames;
 }
-
-export { getSubDirectories };

@@ -3,7 +3,7 @@ import { paths } from '../paths';
 import { mapArrayAsync } from './mapArrayAsync';
 import { SharedModuleConfigsMap } from './types';
 
-async function collectTsConfigPaths(
+export async function collectTsConfigPaths(
   pathToFolder: string,
   folderNames: string[],
   modulesMap: SharedModuleConfigsMap
@@ -28,5 +28,3 @@ async function collectTsConfigPaths(
     sharedModule.hasPathsInTsConfig = fileContent.indexOf('"paths":') !== -1;
   });
 }
-
-export { collectTsConfigPaths };
