@@ -30,6 +30,11 @@ export class PostgresDatabase extends Database {
     } else {
       console.log('has NO logger');
     }
+    if (pool) {
+      console.log('has pool');
+    } else {
+      console.log('has NO pool');
+    }
     super(
       new PgDimensionTable(logger, pool),
       new PgDishTable(logger, pool),

@@ -15,6 +15,8 @@ import {
   POSTGRES_PASSWORD,
   POSTGRES_PORT,
   POSTGRES_USER,
+  API_HOST,
+  API_PORT,
 } from './environment';
 import { ConsoleLogger } from './utils/ConsoleLogger';
 
@@ -51,8 +53,8 @@ import { ConsoleLogger } from './utils/ConsoleLogger';
 
   const server = http.createServer(app);
 
-  const host = 'food-captain.localhost';
-  const port = 3001;
+  const host = API_HOST ?? 'localhost';
+  const port = API_PORT ? parseInt(API_PORT, 10) : 3000;
 
   server.listen(port, host, () => {
     console.log('api has started');

@@ -3,8 +3,12 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=development ts-node src/index.ts",
-    "serve": "ts-node src/index.ts"
+    "start": "run-s \"scrab-env\" start-app",
+    "scrab-env": "ts-node build-scripts/scrab-envs.ts",
+    "start-app": "cross-env NODE_ENV=development ts-node src/index.ts",
+    "-": "",
+    "serve": "run-s \"scrab-env\" serve-app",
+    "serve-app": "ts-node src/index.ts"
   },
   "dependencies": {
     "compression": "1.7.4",
@@ -23,6 +27,7 @@
     "copy-webpack-plugin": "11.0.0",
     "cross-env": "7.0.3",
     "css-loader": "6.7.3",
+    "dotenv": "16.0.3",
     "fork-ts-checker-webpack-plugin": "8.0.0",
     "html-webpack-plugin": "5.5.0",
     "loader-utils": "3.2.1",
