@@ -4,24 +4,22 @@ import { DimensionEntity } from '../../entities';
 import { keyOf } from '../../utils';
 import { PgTableBase } from '../base';
 
-interface MyI {
-  prop3: string;
-}
-
-export class PgDimensionTable
+export class PgDimension
   extends PgTableBase<DimensionEntity>
   implements DimensionTable
 {
   protected tableName = 'dimension';
+  static get table() {
+    return `${this.schema}.dimension`;
+  }
 
   async insertAsync(
     entity: Omit<DimensionEntity, 'id'>
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.schema}.${this.tableName} (
-          ${keyOf<DimensionEntity>('name')} 
-          ${keyOf<MyI>('prop3')} 
+        INSERT INTO ${this.table} (
+          ${keyOf<DimensionEntity>('name')}
         ) 
         VALUES($1) RETURNING ${keyOf<DimensionEntity>('id')};
       `,

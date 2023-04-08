@@ -11,12 +11,18 @@ import {
 } from '../../tables/DishSetTable';
 import { keyOf, MakePropertiesOptional } from '../../utils';
 import { PgTableBase } from '../base';
+import { PgDish } from './PgDish';
+import { PgDishInSet } from './PgDishInSet';
+import { PgImage } from './PgImage';
 
-export class PgDishSetTable
+export class PgDishSet
   extends PgTableBase<DishSetEntity>
   implements DishSetTable
 {
   protected tableName = 'dish_set';
+  static get table() {
+    return `${this.schema}.dish_set`;
+  }
 
   async getWithDishesByIdAsync(
     id: number
@@ -30,16 +36,16 @@ export class PgDishSetTable
           _dish.${keyOf<DishSetWithDishesEntity>('description')}, 
           _dish.${keyOf<DishSetWithDishesEntity>('image_id')}, 
           _image.content as ${keyOf<DishSetWithDishesEntity>('image')} 
-        FROM ${this.schema}.${this.tableName} _dish_set 
+        FROM ${this.table} _dish_set 
         LEFT JOIN ${
-          this.schema
-        }.dish_in_set _dish_in_set on _dish_set.${keyOf<DishSetEntity>(
+          PgDishInSet.table
+        } _dish_in_set on _dish_set.${keyOf<DishSetEntity>(
         'id'
       )} = _ds.${keyOf<DishInSetEntity>('dish_set_id')} 
-        JOIN ${this.schema}.dish _dish on _ds.${keyOf<DishInSetEntity>(
+        JOIN ${PgDish.table} _dish on _ds.${keyOf<DishInSetEntity>(
         'dish_id'
       )} = _dish.${keyOf<DishEntity>('id')} 
-        LEFT JOIN ${this.schema}.image _image on _dish.${keyOf<DishEntity>(
+        LEFT JOIN ${PgImage.table} _image on _dish.${keyOf<DishEntity>(
         'image_id'
       )} = _image.${keyOf<ImageEntity>('id')} 
         WHERE _dish_set.${keyOf<DishSetEntity>('id')} = $1;
@@ -56,7 +62,7 @@ export class PgDishSetTable
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.schema}.${this.tableName} (
+        INSERT INTO ${this.table} (
           ${keyOf<DishSetEntity>('name')}, 
           ${keyOf<DishSetEntity>('image_id')}, 
         ) 

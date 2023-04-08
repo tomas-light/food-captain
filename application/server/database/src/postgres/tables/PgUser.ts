@@ -3,15 +3,19 @@ import { keyOf, MakePropertiesOptional } from '../../utils';
 import { UserEntity, UserRoleEntity } from '../../entities';
 import { UserTable, UserWithRoleEntity } from '../../tables/UserTable';
 import { PgTableBase } from '../base';
+import { PgUserRole } from './PgUserRole';
 
-export class PgUserTable extends PgTableBase<UserEntity> implements UserTable {
+export class PgUser extends PgTableBase<UserEntity> implements UserTable {
   protected tableName = 'user';
+  static get table() {
+    return `${this.schema}.user`;
+  }
 
   async byIdsAsync(ids: number[]): Promise<UserEntity[]> {
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
-        FROM ${this.schema}.${this.tableName} 
+        FROM ${this.table} 
         WHERE ${keyOf<UserEntity>('id')} in ($1);
       `,
       values: ids,
@@ -24,10 +28,8 @@ export class PgUserTable extends PgTableBase<UserEntity> implements UserTable {
   async allWithRoleAsync(): Promise<UserWithRoleEntity[]> {
     const queryResult = await this.query<UserWithRoleEntity>(`
       SELECT _user.*, _user_role.${keyOf<UserRoleEntity>('role_id')} 
-      FROM ${this.schema}.${this.tableName} _user 
-      LEFT JOIN ${
-        this.schema
-      }.user_role _user_role on _user.${keyOf<UserEntity>(
+      FROM ${this.table} _user 
+      LEFT JOIN ${PgUserRole.table} _user_role on _user.${keyOf<UserEntity>(
       'id'
     )} = _user_role.${keyOf<UserRoleEntity>('user_id')};
     `);
@@ -38,10 +40,8 @@ export class PgUserTable extends PgTableBase<UserEntity> implements UserTable {
     const queryConfig: QueryConfig = {
       text: `
         SELECT _user.*, _user_role.${keyOf<UserRoleEntity>('role_id')} 
-        FROM ${this.schema}.${this.tableName} _user 
-        LEFT JOIN ${
-          this.schema
-        }.user_role _user_role on _user.${keyOf<UserEntity>(
+        FROM ${this.table} _user 
+        LEFT JOIN ${PgUserRole.table} _user_role on _user.${keyOf<UserEntity>(
         'id'
       )} = _user_role.${keyOf<UserRoleEntity>('user_id')} 
         WHERE _user.${keyOf<UserEntity>('id')} = $1;
@@ -58,7 +58,7 @@ export class PgUserTable extends PgTableBase<UserEntity> implements UserTable {
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.schema}.${this.tableName} (
+        INSERT INTO ${this.table} (
           ${keyOf<UserEntity>('name')}, 
           ${keyOf<UserEntity>('email')}, 
           ${keyOf<UserEntity>('password')}
@@ -82,9 +82,5 @@ export class PgUserTable extends PgTableBase<UserEntity> implements UserTable {
 
     await this.query<UserEntity>(queryConfig);
     return this.byIdWithRoleAsync(entity.id);
-  }
-
-  async deleteAsync(id: number): Promise<boolean> {
-    return this.deleteByIdAsync(id);
   }
 }

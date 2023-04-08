@@ -4,11 +4,14 @@ import { UserRoleTable } from '../../tables/UserRoleTable';
 import { keyOf } from '../../utils';
 import { PgTableBase } from '../base';
 
-export class PgUserRoleTable
+export class PgUserRole
   extends PgTableBase<UserRoleEntity>
   implements UserRoleTable
 {
   protected tableName = 'user_role';
+  static get table() {
+    return `${this.schema}.user_role`;
+  }
 
   // todo: possible redundant
   async getAsync(
@@ -18,7 +21,7 @@ export class PgUserRoleTable
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
-        FROM ${this.schema}.${this.tableName} 
+        FROM ${this.table} 
         WHERE ${keyOf<UserRoleEntity>('user_id')} = $1 
         AND ${keyOf<UserRoleEntity>('role_id')} = $2;
       `,
@@ -33,7 +36,7 @@ export class PgUserRoleTable
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
-        FROM ${this.schema}.${this.tableName} 
+        FROM ${this.table} 
         WHERE ${keyOf<UserRoleEntity>('user_id')} = $1;
       `,
       values: [user_id],
@@ -46,7 +49,7 @@ export class PgUserRoleTable
   async insertAsync(entity: UserRoleEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.schema}.${this.tableName} (
+        INSERT INTO ${this.table} (
           ${keyOf<UserRoleEntity>('user_id')}, 
           ${keyOf<UserRoleEntity>('role_id')} 
         ) 
@@ -62,7 +65,7 @@ export class PgUserRoleTable
   async deleteAsync(entity: UserRoleEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.schema}.${this.tableName} 
+        DELETE FROM ${this.table} 
         WHERE ${keyOf<UserRoleEntity>('user_id')} = $1 
         AND ${keyOf<UserRoleEntity>('role_id')} = $2;
       `,

@@ -4,18 +4,18 @@ import { ImageTable } from '../../tables/ImageTable';
 import { keyOf } from '../../utils';
 import { PgTableBase } from '../base';
 
-export class PgImageTable
-  extends PgTableBase<ImageEntity>
-  implements ImageTable
-{
+export class PgImage extends PgTableBase<ImageEntity> implements ImageTable {
   protected tableName = 'image';
+  static get table() {
+    return `${this.schema}.image`;
+  }
 
   async insertAsync(
     entity: Omit<ImageEntity, 'id'>
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.schema}.${this.tableName} (
+        INSERT INTO ${this.table} (
           ${keyOf<ImageEntity>('content')} 
         ) 
         VALUES($1) RETURNING ${keyOf<ImageEntity>('id')};

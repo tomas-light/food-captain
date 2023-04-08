@@ -4,15 +4,18 @@ import { RoleTable } from '../../tables/RoleTable';
 import { keyOf } from '../../utils';
 import { PgTableBase } from '../base';
 
-export class PgRoleTable extends PgTableBase<RoleEntity> implements RoleTable {
+export class PgRole extends PgTableBase<RoleEntity> implements RoleTable {
   protected tableName = 'role';
+  static get table() {
+    return `${this.schema}.role`;
+  }
 
   async insertAsync(
     entity: Omit<RoleEntity, 'id'>
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.schema}.${this.tableName} (
+        INSERT INTO ${this.table} (
           ${keyOf<RoleEntity>('name')} 
         ) 
         VALUES($1) RETURNING ${keyOf<RoleEntity>('id')};

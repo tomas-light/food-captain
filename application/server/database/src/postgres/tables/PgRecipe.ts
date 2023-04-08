@@ -12,12 +12,15 @@ import {
 } from '../../tables/RecipeTable';
 import { keyOf, MakePropertiesOptional } from '../../utils';
 import { PgTableBase } from '../base';
+import { PgImage } from './PgImage';
+import { PgIngredient } from './PgIngredient';
+import { PgIngredientInRecipe } from './PgIngredientInRecipe';
 
-export class PgRecipeTable
-  extends PgTableBase<RecipeEntity>
-  implements RecipeTable
-{
+export class PgRecipe extends PgTableBase<RecipeEntity> implements RecipeTable {
   protected tableName = 'recipe';
+  static get table() {
+    return `${this.schema}.recipe`;
+  }
 
   async getWithIngredientsByIdAsync(
     id: number
@@ -39,20 +42,20 @@ export class PgRecipeTable
             'image_id'
           )} as ingredient_image_id, 
           _image2.${keyOf<ImageEntity>('content')} as ingredient_image 
-        FROM ${this.schema}.${this.tableName} _recipe 
-        LEFT JOIN ${this.schema}.image _image1 on _recipe.${keyOf<RecipeEntity>(
+        FROM ${this.table} _recipe 
+        LEFT JOIN ${PgImage.table} _image1 on _recipe.${keyOf<RecipeEntity>(
         'image_id'
       )} = _image1.${keyOf<ImageEntity>('id')} 
         LEFT JOIN ${
-          this.schema
-        }.ingredient_in_recipe _ingredient_in_recipe on _recipe.${keyOf<RecipeEntity>(
+          PgIngredientInRecipe.table
+        } _ingredient_in_recipe on _recipe.${keyOf<RecipeEntity>(
         'id'
       )} = _ingredient_in_recipe.${keyOf<IngredientInRecipeEntity>(
         'recipe_id'
       )} 
         JOIN ${
-          this.schema
-        }.ingredient _ingredient on _ingredient_in_recipe.${keyOf<IngredientInRecipeEntity>(
+          PgIngredient.table
+        } _ingredient on _ingredient_in_recipe.${keyOf<IngredientInRecipeEntity>(
         'ingredient_id'
       )} = _ingredient.${keyOf<IngredientEntity>('id')} 
         LEFT JOIN image _image2 on _ingredient.${keyOf<IngredientEntity>(
@@ -74,7 +77,7 @@ export class PgRecipeTable
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.schema}.${this.tableName} (
+        INSERT INTO ${this.table} (
           ${keyOf<RecipeEntity>('name')}, 
           ${keyOf<RecipeEntity>('description')}, 
           ${keyOf<RecipeEntity>('dish_id')}, 

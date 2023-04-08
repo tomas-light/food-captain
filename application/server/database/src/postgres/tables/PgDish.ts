@@ -3,9 +3,13 @@ import { keyOf, MakePropertiesOptional } from '../../utils';
 import { DishTable, MenuDishesEntity } from '../../tables/DishTable';
 import { DishEntity, DishInMenuEntity } from '../../entities';
 import { PgTableBase } from '../base';
+import { PgDishInMenu } from './PgDishInMenu';
 
-export class PgDishTable extends PgTableBase<DishEntity> implements DishTable {
+export class PgDish extends PgTableBase<DishEntity> implements DishTable {
   protected tableName = 'dish';
+  static get table() {
+    return `${this.schema}.dish`;
+  }
 
   async byMenuIdAsync(menuId: number): Promise<MenuDishesEntity[]> {
     const queryConfig: QueryConfig = {
@@ -14,10 +18,8 @@ export class PgDishTable extends PgTableBase<DishEntity> implements DishTable {
           _dish_in_menu.${keyOf<DishInMenuEntity>('menu_id')},
           _dish.*, 
           _dish_in_menu.${keyOf<DishInMenuEntity>('order_number')} 
-        FROM ${this.schema}.${this.tableName} _dish
-        JOIN ${
-          this.schema
-        }.dish_in_menu _dish_in_menu on _dish.${keyOf<DishEntity>(
+        FROM ${this.table} _dish
+        JOIN ${PgDishInMenu.table} _dish_in_menu on _dish.${keyOf<DishEntity>(
         'id'
       )} = _dish_in_menu.${keyOf<DishInMenuEntity>('dish_id')}
         WHERE ${keyOf<DishInMenuEntity>('menu_id')} == $1;
@@ -36,10 +38,8 @@ export class PgDishTable extends PgTableBase<DishEntity> implements DishTable {
           _dish_in_menu.${keyOf<DishInMenuEntity>('menu_id')},
           _dish.*, 
           _dish_in_menu.${keyOf<DishInMenuEntity>('order_number')} 
-        FROM ${this.schema}.${this.tableName} _dish
-        JOIN ${
-          this.schema
-        }.dish_in_menu _dish_in_menu on _dish.${keyOf<DishEntity>(
+        FROM ${this.table} _dish
+        JOIN ${PgDishInMenu.table} _dish_in_menu on _dish.${keyOf<DishEntity>(
         'id'
       )} = _dish_in_menu.${keyOf<DishInMenuEntity>('dish_id')}
         WHERE ${keyOf<DishInMenuEntity>('menu_id')} in ($1);
@@ -56,7 +56,7 @@ export class PgDishTable extends PgTableBase<DishEntity> implements DishTable {
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.schema}.${this.tableName} (
+        INSERT INTO ${this.table} (
           ${keyOf<DishEntity>('name')}, 
           ${keyOf<DishEntity>('description')}, 
           ${keyOf<DishEntity>('image_id')} 
