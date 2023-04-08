@@ -13,18 +13,23 @@ import {
 } from '../../tables/MenuTable';
 import { keyOf, MakePropertiesOptional, toIsoString } from '../../utils';
 import { PgTableBase } from '../base';
+import { PgDish } from './PgDish';
+import { PgDishInMenu } from './PgDishInMenu';
+import { PgImage } from './PgImage';
+import { PgMenuInSchedule } from './PgMenuInSchedule';
 
-export class PgMenuTable extends PgTableBase<MenuEntity> implements MenuTable {
+export class PgMenu extends PgTableBase<MenuEntity> implements MenuTable {
   protected tableName = 'menu';
+  static get table() {
+    return `${this.schema}.menu`;
+  }
 
   async byScheduleIdAsync(schedule_id: number): Promise<MenuWithDateEntity[]> {
     const queryConfig: QueryConfig = {
       text: `
         SELECT _menu.* 
-        FROM ${this.schema}.${this.tableName} _menu
-        LEFT JOIN ${
-          this.schema
-        }.menu_in_schedule _ms on _menu.${keyOf<MenuEntity>(
+        FROM ${this.table} _menu
+        LEFT JOIN ${PgMenuInSchedule.table} _ms on _menu.${keyOf<MenuEntity>(
         'id'
       )} = _ms.${keyOf<MenuInScheduleEntity>('menu_id')}
         WHERE _menu.${keyOf<MenuInScheduleEntity>('schedule_id')} = $1;
@@ -51,18 +56,16 @@ export class PgMenuTable extends PgTableBase<MenuEntity> implements MenuTable {
           _image.${keyOf<ImageEntity>(
             'content'
           )} as ${keyOf<MenuWithDishesEntity>('image')} 
-        FROM ${this.schema}.${this.tableName} _menu 
+        FROM ${this.table} _menu 
         LEFT JOIN ${
-          this.schema
-        }.dish_in_menu _dish_in_menu on _menu.${keyOf<MenuEntity>(
+          PgDishInMenu.table
+        } _dish_in_menu on _menu.${keyOf<MenuEntity>(
         'id'
       )} = _dish_in_menu.${keyOf<DishInMenuEntity>('menu_id')} 
-        JOIN ${
-          this.schema
-        }.dish _dish on _dish_in_menu.${keyOf<DishInMenuEntity>(
+        JOIN ${PgDish.table} _dish on _dish_in_menu.${keyOf<DishInMenuEntity>(
         'dish_id'
       )} = _dish.${keyOf<DishEntity>('id')} 
-        LEFT JOIN ${this.schema}.image _image on _dish.${keyOf<DishEntity>(
+        LEFT JOIN ${PgImage.table} _image on _dish.${keyOf<DishEntity>(
         'image_id'
       )} = _image.${keyOf<ImageEntity>('id')} 
         WHERE _menu.${keyOf<MenuEntity>('id')} = $1;
@@ -79,7 +82,7 @@ export class PgMenuTable extends PgTableBase<MenuEntity> implements MenuTable {
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.schema}.${this.tableName} (
+        INSERT INTO ${this.table} (
           ${keyOf<MenuEntity>('name')}, 
           ${keyOf<MenuEntity>('create_date')}, 
           ${keyOf<MenuEntity>('last_update')}, 

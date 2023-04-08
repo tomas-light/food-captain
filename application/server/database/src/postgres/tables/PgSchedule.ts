@@ -10,12 +10,17 @@ import {
   ScheduleWithMenuEntity,
 } from '../../tables/ScheduleTable';
 import { PgTableBase } from '../base';
+import { PgMenu } from './PgMenu';
+import { PgMenuInSchedule } from './PgMenuInSchedule';
 
-export class PgScheduleTable
+export class PgSchedule
   extends PgTableBase<ScheduleEntity>
   implements ScheduleTable
 {
   protected tableName = 'schedule';
+  static get table() {
+    return `${this.schema}.schedule`;
+  }
 
   async getWithMenuByIdAsync(id: number): Promise<ScheduleWithMenuEntity[]> {
     const queryConfig: QueryConfig = {
@@ -30,15 +35,15 @@ export class PgScheduleTable
           _menu.${keyOf<MenuEntity>('create_date')}, 
           _menu.${keyOf<MenuEntity>('last_update')}, 
           _menu.${keyOf<MenuEntity>('author_id')} 
-        FROM ${this.schema}.${this.tableName} _schedule 
+        FROM ${this.table} _schedule 
         LEFT JOIN ${
-          this.schema
-        }.menu_in_schedule _menu_in_schedule on _schedule.${keyOf<ScheduleEntity>(
+          PgMenuInSchedule.table
+        } _menu_in_schedule on _schedule.${keyOf<ScheduleEntity>(
         'id'
       )} = _menu_in_schedule.${keyOf<MenuInScheduleEntity>('schedule_id')} 
         JOIN ${
-          this.schema
-        }.menu _menu on _menu_in_schedule.${keyOf<MenuInScheduleEntity>(
+          PgMenu.table
+        } _menu on _menu_in_schedule.${keyOf<MenuInScheduleEntity>(
         'menu_id'
       )} = _menu.${keyOf<MenuEntity>('id')} 
         WHERE _schedule.${keyOf<ScheduleEntity>('id')} = $1;
@@ -55,7 +60,7 @@ export class PgScheduleTable
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.schema}.${this.tableName} (
+        INSERT INTO ${this.table} (
           ${keyOf<ScheduleEntity>('author_id')}, 
           ${keyOf<ScheduleEntity>('name')}, 
         ) 

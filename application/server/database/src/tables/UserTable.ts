@@ -22,5 +22,5 @@ export interface UserTable {
     entity: MakePropertiesOptional<UserEntity, 'name' | 'email' | 'password'>
   ): Promise<UserWithRoleEntity | undefined>;
 
-  deleteAsync(id: number): Promise<boolean>;
+  deleteByIdAsync(id: number): Promise<boolean>;
 }

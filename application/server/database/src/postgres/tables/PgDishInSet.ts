@@ -4,11 +4,14 @@ import { DishInSetEntity } from '../../entities';
 import { keyOf } from '../../utils';
 import { PgTableBase } from '../base';
 
-export class PgDishInSetTable
+export class PgDishInSet
   extends PgTableBase<DishInSetEntity>
   implements DishInSetTable
 {
   protected tableName = 'dish_in_set';
+  static get table() {
+    return `${this.schema}.dish_in_set`;
+  }
 
   // todo: possible redundant
   async getAsync(
@@ -18,7 +21,7 @@ export class PgDishInSetTable
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
-        FROM ${this.schema}.${this.tableName} 
+        FROM ${this.table} 
         WHERE ${keyOf<DishInSetEntity>('dish_set_id')} = $1 
         AND ${keyOf<DishInSetEntity>('dish_id')} = $2;
       `,
@@ -32,7 +35,7 @@ export class PgDishInSetTable
   async insertAsync(entity: DishInSetEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.schema}.${this.tableName} (
+        INSERT INTO ${this.table} (
           ${keyOf<DishInSetEntity>('dish_set_id')}, 
           ${keyOf<DishInSetEntity>('dish_id')} 
         ) 
@@ -48,7 +51,7 @@ export class PgDishInSetTable
   async deleteAsync(entity: DishInSetEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.schema}.${this.tableName} 
+        DELETE FROM ${this.table} 
         WHERE ${keyOf<DishInSetEntity>('dish_set_id')} = $1 
         AND ${keyOf<DishInSetEntity>('dish_id')} = $2;
       `,

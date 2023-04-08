@@ -4,11 +4,14 @@ import { DishInMenuEntity } from '../../entities';
 import { keyOf } from '../../utils';
 import { PgTableBase } from '../base';
 
-export class PgDishInMenuTable
+export class PgDishInMenu
   extends PgTableBase<DishInMenuEntity>
   implements DishInMenuTable
 {
   protected tableName = 'dish_in_menu';
+  static get table() {
+    return `${this.schema}.dish_in_menu`;
+  }
 
   async getAsync(
     menu_id: number,
@@ -17,7 +20,7 @@ export class PgDishInMenuTable
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
-        FROM ${this.schema}.${this.tableName} 
+        FROM ${this.table} 
         WHERE ${keyOf<DishInMenuEntity>('menu_id')} = $1 
         AND ${keyOf<DishInMenuEntity>('dish_id')} = $2;
       `,
@@ -31,7 +34,7 @@ export class PgDishInMenuTable
   async insertAsync(entity: DishInMenuEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.schema}.${this.tableName} (
+        INSERT INTO ${this.table} (
           ${keyOf<DishInMenuEntity>('menu_id')}, 
           ${keyOf<DishInMenuEntity>('dish_id')}, 
           ${keyOf<DishInMenuEntity>('order_number')} 
@@ -50,7 +53,7 @@ export class PgDishInMenuTable
   ): Promise<DishInMenuEntity | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        UPDATE ${this.schema}.${this.tableName} 
+        UPDATE ${this.table} 
         SET ${keyOf<DishInMenuEntity>('order_number')} = $1 
         WHERE ${keyOf<DishInMenuEntity>('menu_id')} = $2 
         AND ${keyOf<DishInMenuEntity>('dish_id')} = $3;
@@ -67,7 +70,7 @@ export class PgDishInMenuTable
   ): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.schema}.${this.tableName} 
+        DELETE FROM ${this.table} 
         WHERE ${keyOf<DishInMenuEntity>('menu_id')} = $1 
         AND ${keyOf<DishInMenuEntity>('dish_id')} = $2;
       `,
@@ -81,7 +84,7 @@ export class PgDishInMenuTable
   async deleteByIdsAsync(dish_ids: number[]): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.schema}.${this.tableName} 
+        DELETE FROM ${this.table} 
         WHERE ${keyOf<DishInMenuEntity>('dish_id')} in ($1);
       `,
       values: dish_ids,
@@ -94,7 +97,7 @@ export class PgDishInMenuTable
   async deleteAllByMenuIdAsync(menu_id: number): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.schema}.${this.tableName} 
+        DELETE FROM ${this.table} 
         WHERE ${keyOf<DishInMenuEntity>('menu_id')} = $1;
       `,
       values: [menu_id],
@@ -107,7 +110,7 @@ export class PgDishInMenuTable
   async deleteAllByDishIdAsync(dish_id: number): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.schema}.${this.tableName} 
+        DELETE FROM ${this.table} 
         WHERE ${keyOf<DishInMenuEntity>('dish_id')} = $1;
       `,
       values: [dish_id],

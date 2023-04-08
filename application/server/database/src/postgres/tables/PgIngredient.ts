@@ -4,18 +4,21 @@ import { IngredientTable } from '../../tables/IngredientTable';
 import { keyOf, MakePropertiesOptional } from '../../utils';
 import { PgTableBase } from '../base';
 
-export class PgIngredientTable
+export class PgIngredient
   extends PgTableBase<IngredientEntity>
   implements IngredientTable
 {
   protected tableName = 'ingredient';
+  static get table() {
+    return `${this.schema}.ingredient`;
+  }
 
   async insertAsync(
     entity: Omit<IngredientEntity, 'id'>
   ): Promise<number | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.schema}.${this.tableName} (
+        INSERT INTO ${this.table} (
           ${keyOf<IngredientEntity>('name')}, 
           ${keyOf<IngredientEntity>('image_id')} 
         ) 

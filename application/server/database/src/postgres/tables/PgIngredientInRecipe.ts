@@ -4,11 +4,14 @@ import { IngredientInRecipeTable } from '../../tables/IngredientInRecipeTable';
 import { keyOf } from '../../utils';
 import { PgTableBase } from '../base';
 
-export class PgIngredientInRecipeTable
+export class PgIngredientInRecipe
   extends PgTableBase<IngredientInRecipeEntity>
   implements IngredientInRecipeTable
 {
   protected tableName = 'ingredient_in_recipe';
+  static get table() {
+    return `${this.schema}.ingredient_in_recipe`;
+  }
 
   async getAsync(
     recipe_id: number,
@@ -17,7 +20,7 @@ export class PgIngredientInRecipeTable
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
-        FROM ${this.schema}.${this.tableName} 
+        FROM ${this.table} 
         WHERE ${keyOf<IngredientInRecipeEntity>('recipe_id')} = $1 
         AND ${keyOf<IngredientInRecipeEntity>('ingredient_id')} = $2;
       `,
@@ -31,7 +34,7 @@ export class PgIngredientInRecipeTable
   async insertAsync(entity: IngredientInRecipeEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.schema}.${this.tableName} (
+        INSERT INTO ${this.table} (
           ${keyOf<IngredientInRecipeEntity>('recipe_id')}, 
           ${keyOf<IngredientInRecipeEntity>('ingredient_id')}, 
           ${keyOf<IngredientInRecipeEntity>('dimension_id')}, 
@@ -56,7 +59,7 @@ export class PgIngredientInRecipeTable
   ): Promise<IngredientInRecipeEntity | undefined> {
     const queryConfig: QueryConfig = {
       text: `
-        UPDATE ${this.schema}.${this.tableName} 
+        UPDATE ${this.table} 
         SET ${keyOf<IngredientInRecipeEntity>('dimension_id')} = $1, 
           ${keyOf<IngredientInRecipeEntity>('size')} = $2 
         WHERE ${keyOf<IngredientInRecipeEntity>('recipe_id')}  = $3 
@@ -79,7 +82,7 @@ export class PgIngredientInRecipeTable
   ): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.schema}.${this.tableName} 
+        DELETE FROM ${this.table} 
         WHERE ${keyOf<IngredientInRecipeEntity>('recipe_id')} = $1 
         AND ${keyOf<IngredientInRecipeEntity>('ingredient_id')} = $2;
       `,

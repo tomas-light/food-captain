@@ -4,11 +4,14 @@ import { RecipeImageTable } from '../../tables/RecipeImageTable';
 import { keyOf } from '../../utils';
 import { PgTableBase } from '../base';
 
-export class PgRecipeImageTable
+export class PgRecipeImage
   extends PgTableBase<RecipeImageEntity>
   implements RecipeImageTable
 {
   protected tableName = 'recipe_image';
+  static get table() {
+    return `${this.schema}.recipe_image`;
+  }
 
   // todo: possible redundant
   async getAsync(
@@ -18,7 +21,7 @@ export class PgRecipeImageTable
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
-        FROM ${this.schema}.${this.tableName} 
+        FROM ${this.table} 
         WHERE ${keyOf<RecipeImageEntity>('recipe_id')} = $1 
         AND ${keyOf<RecipeImageEntity>('image_id')} = $2;
       `,
@@ -32,7 +35,7 @@ export class PgRecipeImageTable
   async insertAsync(entity: RecipeImageEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        INSERT INTO ${this.schema}.${this.tableName} (
+        INSERT INTO ${this.table} (
           ${keyOf<RecipeImageEntity>('recipe_id')}, 
           ${keyOf<RecipeImageEntity>('image_id')} 
         ) 
@@ -48,7 +51,7 @@ export class PgRecipeImageTable
   async deleteAsync(entity: RecipeImageEntity): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.schema}.${this.tableName} 
+        DELETE FROM ${this.table} 
         WHERE ${keyOf<RecipeImageEntity>('recipe_id')} = $1 
         AND ${keyOf<RecipeImageEntity>('image_id')} = $2;
       `,
