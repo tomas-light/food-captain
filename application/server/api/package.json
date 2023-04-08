@@ -5,10 +5,10 @@
   "scripts": {
     "start": "run-s \"scrab-env\" start-app",
     "scrab-env": "ts-node build-scripts/scrab-envs.ts",
-    "start-app": "cross-env NODE_ENV=development ts-node src/index.ts",
+    "start-app": "cross-env NODE_ENV=development ts-node src/startApi.ts",
     "-": "",
     "serve": "run-s \"scrab-env\" serve-app",
-    "serve-app": "ts-node src/index.ts"
+    "serve-app": "ts-node src/startApi.ts"
   },
   "dependencies": {
     "@food-captain/database": "0.0.0",
