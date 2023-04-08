@@ -8,8 +8,10 @@ import {
   LoggedApiResponse,
   UserApi,
 } from '@food-captain/client-api';
+import { Button } from '@food-captain/client-shared';
 import { container } from 'cheap-di';
 import { DIOneTimeProvider, use } from 'cheap-di-react';
+import { ChakraProvider } from '@chakra-ui/react';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -38,30 +40,44 @@ function Root() {
   }, []);
 
   return (
-    <DIOneTimeProvider parentContainer={container}>
-      <SomePage />
-    </DIOneTimeProvider>
+    <ChakraProvider resetCSS>
+      <DIOneTimeProvider parentContainer={container}>
+        <SomePage />
+      </DIOneTimeProvider>
+    </ChakraProvider>
   );
 }
 function SomePage() {
   const userApi = use(UserApi);
+  const [areUsersLoading, setAreUsersLoading] = useState(false);
 
   const [users, setUsers] = useState<UserWithRoleDto[]>([]);
   useEffect(() => {
     // fetch('https://api.food-captain.localhost/check');
-    (async () => {
-      const response = await userApi.getUsersAsync();
-      if (response.isFailed() || !response.data) {
-        setUsers([]);
-        return;
-      }
-      setUsers(response.data);
-    })();
   }, []);
 
   return (
     <div>
       <p>Hello Food Captain!</p>
+
+      <Button
+        state={{
+          loading: areUsersLoading,
+        }}
+        onClick={async () => {
+          setAreUsersLoading(true);
+          const response = await userApi.getUsersAsync();
+          if (response.isFailed() || !response.data) {
+            setUsers([]);
+          } else {
+            setUsers(response.data);
+          }
+          setAreUsersLoading(false);
+        }}
+      >
+        load users
+      </Button>
+
       {users &&
         Array.isArray(users) &&
         users.map((user) => (
