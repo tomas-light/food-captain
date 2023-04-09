@@ -12,8 +12,12 @@ module.exports = {
       version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
     },
     'import/resolver': {
-      // required for eslint-plugin-import
-      typescript: true,
+      typescript: {
+        alwaysTryTypes: true, // always try to resolve types under `<root>@types` directory even it doesn't contain any source code, like `@types/unist`
+
+        // use an array of glob patterns
+        project: ['application/*/tsconfig.json'],
+      },
     },
     'import/internal-regex': '^@food-captain/', // consider such import modules as "internal" to correct sorting
   },
@@ -24,7 +28,9 @@ module.exports = {
     'prettier', // Disables ESLint rules that would conflict with prettier
     'plugin:prettier/recommended', // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
   ],
+  plugins: ['import'],
   rules: {
+    'import/no-unresolved': 'off', // it should be checked by typescript
     'linebreak-style': 'off',
     '@typescript-eslint/ban-types': [
       'error',
