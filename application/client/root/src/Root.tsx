@@ -1,6 +1,5 @@
+import { ChakraProvider } from '@chakra-ui/react';
 import { UserWithRoleDto } from '@food-captain/api';
-import { useEffect, useState } from 'react';
-import { createRoot } from 'react-dom/client';
 import {
   ApiInterceptor,
   LoggedApiError,
@@ -8,15 +7,21 @@ import {
   LoggedApiResponse,
   UserApi,
 } from '@food-captain/client-api';
+import { LocaleApi } from '@food-captain/client-api/src/LocaleApi';
 import { Button } from '@food-captain/client-shared';
 import { container } from 'cheap-di';
 import { DIOneTimeProvider, use } from 'cheap-di-react';
-import { ChakraProvider } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { createRoot } from 'react-dom/client';
+import { useTranslation } from 'react-i18next';
+import { configureTranslation, useButtonsLocale } from './config/i18next';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
   throw new Error('Cant find element with id "root"');
 }
+
+configureTranslation();
 
 const root = createRoot(rootElement);
 root.render(<Root />);
@@ -37,6 +42,7 @@ function Root() {
     // todo: hack, type metadata is not emitted somehow...
     const interceptor = container.resolve(ApiInterceptor);
     container.registerType(UserApi).with(interceptor);
+    container.registerType(LocaleApi).with(interceptor);
   }, []);
 
   return (
@@ -49,6 +55,8 @@ function Root() {
 }
 function SomePage() {
   const userApi = use(UserApi);
+  const { t } = useTranslation();
+  useButtonsLocale();
   const [areUsersLoading, setAreUsersLoading] = useState(false);
 
   const [users, setUsers] = useState<UserWithRoleDto[]>([]);
@@ -75,7 +83,7 @@ function SomePage() {
           setAreUsersLoading(false);
         }}
       >
-        load users
+        {t('buttons.open')}
       </Button>
 
       {users &&

@@ -1,0 +1,13 @@
+{
+  "dish": {
+    "one": "блюдо",
+    "many": "блюда",
+    "name": "$t(title)",
+    "image": "$t(image)",
+    "description": "короткое описание",
+    "recipe": "$t(recipe.one)",
+    "open": "$t(open)",
+    "add": "$t(add) новый $t(dish.recipe)",
+    "edit": "$t(edit) $t(dish.recipe)"
+  }
+}

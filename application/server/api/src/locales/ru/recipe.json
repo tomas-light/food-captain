@@ -1,0 +1,10 @@
+{
+  "recipe": {
+    "one": "рецепт",
+    "many": "рецепты",
+    "name": "$t(title)",
+    "image": "$t(image)",
+    "description": "описание рецепта",
+    "ingredients": "$t(ingredient.many)"
+  }
+}

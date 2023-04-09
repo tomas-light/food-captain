@@ -5,26 +5,22 @@ import { Logger } from '@food-captain/server-utils';
 import { json } from 'body-parser';
 import { container } from 'cheap-di';
 import cookieParser from 'cookie-parser';
-import express, { RequestHandler, Router } from 'express';
+import express, { RequestHandler } from 'express';
 import { MvcMiddleware } from 'mvc-middleware';
-import CheckApiController from './controllers/CheckApiController';
-import UserApiController from './controllers/UserApiController';
 import {
+  API_HOST,
+  API_PORT,
   POSTGRES_CONNECTION_STRING,
   POSTGRES_DATABASE,
   POSTGRES_HOST,
   POSTGRES_PASSWORD,
   POSTGRES_PORT,
   POSTGRES_USER,
-  API_HOST,
-  API_PORT,
 } from './environment';
 import { ConsoleLogger } from './utils/ConsoleLogger';
 
 (async () => {
   container.registerType(ConsoleLogger).as(Logger);
-  container.registerType(CheckApiController);
-  container.registerType(UserApiController);
 
   const app = express();
   app.use(json({ limit: '50mb' }) as RequestHandler);
@@ -48,10 +44,7 @@ import { ConsoleLogger } from './utils/ConsoleLogger';
     connectionString: POSTGRES_CONNECTION_STRING,
   });
 
-  // todo: improve after mvc-middleware release 2.0.0
-  new MvcMiddleware(app as any, Router as any, container)
-    .registerControllers(controllersPath)
-    .run();
+  new MvcMiddleware(app, container).registerControllers(controllersPath);
 
   const server = http.createServer(app);
 

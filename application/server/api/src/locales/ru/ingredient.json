@@ -1,0 +1,12 @@
+{
+  "ingredient": {
+    "one": "ингредиент",
+    "many": "ингредиенты",
+    "name": "$t(title)",
+    "image": "$t(image)",
+    "new": "новый $t(ingredient.one)",
+    "open": "$t(open)",
+    "add": "$t(add) новый $t(ingredient.one)",
+    "edit": "$t(edit) $t(ingredient.one)"
+  }
+}
