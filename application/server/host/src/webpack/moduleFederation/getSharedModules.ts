@@ -10,8 +10,7 @@ export function getSharedModules() {
 }
 
 async function getSharedModulesForFolder(pathToFolder: string) {
-  let folderNames = await getSubDirectories(pathToFolder);
-  folderNames = folderNames.filter((folderName) => folderName !== 'root');
+  const folderNames = await getSubDirectories(pathToFolder);
 
   const modulesMap = await collectPackageJsonNames(pathToFolder, folderNames);
   await collectTsConfigPaths(pathToFolder, folderNames, modulesMap);

@@ -1,6 +1,5 @@
 import { readFile } from 'fs/promises';
 import { join } from 'path';
-import { mapArrayAsync } from './mapArrayAsync';
 import { SharedModuleConfigsMap } from './types';
 
 export async function collectPackageJsonNames(
@@ -9,7 +8,7 @@ export async function collectPackageJsonNames(
 ): Promise<SharedModuleConfigsMap> {
   const modulesMap: SharedModuleConfigsMap = new Map();
 
-  await mapArrayAsync(folderNames, async (folderName) => {
+  for await (const folderName of folderNames) {
     const packageJsonPath = join(pathToFolder, folderName, 'package.json');
 
     let fileContent: string;
@@ -17,7 +16,7 @@ export async function collectPackageJsonNames(
       fileContent = await readFile(packageJsonPath, 'utf8');
     } catch (error) {
       console.error(`Reading of ${packageJsonPath} failed.\n`, error);
-      return;
+      break;
     }
 
     let packageJson: { name: string };
@@ -30,11 +29,11 @@ export async function collectPackageJsonNames(
         '\n\n Error: \n',
         error
       );
-      return;
+      break;
     }
 
     modulesMap.set(folderName, { moduleName: packageJson.name });
-  });
+  }
 
   return modulesMap;
 }

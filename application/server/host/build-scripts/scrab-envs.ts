@@ -12,6 +12,14 @@ async function scrabEnvs() {
     apiVariables,
     'utf-8'
   );
+
+  const isDevMode = process.env.NODE_ENV === 'development';
+  await writeFile(
+    // is executing from "food-captain/application/server/host" folder
+    path.join('..', '..', 'client', 'root', 'src', 'config', 'environment.ts'),
+    `export const IS_DEV_MODE: boolean = ${isDevMode};\n`,
+    'utf-8'
+  );
 }
 
 async function readHostEnvContent() {
