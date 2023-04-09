@@ -1,0 +1,15 @@
+{
+  "menu": {
+    "one": "меню",
+    "many": "меню",
+    "create date": "дата создания {{date}}",
+    "last update": "последнее обновление {{date}}",
+    "add": "$t(add) новое $t(menu.one)",
+    "added": "$t(menu.one) было добавлено.",
+    "edit": "$t(edit) выбранное $t(menu.one)",
+    "updated": "$t(menu.one) было обновлено.",
+    "remove": "удалить выбранные $t(menu.many)",
+    "deleted": "было удалено {{count}} $t(menu.one).",
+    "deleted_plural": "было удалено {{count}} $t(menu.many)."
+  }
+}

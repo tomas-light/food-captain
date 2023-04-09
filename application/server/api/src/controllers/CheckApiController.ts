@@ -1,12 +1,8 @@
-import { Logger, metadata } from '@food-captain/server-utils';
+import { Logger } from '@food-captain/server-utils';
 import { Request, Response } from 'express';
-import { MvcController } from 'mvc-middleware';
+import { api, get, MvcController, post } from 'mvc-middleware';
 
-type UrlToMethodMap = {
-  [url: string]: keyof CheckApiController;
-};
-
-@metadata
+@api
 export default class CheckApiController extends MvcController {
   constructor(
     protected readonly logger: Logger,
@@ -19,17 +15,12 @@ export default class CheckApiController extends MvcController {
     this.logger.info(message);
   }
 
-  static get: UrlToMethodMap = {
-    check: 'check',
-  };
-  static post: UrlToMethodMap = {
-    createUser: 'createUser',
-  };
-
+  @get
   async check() {
     return this.noContent();
   }
 
+  @post
   async createUser(payload: { username: string }) {
     const { username } = payload;
     return this.ok(username);

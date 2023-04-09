@@ -2,10 +2,12 @@ import { Database } from '@food-captain/database';
 import { UserWithRoleEntity } from '@food-captain/database/src/tables';
 import { Logger } from '@food-captain/server-utils';
 import type { Request, Response } from 'express';
-import { api, get, MvcController } from 'mvc-middleware';
+import { MvcController, get, api } from 'mvc-middleware';
 
-@api
-export default class UserApiController extends MvcController {
+const supportedLocales = ['ru'];
+
+@api('/locale')
+export default class LocaleApiController extends MvcController {
   constructor(
     protected readonly logger: Logger,
     private readonly db: Database,
@@ -18,10 +20,16 @@ export default class UserApiController extends MvcController {
     this.logger.info(message);
   }
 
-  @get('users')
-  async getUsersAsync() {
-    const result = await this.db.user.allWithRoleAsync();
-    return this.ok(result);
+  @get('buttons/:locale')
+  async getButtonsAsync(locale: string) {
+    if (!supportedLocales.includes(locale)) {
+      const message = `${locale} is not supported locale`;
+      this.logger.warning(message);
+      return this.badRequest(message);
+    }
+
+    const buttons = require(`../locales/${locale}/buttons.json`);
+    return this.ok(buttons);
   }
 }
 

@@ -21,6 +21,10 @@ export class ApiResponse<Data = unknown> {
     }
   }
 
+  isOk(): boolean {
+    return !this.isFailed();
+  }
+
   isFailed(): boolean {
     return (
       this.status >= ApiResponseStatus.BadRequest ||
