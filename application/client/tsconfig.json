@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
+    "composite": true,
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
@@ -17,6 +18,6 @@
     "strictNullChecks": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ES2022"
+    "target": "ESNext"
   }
 }

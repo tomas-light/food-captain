@@ -1,19 +1,19 @@
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import { Configuration } from 'webpack';
-import { paths } from '../paths';
+// import { paths } from '../paths';
 
 export function tsRule(): Configuration {
   return {
     plugins: [
       new ForkTsCheckerWebpackPlugin({
-        typescript: {
-          // The equivalent of the --build flag for the tsc command -> build project
-          // and all its dependencies in project references.
-          build: true,
-
-          configFile: paths.clientTsConfig,
-          mode: 'readonly', // don't write tsbuildinfo and d.ts on a disk,
-        },
+        // typescript: {
+        //   // The equivalent of the --build flag for the tsc command -> build project
+        //   // and all its dependencies in project references.
+        //   build: true,
+        //
+        //   configFile: paths.clientTsConfig,
+        //   mode: 'readonly', // don't write tsbuildinfo and d.ts on a disk,
+        // },
       }),
     ],
     module: {

@@ -15,6 +15,7 @@ module.exports = {
       // required for eslint-plugin-import
       typescript: true,
     },
+    'import/internal-regex': '^@food-captain/', // consider such import modules as "internal" to correct sorting
   },
   extends: [
     'plugin:react/recommended', // Uses the recommended rules from @eslint-plugin-react
@@ -71,6 +72,11 @@ module.exports = {
             pattern: './**.module.scss', // ./my.module.scss
             group: 'sibling',
             position: 'after',
+          },
+          {
+            pattern: '~/**', // ~/config
+            group: 'parent',
+            position: 'before',
           },
         ],
         groups: [

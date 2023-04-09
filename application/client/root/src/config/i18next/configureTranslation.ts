@@ -1,9 +1,9 @@
-import { LocaleApi } from '@food-captain/client-api';
 import { use } from 'cheap-di-react';
 import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { useEffect, useState } from 'react';
 import { initReactI18next } from 'react-i18next';
+import { LocaleApi } from '@food-captain/client-api';
 
 export function configureTranslation() {
   i18next
