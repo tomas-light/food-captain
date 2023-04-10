@@ -13,9 +13,9 @@ export class PgIngredient
     return `${this.schema}.ingredient`;
   }
 
-  async insertAsync(
+  insertAsync = async (
     entity: Omit<IngredientEntity, 'id'>
-  ): Promise<number | undefined> {
+  ): Promise<number | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
@@ -29,11 +29,11 @@ export class PgIngredient
 
     const queryResult = await this.query<IngredientEntity>(queryConfig);
     return queryResult?.rows[0]?.id;
-  }
+  };
 
-  async updateAsync(
+  updateAsync = async (
     entity: MakePropertiesOptional<IngredientEntity, 'name'>
-  ): Promise<IngredientEntity | undefined> {
+  ): Promise<IngredientEntity | undefined> => {
     const queryConfig = this.makeUpdateQueryConfig(entity);
     if (!queryConfig) {
       return undefined;
@@ -41,5 +41,5 @@ export class PgIngredient
 
     await this.query<IngredientEntity>(queryConfig);
     return this.byIdAsync(entity.id);
-  }
+  };
 }

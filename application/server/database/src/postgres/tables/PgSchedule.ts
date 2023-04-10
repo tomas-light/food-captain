@@ -22,7 +22,9 @@ export class PgSchedule
     return `${this.schema}.schedule`;
   }
 
-  async getWithMenuByIdAsync(id: number): Promise<ScheduleWithMenuEntity[]> {
+  getWithMenuByIdAsync = async (
+    id: number
+  ): Promise<ScheduleWithMenuEntity[]> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT 
@@ -53,11 +55,11 @@ export class PgSchedule
 
     const queryResult = await this.query<ScheduleWithMenuEntity>(queryConfig);
     return queryResult?.rows ?? [];
-  }
+  };
 
-  async insertAsync(
+  insertAsync = async (
     entity: Omit<ScheduleEntity, 'id'>
-  ): Promise<number | undefined> {
+  ): Promise<number | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
@@ -71,11 +73,11 @@ export class PgSchedule
 
     const queryResult = await this.query<ScheduleEntity>(queryConfig);
     return queryResult?.rows[0]?.id;
-  }
+  };
 
-  async updateAsync(
+  updateAsync = async (
     entity: MakePropertiesOptional<ScheduleEntity, 'author_id' | 'name'>
-  ): Promise<ScheduleEntity | undefined> {
+  ): Promise<ScheduleEntity | undefined> => {
     const queryConfig = this.makeUpdateQueryConfig(entity);
     if (!queryConfig) {
       return undefined;
@@ -83,5 +85,5 @@ export class PgSchedule
 
     await this.query<ScheduleEntity>(queryConfig);
     return this.byIdAsync(entity.id);
-  }
+  };
 }

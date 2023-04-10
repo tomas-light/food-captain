@@ -14,10 +14,10 @@ export class PgUserRole
   }
 
   // todo: possible redundant
-  async getAsync(
+  getAsync = async (
     user_id: number,
     role_id: number
-  ): Promise<UserRoleEntity | undefined> {
+  ): Promise<UserRoleEntity | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
@@ -30,9 +30,9 @@ export class PgUserRole
 
     const queryResult = await this.query<UserRoleEntity>(queryConfig);
     return queryResult?.rows[0];
-  }
+  };
 
-  async getByUserIdAsync(user_id: number): Promise<UserRoleEntity[]> {
+  getByUserIdAsync = async (user_id: number): Promise<UserRoleEntity[]> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
@@ -44,9 +44,9 @@ export class PgUserRole
 
     const queryResult = await this.query<UserRoleEntity>(queryConfig);
     return queryResult?.rows ?? [];
-  }
+  };
 
-  async insertAsync(entity: UserRoleEntity): Promise<boolean> {
+  insertAsync = async (entity: UserRoleEntity): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
@@ -60,9 +60,9 @@ export class PgUserRole
 
     const queryResult = await this.query<UserRoleEntity>(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 
-  async deleteAsync(entity: UserRoleEntity): Promise<boolean> {
+  deleteAsync = async (entity: UserRoleEntity): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.table} 
@@ -74,5 +74,5 @@ export class PgUserRole
 
     const queryResult = await this.query(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 }

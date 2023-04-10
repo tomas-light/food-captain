@@ -25,9 +25,9 @@ export class PgIngredientSet
     return `${this.schema}.ingredient_set`;
   }
 
-  async getWithIngredientsByIdAsync(
+  getWithIngredientsByIdAsync = async (
     id: number
-  ): Promise<IngredientSetWithIngredientsEntity | undefined> {
+  ): Promise<IngredientSetWithIngredientsEntity | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT 
@@ -81,11 +81,11 @@ export class PgIngredientSet
       queryConfig
     );
     return queryResult?.rows[0];
-  }
+  };
 
-  async insertAsync(
+  insertAsync = async (
     entity: Omit<IngredientSetEntity, 'id'>
-  ): Promise<number | undefined> {
+  ): Promise<number | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
@@ -99,11 +99,11 @@ export class PgIngredientSet
 
     const queryResult = await this.query<IngredientSetEntity>(queryConfig);
     return queryResult?.rows[0]?.id;
-  }
+  };
 
-  async updateAsync(
+  updateAsync = async (
     entity: MakePropertiesOptional<IngredientSetEntity, 'name' | 'image_id'>
-  ): Promise<IngredientSetWithImageEntity | undefined> {
+  ): Promise<IngredientSetWithImageEntity | undefined> => {
     const queryConfig = this.makeUpdateQueryConfig(entity);
     if (!queryConfig) {
       return undefined;
@@ -111,5 +111,5 @@ export class PgIngredientSet
 
     await this.query<IngredientSetEntity>(queryConfig);
     return this.byIdAsync(entity.id);
-  }
+  };
 }

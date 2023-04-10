@@ -13,10 +13,10 @@ export class PgDishInMenu
     return `${this.schema}.dish_in_menu`;
   }
 
-  async getAsync(
+  getAsync = async (
     menu_id: number,
     dish_id: number
-  ): Promise<DishInMenuEntity | undefined> {
+  ): Promise<DishInMenuEntity | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
@@ -29,9 +29,9 @@ export class PgDishInMenu
 
     const queryResult = await this.query<DishInMenuEntity>(queryConfig);
     return queryResult?.rows[0];
-  }
+  };
 
-  async insertAsync(entity: DishInMenuEntity): Promise<boolean> {
+  insertAsync = async (entity: DishInMenuEntity): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
@@ -46,11 +46,11 @@ export class PgDishInMenu
 
     const queryResult = await this.query<DishInMenuEntity>(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 
-  async updateAsync(
+  updateAsync = async (
     entity: DishInMenuEntity
-  ): Promise<DishInMenuEntity | undefined> {
+  ): Promise<DishInMenuEntity | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         UPDATE ${this.table} 
@@ -63,11 +63,11 @@ export class PgDishInMenu
 
     await this.query<DishInMenuEntity>(queryConfig);
     return this.getAsync(entity.menu_id, entity.dish_id);
-  }
+  };
 
-  async deleteAsync(
+  deleteAsync = async (
     entity: Pick<DishInMenuEntity, 'menu_id' | 'dish_id'>
-  ): Promise<boolean> {
+  ): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.table} 
@@ -79,9 +79,9 @@ export class PgDishInMenu
 
     const queryResult = await this.query(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 
-  async deleteByIdsAsync(dish_ids: number[]): Promise<boolean> {
+  deleteByIdsAsync = async (dish_ids: number[]): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.table} 
@@ -92,9 +92,9 @@ export class PgDishInMenu
 
     const queryResult = await this.query(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 
-  async deleteAllByMenuIdAsync(menu_id: number): Promise<boolean> {
+  deleteAllByMenuIdAsync = async (menu_id: number): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.table} 
@@ -105,9 +105,9 @@ export class PgDishInMenu
 
     const queryResult = await this.query(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 
-  async deleteAllByDishIdAsync(dish_id: number): Promise<boolean> {
+  deleteAllByDishIdAsync = async (dish_id: number): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.table} 
@@ -118,5 +118,5 @@ export class PgDishInMenu
 
     const queryResult = await this.query(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 }

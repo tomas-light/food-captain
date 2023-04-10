@@ -14,10 +14,10 @@ export class PgRecipeImage
   }
 
   // todo: possible redundant
-  async getAsync(
+  getAsync = async (
     recipe_id: number,
     image_id: number
-  ): Promise<RecipeImageEntity | undefined> {
+  ): Promise<RecipeImageEntity | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
@@ -30,9 +30,9 @@ export class PgRecipeImage
 
     const queryResult = await this.query<RecipeImageEntity>(queryConfig);
     return queryResult?.rows[0];
-  }
+  };
 
-  async insertAsync(entity: RecipeImageEntity): Promise<boolean> {
+  insertAsync = async (entity: RecipeImageEntity): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
@@ -46,9 +46,9 @@ export class PgRecipeImage
 
     const queryResult = await this.query<RecipeImageEntity>(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 
-  async deleteAsync(entity: RecipeImageEntity): Promise<boolean> {
+  deleteAsync = async (entity: RecipeImageEntity): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.table} 
@@ -60,5 +60,5 @@ export class PgRecipeImage
 
     const queryResult = await this.query(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 }

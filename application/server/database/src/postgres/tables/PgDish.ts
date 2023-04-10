@@ -11,7 +11,7 @@ export class PgDish extends PgTableBase<DishEntity> implements DishTable {
     return `${this.schema}.dish`;
   }
 
-  async byMenuIdAsync(menuId: number): Promise<MenuDishEntity[]> {
+  byMenuIdAsync = async (menuId: number): Promise<MenuDishEntity[]> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT 
@@ -29,9 +29,9 @@ export class PgDish extends PgTableBase<DishEntity> implements DishTable {
 
     const queryResult = await this.query<MenuDishEntity>(queryConfig);
     return queryResult?.rows ?? [];
-  }
+  };
 
-  async byMenuIdsAsync(menuIds: number[]): Promise<MenuDishEntity[]> {
+  byMenuIdsAsync = async (menuIds: number[]): Promise<MenuDishEntity[]> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT 
@@ -49,11 +49,11 @@ export class PgDish extends PgTableBase<DishEntity> implements DishTable {
 
     const queryResult = await this.query<MenuDishEntity>(queryConfig);
     return queryResult?.rows ?? [];
-  }
+  };
 
-  async insertAsync(
+  insertAsync = async (
     entity: Omit<DishEntity, 'id'>
-  ): Promise<number | undefined> {
+  ): Promise<number | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
@@ -68,11 +68,11 @@ export class PgDish extends PgTableBase<DishEntity> implements DishTable {
 
     const queryResult = await this.query<DishEntity>(queryConfig);
     return queryResult?.rows[0]?.id;
-  }
+  };
 
-  async updateAsync(
+  updateAsync = async (
     entity: MakePropertiesOptional<DishEntity, 'name'>
-  ): Promise<DishEntity | undefined> {
+  ): Promise<DishEntity | undefined> => {
     const queryConfig = this.makeUpdateQueryConfig(entity);
     if (!queryConfig) {
       return undefined;
@@ -80,5 +80,5 @@ export class PgDish extends PgTableBase<DishEntity> implements DishTable {
 
     await this.query<DishEntity>(queryConfig);
     return this.byIdAsync(entity.id);
-  }
+  };
 }
