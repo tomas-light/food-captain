@@ -1,28 +1,59 @@
-import { Database } from '@food-captain/database';
-import { UserWithRoleEntity } from '@food-captain/database/src/tables';
-import { Logger } from '@food-captain/server-utils';
 import type { Request, Response } from 'express';
-import { api, get, MvcController } from 'mvc-middleware';
+import { api, delete_, get, post, put } from 'mvc-middleware';
+import { UserWithRoleEntity } from '@food-captain/database';
+import { Logger } from '@food-captain/server-utils';
+import { UserService } from '../services/UserService';
+import BaseApiController from './BaseApiController';
 
 @api
-export default class UserApiController extends MvcController {
+export default class UserApiController extends BaseApiController {
   constructor(
     protected readonly logger: Logger,
-    private readonly db: Database,
+    private readonly userService: UserService,
     request: Request,
     response: Response
   ) {
-    super(request, response);
-
-    const message = `${request.method.toUpperCase()}: ${request.url}`;
-    this.logger.info(message);
+    super(logger, request, response);
   }
 
   @get('users')
   async getUsersAsync() {
-    const result = await this.db.user.allWithRoleAsync();
+    const result = await this.userService.getAllAsync();
     return this.ok(result);
+  }
+
+  @get('user/current')
+  async getCurrentUserAsync() {
+    const result = await this.userService.getUserByIdAsync(1); // todo: get authorized user
+    return this.ok(result);
+  }
+
+  @post('user')
+  async addUserAsync(user: NewUserWithRoleDto) {
+    const result = await this.userService.addAsync(user);
+    return this.ok(result);
+  }
+
+  @put('user/:userId')
+  async updateUserAsync(userId: number, user: UserWithRoleDto) {
+    const result = await this.userService.updateAsync(user);
+    return this.ok(result);
+  }
+
+  @delete_('user/:userId')
+  async deleteUserAsync(userId: number) {
+    const user = await this.userService.getUserByIdAsync(userId);
+    if (!user) {
+      return this.notFound('user not found');
+    }
+
+    const result = await this.userService.deleteAsync(user);
+    if (result) {
+      return this.noContent();
+    }
+    return this.badRequest('Deletion is failed');
   }
 }
 
+export interface NewUserWithRoleDto extends Omit<UserWithRoleEntity, 'id'> {}
 export interface UserWithRoleDto extends UserWithRoleEntity {}

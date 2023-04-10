@@ -1,7 +1,7 @@
 import { MakePropertiesOptional } from '../utils';
 import { DishEntity } from '../entities';
 
-export interface MenuDishesEntity extends DishEntity {
+export interface MenuDishEntity extends DishEntity {
   menu_id: number;
   order_number?: number;
 }
@@ -11,9 +11,9 @@ export interface DishTable {
 
   byIdAsync(id: number): Promise<DishEntity | undefined>;
 
-  byMenuIdAsync(menuId: number): Promise<MenuDishesEntity[]>;
+  byMenuIdAsync(menuId: number): Promise<MenuDishEntity[]>;
 
-  byMenuIdsAsync(menuIds: number[]): Promise<MenuDishesEntity[]>;
+  byMenuIdsAsync(menuIds: number[]): Promise<MenuDishEntity[]>;
 
   insertAsync(entity: Omit<DishEntity, 'id'>): Promise<number | undefined>;
 

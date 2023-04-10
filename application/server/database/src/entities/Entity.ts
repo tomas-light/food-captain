@@ -1,1 +1,1 @@
-export interface Entity {}
+export abstract class Entity {}

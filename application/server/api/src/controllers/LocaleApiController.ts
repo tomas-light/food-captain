@@ -1,8 +1,7 @@
-import { Database } from '@food-captain/database';
-import { UserWithRoleEntity } from '@food-captain/database/src/tables';
-import { Logger } from '@food-captain/server-utils';
 import type { Request, Response } from 'express';
 import { MvcController, get, api } from 'mvc-middleware';
+import { Database } from '@food-captain/database';
+import { Logger } from '@food-captain/server-utils';
 
 const supportedLocales = ['ru'];
 
@@ -32,5 +31,3 @@ export default class LocaleApiController extends MvcController {
     return this.ok(buttons);
   }
 }
-
-export interface UserWithRoleDto extends UserWithRoleEntity {}
