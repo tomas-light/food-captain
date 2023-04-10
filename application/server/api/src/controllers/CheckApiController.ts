@@ -1,18 +1,16 @@
-import { Logger } from '@food-captain/server-utils';
 import { Request, Response } from 'express';
-import { api, get, MvcController, post } from 'mvc-middleware';
+import { api, get, post } from 'mvc-middleware';
+import { Logger } from '@food-captain/server-utils';
+import BaseApiController from './BaseApiController';
 
 @api
-export default class CheckApiController extends MvcController {
+export default class CheckApiController extends BaseApiController {
   constructor(
     protected readonly logger: Logger,
     request: Request,
     response: Response
   ) {
-    super(request, response);
-
-    const message = `${request.method.toUpperCase()}: ${request.url}`;
-    this.logger.info(message);
+    super(logger, request, response);
   }
 
   @get

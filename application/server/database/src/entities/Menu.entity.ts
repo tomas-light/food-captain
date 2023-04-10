@@ -1,10 +1,10 @@
 import { Entity } from './Entity';
 
-export interface MenuEntity extends Entity {
-  id: number;
-  create_date: string;
-  last_update: string;
-  author_id?: number;
-  name?: string;
-  order_number?: number;
+export abstract class MenuEntity extends Entity {
+  abstract id: number;
+  abstract create_date: string;
+  abstract last_update: string;
+  abstract author_id?: number;
+  abstract name?: string;
+  abstract order_number?: number;
 }

@@ -1,6 +1,6 @@
 import { QueryConfig } from 'pg';
 import { keyOf, MakePropertiesOptional } from '../../utils';
-import { DishTable, MenuDishesEntity } from '../../tables/DishTable';
+import { DishTable, MenuDishEntity } from '../../tables/DishTable';
 import { DishEntity, DishInMenuEntity } from '../../entities';
 import { PgTableBase } from '../base';
 import { PgDishInMenu } from './PgDishInMenu';
@@ -11,7 +11,7 @@ export class PgDish extends PgTableBase<DishEntity> implements DishTable {
     return `${this.schema}.dish`;
   }
 
-  async byMenuIdAsync(menuId: number): Promise<MenuDishesEntity[]> {
+  async byMenuIdAsync(menuId: number): Promise<MenuDishEntity[]> {
     const queryConfig: QueryConfig = {
       text: `
         SELECT 
@@ -27,11 +27,11 @@ export class PgDish extends PgTableBase<DishEntity> implements DishTable {
       values: [menuId],
     };
 
-    const queryResult = await this.query<MenuDishesEntity>(queryConfig);
+    const queryResult = await this.query<MenuDishEntity>(queryConfig);
     return queryResult?.rows ?? [];
   }
 
-  async byMenuIdsAsync(menuIds: number[]): Promise<MenuDishesEntity[]> {
+  async byMenuIdsAsync(menuIds: number[]): Promise<MenuDishEntity[]> {
     const queryConfig: QueryConfig = {
       text: `
         SELECT 
@@ -47,7 +47,7 @@ export class PgDish extends PgTableBase<DishEntity> implements DishTable {
       values: menuIds,
     };
 
-    const queryResult = await this.query<MenuDishesEntity>(queryConfig);
+    const queryResult = await this.query<MenuDishEntity>(queryConfig);
     return queryResult?.rows ?? [];
   }
 
