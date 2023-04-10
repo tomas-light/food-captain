@@ -13,10 +13,10 @@ export class PgMenuInSchedule
     return `${this.schema}.menu_in_schedule`;
   }
 
-  async getAsync(
+  getAsync = async (
     schedule_id: number,
     menu_id: number
-  ): Promise<MenuInScheduleEntity | undefined> {
+  ): Promise<MenuInScheduleEntity | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
@@ -29,11 +29,11 @@ export class PgMenuInSchedule
 
     const queryResult = await this.query<MenuInScheduleEntity>(queryConfig);
     return queryResult?.rows[0];
-  }
+  };
 
-  async getByScheduleIdAsync(
+  getByScheduleIdAsync = async (
     schedule_id: number
-  ): Promise<MenuInScheduleEntity[]> {
+  ): Promise<MenuInScheduleEntity[]> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT *
@@ -45,9 +45,11 @@ export class PgMenuInSchedule
 
     const queryResult = await this.query<MenuInScheduleEntity>(queryConfig);
     return queryResult?.rows ?? [];
-  }
+  };
 
-  async getByMenuIdAsync(menu_id: number): Promise<MenuInScheduleEntity[]> {
+  getByMenuIdAsync = async (
+    menu_id: number
+  ): Promise<MenuInScheduleEntity[]> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT *
@@ -59,9 +61,9 @@ export class PgMenuInSchedule
 
     const queryResult = await this.query<MenuInScheduleEntity>(queryConfig);
     return queryResult?.rows ?? [];
-  }
+  };
 
-  async insertAsync(entity: MenuInScheduleEntity): Promise<boolean> {
+  insertAsync = async (entity: MenuInScheduleEntity): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
@@ -76,11 +78,11 @@ export class PgMenuInSchedule
 
     const queryResult = await this.query<MenuInScheduleEntity>(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 
-  async updateAsync(
+  updateAsync = async (
     entity: MenuInScheduleEntity
-  ): Promise<MenuInScheduleEntity | undefined> {
+  ): Promise<MenuInScheduleEntity | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         UPDATE ${this.table} 
@@ -93,11 +95,11 @@ export class PgMenuInSchedule
 
     await this.query<MenuInScheduleEntity>(queryConfig);
     return this.getAsync(entity.schedule_id, entity.menu_id);
-  }
+  };
 
-  async deleteAsync(
+  deleteAsync = async (
     entity: Pick<MenuInScheduleEntity, 'schedule_id' | 'menu_id'>
-  ): Promise<boolean> {
+  ): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.table} 
@@ -109,9 +111,9 @@ export class PgMenuInSchedule
 
     const queryResult = await this.query(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 
-  async deleteByIdsAsync(menu_ids: number[]): Promise<boolean> {
+  deleteByIdsAsync = async (menu_ids: number[]): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.table} 
@@ -122,9 +124,11 @@ export class PgMenuInSchedule
 
     const queryResult = await this.query(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 
-  async deleteAllByScheduleIdAsync(schedule_id: number): Promise<boolean> {
+  deleteAllByScheduleIdAsync = async (
+    schedule_id: number
+  ): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.table} 
@@ -135,9 +139,9 @@ export class PgMenuInSchedule
 
     const queryResult = await this.query(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 
-  async deleteAllByMenuIdAsync(menu_id: number): Promise<boolean> {
+  deleteAllByMenuIdAsync = async (menu_id: number): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.table} 
@@ -148,5 +152,5 @@ export class PgMenuInSchedule
 
     const queryResult = await this.query(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 }

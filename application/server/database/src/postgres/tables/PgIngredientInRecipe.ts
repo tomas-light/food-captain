@@ -13,10 +13,10 @@ export class PgIngredientInRecipe
     return `${this.schema}.ingredient_in_recipe`;
   }
 
-  async getAsync(
+  getAsync = async (
     recipe_id: number,
     ingredient_id: number
-  ): Promise<IngredientInRecipeEntity | undefined> {
+  ): Promise<IngredientInRecipeEntity | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
@@ -29,9 +29,9 @@ export class PgIngredientInRecipe
 
     const queryResult = await this.query<IngredientInRecipeEntity>(queryConfig);
     return queryResult?.rows[0];
-  }
+  };
 
-  async insertAsync(entity: IngredientInRecipeEntity): Promise<boolean> {
+  insertAsync = async (entity: IngredientInRecipeEntity): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
@@ -52,11 +52,11 @@ export class PgIngredientInRecipe
 
     const queryResult = await this.query<IngredientInRecipeEntity>(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 
-  async updateAsync(
+  updateAsync = async (
     entity: IngredientInRecipeEntity
-  ): Promise<IngredientInRecipeEntity | undefined> {
+  ): Promise<IngredientInRecipeEntity | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         UPDATE ${this.table} 
@@ -75,11 +75,11 @@ export class PgIngredientInRecipe
 
     await this.query<IngredientInRecipeEntity>(queryConfig);
     return this.getAsync(entity.recipe_id, entity.ingredient_id);
-  }
+  };
 
-  async deleteAsync(
+  deleteAsync = async (
     entity: Pick<IngredientInRecipeEntity, 'recipe_id' | 'ingredient_id'>
-  ): Promise<boolean> {
+  ): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.table} 
@@ -91,5 +91,5 @@ export class PgIngredientInRecipe
 
     const queryResult = await this.query(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 }

@@ -14,10 +14,10 @@ export class PgDishInSet
   }
 
   // todo: possible redundant
-  async getAsync(
+  getAsync = async (
     dish_set_id: number,
     dish_id: number
-  ): Promise<DishInSetEntity | undefined> {
+  ): Promise<DishInSetEntity | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
@@ -30,9 +30,9 @@ export class PgDishInSet
 
     const queryResult = await this.query<DishInSetEntity>(queryConfig);
     return queryResult?.rows[0];
-  }
+  };
 
-  async insertAsync(entity: DishInSetEntity): Promise<boolean> {
+  insertAsync = async (entity: DishInSetEntity): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
@@ -46,9 +46,9 @@ export class PgDishInSet
 
     const queryResult = await this.query<DishInSetEntity>(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 
-  async deleteAsync(entity: DishInSetEntity): Promise<boolean> {
+  deleteAsync = async (entity: DishInSetEntity): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.table} 
@@ -60,5 +60,5 @@ export class PgDishInSet
 
     const queryResult = await this.query(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
-  }
+  };
 }

@@ -11,7 +11,7 @@ export class PgUser extends PgTableBase<UserEntity> implements UserTable {
     return `${this.schema}.user`;
   }
 
-  async byIdsAsync(ids: number[]): Promise<UserEntity[]> {
+  byIdsAsync = async (ids: number[]): Promise<UserEntity[]> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
@@ -23,9 +23,9 @@ export class PgUser extends PgTableBase<UserEntity> implements UserTable {
 
     const queryResult = await this.query<UserEntity>(queryConfig);
     return queryResult?.rows ?? [];
-  }
+  };
 
-  async allWithRoleAsync(): Promise<UserWithRoleEntity[]> {
+  allWithRoleAsync = async (): Promise<UserWithRoleEntity[]> => {
     const queryResult = await this.query<UserWithRoleEntity>(`
       SELECT _user.*, _user_role.${keyOf<UserRoleEntity>('role_id')} 
       FROM ${this.table} _user 
@@ -34,9 +34,11 @@ export class PgUser extends PgTableBase<UserEntity> implements UserTable {
     )} = _user_role.${keyOf<UserRoleEntity>('user_id')};
     `);
     return queryResult?.rows ?? [];
-  }
+  };
 
-  async byIdWithRoleAsync(id: number): Promise<UserWithRoleEntity | undefined> {
+  byIdWithRoleAsync = async (
+    id: number
+  ): Promise<UserWithRoleEntity | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT _user.*, _user_role.${keyOf<UserRoleEntity>('role_id')} 
@@ -51,11 +53,11 @@ export class PgUser extends PgTableBase<UserEntity> implements UserTable {
 
     const queryResult = await this.query<UserWithRoleEntity>(queryConfig);
     return queryResult?.rows[0];
-  }
+  };
 
-  async insertAsync(
+  insertAsync = async (
     entity: Omit<UserEntity, 'id'>
-  ): Promise<number | undefined> {
+  ): Promise<number | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
@@ -70,11 +72,11 @@ export class PgUser extends PgTableBase<UserEntity> implements UserTable {
 
     const queryResult = await this.query<UserEntity>(queryConfig);
     return queryResult?.rows[0]?.id;
-  }
+  };
 
-  async updateAsync(
+  updateAsync = async (
     entity: MakePropertiesOptional<UserEntity, 'name' | 'email' | 'password'>
-  ): Promise<UserEntity | undefined> {
+  ): Promise<UserEntity | undefined> => {
     const queryConfig = this.makeUpdateQueryConfig(entity);
     if (!queryConfig) {
       return undefined;
@@ -82,5 +84,5 @@ export class PgUser extends PgTableBase<UserEntity> implements UserTable {
 
     await this.query<UserEntity>(queryConfig);
     return this.byIdWithRoleAsync(entity.id);
-  }
+  };
 }

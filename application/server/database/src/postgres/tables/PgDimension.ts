@@ -13,9 +13,9 @@ export class PgDimension
     return `${this.schema}.dimension`;
   }
 
-  async insertAsync(
+  insertAsync = async (
     entity: Omit<DimensionEntity, 'id'>
-  ): Promise<number | undefined> {
+  ): Promise<number | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
@@ -28,11 +28,11 @@ export class PgDimension
 
     const queryResult = await this.query<DimensionEntity>(queryConfig);
     return queryResult?.rows[0]?.id;
-  }
+  };
 
-  async updateAsync(
+  updateAsync = async (
     entity: DimensionEntity
-  ): Promise<DimensionEntity | undefined> {
+  ): Promise<DimensionEntity | undefined> => {
     const queryConfig = this.makeUpdateQueryConfig(entity);
     if (!queryConfig) {
       return undefined;
@@ -40,5 +40,5 @@ export class PgDimension
 
     await this.query<DimensionEntity>(queryConfig);
     return this.byIdAsync(entity.id);
-  }
+  };
 }

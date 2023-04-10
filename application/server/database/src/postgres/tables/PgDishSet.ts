@@ -24,9 +24,9 @@ export class PgDishSet
     return `${this.schema}.dish_set`;
   }
 
-  async getWithDishesByIdAsync(
+  getWithDishesByIdAsync = async (
     id: number
-  ): Promise<DishSetWithDishesEntity | undefined> {
+  ): Promise<DishSetWithDishesEntity | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT 
@@ -55,11 +55,11 @@ export class PgDishSet
 
     const queryResult = await this.query<DishSetWithDishesEntity>(queryConfig);
     return queryResult?.rows[0];
-  }
+  };
 
-  async insertAsync(
+  insertAsync = async (
     entity: Omit<DishSetEntity, 'id'>
-  ): Promise<number | undefined> {
+  ): Promise<number | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
@@ -73,11 +73,11 @@ export class PgDishSet
 
     const queryResult = await this.query<DishSetEntity>(queryConfig);
     return queryResult?.rows[0]?.id;
-  }
+  };
 
-  async updateAsync(
+  updateAsync = async (
     entity: MakePropertiesOptional<DishSetEntity, 'name' | 'image_id'>
-  ): Promise<DishSetEntity | undefined> {
+  ): Promise<DishSetEntity | undefined> => {
     const queryConfig = this.makeUpdateQueryConfig(entity);
     if (!queryConfig) {
       return undefined;
@@ -85,5 +85,5 @@ export class PgDishSet
 
     await this.query<DishSetEntity>(queryConfig);
     return this.byIdAsync(entity.id);
-  }
+  };
 }

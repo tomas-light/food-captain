@@ -10,9 +10,9 @@ export class PgRole extends PgTableBase<RoleEntity> implements RoleTable {
     return `${this.schema}.role`;
   }
 
-  async insertAsync(
+  insertAsync = async (
     entity: Omit<RoleEntity, 'id'>
-  ): Promise<number | undefined> {
+  ): Promise<number | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
@@ -25,9 +25,9 @@ export class PgRole extends PgTableBase<RoleEntity> implements RoleTable {
 
     const queryResult = await this.query<RoleEntity>(queryConfig);
     return queryResult?.rows[0]?.id;
-  }
+  };
 
-  async updateAsync(entity: RoleEntity): Promise<RoleEntity | undefined> {
+  updateAsync = async (entity: RoleEntity): Promise<RoleEntity | undefined> => {
     const queryConfig = this.makeUpdateQueryConfig(entity);
     if (!queryConfig) {
       return undefined;
@@ -35,5 +35,5 @@ export class PgRole extends PgTableBase<RoleEntity> implements RoleTable {
 
     await this.query<RoleEntity>(queryConfig);
     return this.byIdAsync(entity.id);
-  }
+  };
 }

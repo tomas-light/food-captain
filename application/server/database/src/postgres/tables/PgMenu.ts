@@ -24,7 +24,9 @@ export class PgMenu extends PgTableBase<MenuEntity> implements MenuTable {
     return `${this.schema}.menu`;
   }
 
-  async byScheduleIdAsync(schedule_id: number): Promise<MenuWithDateEntity[]> {
+  byScheduleIdAsync = async (
+    schedule_id: number
+  ): Promise<MenuWithDateEntity[]> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT _menu.* 
@@ -39,9 +41,11 @@ export class PgMenu extends PgTableBase<MenuEntity> implements MenuTable {
 
     const queryResult = await this.query<MenuWithDateEntity>(queryConfig);
     return queryResult?.rows ?? [];
-  }
+  };
 
-  async getWithDishesByIdAsync(id: number): Promise<MenuWithDishesEntity[]> {
+  getWithDishesByIdAsync = async (
+    id: number
+  ): Promise<MenuWithDishesEntity[]> => {
     const queryConfig: QueryConfig = {
       text: `
         SELECT 
@@ -75,11 +79,11 @@ export class PgMenu extends PgTableBase<MenuEntity> implements MenuTable {
 
     const queryResult = await this.query<MenuWithDishesEntity>(queryConfig);
     return queryResult?.rows ?? [];
-  }
+  };
 
-  async insertAsync(
+  insertAsync = async (
     entity: Omit<MenuEntity, 'id'>
-  ): Promise<number | undefined> {
+  ): Promise<number | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
@@ -100,14 +104,14 @@ export class PgMenu extends PgTableBase<MenuEntity> implements MenuTable {
 
     const queryResult = await this.query<MenuEntity>(queryConfig);
     return queryResult?.rows[0]?.id;
-  }
+  };
 
-  async updateAsync(
+  updateAsync = async (
     entity: MakePropertiesOptional<
       MenuEntity,
       'name' | 'create_date' | 'last_update' | 'author_id'
     >
-  ): Promise<MenuEntity | undefined> {
+  ): Promise<MenuEntity | undefined> => {
     const queryConfig = this.makeUpdateQueryConfig(entity);
     if (!queryConfig) {
       return undefined;
@@ -115,5 +119,5 @@ export class PgMenu extends PgTableBase<MenuEntity> implements MenuTable {
 
     await this.query<MenuEntity>(queryConfig);
     return this.byIdAsync(entity.id);
-  }
+  };
 }
