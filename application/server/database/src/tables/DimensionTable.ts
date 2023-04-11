@@ -4,6 +4,7 @@ export interface DimensionTable {
   allAsync(): Promise<DimensionEntity[]>;
 
   byIdAsync(id: number): Promise<DimensionEntity | undefined>;
+  byIdsAsync(ids: number[]): Promise<DimensionEntity[]>;
 
   insertAsync(entity: Omit<DimensionEntity, 'id'>): Promise<number | undefined>;
 

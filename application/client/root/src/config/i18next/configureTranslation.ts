@@ -27,6 +27,25 @@ export function configureTranslation() {
 }
 
 export function useButtonsLocale() {
+  return useLocaleResource('getButtonsAsync');
+}
+
+export function useIngredientLocale() {
+  return useLocaleResource('getIngredientAsync');
+}
+
+function useLocaleResource(
+  resourceMethodName: keyof Pick<
+    LocaleApi,
+    | 'getButtonsAsync'
+    | 'getCommonAsync'
+    | 'getDimensionAsync'
+    | 'getDishAsync'
+    | 'getIngredientAsync'
+    | 'getMenuAsync'
+    | 'getRecipeAsync'
+  >
+) {
   const localeApi = use(LocaleApi);
   const [loading, setLoading] = useState(false);
 
@@ -36,7 +55,7 @@ export function useButtonsLocale() {
       try {
         const userLocale = i18next.language;
 
-        const response = await localeApi.getButtonsAsync(userLocale);
+        const response = await localeApi[resourceMethodName](userLocale);
         if (response.isOk()) {
           i18next.addResourceBundle(userLocale, 'translation', response.data);
         }

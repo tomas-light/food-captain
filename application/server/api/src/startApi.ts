@@ -1,12 +1,13 @@
 import http from 'http';
 import path from 'path';
-import { registerDatabase } from '@food-captain/database';
-import { Logger } from '@food-captain/server-utils';
 import { json } from 'body-parser';
+import cors from 'cors';
 import { container } from 'cheap-di';
 import cookieParser from 'cookie-parser';
 import express, { RequestHandler } from 'express';
 import { MvcMiddleware } from 'mvc-middleware';
+import { Logger } from '@food-captain/server-utils';
+import { registerDatabase } from '@food-captain/database';
 import {
   API_HOST,
   API_PORT,
@@ -23,6 +24,13 @@ import { ConsoleLogger } from './utils/ConsoleLogger';
   container.registerType(ConsoleLogger).as(Logger);
 
   const app = express();
+
+  app.use(
+    cors({
+      origin: 'https://food-captain.localhost',
+    })
+  );
+
   app.use(json({ limit: '50mb' }) as RequestHandler);
   app.use(cookieParser());
   app.use((request, response, next) => {

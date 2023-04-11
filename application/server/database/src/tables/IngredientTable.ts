@@ -5,6 +5,7 @@ export interface IngredientTable {
   allAsync(): Promise<IngredientEntity[]>;
 
   byIdAsync(id: number): Promise<IngredientEntity | undefined>;
+  byIdsAsync(ids: number[]): Promise<IngredientEntity[]>;
 
   insertAsync(
     entity: Omit<IngredientEntity, 'id'>

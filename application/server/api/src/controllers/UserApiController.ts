@@ -8,8 +8,8 @@ import BaseApiController from './BaseApiController';
 @api
 export default class UserApiController extends BaseApiController {
   constructor(
-    protected readonly logger: Logger,
     private readonly userService: UserService,
+    logger: Logger,
     request: Request,
     response: Response
   ) {
@@ -30,14 +30,14 @@ export default class UserApiController extends BaseApiController {
 
   @post('user')
   async addUserAsync(user: NewUserWithRoleDto) {
-    const result = await this.userService.addAsync(user);
-    return this.ok(result);
+    const createdUser = await this.userService.addAsync(user);
+    return this.ok(createdUser);
   }
 
   @put('user/:userId')
   async updateUserAsync(userId: number, user: UserWithRoleDto) {
-    const result = await this.userService.updateAsync(user);
-    return this.ok(result);
+    const updatedUser = await this.userService.updateAsync(user);
+    return this.ok(updatedUser);
   }
 
   @delete_('user/:userId')
@@ -47,11 +47,8 @@ export default class UserApiController extends BaseApiController {
       return this.notFound('user not found');
     }
 
-    const result = await this.userService.deleteAsync(user);
-    if (result) {
-      return this.noContent();
-    }
-    return this.badRequest('Deletion is failed');
+    const removed = await this.userService.deleteAsync(user);
+    return this.ok({ removed });
   }
 }
 

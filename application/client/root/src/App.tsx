@@ -13,6 +13,7 @@ import {
 } from '@food-captain/client-api';
 import { AppInitializer } from '~/appInitializer';
 import { configureTranslation } from '~/config/i18next';
+import { Layout } from '~/Layout';
 import { RegisterNavigationInDI } from '~/routing/RegisterNavigationInDI';
 import { configureRedux } from './config/redux';
 
@@ -58,7 +59,10 @@ const App: FC<{ children: ReactElement }> = (props) => {
     <ChakraProvider resetCSS>
       <Provider store={config.store}>
         <DIOneTimeProvider parentContainer={config.container}>
-          <AppInitializer>{children}</AppInitializer>
+          <AppInitializer>
+            <Layout>{children}</Layout>
+          </AppInitializer>
+
           <RegisterNavigationInDI container={config.container} />
         </DIOneTimeProvider>
       </Provider>

@@ -18,20 +18,20 @@ export default class DishApiController extends BaseApiController {
 
   @get('dish')
   async getDishesAsync() {
-    const result = await this.dishService.getAllAsync();
-    return this.ok(result);
+    const dishes = await this.dishService.getAllAsync();
+    return this.ok(dishes);
   }
 
   @post('dish')
   async addDishAsync(dish: NewDishDto) {
-    const result = await this.dishService.addAsync(dish);
-    return this.ok(result);
+    const createdDish = await this.dishService.addAsync(dish);
+    return this.ok(createdDish);
   }
 
   @put('dish/:dishId')
   async updateDishAsync(dishId: number, dish: UpdatedDishDto) {
-    const result = await this.dishService.updateAsync(dish);
-    return this.ok(result);
+    const updatedDish = await this.dishService.updateAsync(dish);
+    return this.ok(updatedDish);
   }
 
   @delete_('dish/:dishId')
@@ -41,11 +41,8 @@ export default class DishApiController extends BaseApiController {
       return this.notFound('dish not found');
     }
 
-    const result = await this.dishService.deleteAsync(dish);
-    if (result) {
-      return this.noContent();
-    }
-    return this.badRequest('Deletion is failed');
+    const removed = await this.dishService.deleteAsync(dish);
+    return this.ok({ removed });
   }
 }
 
