@@ -11,12 +11,12 @@ export class DishService {
     private readonly logger: Logger
   ) {}
 
-  getAllAsync(): Promise<DishEntity[]> {
-    return this.db.dish.allAsync();
+  getAllAsync(...args: Parameters<Database['dish']['allAsync']>) {
+    return this.db.dish.allAsync(...args);
   }
 
-  getDishByIdAsync(dishId: number): Promise<DishEntity | undefined> {
-    return this.db.dish.byIdAsync(dishId);
+  getDishByIdAsync(...args: Parameters<Database['dish']['byIdAsync']>) {
+    return this.db.dish.byIdAsync(...args);
   }
 
   async addAsync(

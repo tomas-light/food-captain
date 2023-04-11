@@ -7,12 +7,12 @@ import { MakeOptional } from '../utils/MakeOptional';
 export class UserService {
   constructor(private readonly db: Database, private readonly logger: Logger) {}
 
-  getAllAsync(): Promise<UserWithRoleEntity[]> {
-    return this.db.user.allWithRoleAsync();
+  getAllAsync(...args: Parameters<Database['user']['allWithRoleAsync']>) {
+    return this.db.user.allWithRoleAsync(...args);
   }
 
-  getUserByIdAsync(userId: number): Promise<UserWithRoleEntity | undefined> {
-    return this.db.user.byIdWithRoleAsync(userId);
+  getUserByIdAsync(...args: Parameters<Database['user']['byIdWithRoleAsync']>) {
+    return this.db.user.byIdWithRoleAsync(...args);
   }
 
   async addAsync(

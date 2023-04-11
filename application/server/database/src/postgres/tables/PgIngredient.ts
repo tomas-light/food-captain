@@ -13,6 +13,20 @@ export class PgIngredient
     return `${this.schema}.ingredient`;
   }
 
+  byIdsAsync = async (ids: number[]): Promise<IngredientEntity[]> => {
+    const queryConfig: QueryConfig = {
+      text: `
+        SELECT * 
+        FROM ${this.table} 
+        WHERE ${keyOf<IngredientEntity>('id')} in ($1);
+      `,
+      values: ids,
+    };
+
+    const queryResult = await this.query<IngredientEntity>(queryConfig);
+    return queryResult?.rows ?? [];
+  };
+
   insertAsync = async (
     entity: Omit<IngredientEntity, 'id'>
   ): Promise<number | undefined> => {

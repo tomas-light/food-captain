@@ -32,26 +32,26 @@ export default class MenuApiController extends BaseApiController {
 
   @post('menu')
   async addMenuAsync(dto: MenuDto) {
-    const result = await this.menuService.addAsync({
+    const createdMenu = await this.menuService.addAsync({
       ...dto,
       dishes: dto.dishes?.map((dishDto) => ({
         dish_id: dishDto.id,
         order_number: dishDto.order,
       })),
     });
-    return this.ok(result);
+    return this.ok(createdMenu);
   }
 
   @put(':menuId')
   async updateMenuAsync(menuId: string, dto: MenuDto) {
-    const result = await this.menuService.updateAsync({
+    const updatedMenu = await this.menuService.updateAsync({
       ...dto,
       dishes: dto.dishes?.map((dishDto) => ({
         dish_id: dishDto.id,
         order_number: dishDto.order,
       })),
     });
-    return this.ok(result);
+    return this.ok(updatedMenu);
   }
 
   @delete_(':menuId')
@@ -61,19 +61,16 @@ export default class MenuApiController extends BaseApiController {
       return this.notFound('menu not found');
     }
 
-    const result = await this.menuService.deleteAsync(menu);
-    if (result) {
-      return this.noContent();
-    }
-    return this.badRequest('Deletion is failed');
+    const removed = await this.menuService.deleteAsync(menu);
+    return this.ok({ removed });
   }
 }
 
-export abstract class MenuDto {
-  abstract id: number;
-  abstract name?: string;
-  abstract author_id: number;
-  abstract dishes?: DishInMenuDto[];
+export interface MenuDto {
+  id: number;
+  name?: string;
+  author_id: number;
+  dishes?: DishInMenuDto[];
 }
 export interface DishInMenuDto extends DishDto {
   order?: number;

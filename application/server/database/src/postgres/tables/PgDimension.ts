@@ -1,6 +1,6 @@
 import { QueryConfig } from 'pg';
-import { DimensionTable } from '../../tables/DimensionTable';
 import { DimensionEntity } from '../../entities';
+import { DimensionTable } from '../../tables/DimensionTable';
 import { keyOf } from '../../utils';
 import { PgTableBase } from '../base';
 
@@ -12,6 +12,20 @@ export class PgDimension
   static get table() {
     return `${this.schema}.dimension`;
   }
+
+  byIdsAsync = async (ids: number[]): Promise<DimensionEntity[]> => {
+    const queryConfig: QueryConfig = {
+      text: `
+        SELECT * 
+        FROM ${this.table} 
+        WHERE ${keyOf<DimensionEntity>('id')} in ($1);
+      `,
+      values: ids,
+    };
+
+    const queryResult = await this.query<DimensionEntity>(queryConfig);
+    return queryResult?.rows ?? [];
+  };
 
   insertAsync = async (
     entity: Omit<DimensionEntity, 'id'>

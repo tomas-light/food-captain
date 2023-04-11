@@ -6,12 +6,8 @@ import { MakeOptional } from '../utils/MakeOptional';
 export class ImageService {
   constructor(private readonly db: Database, private readonly logger: Logger) {}
 
-  getAllAsync(): Promise<ImageEntity[]> {
-    return this.db.image.allAsync();
-  }
-
-  getImageByIdAsync(imageId: number): Promise<ImageEntity | undefined> {
-    return this.db.image.byIdAsync(imageId);
+  getImageByIdAsync(...args: Parameters<Database['image']['byIdAsync']>) {
+    return this.db.image.byIdAsync(...args);
   }
 
   async addAsync(
@@ -35,11 +31,10 @@ export class ImageService {
     return image;
   }
 
-  async updateAsync(image: ImageEntity): Promise<ImageEntity | undefined> {
-    return await this.db.image.updateAsync(image);
+  updateAsync(...args: Parameters<Database['image']['updateAsync']>) {
+    return this.db.image.updateAsync(...args);
   }
-
-  async deleteByIdAsync(imageId: ImageEntity['id']): Promise<boolean> {
-    return await this.db.image.deleteByIdAsync(imageId);
+  deleteByIdAsync(...args: Parameters<Database['image']['deleteByIdAsync']>) {
+    return this.db.image.deleteByIdAsync(...args);
   }
 }
