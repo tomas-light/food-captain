@@ -25,13 +25,12 @@ class AppInitializerController extends ControllerBase<State> {
 
   @watch
   initialized() {
-    // todo: remove delay later
     setTimeout(() => {
       console.log('AppInitializerController initialized');
       this.updateStore({
         initialized: true,
       });
-    }, 2000);
+    }, 300);
   }
 
   @watch

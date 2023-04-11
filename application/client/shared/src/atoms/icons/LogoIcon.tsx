@@ -3,7 +3,7 @@ import { CommonIconProps } from './CommonProps';
 type Props = CommonIconProps;
 
 const LogoIcon = (props: Props) => {
-  const { height = 88, color = '#6A1B9A', ...rest } = props;
+  const { height = 48, color = '#6A1B9A', ...rest } = props;
 
   return (
     <svg
