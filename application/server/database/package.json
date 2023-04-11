@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "main": "./src/index.ts",
+  "scripts": {
+    "db:docker:run": "docker compose up"
+  },
   "dependencies": {
     "@food-captain/server-utils": "0.0.0",
     "pg": "8.10.0"
