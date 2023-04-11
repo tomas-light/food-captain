@@ -1,0 +1,15 @@
+{
+  "menu": {
+    "one": "menu",
+    "many": "menus",
+    "create date": "creating date {{date}}",
+    "last update": "last update {{date}}",
+    "add": "$t(buttons.add) new $t(menu.one)",
+    "added": "$t(menu.one) was added.",
+    "edit": "$t(buttons.edit) selected $t(menu.one)",
+    "updated": "$t(menu.one) was updated.",
+    "remove": "remove selected $t(menu.many)",
+    "deleted": "was removed {{count}} $t(menu.one).",
+    "deleted_plural": "was removed {{count}} $t(menu.many)."
+  }
+}

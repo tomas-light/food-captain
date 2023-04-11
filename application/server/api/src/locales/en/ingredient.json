@@ -1,0 +1,12 @@
+{
+  "ingredient": {
+    "one": "ingredient",
+    "many": "ingredients",
+    "name": "$t(common.title)",
+    "image": "$t(common.image)",
+    "new": "new $t(ingredient.one)",
+    "open": "$t(buttons.open)",
+    "add": "$t(buttons.add) new $t(ingredient.one)",
+    "edit": "$t(buttons.edit) $t(ingredient.one)"
+  }
+}

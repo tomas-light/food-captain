@@ -1,0 +1,13 @@
+{
+  "common": {
+    "id": "ID",
+    "name": "name",
+    "title": "title",
+    "author": "author",
+    "image": "image",
+    "field": {
+      "required": "required field.",
+      "invalid": "field is invalid."
+    }
+  }
+}

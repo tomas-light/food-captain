@@ -1,0 +1,7 @@
+{
+  "dimension": {
+    "one": "dimension",
+    "many": "dimensions",
+    "size": "count"
+  }
+}
