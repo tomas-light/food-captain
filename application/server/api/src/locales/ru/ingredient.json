@@ -2,11 +2,11 @@
   "ingredient": {
     "one": "ингредиент",
     "many": "ингредиенты",
-    "name": "$t(title)",
-    "image": "$t(image)",
+    "name": "$t(common.title)",
+    "image": "$t(common.image)",
     "new": "новый $t(ingredient.one)",
-    "open": "$t(open)",
-    "add": "$t(add) новый $t(ingredient.one)",
-    "edit": "$t(edit) $t(ingredient.one)"
+    "open": "$t(buttons.open)",
+    "add": "$t(buttons.add) новый $t(ingredient.one)",
+    "edit": "$t(buttons.edit) $t(ingredient.one)"
   }
 }

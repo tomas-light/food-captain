@@ -1,0 +1,11 @@
+{
+  "buttons": {
+    "back": "back",
+    "add": "add",
+    "edit": "edit",
+    "save": "save",
+    "delete": "delete",
+    "open": "open",
+    "drag or click": "drag or click"
+  }
+}
