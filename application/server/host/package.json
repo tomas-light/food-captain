@@ -6,6 +6,7 @@
     "start": "run-s \"scrab-env\" start-app",
     "scrab-env": "ts-node build-scripts/scrab-envs.ts",
     "start-app": "cross-env NODE_ENV=development ts-node src/index.ts",
+    "caddy:run": "\"../../../caddy_windows_amd64.exe\" run --config Caddyfile",
     "-": "",
     "serve": "run-s \"scrab-env\" serve-app",
     "serve-app": "ts-node src/index.ts"

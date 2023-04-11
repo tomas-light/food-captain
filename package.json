@@ -10,9 +10,13 @@
     "application/**"
   ],
   "scripts": {
-    "start": "npm-run-all --parallel start:host start:api",
+    "start": "npm-run-all --parallel db:docker:run start:host start:api",
     "start:host": "yarn workspace @food-captain/host run start",
     "start:api": "yarn workspace @food-captain/api run start",
+    "-": "",
+    "db:docker:run": "yarn workspace @food-captain/database db:docker:run",
+    "caddy:run": "yarn workspace @food-captain/host caddy:run",
+    "--": "",
     "test": "yarn workspaces run test"
   },
   "devDependencies": {
