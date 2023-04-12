@@ -37,10 +37,12 @@ export const router = createBrowserRouter(
         index
         element={<Navigate to={appUrls.dish.relativeUrl()} replace />}
       />
-      {/* <Route path={appUrls.dish.relativeUrl()}>
-        <Route index element={<DishPage />} />
 
-        <Route
+      <Route path={appUrls.dish.relativeUrl()}>
+        {/* <Route index element={<DishPage />} />*/}
+        <Route index element={<p>dish page</p>} />
+
+        {/* <Route
           path={appUrls.dish.add.relativeUrl()}
           element={<AddDishPage />}
         />
@@ -51,8 +53,12 @@ export const router = createBrowserRouter(
             element={<EditDishPage />}
           />
           <Route index element={<DishDetailsPage />} />
-        </Route>
-      </Route>*/}
+        </Route>*/}
+      </Route>
+
+      <Route path={appUrls.menu.relativeUrl()}>
+        <Route index element={<p>menu page</p>} />
+      </Route>
 
       <Route path={appUrls.ingredient.relativeUrl()}>
         <Route index element={<IngredientPage />} />
