@@ -1,6 +1,5 @@
 import type { Request, Response } from 'express';
 import multer, { memoryStorage } from 'multer';
-//
 import { api, delete_, get, post } from 'mvc-middleware';
 import { ImageEntity } from '@food-captain/database';
 import { Logger } from '@food-captain/server-utils';
