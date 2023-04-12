@@ -1,11 +1,15 @@
-import { PassThrough } from 'stream';
 import type { Request, Response } from 'express';
-import { IncomingForm } from 'formidable';
+import multer, { memoryStorage } from 'multer';
+//
 import { api, delete_, get, post } from 'mvc-middleware';
 import { ImageEntity } from '@food-captain/database';
 import { Logger } from '@food-captain/server-utils';
 import { ImageService, NewImage } from '../services/ImageService';
 import BaseApiController from './BaseApiController';
+
+const upload = multer({
+  storage: memoryStorage(),
+});
 
 @api
 export default class ImageApiController extends BaseApiController {
@@ -48,71 +52,29 @@ export default class ImageApiController extends BaseApiController {
   @post('image')
   async addAsync() {
     try {
-      const { imageProperties, fileStream } = await new Promise<{
-        imageProperties: Pick<NewImage, 'tags' | 'file_name' | 'mime_type'>;
-        fileStream: PassThrough;
-      }>((resolve, reject) => {
-        const form = new IncomingForm();
-        const fileStream = new PassThrough();
-
-        const fileMeta = {} as Pick<NewImage, 'file_name' | 'mime_type'>;
-
-        form.onPart = (part) => {
-          // do not process not files
-          if (!part.originalFilename) {
-            form._handlePart(part);
-            return;
-          }
-
-          fileMeta.file_name = part.originalFilename;
-          fileMeta.mime_type = part.mimetype ?? 'unknown';
-
-          part.on('data', function (buffer: Buffer) {
-            fileStream.write(buffer);
-          });
-          part.on('end', function () {
-            fileStream.end();
-          });
-        };
-
-        form.parse(this.request, (error, fields, files) => {
-          if (error) {
-            reject(error);
+      const multerMiddleware = upload.single('imageFile');
+      await new Promise<void>((resolve, reject) => {
+        multerMiddleware(this.request, this.response, (middlewareError) => {
+          if (!middlewareError) {
+            resolve();
           } else {
-            resolve({
-              fileStream,
-              imageProperties: {
-                ...fields,
-                ...fileMeta,
-              },
-            });
+            reject(middlewareError);
           }
         });
       });
 
-      // todo: not sure if is this correct way
-      //  what about size limit? do we need to compare head and tail?
-      //  do we need to concatenate head and tail somehow?
-      const buffer = (
-        fileStream as unknown as {
-          _readableState: {
-            // BufferList
-            buffer: {
-              length: number;
-              head: {
-                data: Buffer;
-              };
-              tail: {
-                data: Buffer;
-              };
-            };
-          };
-        }
-      )._readableState.buffer.head.data;
+      const uploadedFile = this.request.file;
+      if (!uploadedFile) {
+        return this.badRequest('File has missed!');
+      }
+
+      const bodyParameters = this.request.body as { tags?: string };
 
       const image = await this.imageService.addAsync({
-        ...imageProperties,
-        content: buffer,
+        tags: bodyParameters.tags,
+        mime_type: uploadedFile.mimetype,
+        file_name: uploadedFile.originalname,
+        content: uploadedFile.buffer,
       });
       if (!image) {
         return this.notFound('Image is not saved');
