@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { useEffect, useState } from 'react';
 import { initReactI18next } from 'react-i18next';
-import { LocaleApi } from '@food-captain/client-api';
+import { LocaleApi, LocaleResource } from '@food-captain/client-api';
 
 export function configureTranslation() {
   i18next
@@ -26,26 +26,7 @@ export function configureTranslation() {
     });
 }
 
-export function useButtonsLocale() {
-  return useLocaleResource('getButtonsAsync');
-}
-
-export function useIngredientLocale() {
-  return useLocaleResource('getIngredientAsync');
-}
-
-function useLocaleResource(
-  resourceMethodName: keyof Pick<
-    LocaleApi,
-    | 'getButtonsAsync'
-    | 'getCommonAsync'
-    | 'getDimensionAsync'
-    | 'getDishAsync'
-    | 'getIngredientAsync'
-    | 'getMenuAsync'
-    | 'getRecipeAsync'
-  >
-) {
+export function useLocaleResource(resource: LocaleResource) {
   const localeApi = use(LocaleApi);
   const [loading, setLoading] = useState(false);
 
@@ -55,7 +36,7 @@ function useLocaleResource(
       try {
         const userLocale = i18next.language;
 
-        const response = await localeApi[resourceMethodName](userLocale);
+        const response = await localeApi.getAsync(userLocale, resource);
         if (response.isOk()) {
           i18next.addResourceBundle(userLocale, 'translation', response.data);
         }

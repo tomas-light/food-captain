@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { UserWithRoleDto } from '@food-captain/api';
 import { UserApi } from '@food-captain/client-api';
 import { Button } from '@food-captain/client-shared';
-import { useButtonsLocale } from '~/config/i18next';
+import { useLocaleResource } from '~/config/i18next';
 
 const SomePage: FC = () => {
   const userApi = use(UserApi);
   const { t } = useTranslation();
-  useButtonsLocale();
+  useLocaleResource('buttons');
   const [areUsersLoading, setAreUsersLoading] = useState(false);
 
   const [users, setUsers] = useState<UserWithRoleDto[]>([]);

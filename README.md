@@ -13,9 +13,10 @@ yarn install
 
 #### First run on Windows
 
-1) Modify your `C:/Windows/System32/drivers/etc/host` file with adding following line:
+1) Modify your `C:/Windows/System32/drivers/etc/host` file with adding following lines:
 ```
 127.0.0.1 food-captain.localhost
+127.0.0.1 api.food-captain.localhost
 ```
 
 2) Run caddy with Administration permission to allow him install TSL certificates in your system:
