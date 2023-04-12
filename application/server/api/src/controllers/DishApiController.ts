@@ -3,6 +3,7 @@ import { api, get, post, put, delete_ } from 'mvc-middleware';
 import { DishEntity } from '@food-captain/database';
 import { Logger } from '@food-captain/server-utils';
 import { DishService } from '../services/DishService';
+import { NewImage } from '../services/ImageService';
 import BaseApiController from './BaseApiController';
 
 @api
@@ -48,8 +49,8 @@ export default class DishApiController extends BaseApiController {
 
 export interface DishDto extends DishEntity {}
 export interface NewDishDto extends Omit<DishEntity, 'id'> {
-  image?: string;
+  image?: NewImage;
 }
 export interface UpdatedDishDto extends DishEntity {
-  image?: string;
+  image?: NewImage;
 }

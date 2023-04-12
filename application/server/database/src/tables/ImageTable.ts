@@ -2,6 +2,7 @@ import { ImageEntity } from '../entities';
 
 export interface ImageTable {
   allAsync(): Promise<ImageEntity[]>;
+  allIdsAsync(): Promise<ImageEntity['id'][]>;
 
   byIdAsync(id: number): Promise<ImageEntity | undefined>;
 

@@ -1,7 +1,7 @@
 import { Database, DishEntity, ImageEntity } from '@food-captain/database';
 import { Logger, metadata } from '@food-captain/server-utils';
 import { MakeOptional } from '../utils/MakeOptional';
-import { ImageService } from './ImageService';
+import { ImageService, NewImage } from './ImageService';
 
 @metadata
 export class DishService {
@@ -20,14 +20,14 @@ export class DishService {
   }
 
   async addAsync(
-    dishWithoutId: MakeOptional<DishEntity, 'id'> & { image?: string }
+    dishWithoutId: MakeOptional<DishEntity, 'id'> & { image?: NewImage }
   ): Promise<DishEntity | undefined> {
     const dish = dishWithoutId as DishEntity;
 
     let image: ImageEntity | undefined;
     if (dishWithoutId.image) {
       image = await this.imageService.addAsync({
-        content: dishWithoutId.image,
+        ...dishWithoutId.image,
       });
     }
 
@@ -48,7 +48,7 @@ export class DishService {
   }
 
   async updateAsync(
-    dish: MakeOptional<DishEntity, 'name'> & { image?: string }
+    dish: MakeOptional<DishEntity, 'name'> & { image?: NewImage }
   ): Promise<DishEntity | undefined> {
     const dishEntity = await this.db.dish.updateAsync(dish);
     if (!dishEntity) {
@@ -68,7 +68,7 @@ export class DishService {
 
       if (imageWasDeleted) {
         const imageEntity = await this.imageService.addAsync({
-          content: dish.image,
+          ...dish.image,
         });
         imageId = imageEntity?.id;
       }

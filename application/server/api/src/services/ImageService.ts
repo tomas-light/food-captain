@@ -1,22 +1,23 @@
 import { Database, ImageEntity } from '@food-captain/database';
 import { Logger, metadata } from '@food-captain/server-utils';
-import { MakeOptional } from '../utils/MakeOptional';
 
 @metadata
 export class ImageService {
   constructor(private readonly db: Database, private readonly logger: Logger) {}
 
+  allIdsAsync(...args: Parameters<Database['image']['allIdsAsync']>) {
+    return this.db.image.allIdsAsync(...args);
+  }
+
   getImageByIdAsync(...args: Parameters<Database['image']['byIdAsync']>) {
     return this.db.image.byIdAsync(...args);
   }
 
-  async addAsync(
-    imageWithoutId: MakeOptional<ImageEntity, 'id'>
-  ): Promise<ImageEntity | undefined> {
-    const image = imageWithoutId as ImageEntity;
+  async addAsync(newImage: NewImage): Promise<ImageEntity | undefined> {
+    const image = newImage as ImageEntity;
 
     const imageId = await this.db.image.insertAsync({
-      content: image.content,
+      ...image,
     });
 
     if (imageId == null) {
@@ -38,3 +39,5 @@ export class ImageService {
     return this.db.image.deleteByIdAsync(...args);
   }
 }
+
+export interface NewImage extends Omit<ImageEntity, 'id'> {}

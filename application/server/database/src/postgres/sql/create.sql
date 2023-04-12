@@ -162,8 +162,12 @@ ALTER SEQUENCE public.dish_set_id_seq OWNED BY public.dish_set.id;
 --
 
 CREATE TABLE public.image (
-    id integer NOT NULL,
-    content text NOT NULL
+	id serial4 NOT NULL,
+	"content" bytea NOT NULL,
+	file_name varchar(200) NULL,
+	mime_type varchar(200) NOT NULL,
+	tags varchar NULL,
+	CONSTRAINT pk_image_id PRIMARY KEY (id)
 );
 
 

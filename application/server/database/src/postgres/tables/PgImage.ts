@@ -10,17 +10,27 @@ export class PgImage extends PgTableBase<ImageEntity> implements ImageTable {
     return `${this.schema}.image`;
   }
 
+  allIdsAsync = async (): Promise<number[]> => {
+    const queryResult = await this.query<{ id: number }>(
+      `SELECT id from ${this.table}`
+    );
+    return queryResult?.rows.map((entity) => entity.id) ?? [];
+  };
+
   insertAsync = async (
     entity: Omit<ImageEntity, 'id'>
   ): Promise<number | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
-          ${keyOf<ImageEntity>('content')} 
+          ${keyOf<ImageEntity>('content')}, 
+          ${keyOf<ImageEntity>('file_name')}, 
+          ${keyOf<ImageEntity>('mime_type')}, 
+          ${keyOf<ImageEntity>('tags')} 
         ) 
-        VALUES($1) RETURNING ${keyOf<ImageEntity>('id')};
+        VALUES($1, $2, $3, $4) RETURNING ${keyOf<ImageEntity>('id')};
       `,
-      values: [entity.content],
+      values: [entity.content, entity.file_name, entity.mime_type, entity.tags],
     };
 
     const queryResult = await this.query<ImageEntity>(queryConfig);

@@ -1,5 +1,5 @@
-import { metadata } from '@food-captain/client-utils';
 import { AxiosRequestConfig } from 'axios';
+import { metadata } from '@food-captain/client-utils';
 import { ApiInterceptor } from '../ApiInterceptor';
 import { API_BASE_URL } from './API_BASE_URL';
 import { ApiResponse } from './ApiResponse';
