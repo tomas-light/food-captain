@@ -1,7 +1,9 @@
 import { Link } from '@chakra-ui/react';
+import clsx from 'clsx';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
+import { Icon } from '@food-captain/client-shared';
 import { useLocaleResource } from '~/config/i18next';
 import { appUrls } from '~/routing/appUrls';
 import classes from './NavigationPanel.module.scss';
@@ -35,17 +37,22 @@ const NavigationPanel = () => {
 
   return (
     <div className={classes.root}>
+      <Icon className={classes.logo} variant={'logo'} />
+
       {navigationElements.map((element) => (
         <Link
-          as={(props: any) => (
+          as={(props: { to: string }) => (
             <NavLink
               {...props}
               className={({ isActive, isPending }) =>
-                isActive ? 'my-active' : 'my-defult'
+                clsx(classes.link, {
+                  [classes.inactive]: !isActive,
+                  [classes.active]: isActive,
+                })
               }
             />
           )}
-          key={element.url}
+          key={element.labelKey}
           to={element.url}
         >
           {t(element.labelKey)}

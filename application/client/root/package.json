@@ -10,6 +10,7 @@
     "@tomas-light/mapper-js": "2.2.0",
     "cheap-di": "3.4.0-alpha-0.1",
     "cheap-di-react": "4.0.2",
+    "clsx": "1.2.1",
     "dayjs": "1.11.7",
     "i18next": "22.4.14",
     "i18next-browser-languagedetector": "7.0.1",

@@ -1,7 +1,48 @@
+@use '~@food-captain/client-shared/src/colors';
+@use "sass:map";
+
 .root {
   display: flex;
   flex-direction: column;
   padding: 16px;
   width: 160px;
   row-gap: 16px;
+  background-color: map.get(colors.$default, main);
+}
+
+.logo {
+  align-self: center;
+}
+
+.link {
+  padding: 4px 8px;
+
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+
+  text-transform: capitalize;
+  text-align: center;
+
+  &.inactive {
+    border-color: map.get(colors.$secondary, main);
+    background-color: map.get(colors.$secondary, main);
+    color: map.get(colors.$secondary, text);
+
+    &:hover {
+      background-color: map.get(colors.$secondary, hover);
+    }
+  }
+
+  &.active {
+    border-color: map.get(colors.$secondary, main);
+    color: map.get(colors.$secondary, main);
+
+    $secondaryOutline: map.get(colors.$secondary, outline);
+    background-color: map.get($secondaryOutline, main);
+
+    &:hover {
+      background-color: map.get($secondaryOutline, hoverOnDark);
+    }
+  }
 }
