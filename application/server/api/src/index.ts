@@ -13,4 +13,4 @@ export type {
   DimensionDto,
   NewDimensionDto,
 } from './controllers/DimensionApiController';
-export type { ImageEntity as ImageDto } from '@food-captain/database';
+export type { ImageDto, NewImageDto } from './controllers/ImageApiController';

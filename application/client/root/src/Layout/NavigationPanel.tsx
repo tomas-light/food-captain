@@ -1,9 +1,10 @@
-import { Box, Link } from '@chakra-ui/react';
+import { Link } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { useIngredientLocale } from '~/config/i18next';
 import { appUrls } from '~/routing/appUrls';
+import classes from './NavigationPanel.module.scss';
 
 type NavigationElement = {
   url: string;
@@ -27,7 +28,7 @@ const NavigationPanel = () => {
   ]);
 
   return (
-    <Box paddingX={8} width={200}>
+    <div className={classes.root}>
       {navigationElements.map((element) => (
         <Link
           as={(props: any) => (
@@ -44,7 +45,7 @@ const NavigationPanel = () => {
           {element.label}
         </Link>
       ))}
-    </Box>
+    </div>
   );
 };
 

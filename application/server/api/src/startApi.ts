@@ -1,6 +1,6 @@
 import http from 'http';
 import path from 'path';
-import { json } from 'body-parser';
+import bodyParser, { json } from 'body-parser';
 import cors from 'cors';
 import { container } from 'cheap-di';
 import cookieParser from 'cookie-parser';
@@ -30,6 +30,7 @@ import { ConsoleLogger } from './utils/ConsoleLogger';
       origin: 'https://food-captain.localhost',
     })
   );
+  // app.use(bodyParser.raw({ type: 'multipart/form-data', limit: '12mb' }));
 
   app.use(json({ limit: '50mb' }) as RequestHandler);
   app.use(cookieParser());
