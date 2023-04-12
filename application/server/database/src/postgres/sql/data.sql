@@ -23,10 +23,10 @@ VALUES
 
 INSERT INTO public.dish_in_menu (menu_id, dish_id, order_number)
 VALUES
+    (1,	3,	null),
     (1,	4,	null),
-    (1,	5,	null),
-    (2,	4,	null),
-    (2,	6,	null)
+    (2,	3,	null),
+    (2,	5,	null)
 ;
 
 INSERT INTO public.role (id, name)
