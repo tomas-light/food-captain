@@ -162,12 +162,11 @@ ALTER SEQUENCE public.dish_set_id_seq OWNED BY public.dish_set.id;
 --
 
 CREATE TABLE public.image (
-	id serial4 NOT NULL,
+	id integer NOT NULL,
 	"content" bytea NOT NULL,
 	file_name varchar(200) NULL,
 	mime_type varchar(200) NOT NULL,
-	tags varchar NULL,
-	CONSTRAINT pk_image_id PRIMARY KEY (id)
+	tags varchar NULL
 );
 
 
@@ -1049,10 +1048,10 @@ VALUES
 
 INSERT INTO public.dish_in_menu (menu_id, dish_id, order_number)
 VALUES
+    (1,	3,	null),
     (1,	4,	null),
-    (1,	5,	null),
-    (2,	4,	null),
-    (2,	6,	null)
+    (2,	3,	null),
+    (2,	5,	null)
 ;
 
 INSERT INTO public.role (id, name)
