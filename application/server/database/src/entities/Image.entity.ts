@@ -5,5 +5,5 @@ export interface ImageEntity extends Entity {
   mime_type: string;
   file_name?: string | null;
   tags?: string; // tag arrays joined with ','
-  content: ArrayBuffer;
+  content: Buffer;
 }
