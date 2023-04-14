@@ -11,6 +11,7 @@ import {
   Typography,
 } from '@food-captain/client-shared';
 import { ImageApi } from '@food-captain/client-api';
+import { useLocaleResource } from '~/config/i18next';
 import { NewIngredient } from '~/models';
 import { appUrls } from '~/routing';
 import { NavigationBar } from '~/Layout';
@@ -21,6 +22,8 @@ const AddIngredientPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useLocaleResource('ingredient');
 
   const imageApi = use(ImageApi);
 

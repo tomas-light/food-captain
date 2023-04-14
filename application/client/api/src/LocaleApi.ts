@@ -2,6 +2,7 @@ import { metadata } from '@food-captain/client-utils';
 import { ApiBase } from './base/ApiBase';
 
 export type LocaleResource =
+  | 'navigation'
   | 'buttons'
   | 'common'
   | 'dimension'

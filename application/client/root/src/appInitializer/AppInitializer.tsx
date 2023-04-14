@@ -1,6 +1,7 @@
 import { FC, ReactElement, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Icon, Typography, Fade } from '@food-captain/client-shared';
+import { useLocaleResource } from '~/config/i18next';
 import { useSelector } from '~/config/redux/useSelector';
 import { AppInitializerController } from './redux';
 import classes from './AppInitializer.module.scss';
@@ -13,6 +14,9 @@ export const AppInitializer: FC<Props> = (props) => {
   const { children } = props;
   const dispatch = useDispatch();
   const { initialized } = useSelector((state) => state.appInitializer);
+
+  useLocaleResource('buttons');
+  useLocaleResource('common');
 
   useEffect(() => {
     if (!initialized) {

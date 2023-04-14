@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ImageApi } from '@food-captain/client-api/src/ImageApi';
 import { Button, Typography } from '@food-captain/client-shared';
+import { useLocaleResource } from '~/config/i18next';
 import { useSelector } from '~/config/redux/useSelector';
 import { appUrls } from '~/routing/appUrls';
 import { IngredientController } from './redux/Ingredient.controller';
@@ -21,6 +22,8 @@ const IngredientPage = () => {
   const navigate = useNavigate();
 
   const ingredients = useSelector((state) => state.ingredient.ingredients);
+
+  useLocaleResource('ingredient');
 
   useEffect(() => {
     dispatch(IngredientController.loadIngredients());

@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Typography } from '@food-captain/client-shared';
+import { useLocaleResource } from '~/config/i18next';
 import { appUrls } from '~/routing';
 import classes from './ManagementPage.module.scss';
 
@@ -37,6 +38,10 @@ const Card: FC<CardProps> = (props) => {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  useLocaleResource('ingredient');
+  useLocaleResource('menu');
+  useLocaleResource('dish');
 
   return (
     <div className={classes.cardRoot} onClick={() => navigate(url)}>

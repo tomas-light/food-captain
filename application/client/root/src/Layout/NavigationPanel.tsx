@@ -17,17 +17,13 @@ export const NavigationPanel = () => {
   const { t } = useTranslation();
 
   // todo: optimize?
-  useLocaleResource('buttons');
-  useLocaleResource('common');
-  useLocaleResource('ingredient');
-  useLocaleResource('menu');
-  useLocaleResource('dish');
+  useLocaleResource('navigation');
 
   const [navigationElements] = useState<NavigationElement[]>([
-    { url: appUrls.management.url(), labelKey: 'management' },
+    { url: appUrls.management.url(), labelKey: 'navigation.management' },
     {
       url: appUrls.randomizer.url(),
-      labelKey: 'randomizer',
+      labelKey: 'navigation.randomizer',
     },
   ]);
 

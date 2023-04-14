@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { TextField } from '@food-captain/client-shared/src/organisms/fields/TextField';
 import { Button } from '@food-captain/client-shared';
+import { useLocaleResource } from '~/config/i18next';
 import { useSelector } from '~/config/redux/useSelector';
 import { Ingredient } from '~/models';
 import { appUrls } from '~/routing';
@@ -30,6 +31,8 @@ const EditIngredientPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useLocaleResource('ingredient');
 
   const ingredients = useSelector((state) => state.ingredient.ingredients);
 
