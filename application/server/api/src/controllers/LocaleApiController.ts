@@ -16,45 +16,8 @@ export default class LocaleApiController extends BaseApiController {
     super(logger, request, response);
   }
 
-  @get('buttons/:locale')
-  async getButtonsAsync(localeOrLocaleWithRegion: string) {
-    return this.getLocaleResource(localeOrLocaleWithRegion, 'buttons');
-  }
-
-  @get('common/:locale')
-  async getCommonAsync(localeOrLocaleWithRegion: string) {
-    return this.getLocaleResource(localeOrLocaleWithRegion, 'common');
-  }
-
-  @get('dimension/:locale')
-  async getDimensionAsync(localeOrLocaleWithRegion: string) {
-    return this.getLocaleResource(localeOrLocaleWithRegion, 'dimension');
-  }
-
-  @get('dish/:locale')
-  async getDishAsync(localeOrLocaleWithRegion: string) {
-    return this.getLocaleResource(localeOrLocaleWithRegion, 'dish');
-  }
-
-  @get('ingredient/:locale')
-  async getIngredientAsync(localeOrLocaleWithRegion: string) {
-    return this.getLocaleResource(localeOrLocaleWithRegion, 'ingredient');
-  }
-
-  @get('menu/:locale')
-  async getMenuAsync(localeOrLocaleWithRegion: string) {
-    return this.getLocaleResource(localeOrLocaleWithRegion, 'menu');
-  }
-
-  @get('recipe/:locale')
-  async getRecipeAsync(localeOrLocaleWithRegion: string) {
-    return this.getLocaleResource(localeOrLocaleWithRegion, 'recipe');
-  }
-
-  private getLocaleResource(
-    localeOrLocaleWithRegion: string,
-    resource: string
-  ) {
+  @get(':localeOrLocaleWithRegion/:resource')
+  getLocaleResource(localeOrLocaleWithRegion: string, resource: string) {
     const locale = this.getLocale(localeOrLocaleWithRegion);
 
     if (!supportedLocales.includes(locale)) {
