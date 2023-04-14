@@ -30,7 +30,7 @@ const IngredientPage = () => {
     <div>
       <h1>{t('ingredient.many')}</h1>
 
-      <Button onClick={() => navigate(appUrls.ingredient.add.url())}>
+      <Button onClick={() => navigate(appUrls.management.ingredient.add.url())}>
         {t('ingredient.add')}
       </Button>
 
@@ -57,7 +57,7 @@ const IngredientPage = () => {
                 <Button
                   onClick={() =>
                     navigate(
-                      appUrls.ingredient
+                      appUrls.management.ingredient
                         .ingredientId(ingredient.id.toString())
                         .edit.url()
                     )

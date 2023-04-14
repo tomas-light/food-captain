@@ -13,7 +13,7 @@ type NavigationElement = {
   labelKey: string;
 };
 
-const NavigationPanel = () => {
+export const NavigationPanel = () => {
   const { t } = useTranslation();
 
   // todo: optimize?
@@ -24,14 +24,10 @@ const NavigationPanel = () => {
   useLocaleResource('dish');
 
   const [navigationElements] = useState<NavigationElement[]>([
-    { url: appUrls.menu.url(), labelKey: 'menu.many' },
+    { url: appUrls.management.url(), labelKey: 'management' },
     {
-      url: appUrls.dish.url(),
-      labelKey: 'dish.many',
-    },
-    {
-      url: appUrls.ingredient.url(),
-      labelKey: 'ingredient.many',
+      url: appUrls.randomizer.url(),
+      labelKey: 'randomizer',
     },
   ]);
 
@@ -42,15 +38,18 @@ const NavigationPanel = () => {
       {navigationElements.map((element) => (
         <Link
           as={(props: { to: string }) => (
-            <NavLink
-              {...props}
-              className={({ isActive, isPending }) =>
-                clsx(classes.link, {
-                  [classes.inactive]: !isActive,
-                  [classes.active]: isActive,
-                })
-              }
-            />
+            <div className={classes.linkContainer}>
+              <NavLink
+                {...props}
+                className={({ isActive, isPending }) =>
+                  clsx(classes.link, {
+                    [classes.inactive]: !isActive,
+                    [classes.active]: isActive,
+                  })
+                }
+              />
+              <Icon className={classes.meatBall} variant={'meatBall'} />
+            </div>
           )}
           key={element.labelKey}
           to={element.url}
@@ -61,5 +60,3 @@ const NavigationPanel = () => {
     </div>
   );
 };
-
-export { NavigationPanel };

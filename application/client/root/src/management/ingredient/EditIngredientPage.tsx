@@ -61,7 +61,7 @@ const EditIngredientPage = () => {
     dispatch(
       IngredientController.updateIngredient({
         ingredient,
-        callback: () => navigate(appUrls.ingredient.url()),
+        callback: () => navigate(appUrls.management.ingredient.url()),
       })
     );
   };
@@ -70,7 +70,7 @@ const EditIngredientPage = () => {
     dispatch(
       IngredientController.removeIngredient({
         ingredientId: ingredient.id,
-        callback: () => navigate(appUrls.ingredient.url()),
+        callback: () => navigate(appUrls.management.ingredient.url()),
       })
     );
   };
@@ -84,7 +84,7 @@ const EditIngredientPage = () => {
         rowGap: '16px',
       }}
     >
-      <Button onClick={() => navigate(appUrls.ingredient.url())}>
+      <Button onClick={() => navigate(appUrls.management.ingredient.url())}>
         {t('buttons.back')}
       </Button>
 

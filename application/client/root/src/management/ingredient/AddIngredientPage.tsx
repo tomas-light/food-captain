@@ -4,15 +4,16 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ImageApi } from '@food-captain/client-api';
 import {
   Button,
-  TextField,
   ImageField,
+  TextField,
   Typography,
 } from '@food-captain/client-shared';
+import { ImageApi } from '@food-captain/client-api';
 import { NewIngredient } from '~/models';
 import { appUrls } from '~/routing';
+import { NavigationBar } from '~/Layout';
 import { IngredientController } from './redux/Ingredient.controller';
 import classes from './AddIngredientPage.module.scss';
 
@@ -42,17 +43,13 @@ const AddIngredientPage = () => {
     dispatch(
       IngredientController.addIngredient({
         ingredient,
-        callback: () => navigate(appUrls.ingredient.url()),
+        callback: () => navigate(appUrls.management.ingredient.url()),
       })
     );
   };
 
   return (
     <div>
-      <Button onClick={() => navigate(appUrls.ingredient.url())}>
-        {t('buttons.back')}
-      </Button>
-
       <h1>{t('ingredient.add')}</h1>
 
       <TextField

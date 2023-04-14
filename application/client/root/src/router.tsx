@@ -8,16 +8,17 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { App } from '~/App';
-import { AddIngredientPage } from '~/ingredient/AddIngredientPage';
-import { EditIngredientPage } from '~/ingredient/EditIngredientPage';
-import { IngredientPage } from '~/ingredient/IngredientPage';
+import { AddIngredientPage } from '~/management/ingredient/AddIngredientPage';
+import { EditIngredientPage } from '~/management/ingredient/EditIngredientPage';
+import { IngredientPage } from '~/management/ingredient/IngredientPage';
+import { ManagementPage } from '~/management';
 import { appUrls } from './routing/appUrls';
 
 const FallbackRedirect = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate(appUrls.dish.url());
+    navigate(appUrls.management.dish.url());
   }, []);
 
   return null;
@@ -35,14 +36,17 @@ export const router = createBrowserRouter(
     >
       <Route
         index
-        element={<Navigate to={appUrls.dish.relativeUrl()} replace />}
+        element={<Navigate to={appUrls.management.relativeUrl()} replace />}
       />
 
-      <Route path={appUrls.dish.relativeUrl()}>
-        {/* <Route index element={<DishPage />} />*/}
-        <Route index element={<p>dish page</p>} />
+      <Route path={appUrls.management.relativeUrl()}>
+        <Route index element={<ManagementPage />} />
 
-        {/* <Route
+        <Route path={appUrls.management.dish.relativeUrl()}>
+          {/* <Route index element={<DishPage />} />*/}
+          <Route index element={<p>dish page</p>} />
+
+          {/* <Route
           path={appUrls.dish.add.relativeUrl()}
           element={<AddDishPage />}
         />
@@ -54,27 +58,36 @@ export const router = createBrowserRouter(
           />
           <Route index element={<DishDetailsPage />} />
         </Route>*/}
-      </Route>
-
-      <Route path={appUrls.menu.relativeUrl()}>
-        <Route index element={<p>menu page</p>} />
-      </Route>
-
-      <Route path={appUrls.ingredient.relativeUrl()}>
-        <Route index element={<IngredientPage />} />
-
-        <Route
-          path={appUrls.ingredient.add.relativeUrl()}
-          element={<AddIngredientPage />}
-        />
-
-        <Route path={appUrls.ingredient.ingredientId().relativeUrl()}>
-          <Route
-            path={appUrls.ingredient.ingredientId().edit.relativeUrl()}
-            element={<EditIngredientPage />}
-          />
-          {/* <Route index element={<IngredientDetailsPage />} />*/}
         </Route>
+
+        <Route path={appUrls.management.menu.relativeUrl()}>
+          <Route index element={<p>menu page</p>} />
+        </Route>
+
+        <Route path={appUrls.management.ingredient.relativeUrl()}>
+          <Route index element={<IngredientPage />} />
+
+          <Route
+            path={appUrls.management.ingredient.add.relativeUrl()}
+            element={<AddIngredientPage />}
+          />
+
+          <Route
+            path={appUrls.management.ingredient.ingredientId().relativeUrl()}
+          >
+            <Route
+              path={appUrls.management.ingredient
+                .ingredientId()
+                .edit.relativeUrl()}
+              element={<EditIngredientPage />}
+            />
+            {/* <Route index element={<IngredientDetailsPage />} />*/}
+          </Route>
+        </Route>
+      </Route>
+
+      <Route path={appUrls.randomizer.relativeUrl()}>
+        <Route index element={<p>Randomizer page</p>} />
       </Route>
 
       <Route path="*" element={<FallbackRedirect />} />

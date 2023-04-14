@@ -15,7 +15,7 @@ import {
   stringifyState,
 } from '@food-captain/client-utils';
 import { AppInitializerStore } from '~/appInitializer/redux';
-import { IngredientStore } from '~/ingredient/redux';
+import { IngredientStore } from '~/management/ingredient/redux';
 import { registerControllerDependencies } from '../registerControllerDependencies';
 import { IS_DEV_MODE } from '../environment';
 
