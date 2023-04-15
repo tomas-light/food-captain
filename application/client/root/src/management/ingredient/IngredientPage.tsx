@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ImageApi } from '@food-captain/client-api/src/ImageApi';
 import { Button, Typography } from '@food-captain/client-shared';
+import { useLocaleResource } from '~/config/i18next';
 import { useSelector } from '~/config/redux/useSelector';
 import { appUrls } from '~/routing/appUrls';
 import { IngredientController } from './redux/Ingredient.controller';
@@ -22,6 +23,8 @@ const IngredientPage = () => {
 
   const ingredients = useSelector((state) => state.ingredient.ingredients);
 
+  useLocaleResource('ingredient');
+
   useEffect(() => {
     dispatch(IngredientController.loadIngredients());
   }, []);
@@ -30,7 +33,7 @@ const IngredientPage = () => {
     <div>
       <h1>{t('ingredient.many')}</h1>
 
-      <Button onClick={() => navigate(appUrls.ingredient.add.url())}>
+      <Button onClick={() => navigate(appUrls.management.ingredient.add.url())}>
         {t('ingredient.add')}
       </Button>
 
@@ -57,7 +60,7 @@ const IngredientPage = () => {
                 <Button
                   onClick={() =>
                     navigate(
-                      appUrls.ingredient
+                      appUrls.management.ingredient
                         .ingredientId(ingredient.id.toString())
                         .edit.url()
                     )

@@ -1,0 +1,32 @@
+@use '~@food-captain/client-shared/src/colors';
+@use "sass:map";
+
+$cardWidth: 248px;
+
+.root {
+  padding: 24px 48px;
+  display: grid;
+  gap: 48px;
+  grid-template-columns: repeat(auto-fill, $cardWidth);
+}
+
+.cardRoot {
+  border-image-source: url("macaroni-border.png");
+  border-image-slice: 24%;
+  border-image-width: 54px;
+  border-image-outset: 13px; // 1/2 of width - place by center
+  border-image-repeat: repeat;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: $cardWidth;
+  height: 164px;
+
+  background-color: colors.$background;
+
+  &:hover {
+    background-color: rgba(245, 208, 96, 0.80);
+  }
+}

@@ -1,5 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { theme } from '@food-captain/client-shared';
+import { NavigationBar } from '~/Layout/NavigationBar';
 import { NavigationPanel } from './NavigationPanel';
 
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
@@ -23,6 +24,8 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
           boxSizing: 'border-box',
         }}
       >
+        <NavigationBar />
+
         {children}
       </main>
 

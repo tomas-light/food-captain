@@ -1,8 +1,12 @@
 import { ComponentProps, FC, ForwardedRef, forwardRef } from 'react';
+import { ChevronLeftIcon } from '@chakra-ui/icons';
 import { LogoIcon } from './LogoIcon';
+import { MeatBallIcon } from './MeatBallIcon';
 
 const variants = {
+  chevronLeft: ChevronLeftIcon,
   logo: LogoIcon,
+  meatBall: MeatBallIcon,
 };
 
 type Variants = typeof variants;

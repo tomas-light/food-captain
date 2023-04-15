@@ -26,12 +26,20 @@ export function configureTranslation() {
     });
 }
 
+const loadedResources = new Set<string>();
+
 export function useLocaleResource(resource: LocaleResource) {
   const localeApi = use(LocaleApi);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
+      if (loadedResources.has(resource)) {
+        return;
+      }
+
+      loadedResources.add(resource);
+
       setLoading(true);
       try {
         const userLocale = i18next.language;

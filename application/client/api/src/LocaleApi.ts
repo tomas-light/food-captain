@@ -2,6 +2,7 @@ import { metadata } from '@food-captain/client-utils';
 import { ApiBase } from './base/ApiBase';
 
 export type LocaleResource =
+  | 'navigation'
   | 'buttons'
   | 'common'
   | 'dimension'
@@ -13,6 +14,6 @@ export type LocaleResource =
 @metadata
 export class LocaleApi extends ApiBase {
   async getAsync(locale: string, resource: LocaleResource) {
-    return this.get<object>(`/locale/${resource}/${locale}`);
+    return this.get<object>(`/locale/${locale}/${resource}`);
   }
 }
