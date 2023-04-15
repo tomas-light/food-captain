@@ -1,13 +1,19 @@
 @use '~@food-captain/client-shared/src/colors';
 @use "sass:map";
 
+$panelPadding: 16px;
+
 .root {
+  padding: $panelPadding;
+  width: 184px;
+  background-color: map.get(colors.$default, main);
+}
+
+.relativeContainerForMeatBall {
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  width: 184px;
   row-gap: 16px;
-  background-color: map.get(colors.$default, main);
+  position: relative;
 }
 
 .logo {
@@ -31,7 +37,7 @@
     }
 
     & + .meatBall {
-      display: none;
+      never: 0;
     }
   }
 
@@ -41,11 +47,40 @@
     }
 
     & + .meatBall {
-      display: inline;
+      visibility: visible;
+      animation-name: meatBallFall, meatBallFallTransition;
+      animation-timing-function: linear, steps(34);
+      animation-duration: 0.3s, 0.7s;
     }
   }
 }
 
 .meatBall {
-  never: 0;
+  width: 47px;
+  height: 40px;
+  background-image: url("Maeatball Sprite.png");
+  background-position: 0 0;
+
+  visibility: hidden;
+  animation-name: none;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  position: absolute;
+  right: 0;
+}
+
+@keyframes meatBallFall {
+  from {
+    top: 0;
+    transform: translateY(calc(-100% - $panelPadding));
+  }
+
+  to {
+    top: auto;
+    transform: translateY(0);
+  }
+}
+
+@keyframes meatBallFallTransition {
+  to { background-position: -1598px; }
 }
