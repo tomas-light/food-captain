@@ -15,8 +15,13 @@ type NavigationElement = {
 
 export const NavigationPanel = () => {
   const { t } = useTranslation();
+  const [playMeatBallSlap] = useState(() => {
+    const audio = new Audio('/sounds/meatBall_slap.mp3');
+    return () => {
+      audio.play();
+    };
+  });
 
-  // todo: optimize?
   useLocaleResource('navigation');
 
   const [navigationElements] = useState<NavigationElement[]>([
@@ -29,30 +34,43 @@ export const NavigationPanel = () => {
 
   return (
     <div className={classes.root}>
-      <Icon className={classes.logo} variant={'logo'} />
+      <div className={classes.relativeContainerForMeatBall}>
+        <Icon className={classes.logo} variant={'logo'} />
 
-      {navigationElements.map((element) => (
-        <Link
-          as={(props: { to: string }) => (
-            <div className={classes.linkContainer}>
-              <NavLink
-                {...props}
-                className={({ isActive, isPending }) =>
-                  clsx(classes.link, {
-                    [classes.inactive]: !isActive,
-                    [classes.active]: isActive,
-                  })
-                }
-              />
-              <Icon className={classes.meatBall} variant={'meatBall'} />
-            </div>
-          )}
-          key={element.labelKey}
-          to={element.url}
-        >
-          {t(element.labelKey)}
-        </Link>
-      ))}
+        {navigationElements.map((element) => (
+          <Link
+            as={(props: { to: string }) => (
+              <div
+                className={classes.linkContainer}
+                ref={(div) => {
+                  if (div) {
+                    div.addEventListener(
+                      'animationend',
+                      playMeatBallSlap,
+                      false
+                    );
+                  }
+                }}
+              >
+                <NavLink
+                  {...props}
+                  className={({ isActive, isPending }) =>
+                    clsx(classes.link, {
+                      [classes.inactive]: !isActive,
+                      [classes.active]: isActive,
+                    })
+                  }
+                />
+                <div className={classes.meatBall}></div>
+              </div>
+            )}
+            key={element.labelKey}
+            to={element.url}
+          >
+            {t(element.labelKey)}
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };
