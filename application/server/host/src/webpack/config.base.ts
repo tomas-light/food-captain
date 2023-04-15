@@ -37,6 +37,10 @@ async function makeBaseConfig() {
                 from: paths.join(paths.static, 'img'),
                 to: paths.join(paths.clientDist, 'img'),
               },
+              {
+                from: paths.join(paths.static, 'sounds'),
+                to: paths.join(paths.clientDist, 'sounds'),
+              },
             ],
           }),
           new ModuleFederationPlugin({

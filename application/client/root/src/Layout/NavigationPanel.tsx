@@ -15,8 +15,13 @@ type NavigationElement = {
 
 export const NavigationPanel = () => {
   const { t } = useTranslation();
+  const [playMeatBallSlap] = useState(() => {
+    const audio = new Audio('/sounds/meatBall_slap.mp3');
+    return () => {
+      audio.play();
+    };
+  });
 
-  // todo: optimize?
   useLocaleResource('navigation');
 
   const [navigationElements] = useState<NavigationElement[]>([
@@ -35,7 +40,18 @@ export const NavigationPanel = () => {
         {navigationElements.map((element) => (
           <Link
             as={(props: { to: string }) => (
-              <div className={classes.linkContainer}>
+              <div
+                className={classes.linkContainer}
+                ref={(div) => {
+                  if (div) {
+                    div.addEventListener(
+                      'animationend',
+                      playMeatBallSlap,
+                      false
+                    );
+                  }
+                }}
+              >
                 <NavLink
                   {...props}
                   className={({ isActive, isPending }) =>
@@ -46,7 +62,6 @@ export const NavigationPanel = () => {
                   }
                 />
                 <div className={classes.meatBall}></div>
-                {/* <Icon className={classes.meatBall} variant={'meatBall'} />*/}
               </div>
             )}
             key={element.labelKey}
