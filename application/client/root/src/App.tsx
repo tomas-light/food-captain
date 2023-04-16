@@ -1,11 +1,12 @@
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import DayjsAdapter from '@date-io/dayjs';
 import { DIOneTimeProvider } from 'cheap-di-react';
 import { FC, ReactElement, useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
-import { LocaleApi } from '@food-captain/client-api/src/LocaleApi';
+import { theme } from '@food-captain/client-shared';
 import {
   ApiInterceptor,
+  LocaleApi,
   LoggedApiError,
   LoggedApiRequest,
   LoggedApiResponse,
@@ -19,6 +20,12 @@ import { configureRedux } from './config/redux';
 
 const dayjsAdapter = new DayjsAdapter(); // todo: share with Chakra UI ?
 configureTranslation();
+
+const extendedTheme = extendTheme({
+  colors: {
+    ...theme.colors,
+  },
+});
 
 const App: FC<{ children: ReactElement }> = (props) => {
   const { children } = props;
@@ -56,7 +63,7 @@ const App: FC<{ children: ReactElement }> = (props) => {
   }
 
   return (
-    <ChakraProvider resetCSS>
+    <ChakraProvider resetCSS theme={extendedTheme}>
       <Provider store={config.store}>
         <DIOneTimeProvider parentContainer={config.container}>
           <AppInitializer>

@@ -1,0 +1,27 @@
+@use "sass:map";
+@import '../../colors';
+
+$imageSize: 200px;
+
+.positionContainer {
+  position: relative;
+  height: $imageSize;
+  width: $imageSize;
+}
+
+.image {
+  height: $imageSize;
+  width: $imageSize;
+}
+
+.withoutImage {
+  background-color: #EDF2F7;
+}
+
+.icon {
+  color: map.get($secondary, main);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

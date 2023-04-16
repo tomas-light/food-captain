@@ -11,17 +11,19 @@ type Props = PropsWithChildren<
 >;
 
 const Button = (props: Props) => {
-  const { state = {}, title, disabled, ...rest } = props;
+  const { className, state = {}, title, disabled, ...rest } = props;
 
   const _disabled =
     state.loading || state.disabled || state.pristine || disabled;
 
   return (
-    <ButtonWrapper title={title} disabled={_disabled}>
+    <ButtonWrapper className={className} title={title} disabled={_disabled}>
       <ChakraButton
         aria-label={title}
         isLoading={state.loading}
-        disabled={_disabled}
+        isDisabled={_disabled}
+        background="secondary.main"
+        color="secondary.text"
         {...rest}
       />
     </ButtonWrapper>

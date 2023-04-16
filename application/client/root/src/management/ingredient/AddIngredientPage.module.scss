@@ -1,11 +1,76 @@
-.images {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 16px
+$imageSize: 200px;
+
+.root {
+  display: grid;
+  grid-template-areas:
+    ". ."
+    "title-field ."
+    ". ."
+    "image-field ."
+    ". ."
+    "image-preview image-preview"
+    ". ."
+    "save-button ."
+    ". ."
+    "gallery gallery"
+  ;
+  grid-template-columns: 222px 1fr;
+  grid-template-rows:
+    24px
+    auto
+    24px
+    auto
+    24px
+    auto
+    36px
+    auto
+    36px
+    auto
+  ;
 }
 
-.storedImage {
-  max-height: 200px;
-  max-width: 200px;
+.titleField {
+  grid-area: title-field;
+}
+.imageField {
+  grid-area: image-field;
+}
+
+.imagePreview {
+  grid-area: image-preview;
+}
+.saveButton {
+  grid-area: save-button;
+}
+
+.gallery {
+  grid-area: gallery;
+  display: grid;
+  grid-template-areas: "gallery-title" "." "search" "." "images";
+  grid-template-rows: auto 24px auto 24px auto;
+}
+
+.galleryTitle {
+  grid-area: gallery-title;
+  text-transform: capitalize;
+}
+
+.search {
+  grid-area: search;
+}
+
+.images {
+  grid-area: images;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, $imageSize);
+  gap: 24px;
+}
+
+.imageCard {
+  position: relative;
+}
+
+.imageCheckbox {
+  top: 8px;
+  right: 8px;
 }

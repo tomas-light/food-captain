@@ -3,6 +3,7 @@ import { FC, ReactNode } from 'react';
 
 type Props = {
   size?: keyof typeof sizes;
+  className?: string;
   children: ReactNode;
 };
 
@@ -15,9 +16,13 @@ const sizes = {
 };
 
 const Typography: FC<Props> = (props) => {
-  const { children, size = 16 } = props;
+  const { children, className, size = 16 } = props;
 
-  return <Text fontSize={sizes[size]}>{children}</Text>;
+  return (
+    <Text className={className} fontSize={sizes[size]}>
+      {children}
+    </Text>
+  );
 };
 
 export { Typography };

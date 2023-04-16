@@ -5,6 +5,8 @@
     "title": "title",
     "author": "author",
     "image": "image",
+    "imageSearch": "search image",
+    "gallery": "gallery",
     "field": {
       "required": "required field.",
       "invalid": "field is invalid."
