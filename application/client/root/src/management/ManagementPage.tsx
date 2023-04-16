@@ -19,6 +19,10 @@ export const ManagementPage: FC = () => {
     },
   ]);
 
+  useLocaleResource('ingredient');
+  useLocaleResource('menu');
+  useLocaleResource('dish');
+
   return (
     <div className={classes.root}>
       {cards.map(({ labelKey, url }) => (
@@ -39,10 +43,6 @@ const MacaroniCard: FC<CardProps> = (props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  useLocaleResource('ingredient');
-  useLocaleResource('menu');
-  useLocaleResource('dish');
-
   return (
     <div className={classes.cardRoot} onClick={() => navigate(url)}>
       <Typography size={18}>{t(labelKey)}</Typography>
@@ -55,10 +55,6 @@ const PlatterCard: FC<CardProps> = (props) => {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
-
-  useLocaleResource('ingredient');
-  useLocaleResource('menu');
-  useLocaleResource('dish');
 
   return (
     <div className={classes.platterRoot} onClick={() => navigate(url)}>

@@ -36,10 +36,10 @@ const App: FC<{ children: ReactElement }> = (props) => {
 
       container.registerType(ApiInterceptor).with(
         (request: LoggedApiRequest): void => {
-          console.log('[API] request', request);
+          // console.log('[API] request', request);
         },
         (response: LoggedApiResponse): void => {
-          console.log('[API] response', response);
+          // console.log('[API] response', response);
         },
         (error: LoggedApiError): void => {
           console.log('[API] error', error);

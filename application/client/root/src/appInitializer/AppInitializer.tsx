@@ -15,8 +15,8 @@ export const AppInitializer: FC<Props> = (props) => {
   const dispatch = useDispatch();
   const { initialized } = useSelector((state) => state.appInitializer);
 
-  useLocaleResource('buttons');
-  useLocaleResource('common');
+  const { loading: buttonsResourcesAreLoading } = useLocaleResource('buttons');
+  const { loading: commonResourcesAreLoading } = useLocaleResource('common');
 
   useEffect(() => {
     if (!initialized) {
@@ -24,9 +24,7 @@ export const AppInitializer: FC<Props> = (props) => {
     }
   }, [initialized]);
 
-  console.log('AppInitializer initialized', initialized);
-
-  if (!initialized) {
+  if (!initialized || buttonsResourcesAreLoading || commonResourcesAreLoading) {
     return (
       <Fade isOpen={true}>
         <div className={classes.initialScreen}>
