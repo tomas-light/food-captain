@@ -1,0 +1,43 @@
+@import '~@food-captain/client-shared/src/atoms/Image/Image.module';
+
+.root {
+  width: fit-content;
+  display: grid;
+  grid-template-areas: "." "header" "." "ingredients";
+  grid-template-rows: 24px auto 24px auto;
+}
+
+$fieldWidth: 222px;
+
+.header {
+  grid-area: header;
+  display: grid;
+  grid-template-areas: "search-field . add-button";
+  grid-template-columns: $fieldWidth 1fr auto;
+}
+
+.searchField {
+  grid-area: search-field;
+}
+
+.addButton {
+  grid-area: add-button;
+}
+
+$padding: 8px;
+
+.ingredients {
+  grid-area: ingredients;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, calc($imageSize + $padding + $padding));
+  gap: 24px;
+}
+
+.cardHeader {
+  text-align: center;
+}
+
+.cardFooter {
+  gap: 16px;
+  justify-content: space-evenly;
+}

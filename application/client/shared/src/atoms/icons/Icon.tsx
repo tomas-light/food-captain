@@ -1,12 +1,24 @@
-import { ComponentProps, FC, ForwardedRef, forwardRef } from 'react';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
+import { ComponentProps, FC, ForwardedRef, forwardRef } from 'react';
+import { ImageIcon } from './ImageIcon';
+import { ImageSearchIcon } from './ImageSearchIcon';
 import { LogoIcon } from './LogoIcon';
 import { MeatBallIcon } from './MeatBallIcon';
+import { NoImageIcon } from './NoImageIcon';
+import { PlatterIcon } from './PlatterIcon';
+import { SearchIcon } from './SearchIcon';
+import { TitleIcon } from './TitleIcon';
 
 const variants = {
   chevronLeft: ChevronLeftIcon,
+  image: ImageIcon,
+  imageSearch: ImageSearchIcon,
   logo: LogoIcon,
   meatBall: MeatBallIcon,
+  noImage: NoImageIcon,
+  platter: PlatterIcon,
+  search: SearchIcon,
+  title: TitleIcon,
 };
 
 type Variants = typeof variants;

@@ -1,5 +1,6 @@
-import { Button as ChakraButton } from '@chakra-ui/react';
+import { Button as ChakraButton, ButtonProps } from '@chakra-ui/react';
 import { PropsWithChildren } from 'react';
+import { theme } from '../../../theme';
 import { ButtonState } from '../ButtonState';
 import { ButtonWrapper, ButtonWrapperProps } from './ButtonWrapper';
 
@@ -7,21 +8,30 @@ type Props = PropsWithChildren<
   ButtonWrapperProps & {
     state?: ButtonState;
     onClick?: () => void;
-  }
+    color?: keyof (typeof theme)['colors'];
+  } & Pick<ButtonProps, 'size'>
 >;
 
 const Button = (props: Props) => {
-  const { state = {}, title, disabled, ...rest } = props;
+  const {
+    className,
+    state = {},
+    title,
+    disabled,
+    color = 'secondary',
+    ...rest
+  } = props;
 
   const _disabled =
     state.loading || state.disabled || state.pristine || disabled;
 
   return (
-    <ButtonWrapper title={title} disabled={_disabled}>
+    <ButtonWrapper className={className} title={title} disabled={_disabled}>
       <ChakraButton
         aria-label={title}
         isLoading={state.loading}
-        disabled={_disabled}
+        isDisabled={_disabled}
+        colorScheme={color}
         {...rest}
       />
     </ButtonWrapper>

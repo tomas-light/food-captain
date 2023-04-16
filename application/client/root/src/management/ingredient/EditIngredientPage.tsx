@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { TextField } from '@food-captain/client-shared/src/organisms/fields/TextField';
-import { Button } from '@food-captain/client-shared';
+import { Typography } from '@food-captain/client-shared';
 import { useLocaleResource } from '~/config/i18next';
 import { useSelector } from '~/config/redux/useSelector';
+import { IngredientPageTemplate } from '~/management/ingredient/IngredientPageTemplate';
 import { Ingredient } from '~/models';
 import { appUrls } from '~/routing';
 import { IngredientController } from './redux/Ingredient.controller';
@@ -28,7 +27,6 @@ function useIngredientId() {
 const EditIngredientPage = () => {
   const ingredientId = useIngredientId();
 
-  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -57,7 +55,7 @@ const EditIngredientPage = () => {
   );
 
   if (!ingredient) {
-    return <p>Ingredient not found (id: {ingredientId})</p>;
+    return <Typography>Ingredient not found (id: {ingredientId})</Typography>;
   }
 
   const save = () => {
@@ -69,50 +67,31 @@ const EditIngredientPage = () => {
     );
   };
 
-  const remove = () => {
-    dispatch(
-      IngredientController.removeIngredient({
-        ingredientId: ingredient.id,
-        callback: () => navigate(appUrls.management.ingredient.url()),
-      })
-    );
-  };
-
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        flexWrap: 'wrap',
-        rowGap: '16px',
+    <IngredientPageTemplate
+      ingredient={ingredient}
+      saveButtonLabelKey={'buttons.save'}
+      onNameChanged={(newName) =>
+        setIngredient((changedIngredient) => {
+          if (!changedIngredient) {
+            return changedIngredient;
+          }
+          return { ...changedIngredient, name: newName };
+        })
+      }
+      onImageChanged={(newImageId) => {
+        setIngredient((changedIngredient) => {
+          if (!changedIngredient) {
+            return changedIngredient;
+          }
+          return {
+            ...changedIngredient,
+            image_id: newImageId,
+          };
+        });
       }}
-    >
-      <Button onClick={() => navigate(appUrls.management.ingredient.url())}>
-        {t('buttons.back')}
-      </Button>
-
-      <h1>{t('ingredient.edit')}</h1>
-
-      <TextField
-        label={t('ingredient.name')}
-        value={ingredient.name ?? ''}
-        onChange={(value) => {
-          setIngredient(
-            (_ingredient) => ({ ..._ingredient, name: value } as Ingredient)
-          );
-        }}
-      />
-      <TextField
-        label={t('ingredient.image')}
-        value={''}
-        onChange={(value) => {
-          // setIngredient((_ingredient) => ({ ..._ingredient, image: value }))
-        }}
-      />
-
-      <Button onClick={save}>{t('buttons.save')}</Button>
-      <Button onClick={remove}>{t('buttons.delete')}</Button>
-    </div>
+      onSave={save}
+    />
   );
 };
 

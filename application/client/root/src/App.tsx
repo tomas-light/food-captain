@@ -3,9 +3,10 @@ import DayjsAdapter from '@date-io/dayjs';
 import { DIOneTimeProvider } from 'cheap-di-react';
 import { FC, ReactElement, useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
-import { LocaleApi } from '@food-captain/client-api/src/LocaleApi';
+import { chakraTheme } from '@food-captain/client-shared';
 import {
   ApiInterceptor,
+  LocaleApi,
   LoggedApiError,
   LoggedApiRequest,
   LoggedApiResponse,
@@ -56,7 +57,7 @@ const App: FC<{ children: ReactElement }> = (props) => {
   }
 
   return (
-    <ChakraProvider resetCSS>
+    <ChakraProvider resetCSS theme={chakraTheme}>
       <Provider store={config.store}>
         <DIOneTimeProvider parentContainer={config.container}>
           <AppInitializer>

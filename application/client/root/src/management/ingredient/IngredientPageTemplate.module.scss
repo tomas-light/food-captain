@@ -1,0 +1,60 @@
+$fieldWidth: 222px;
+
+.root {
+  display: grid;
+  grid-template-areas:
+    ". ."
+    "title-field ."
+    ". ."
+    "image-field ."
+    ". ."
+    "image-preview image-preview"
+    ". ."
+    "save-button ."
+    ". ."
+    "gallery gallery"
+  ;
+  grid-template-columns: $fieldWidth 1fr;
+  grid-template-rows:
+    24px
+    auto
+    24px
+    auto
+    24px
+    auto
+    36px
+    auto
+    36px
+    auto
+  ;
+}
+
+.titleField {
+  grid-area: title-field;
+}
+.imageField {
+  grid-area: image-field;
+}
+
+.imagePreview {
+  grid-area: image-preview;
+}
+.saveButton {
+  grid-area: save-button;
+}
+
+.gallery {
+  grid-area: gallery;
+  display: grid;
+  grid-template-areas: "gallery-title" "." "search" "." "images";
+  grid-template-rows: auto 24px auto 24px auto;
+}
+
+.galleryTitle {
+  grid-area: gallery-title;
+  text-transform: capitalize;
+}
+
+.search {
+  grid-area: search;
+}
