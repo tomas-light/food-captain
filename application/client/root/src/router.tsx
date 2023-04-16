@@ -10,7 +10,7 @@ import {
 import { App } from '~/App';
 import { AddIngredientPage } from '~/management/ingredient/AddIngredientPage';
 import { EditIngredientPage } from '~/management/ingredient/EditIngredientPage';
-import { IngredientPage } from '~/management/ingredient/IngredientPage';
+import { IngredientsPage } from '~/management/ingredient/IngredientsPage';
 import { ManagementPage } from '~/management';
 import { appUrls } from './routing/appUrls';
 
@@ -65,7 +65,7 @@ export const router = createBrowserRouter(
         </Route>
 
         <Route path={appUrls.management.ingredient.relativeUrl()}>
-          <Route index element={<IngredientPage />} />
+          <Route index element={<IngredientsPage />} />
 
           <Route
             path={appUrls.management.ingredient.add.relativeUrl()}

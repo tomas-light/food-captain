@@ -6,6 +6,7 @@ import { LogoIcon } from './LogoIcon';
 import { MeatBallIcon } from './MeatBallIcon';
 import { NoImageIcon } from './NoImageIcon';
 import { PlatterIcon } from './PlatterIcon';
+import { SearchIcon } from './SearchIcon';
 import { TitleIcon } from './TitleIcon';
 
 const variants = {
@@ -16,6 +17,7 @@ const variants = {
   meatBall: MeatBallIcon,
   noImage: NoImageIcon,
   platter: PlatterIcon,
+  search: SearchIcon,
   title: TitleIcon,
 };
 

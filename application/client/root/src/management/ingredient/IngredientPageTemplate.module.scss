@@ -1,3 +1,5 @@
+$fieldWidth: 222px;
+
 .root {
   display: grid;
   grid-template-areas:
@@ -12,7 +14,7 @@
     ". ."
     "gallery gallery"
   ;
-  grid-template-columns: 222px 1fr;
+  grid-template-columns: $fieldWidth 1fr;
   grid-template-rows:
     24px
     auto

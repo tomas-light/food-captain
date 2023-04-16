@@ -7,6 +7,8 @@
     "new": "new $t(ingredient.one)",
     "open": "$t(buttons.open)",
     "add": "$t(buttons.add) new $t(ingredient.one)",
-    "edit": "$t(buttons.edit) $t(ingredient.one)"
+    "edit": "$t(buttons.edit)",
+    "delete": "$t(buttons.delete)",
+    "search": "search ingredient"
   }
 }
