@@ -1,5 +1,5 @@
 import { QueryConfig } from 'pg';
-import { IngredientEntity } from '../../entities';
+import { IngredientEntity, NewIngredientEntity } from '../../entities';
 import { IngredientTable } from '../../tables/IngredientTable';
 import { keyOf, MakePropertiesOptional } from '../../utils';
 import { PgTableBase } from '../base';
@@ -43,6 +43,46 @@ export class PgIngredient
 
     const queryResult = await this.query<IngredientEntity>(queryConfig);
     return queryResult?.rows[0]?.id;
+  };
+
+  insertMultipleAsync = async (
+    entities: NewIngredientEntity[]
+  ): Promise<number[]> => {
+    let parameterOrder = 1;
+
+    const { parameterExpression, values } = entities.reduce(
+      (sql, entity) => {
+        const parameterExpression: string[] = [
+          `$${parameterOrder++}`, // name
+          `$${parameterOrder++}`, // image_id
+        ];
+        const values = [entity.name, entity.image_id];
+
+        sql.parameterExpression.push(`(${parameterExpression.join(',')})`);
+        sql.values.push(...values);
+        return sql;
+      },
+      {
+        parameterExpression: [] as string[],
+        values: [] as any[],
+      }
+    );
+
+    const queryConfig: QueryConfig = {
+      text: `
+        INSERT INTO ${this.table} (
+          ${keyOf<IngredientEntity>('name')}, 
+          ${keyOf<IngredientEntity>('image_id')} 
+        ) 
+        VALUES 
+            ${parameterExpression.join(',')}
+        RETURNING ${keyOf<IngredientEntity>('id')};
+      `,
+      values: values,
+    };
+
+    const queryResult = await this.query<IngredientEntity>(queryConfig);
+    return queryResult?.rows?.map((row) => row.id) ?? [];
   };
 
   updateAsync = async (

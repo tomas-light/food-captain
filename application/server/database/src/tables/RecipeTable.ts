@@ -1,36 +1,36 @@
 import { MakePropertiesOptional } from '../utils';
-import { IngredientInRecipeEntity, RecipeEntity } from '../entities';
+import {
+  IngredientInRecipeEntity,
+  NewRecipeEntity,
+  RecipeEntity,
+} from '../entities';
 
-export interface RecipeWithImageEntity extends RecipeEntity {
-  image?: string;
-}
-
-export interface RecipeWithIngredientsEntity
-  extends RecipeWithImageEntity,
-    Omit<IngredientInRecipeEntity, 'recipe_id'> {
-  ingredient_id: number;
-  ingredient_name: string;
-  ingredient_image_id?: number;
-  ingredient_image?: string;
+export interface RecipeWithIngredientsEntity extends RecipeEntity {
+  ingredients: Omit<IngredientInRecipeEntity, 'recipe_id'>[];
 }
 
 export interface RecipeTable {
-  allAsync(): Promise<RecipeWithImageEntity[]>;
+  allAsync(): Promise<RecipeEntity[]>;
 
-  byIdAsync(id: number): Promise<RecipeWithImageEntity | undefined>;
+  byIdAsync(id: number): Promise<RecipeEntity | undefined>;
+  byIdsAsync(ids: number[]): Promise<RecipeEntity[]>;
 
-  getWithIngredientsByIdAsync(
+  byIdWithIngredientsAsync(
     id: number
   ): Promise<RecipeWithIngredientsEntity | undefined>;
 
-  insertAsync(entity: Omit<RecipeEntity, 'id'>): Promise<number | undefined>;
+  byDishIdWithIngredientsAsync(
+    dishId: number
+  ): Promise<RecipeWithIngredientsEntity | undefined>;
+
+  insertAsync(entity: NewRecipeEntity): Promise<number | undefined>;
 
   updateAsync(
     entity: MakePropertiesOptional<
       RecipeEntity,
       'name' | 'dish_id' | 'image_id'
     >
-  ): Promise<RecipeWithImageEntity | undefined>;
+  ): Promise<RecipeEntity | undefined>;
 
   deleteByIdAsync(id: number): Promise<boolean>;
 }

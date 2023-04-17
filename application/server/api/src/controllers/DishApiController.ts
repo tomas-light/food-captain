@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { api, get, post, put, delete_ } from 'mvc-middleware';
+import { api, delete_, get, post, put } from 'mvc-middleware';
 import { DishEntity } from '@food-captain/database';
 import { Logger } from '@food-captain/server-utils';
 import { DishService } from '../services/DishService';
@@ -17,10 +17,32 @@ export default class DishApiController extends BaseApiController {
     super(logger, request, response);
   }
 
-  @get('dish')
+  @get('dishes')
   async getDishesAsync() {
     const dishes = await this.dishService.getAllAsync();
     return this.ok(dishes);
+  }
+
+  @post('dishes-by-ids')
+  async getManyAsync(dishIds: DishEntity['id'][]) {
+    const ingredients = await this.dishService.getManyAsync(dishIds);
+    return this.ok(ingredients);
+  }
+
+  @get('dish/:dishId')
+  async getByIdAsync(dishId: string) {
+    const id = parseInt(dishId, 10);
+
+    if (isNaN(id)) {
+      return this.badRequest('Dish id is invalid');
+    }
+
+    const dish = await this.dishService.getByIdAsync(id);
+    if (!dish) {
+      return this.notFound('Dish not found');
+    }
+
+    return this.ok(dish);
   }
 
   @post('dish')
@@ -37,7 +59,7 @@ export default class DishApiController extends BaseApiController {
 
   @delete_('dish/:dishId')
   async deleteDishAsync(dishId: number) {
-    const dish = await this.dishService.getDishByIdAsync(dishId);
+    const dish = await this.dishService.getByIdAsync(dishId);
     if (!dish) {
       return this.notFound('dish not found');
     }

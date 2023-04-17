@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import { api, delete_, get, post, put } from 'mvc-middleware';
-import { IngredientEntity } from '@food-captain/database';
+import { IngredientEntity, NewIngredientEntity } from '@food-captain/database';
 import { Logger } from '@food-captain/server-utils';
 import { IngredientService } from '../services/IngredientService';
 import BaseApiController from './BaseApiController';
@@ -46,17 +46,17 @@ export default class IngredientApiController extends BaseApiController {
     return this.ok(ingredient);
   }
 
-  @get('ingredients/recipe/:recipeId')
-  async getByRecipeIdAsync(recipeId: string) {
-    const id = parseInt(recipeId, 10);
-
-    if (isNaN(id)) {
-      return this.badRequest('Recipe id is invalid');
-    }
-
-    const ingredients = await this.ingredientService.getByRecipeIdAsync(id);
-    return this.ok(ingredients);
-  }
+  // @get('ingredients/recipe/:recipeId')
+  // async getByRecipeIdAsync(recipeId: string) {
+  //   const id = parseInt(recipeId, 10);
+  //
+  //   if (isNaN(id)) {
+  //     return this.badRequest('Recipe id is invalid');
+  //   }
+  //
+  //   const ingredients = await this.ingredientService.getByRecipeIdAsync(id);
+  //   return this.ok(ingredients);
+  // }
 
   @post('ingredient')
   async addAsync(newIngredient: NewIngredientDto) {
@@ -91,4 +91,4 @@ export default class IngredientApiController extends BaseApiController {
 }
 
 export interface IngredientDto extends IngredientEntity {}
-export interface NewIngredientDto extends Omit<IngredientEntity, 'id'> {}
+export interface NewIngredientDto extends NewIngredientEntity {}

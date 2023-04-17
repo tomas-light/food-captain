@@ -1,7 +1,7 @@
 import { QueryConfig } from 'pg';
 import { keyOf, MakePropertiesOptional } from '../../utils';
 import { DishTable, MenuDishEntity } from '../../tables/DishTable';
-import { DishEntity, DishInMenuEntity } from '../../entities';
+import { DishEntity, DishInMenuEntity, IngredientEntity } from '../../entities';
 import { PgTableBase } from '../base';
 import { PgDishInMenu } from './PgDishInMenu';
 
@@ -10,6 +10,20 @@ export class PgDish extends PgTableBase<DishEntity> implements DishTable {
   static get table() {
     return `${this.schema}.dish`;
   }
+
+  byIdsAsync = async (ids: number[]): Promise<DishEntity[]> => {
+    const queryConfig: QueryConfig = {
+      text: `
+        SELECT * 
+        FROM ${this.table} 
+        WHERE ${keyOf<DishEntity>('id')} in ($1);
+      `,
+      values: ids,
+    };
+
+    const queryResult = await this.query<DishEntity>(queryConfig);
+    return queryResult?.rows ?? [];
+  };
 
   byMenuIdAsync = async (menuId: number): Promise<MenuDishEntity[]> => {
     const queryConfig: QueryConfig = {

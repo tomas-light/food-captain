@@ -15,7 +15,11 @@ export class DishService {
     return this.db.dish.allAsync(...args);
   }
 
-  getDishByIdAsync(...args: Parameters<Database['dish']['byIdAsync']>) {
+  getManyAsync(...args: Parameters<Database['dish']['byIdsAsync']>) {
+    return this.db.dish.byIdsAsync(...args);
+  }
+
+  getByIdAsync(...args: Parameters<Database['dish']['byIdAsync']>) {
     return this.db.dish.byIdAsync(...args);
   }
 
