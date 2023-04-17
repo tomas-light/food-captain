@@ -21,7 +21,7 @@ export interface RecipeTable {
 
   byDishIdWithIngredientsAsync(
     dishId: number
-  ): Promise<RecipeWithIngredientsEntity | undefined>;
+  ): Promise<RecipeWithIngredientsEntity[]>;
 
   insertAsync(entity: NewRecipeEntity): Promise<number | undefined>;
 

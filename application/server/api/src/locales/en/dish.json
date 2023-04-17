@@ -6,6 +6,8 @@
     "image": "$t(common.image)",
     "description": "description",
     "recipe": "$t(recipe.one)",
+    "recipes": "$t(recipe.many)",
+    "search": "search dish",
     "open": "$t(buttons.open)",
     "add": "$t(buttons.add) new $t(dish.recipe)",
     "edit": "$t(buttons.edit) $t(dish.recipe)"

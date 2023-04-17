@@ -47,22 +47,13 @@ export class RecipeService {
 
   async addAsync(
     newRecipe: NewRecipeEntity & {
-      image?: NewImage;
       ingredients: IngredientForRecipe[];
     }
   ): Promise<RecipeEntity | undefined> {
     const recipe = newRecipe as unknown as RecipeEntity;
 
-    let image: ImageEntity | undefined;
-    if (newRecipe.image) {
-      image = await this.imageService.addAsync({
-        ...newRecipe.image,
-      });
-    }
-
     const recipeId = await this.db.recipe.insertAsync({
       ...recipe,
-      image_id: image?.id,
     });
 
     if (recipeId == null) {
@@ -94,32 +85,12 @@ export class RecipeService {
 
   async updateAsync(
     recipe: MakeOptional<RecipeEntity, 'name'> & {
-      image?: NewImage;
       ingredients: IngredientForRecipe[];
     }
   ): Promise<RecipeEntity | undefined> {
     const recipeEntity = await this.db.recipe.updateAsync(recipe);
     if (!recipeEntity) {
       return undefined;
-    }
-
-    let imageId: ImageEntity['id'] | undefined;
-    if (recipe.image) {
-      let imageWasDeleted: boolean;
-      if (recipeEntity.image_id != null) {
-        imageWasDeleted = await this.imageService.deleteByIdAsync(
-          recipeEntity.image_id
-        );
-      } else {
-        imageWasDeleted = true;
-      }
-
-      if (imageWasDeleted) {
-        const imageEntity = await this.imageService.addAsync({
-          ...recipe.image,
-        });
-        imageId = imageEntity?.id;
-      }
     }
 
     const recipeIngredients =
@@ -190,7 +161,6 @@ export class RecipeService {
 
     return {
       ...recipeEntity,
-      image_id: imageId,
     };
   }
 

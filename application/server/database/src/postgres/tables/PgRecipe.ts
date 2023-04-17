@@ -16,6 +16,7 @@ import { PgIngredientInRecipe } from './PgIngredientInRecipe';
 
 export class PgRecipe extends PgTableBase<RecipeEntity> implements RecipeTable {
   protected tableName = 'recipe';
+
   static get table() {
     return `${this.schema}.recipe`;
   }
@@ -94,7 +95,7 @@ export class PgRecipe extends PgTableBase<RecipeEntity> implements RecipeTable {
 
   byDishIdWithIngredientsAsync = async (
     dishId: number
-  ): Promise<RecipeWithIngredientsEntity | undefined> => {
+  ): Promise<RecipeWithIngredientsEntity[]> => {
     type RecipeWithIngredientRecipe = RecipeEntity & IngredientInRecipeEntity;
 
     const queryConfig: QueryConfig = {
@@ -126,28 +127,40 @@ export class PgRecipe extends PgTableBase<RecipeEntity> implements RecipeTable {
 
     const rows = queryResult?.rows ?? [];
     if (!rows.length) {
-      return undefined;
+      return [];
     }
 
-    const [firstRow] = rows;
-    const recipeWithIngredients: RecipeWithIngredientsEntity = {
-      id: firstRow.id,
-      name: firstRow.name,
-      dish_id: firstRow.dish_id,
-      image_id: firstRow.image_id,
-      description: firstRow.description,
-      ingredients: [],
-    };
-
+    const recipesMap = new Map<
+      RecipeWithIngredientsEntity['id'],
+      RecipeWithIngredientsEntity
+    >();
     rows.forEach((row) => {
-      recipeWithIngredients.ingredients.push({
-        ingredient_id: row.ingredient_id,
-        dimension_id: row.dimension_id,
-        size: row.size,
-      });
+      const recipe = recipesMap.get(row.id);
+      if (recipe) {
+        recipe.ingredients.push({
+          ingredient_id: row.ingredient_id,
+          dimension_id: row.dimension_id,
+          size: row.size,
+        });
+      } else {
+        recipesMap.set(row.id, {
+          id: row.id,
+          name: row.name,
+          dish_id: row.dish_id,
+          image_id: row.image_id,
+          description: row.description,
+          ingredients: [
+            {
+              ingredient_id: row.ingredient_id,
+              dimension_id: row.dimension_id,
+              size: row.size,
+            },
+          ],
+        });
+      }
     });
 
-    return recipeWithIngredients;
+    return Array.from(recipesMap.values());
   };
 
   insertAsync = async (

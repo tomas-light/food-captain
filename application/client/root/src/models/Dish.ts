@@ -1,10 +1,5 @@
-import { Recipe } from './Recipe';
+import { DishDto, NewDishDto, UpdatedDishDto } from '@food-captain/api';
 
-export interface Dish {
-	id: string;
-	name: string;
-	description?: string;
-	recipe?: Recipe;
-	image?: string;
-	order?: number;
-}
+export interface Dish extends DishDto {}
+export interface NewDish extends NewDishDto {}
+export interface UpdatedDish extends UpdatedDishDto {}

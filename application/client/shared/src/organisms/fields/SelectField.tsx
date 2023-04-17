@@ -4,7 +4,7 @@ import { Option } from './Option';
 
 type Props<TOption extends Option> = {
   label: string;
-  value: TOption;
+  value: TOption | null;
   options: TOption[];
   onChange: (value: TOption | null) => void;
 };

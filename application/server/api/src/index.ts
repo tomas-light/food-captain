@@ -14,3 +14,9 @@ export type {
   NewDimensionDto,
 } from './controllers/DimensionApiController';
 export type { ImageDto, NewImageDto } from './controllers/ImageApiController';
+export type {
+  NewRecipeDto,
+  UpdatedRecipeDto,
+  RecipeDto,
+  RecipeWithIngredientsDto,
+} from './controllers/RecipeApiController';

@@ -6,6 +6,8 @@
     "image": "$t(common.image)",
     "description": "короткое описание",
     "recipe": "$t(recipe.one)",
+    "recipes": "$t(recipe.many)",
+    "search": "поиск блюда",
     "open": "$t(buttons.open)",
     "add": "$t(buttons.add) новый $t(dish.recipe)",
     "edit": "$t(buttons.edit) $t(dish.recipe)"

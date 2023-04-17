@@ -6,4 +6,5 @@ export * from './DishApi';
 export * from './ImageApi';
 export * from './IngredientApi';
 export * from './LocaleApi';
+export * from './RecipeApi';
 export * from './UserApi';
