@@ -1,15 +1,15 @@
 {
   "dish": {
-    "one": "dish",
+    "add": "$t(buttons.add) new $t(dish.recipe)",
+    "description": "description",
+    "edit": "$t(buttons.edit) $t(dish.recipe)",
+    "image": "$t(common.image)",
     "many": "dishes",
     "name": "$t(common.title)",
-    "image": "$t(common.image)",
-    "description": "description",
+    "one": "dish",
+    "open": "$t(buttons.open)",
     "recipe": "$t(recipe.one)",
     "recipes": "$t(recipe.many)",
-    "search": "search dish",
-    "open": "$t(buttons.open)",
-    "add": "$t(buttons.add) new $t(dish.recipe)",
-    "edit": "$t(buttons.edit) $t(dish.recipe)"
+    "search": "search dish"
   }
 }

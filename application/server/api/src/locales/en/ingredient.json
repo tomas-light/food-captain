@@ -1,14 +1,14 @@
 {
   "ingredient": {
-    "one": "ingredient",
+    "add": "$t(buttons.add) new $t(ingredient.one)",
+    "delete": "$t(buttons.delete)",
+    "edit": "$t(buttons.edit)",
+    "image": "$t(common.image)",
     "many": "ingredients",
     "name": "$t(common.title)",
-    "image": "$t(common.image)",
     "new": "new $t(ingredient.one)",
+    "one": "ingredient",
     "open": "$t(buttons.open)",
-    "add": "$t(buttons.add) new $t(ingredient.one)",
-    "edit": "$t(buttons.edit)",
-    "delete": "$t(buttons.delete)",
     "search": "search ingredient"
   }
 }
