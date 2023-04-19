@@ -81,7 +81,10 @@ const ImageFieldWithPreview: FC<Props> = (props) => {
             const [type, extension] = imageMimeType.split('/');
             const imageFile = new File(
               [imageBlob],
-              `image from buffer.${extension}`
+              `image from buffer.${extension}`,
+              {
+                type: imageMimeType,
+              }
             );
 
             uploadImage(imageFile);
