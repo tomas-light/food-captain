@@ -7,16 +7,18 @@ type Props = Partial<TooltipProps> & {
   icon: ReactElement;
   state?: ButtonState;
   onClick?: () => void;
+  className?: string;
 };
 
 const IconButton = (props: Props) => {
-  const { icon, state = {}, title = 'Icon button' } = props;
+  const { state = {}, title = 'Icon button', ...rest } = props;
 
   return (
     <Tooltip title={title}>
       <ChakraIconButton
+        {...rest}
+        variant={'outline'}
         aria-label={title}
-        icon={icon}
         disabled={state.disabled}
         isLoading={state.loading}
       />

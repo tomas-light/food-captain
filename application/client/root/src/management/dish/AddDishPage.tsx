@@ -1,34 +1,37 @@
-import { use } from 'cheap-di-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
   Button,
-  Icon,
-  Image,
-  ImageField,
   NumberField,
   SelectField,
   TextAreaField,
   TextField,
   Typography,
 } from '@food-captain/client-shared';
-import { ImageApi } from '@food-captain/client-api';
 import { useLocaleResource } from '~/config/i18next';
 import { useSelector } from '~/config/redux/useSelector';
-import { Gallery } from '~/Gallery';
 import classes from '~/management/ingredient/IngredientPageTemplate.module.scss';
 import { IngredientController } from '~/management/ingredient/redux';
 import { NewDish, NewRecipe } from '~/models';
 import { appUrls } from '~/routing';
+import {
+  GalleryModal,
+  GalleryModalRef,
+  ImageFieldWithPreview,
+} from '~/templates';
 import { DishController } from './redux/Dish.controller';
 
 export const AddDishPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const imageApi = use(ImageApi);
+
+  const ref = useRef<GalleryModalRef>(null);
+  const galleryModeRef = useRef<{ mode: 'dish' | 'recipe' | null }>({
+    mode: null,
+  });
 
   useLocaleResource('dish');
   useLocaleResource('recipe');
@@ -67,7 +70,6 @@ export const AddDishPage = () => {
     dish_id: null as unknown as number,
     ingredients: [],
   });
-  const [gallerySearch, setGallerySearch] = useState('');
 
   const save = () => {
     dispatch(
@@ -77,6 +79,33 @@ export const AddDishPage = () => {
         callback: () => navigate(appUrls.management.dish.url()),
       })
     );
+  };
+
+  const onDishImageChanged = (imageId: number | undefined) => {
+    setDish((_dish) => ({
+      ..._dish,
+      image_id: imageId,
+    }));
+  };
+  const onRecipeImageChanged = (imageId: number | undefined) => {
+    setRecipe((_recipe) => ({
+      ..._recipe,
+      image_id: imageId,
+    }));
+  };
+  const onImageSelectedInGallery = (imageId: number | undefined) => {
+    switch (galleryModeRef.current.mode) {
+      case 'dish':
+        onDishImageChanged(imageId);
+        break;
+
+      case 'recipe':
+        onRecipeImageChanged(imageId);
+        break;
+
+      default:
+        console.warn('Gallery is not correct mode');
+    }
   };
 
   return (
@@ -102,54 +131,16 @@ export const AddDishPage = () => {
           }}
         />
 
-        <ImageField
+        <ImageFieldWithPreview
           className={classes.imageField}
-          label={
-            dish.image_id ? `#${dish.image_id.toString()}` : t('dish.image')
-          }
-          onChange={async (imageFile) => {
-            const response = await imageApi.addAsync(imageFile, ['dish']);
-            if (response.isFailed() || !response.data) {
-              console.warn('image is no uploaded');
-              return;
-            }
-            setDish((_dish) => ({
-              ..._dish,
-              image_id: response.data!.imageId,
-            }));
+          imageId={dish.image_id}
+          imageTags={['ingredient']}
+          onImageChanged={onDishImageChanged}
+          onOpenGallery={() => {
+            galleryModeRef.current.mode = 'dish';
+            ref.current?.onOpen();
           }}
         />
-
-        <Image
-          className={classes.imagePreview}
-          src={dish.image_id ? imageApi.makeUrl(dish.image_id) : undefined}
-        />
-
-        <div className={classes.gallery}>
-          <Typography className={classes.galleryTitle}>
-            {t('common.gallery')}
-          </Typography>
-
-          <TextField
-            className={classes.search}
-            icon={<Icon variant={'imageSearch'} />}
-            label={t('common.imageSearch')}
-            value={gallerySearch}
-            onChange={setGallerySearch}
-            disabled // todo: remove, when filter will be added
-          />
-
-          <Gallery
-            searchString={gallerySearch}
-            onImageClick={(imageId) => {
-              setDish((_dish) => ({
-                ..._dish,
-                image_id: imageId,
-              }));
-            }}
-            selectedImageId={dish.image_id}
-          />
-        </div>
 
         <TextAreaField
           label={t('dish.description')}
@@ -159,6 +150,8 @@ export const AddDishPage = () => {
           }}
         />
       </div>
+
+      <GalleryModal onChoose={onImageSelectedInGallery} ref={ref} />
 
       <Typography size={18}>{t('dish.recipe')}</Typography>
 
@@ -180,56 +173,16 @@ export const AddDishPage = () => {
           }}
         />
 
-        <ImageField
+        <ImageFieldWithPreview
           className={classes.imageField}
-          label={
-            recipe.image_id
-              ? `#${recipe.image_id.toString()}`
-              : t('recipe.image')
-          }
-          onChange={async (imageFile) => {
-            const response = await imageApi.addAsync(imageFile, ['recipe']);
-            if (response.isFailed() || !response.data) {
-              console.warn('image is no uploaded');
-              return;
-            }
-            setRecipe((_recipe) => ({
-              ..._recipe,
-              image_id: response.data!.imageId,
-            }));
+          imageId={recipe.image_id}
+          imageTags={['recipe']}
+          onImageChanged={onRecipeImageChanged}
+          onOpenGallery={() => {
+            galleryModeRef.current.mode = 'recipe';
+            ref.current?.onOpen();
           }}
         />
-
-        <Image
-          className={classes.imagePreview}
-          src={recipe.image_id ? imageApi.makeUrl(recipe.image_id) : undefined}
-        />
-
-        <div className={classes.gallery}>
-          <Typography className={classes.galleryTitle}>
-            {t('common.gallery')}
-          </Typography>
-
-          <TextField
-            className={classes.search}
-            icon={<Icon variant={'imageSearch'} />}
-            label={t('common.imageSearch')}
-            value={gallerySearch}
-            onChange={setGallerySearch}
-            disabled // todo: remove, when filter will be added
-          />
-
-          <Gallery
-            searchString={gallerySearch}
-            onImageClick={(imageId) => {
-              setRecipe((_recipe) => ({
-                ..._recipe,
-                image_id: imageId,
-              }));
-            }}
-            selectedImageId={recipe.image_id}
-          />
-        </div>
 
         <Typography size={18}>{t('recipe.ingredients')}</Typography>
         <ul

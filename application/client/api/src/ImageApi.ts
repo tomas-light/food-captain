@@ -1,3 +1,4 @@
+import { ImageDto } from '@food-captain/api';
 import { API_BASE_URL } from './base/API_BASE_URL';
 import { ApiBase } from './base/ApiBase';
 
@@ -10,9 +11,7 @@ export class ImageApi extends ApiBase {
 
   // todo: add filter by image type? like get all ingredients images
   async getAllIdsAsync() {
-    return await this.get<{
-      imageIds: number[];
-    }>('/images');
+    return await this.get<Pick<ImageDto, 'id' | 'tags'>[]>('/images');
   }
 
   async addAsync(imageFile: File, imageTags: string[]) {

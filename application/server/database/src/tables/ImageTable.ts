@@ -2,7 +2,7 @@ import { ImageEntity } from '../entities';
 
 export interface ImageTable {
   allAsync(): Promise<ImageEntity[]>;
-  allIdsAsync(): Promise<ImageEntity['id'][]>;
+  allShortInfoAsync(): Promise<Pick<ImageEntity, 'id' | 'tags'>[]>;
 
   byIdAsync(id: number): Promise<ImageEntity | undefined>;
 

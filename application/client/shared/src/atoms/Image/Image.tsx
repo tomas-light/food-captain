@@ -4,7 +4,10 @@ import { Image as ChakraImage, ImageProps } from '@chakra-ui/react';
 import { Icon } from '../icons';
 import classes from './Image.module.scss';
 
-type Props = Pick<ImageProps, 'src' | 'className' | 'onClick'> & {};
+type Props = Pick<
+  ImageProps,
+  'src' | 'className' | 'onClick' | 'onDoubleClick'
+> & {};
 
 const Image: FC<Props> = (props) => {
   const { className, src, ...rest } = props;

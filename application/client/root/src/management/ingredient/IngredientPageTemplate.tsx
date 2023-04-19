@@ -1,18 +1,13 @@
-import { use } from 'cheap-di-react';
-import { FC, useState } from 'react';
+import { FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  Icon,
-  Image,
-  ImageField,
-  TextField,
-  Typography,
-} from '@food-captain/client-shared';
-import { ImageApi } from '@food-captain/client-api';
+import { Button, Icon, TextField } from '@food-captain/client-shared';
 import { useLocaleResource } from '~/config/i18next';
-import { Gallery } from '~/Gallery';
 import { Ingredient, NewIngredient } from '~/models';
+import {
+  GalleryModal,
+  GalleryModalRef,
+  ImageFieldWithPreview,
+} from '~/templates';
 import classes from './IngredientPageTemplate.module.scss';
 
 type Props = {
@@ -36,9 +31,7 @@ const IngredientPageTemplate: FC<Props> = (props) => {
 
   useLocaleResource('ingredient');
 
-  const imageApi = use(ImageApi);
-
-  const [gallerySearch, setGallerySearch] = useState('');
+  const ref = useRef<GalleryModalRef>(null);
 
   return (
     <div className={classes.root}>
@@ -50,57 +43,21 @@ const IngredientPageTemplate: FC<Props> = (props) => {
         onChange={onNameChanged}
       />
 
-      <ImageField
+      <ImageFieldWithPreview
         className={classes.imageField}
-        label={
-          ingredient.image_id
-            ? `#${ingredient.image_id.toString()}`
-            : t('ingredient.image')
-        }
-        onChange={async (imageFile) => {
-          const response = await imageApi.addAsync(imageFile, ['ingredient']);
-          if (response.isFailed() || !response.data) {
-            console.warn('image is no uploaded');
-            return;
-          }
-
-          onImageChanged(response.data!.imageId);
+        imageId={ingredient.image_id}
+        imageTags={['ingredient']}
+        onImageChanged={onImageChanged}
+        onOpenGallery={() => {
+          ref.current?.onOpen();
         }}
       />
 
-      <Image
-        className={classes.imagePreview}
-        src={
-          ingredient.image_id
-            ? imageApi.makeUrl(ingredient.image_id)
-            : undefined
-        }
-      />
+      <GalleryModal onChoose={onImageChanged} ref={ref} />
 
       <Button className={classes.saveButton} onClick={onSave}>
         {t(saveButtonLabelKey)}
       </Button>
-
-      <div className={classes.gallery}>
-        <Typography className={classes.galleryTitle}>
-          {t('common.gallery')}
-        </Typography>
-
-        <TextField
-          className={classes.search}
-          icon={<Icon variant={'imageSearch'} />}
-          label={t('common.imageSearch')}
-          value={gallerySearch}
-          onChange={setGallerySearch}
-          disabled // todo: remove, when filter will be added
-        />
-
-        <Gallery
-          searchString={gallerySearch}
-          onImageClick={onImageChanged}
-          selectedImageId={ingredient.image_id}
-        />
-      </div>
     </div>
   );
 };

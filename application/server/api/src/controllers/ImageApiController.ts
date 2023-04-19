@@ -23,8 +23,8 @@ export default class ImageApiController extends BaseApiController {
 
   @get('images')
   async getAllAsync() {
-    const imageIds = await this.imageService.allIdsAsync();
-    return this.ok({ imageIds });
+    const images = await this.imageService.allShortInfoAsync();
+    return this.ok(images);
   }
 
   @get('image/:imageId')

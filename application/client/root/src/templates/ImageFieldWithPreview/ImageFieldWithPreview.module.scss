@@ -1,0 +1,40 @@
+@use "sass:map";
+@import '~@food-captain/client-shared/src/colors';
+
+$fieldWidth: 222px;
+
+.root {
+  display: grid;
+  grid-template-areas:
+    "image-field gallery-button paste-button ."
+    ". . . ."
+    "image-preview image-preview image-preview ."
+;
+  grid-template-columns: $fieldWidth auto auto 1fr;
+  grid-template-rows:
+    auto
+    24px
+    auto
+  ;
+  column-gap: 12px;
+}
+
+.imageField {
+  grid-area: image-field;
+}
+.galleryButton {
+  grid-area: gallery-button;
+  & > svg {
+    color: map.get($primary, main);
+  }
+}
+.pasteButton {
+  grid-area: paste-button;
+  & > svg {
+    color: map.get($primary, main);
+  }
+}
+
+.imagePreview {
+  grid-area: image-preview;
+}
