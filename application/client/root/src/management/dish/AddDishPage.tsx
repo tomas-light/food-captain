@@ -35,6 +35,7 @@ export const AddDishPage = () => {
 
   useLocaleResource('dish');
   useLocaleResource('recipe');
+  useLocaleResource('ingredient');
 
   const ingredients = useSelector((state) => state.ingredient.ingredients);
   const dimensions = useSelector((state) => state.ingredient.dimensions);
@@ -206,7 +207,12 @@ export const AddDishPage = () => {
                 onChange={(option) =>
                   setRecipe((_recipe) => {
                     const _ingredients = [..._recipe.ingredients];
-                    _ingredients.splice(index, 1, { ...ingredient, ...option });
+                    _ingredients.splice(index, 1, {
+                      size: ingredient.size,
+                      dimension_id: ingredient.dimension_id,
+                      ingredient_id:
+                        option?.value ?? (null as unknown as number),
+                    });
 
                     return {
                       ..._recipe,
@@ -258,6 +264,23 @@ export const AddDishPage = () => {
                   });
                 }}
               />
+
+              <Button
+                color={'destructive'}
+                onClick={() => {
+                  setRecipe((_recipe) => {
+                    const _ingredients = [..._recipe.ingredients];
+                    _ingredients.splice(index, 1);
+
+                    return {
+                      ..._recipe,
+                      ingredients: _ingredients,
+                    };
+                  });
+                }}
+              >
+                {t('ingredient.delete')}
+              </Button>
             </li>
           ))}
 
@@ -291,7 +314,7 @@ export const AddDishPage = () => {
         />
       </div>
 
-      <Button onClick={save}>{t('save')}</Button>
+      <Button onClick={save}>{t('buttons.save')}</Button>
     </>
   );
 };

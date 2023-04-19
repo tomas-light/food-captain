@@ -8,7 +8,7 @@ import {
 } from 'redux-controller-middleware';
 import { DishDto, RecipeWithIngredientsDto } from '@food-captain/api';
 import { DishApi, RecipeApi } from '@food-captain/client-api';
-import { Dish, NewDish, NewRecipe, UpdatedDish } from '~/models';
+import { Dish, NewDish, NewRecipe, UpdatedDish, UpdatedRecipe } from '~/models';
 import { DishStore } from './Dish.store';
 import { State } from '~State';
 
@@ -131,12 +131,21 @@ class DishController extends ControllerBase<State> {
 
   @watch
   async updateDish(
-    action: Action<{ dish: UpdatedDish; callback?: () => void }>
+    action: Action<{
+      dish: UpdatedDish;
+      recipe: UpdatedRecipe;
+      callback?: () => void;
+    }>
   ) {
-    const { dish, callback } = action.payload;
+    const { dish, recipe, callback } = action.payload;
 
-    const response = await this.dishApi.updateAsync(dish);
-    if (response.isFailed() || !response.data) {
+    const dishResponse = await this.dishApi.updateAsync(dish);
+    if (dishResponse.isFailed() || !dishResponse.data) {
+      return;
+    }
+
+    const recipeResponse = await this.recipeApi.updateAsync(recipe);
+    if (recipeResponse.isFailed() || !recipeResponse.data) {
       return;
     }
 
@@ -145,7 +154,7 @@ class DishController extends ControllerBase<State> {
     this.updateStore({
       dishes: dishes
         .filter((_dish) => _dish.id !== dish.id)
-        .concat(response.data),
+        .concat(dishResponse.data),
     });
 
     callback?.();

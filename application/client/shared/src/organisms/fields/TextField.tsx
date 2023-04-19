@@ -9,10 +9,19 @@ type Props = {
   onChange: (value: string) => void;
   icon?: ReactNode;
   disabled?: boolean;
+  autoFocus?: boolean;
 };
 
 function TextField(props: Props) {
-  const { className, label, value, onChange, icon, disabled = false } = props;
+  const {
+    className,
+    label,
+    value,
+    onChange,
+    icon,
+    disabled = false,
+    autoFocus = false,
+  } = props;
 
   return (
     <InputGroup className={className}>
@@ -23,6 +32,7 @@ function TextField(props: Props) {
         value={value}
         onChange={(event) => onChange(event.target.value)}
         isDisabled={disabled}
+        autoFocus={autoFocus}
       />
     </InputGroup>
   );

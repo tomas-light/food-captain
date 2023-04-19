@@ -2,12 +2,14 @@ import { Database, DishEntity, ImageEntity } from '@food-captain/database';
 import { Logger, metadata } from '@food-captain/server-utils';
 import { MakeOptional } from '../utils/MakeOptional';
 import { ImageService, NewImage } from './ImageService';
+import { RecipeService } from './RecipeService';
 
 @metadata
 export class DishService {
   constructor(
     private readonly db: Database,
     private readonly imageService: ImageService,
+    private readonly recipeService: RecipeService,
     private readonly logger: Logger
   ) {}
 
@@ -57,13 +59,18 @@ export class DishService {
   }
 
   async deleteAsync(dish: DishEntity): Promise<boolean> {
-    if (dish.image_id) {
-      const imageWasDeleted = await this.imageService.deleteByIdAsync(
-        dish.image_id
-      );
+    const dishRecipes =
+      await this.recipeService.getByDishIdWithIngredientsAsync(dish.id);
 
-      if (!imageWasDeleted) {
-        return false;
+    for await (const recipe of dishRecipes) {
+      await this.recipeService.deleteAsync(recipe);
+    }
+
+    if (dish.image_id) {
+      try {
+        await this.imageService.deleteByIdAsync(dish.image_id);
+      } catch {
+        // todo: image me ybe linked to another entities, it is valid case
       }
     }
 

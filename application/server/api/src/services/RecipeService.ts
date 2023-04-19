@@ -107,7 +107,7 @@ export class RecipeService {
       recipe.ingredients.map((ingredient) => ingredient.ingredient_id)
     );
     recipeIngredients.forEach((existedIngredient) => {
-      if (!newRecipeIngredientsSet.has(existedIngredient.recipe_id)) {
+      if (!newRecipeIngredientsSet.has(existedIngredient.ingredient_id)) {
         ingredientsToRemove.push(existedIngredient);
       }
     });
@@ -120,13 +120,15 @@ export class RecipeService {
       }
     });
 
-    const areIngredientsRemovedToRecipe =
-      await this.db.ingredientInRecipe.deleteMultipleAsync(
-        recipe.id,
-        ingredientsToRemove.map((ingredient) => ingredient.ingredient_id)
-      );
-    if (!areIngredientsRemovedToRecipe) {
-      this.logger.warning('Ingredients were not removed from recipe in DB');
+    if (ingredientsToRemove.length) {
+      const areIngredientsRemovedToRecipe =
+        await this.db.ingredientInRecipe.deleteMultipleAsync(
+          recipe.id,
+          ingredientsToRemove.map((ingredient) => ingredient.ingredient_id)
+        );
+      if (!areIngredientsRemovedToRecipe) {
+        this.logger.warning('Ingredients were not removed from recipe in DB');
+      }
     }
 
     const updateIngredientResults = await Promise.allSettled(
@@ -148,15 +150,17 @@ export class RecipeService {
       );
     }
 
-    const areIngredientsAddedToRecipe =
-      await this.db.ingredientInRecipe.insertMultipleAsync(
-        ingredientsToAdd.map((ingredient) => ({
-          ...ingredient,
-          recipe_id: recipe.id,
-        }))
-      );
-    if (!areIngredientsAddedToRecipe) {
-      this.logger.warning('Ingredients were not added to recipe in DB');
+    if (ingredientsToAdd.length) {
+      const areIngredientsAddedToRecipe =
+        await this.db.ingredientInRecipe.insertMultipleAsync(
+          ingredientsToAdd.map((ingredient) => ({
+            ...ingredient,
+            recipe_id: recipe.id,
+          }))
+        );
+      if (!areIngredientsAddedToRecipe) {
+        this.logger.warning('Ingredients were not added to recipe in DB');
+      }
     }
 
     return {
@@ -166,13 +170,10 @@ export class RecipeService {
 
   async deleteAsync(recipe: RecipeEntity): Promise<boolean> {
     if (recipe.image_id) {
-      const imageWasDeleted = await this.imageService.deleteByIdAsync(
-        recipe.image_id
-      );
-
-      if (!imageWasDeleted) {
-        this.logger.warning('Recipe image was not removed from recipe in DB');
-        return false;
+      try {
+        await this.imageService.deleteByIdAsync(recipe.image_id);
+      } catch {
+        // todo: image me ybe linked to another entities, it is valid case
       }
     }
 

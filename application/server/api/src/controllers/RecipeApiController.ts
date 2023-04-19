@@ -96,11 +96,14 @@ export default class RecipeApiController extends BaseApiController {
 }
 
 export interface RecipeDto extends RecipeEntity {}
+
 export interface RecipeWithIngredientsDto extends RecipeWithIngredientsEntity {}
+
 export interface NewRecipeDto extends NewRecipeEntity {
   image?: NewImage;
   ingredients: IngredientForRecipe[];
 }
+
 export interface UpdatedRecipeDto extends MakeOptional<RecipeEntity, 'name'> {
   image?: NewImage;
   ingredients: IngredientForRecipe[];

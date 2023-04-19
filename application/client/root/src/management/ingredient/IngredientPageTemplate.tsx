@@ -41,6 +41,7 @@ const IngredientPageTemplate: FC<Props> = (props) => {
         label={t('ingredient.name')}
         value={ingredient.name ?? ''}
         onChange={onNameChanged}
+        autoFocus
       />
 
       <ImageFieldWithPreview

@@ -194,7 +194,13 @@ export class PgRecipe extends PgTableBase<RecipeEntity> implements RecipeTable {
       'name' | 'dish_id' | 'image_id'
     >
   ): Promise<RecipeEntity | undefined> => {
-    const queryConfig = this.makeUpdateQueryConfig(entity);
+    const queryConfig = this.makeUpdateQueryConfig({
+      id: entity.id,
+      name: entity.name,
+      dish_id: entity.dish_id,
+      image_id: entity.image_id,
+      description: entity.description,
+    });
     if (!queryConfig) {
       return undefined;
     }
