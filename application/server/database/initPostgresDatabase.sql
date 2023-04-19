@@ -1025,33 +1025,13 @@ ALTER TABLE ONLY public.user_role
 
 INSERT INTO public.dimension (id, name)
 VALUES
-    (1,	'test')
-;
-
-
-INSERT INTO public.dish (id, name, description, image_id)
-VALUES
-    (1,	'dish 1',	'description 12',	null),
-    (2,	'dish 2',	'description 3',	null),
-    (3,	'dish 3',	'description 4',	null),
-    (4,	'dish 4',	'description 5',	null),
-    (5,	'dish 5',	'description 6',	null)
-;
-
-
-INSERT INTO public.menu (id, create_date, last_update, author_id, name)
-VALUES
-    (1,	'2021-02-24',	'2021-02-24',	null,	'menu 1'),
-    (2,	'2021-02-24',	'2021-02-24',	null,	'menu 2')
-;
-
-
-INSERT INTO public.dish_in_menu (menu_id, dish_id, order_number)
-VALUES
-    (1,	3,	null),
-    (1,	4,	null),
-    (2,	3,	null),
-    (2,	5,	null)
+    (1,	'килограмм'),
+    (2,	'грамм'),
+    (3,	'штука'),
+    (4,	'литр'),
+    (5,	'столовая ложка'),
+    (6,	'чайная ложка'),
+    (7,	'щепотка')
 ;
 
 INSERT INTO public.role (id, name)
