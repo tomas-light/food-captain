@@ -6,7 +6,7 @@ import {
   watch,
   WatchedController,
 } from 'redux-controller-middleware';
-import { DishDto, RecipeWithIngredientsDto } from '@food-captain/api';
+import { DishDto, RecipeForViewDto } from '@food-captain/api';
 import { DishApi, RecipeApi } from '@food-captain/client-api';
 import { Dish, NewDish, NewRecipe, UpdatedDish, UpdatedRecipe } from '~/models';
 import { DishStore } from './Dish.store';
@@ -75,13 +75,10 @@ class DishController extends ControllerBase<State> {
     const { dishes, dishRecipes } = this.getState().dish;
     const newDishRecipeMap = new Map(dishRecipes);
 
-    let recipeMap: Map<number, RecipeWithIngredientsDto>;
+    let recipeMap: Map<number, RecipeForViewDto>;
     const recipes = newDishRecipeMap.get(dishId);
     if (!recipes) {
-      recipeMap = new Map<
-        RecipeWithIngredientsDto['id'],
-        RecipeWithIngredientsDto
-      >();
+      recipeMap = new Map<RecipeForViewDto['id'], RecipeForViewDto>();
     } else {
       recipeMap = new Map(recipes);
     }

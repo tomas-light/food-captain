@@ -1,5 +1,5 @@
 import { createReducer } from 'redux-controller-middleware';
-import { RecipeWithIngredientsDto } from '@food-captain/api';
+import { RecipeForViewDto } from '@food-captain/api';
 import { Dish } from '~/models';
 
 export class DishStore {
@@ -9,7 +9,7 @@ export class DishStore {
   dishRecipesAreLoading: boolean;
   dishRecipes: Map<
     Dish['id'] | null | undefined,
-    Map<RecipeWithIngredientsDto['id'], RecipeWithIngredientsDto>
+    Map<RecipeForViewDto['id'], RecipeForViewDto>
   >;
 
   constructor(store?: DishStore) {

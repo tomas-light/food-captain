@@ -18,5 +18,5 @@ export type {
   NewRecipeDto,
   UpdatedRecipeDto,
   RecipeDto,
-  RecipeWithIngredientsDto,
+  RecipeForViewDto,
 } from './controllers/RecipeApiController';

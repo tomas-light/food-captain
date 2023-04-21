@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Image } from '@food-captain/client-shared';
 import { ImageApi } from '@food-captain/client-api';
-import { RecipeWithIngredientsDto } from '@food-captain/api';
+import { RecipeForViewDto } from '@food-captain/api';
 import { useLocaleResource } from '~/config/i18next';
 import { useSelector } from '~/config/redux/useSelector';
 import classes from '~/management/ingredient/IngredientPageTemplate.module.scss';
@@ -12,7 +12,7 @@ import { IngredientController } from '~/management/ingredient/redux';
 import { Dimension, Ingredient } from '~/models';
 
 type Props = {
-  recipe: RecipeWithIngredientsDto;
+  recipe: RecipeForViewDto;
 };
 
 const RecipeDetails = (props: Props) => {

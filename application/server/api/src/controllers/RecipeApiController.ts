@@ -101,7 +101,7 @@ export default class RecipeApiController extends BaseApiController {
 
 export interface RecipeDto extends RecipeEntity {}
 
-export interface RecipeWithIngredientsDto extends RecipeForViewEntity {}
+export interface RecipeForViewDto extends RecipeForViewEntity {}
 
 export interface NewRecipeDto extends NewRecipeEntity {
   image?: NewImage;
