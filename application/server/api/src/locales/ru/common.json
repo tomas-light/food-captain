@@ -1,15 +1,19 @@
 {
   "common": {
-    "id": "ID",
-    "name": "имя",
-    "title": "название",
     "author": "автор",
-    "image": "картинка",
-    "imageSearch": "поиск по картинкам",
-    "gallery": "галерея",
+    "choose": "выбрать",
+    "chooseFromGallery": "выбрать из галереи",
     "field": {
       "required": "oбязательное поле.",
       "invalid": "неправильно заполнено поле."
-    }
+    },
+    "gallery": "галерея",
+    "id": "ID",
+    "image": "картинка",
+    "imageSearch": "поиск по картинкам",
+    "name": "имя",
+    "pasteFromBuffer": "вставить из буфера",
+    "title": "название",
+    "uploadImage": "загрузить картинку"
   }
 }

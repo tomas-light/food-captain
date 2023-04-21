@@ -35,12 +35,15 @@ export function useLocaleResource(resource: LocaleResource) {
   useEffect(() => {
     (async () => {
       if (loadedResources.has(resource)) {
+        // console.log(`resource ${resource} is already loaded`);
+        setLoading(true);
         return;
       }
 
       loadedResources.add(resource);
 
       setLoading(true);
+      // console.log(`resource ${resource} is loading`);
       try {
         const userLocale = i18next.language;
 
@@ -50,6 +53,7 @@ export function useLocaleResource(resource: LocaleResource) {
         }
       } finally {
         setLoading(false);
+        // console.log(`resource ${resource} is loaded`);
       }
     })();
   }, []);

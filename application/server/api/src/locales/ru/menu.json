@@ -1,15 +1,15 @@
 {
   "menu": {
-    "one": "меню",
-    "many": "меню",
-    "create date": "дата создания {{date}}",
-    "last update": "последнее обновление {{date}}",
     "add": "$t(buttons.add) новое $t(menu.one)",
     "added": "$t(menu.one) было добавлено.",
-    "edit": "$t(buttons.edit) выбранное $t(menu.one)",
-    "updated": "$t(menu.one) было обновлено.",
-    "remove": "удалить выбранные $t(menu.many)",
+    "create date": "дата создания {{date}}",
     "deleted": "было удалено {{count}} $t(menu.one).",
-    "deleted_plural": "было удалено {{count}} $t(menu.many)."
+    "deleted_plural": "было удалено {{count}} $t(menu.many).",
+    "edit": "$t(buttons.edit) выбранное $t(menu.one)",
+    "last update": "последнее обновление {{date}}",
+    "many": "меню",
+    "one": "меню",
+    "remove": "удалить выбранные $t(menu.many)",
+    "updated": "$t(menu.one) было обновлено."
   }
 }

@@ -12,6 +12,7 @@ $imageSize: 200px;
 .image {
   height: $imageSize;
   width: $imageSize;
+  object-fit: cover;
 }
 
 .withoutImage {

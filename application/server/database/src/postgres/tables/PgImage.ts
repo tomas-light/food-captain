@@ -10,11 +10,11 @@ export class PgImage extends PgTableBase<ImageEntity> implements ImageTable {
     return `${this.schema}.image`;
   }
 
-  allIdsAsync = async (): Promise<number[]> => {
-    const queryResult = await this.query<{ id: number }>(
-      `SELECT id from ${this.table}`
+  allShortInfoAsync = async (): Promise<Pick<ImageEntity, 'id' | 'tags'>[]> => {
+    const queryResult = await this.query<Pick<ImageEntity, 'id' | 'tags'>>(
+      `SELECT id, tags from ${this.table}`
     );
-    return queryResult?.rows.map((entity) => entity.id) ?? [];
+    return queryResult?.rows ?? [];
   };
 
   insertAsync = async (

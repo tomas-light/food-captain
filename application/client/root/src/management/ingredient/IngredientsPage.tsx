@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ImageApi } from '@food-captain/client-api/src/ImageApi';
 import {
   Button,
   Icon,
@@ -11,11 +10,12 @@ import {
   TextField,
   Typography,
 } from '@food-captain/client-shared';
+import { ImageApi } from '@food-captain/client-api/src/ImageApi';
 import { useLocaleResource } from '~/config/i18next';
 import { useSelector } from '~/config/redux/useSelector';
 import { Ingredient } from '~/models';
 import { appUrls } from '~/routing/appUrls';
-import { IngredientController } from './redux/Ingredient.controller';
+import { IngredientController, selectIngredientsBySearchString } from './redux';
 import classes from './IngredientsPage.module.scss';
 
 const IngredientsPage = () => {
@@ -24,8 +24,9 @@ const IngredientsPage = () => {
   const navigate = useNavigate();
 
   const [searchString, setSearchString] = useState('');
-  // todo: add selector by search string
-  const ingredients = useSelector((state) => state.ingredient.ingredients);
+  const ingredients = useSelector((state) =>
+    selectIngredientsBySearchString(state, searchString)
+  );
 
   useLocaleResource('ingredient');
 

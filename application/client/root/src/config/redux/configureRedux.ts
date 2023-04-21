@@ -16,6 +16,7 @@ import {
 } from '@food-captain/client-utils';
 import { AppInitializerStore } from '~/appInitializer/redux';
 import { IngredientStore } from '~/management/ingredient/redux';
+import { DishStore } from '~/management/dish/redux';
 import { registerControllerDependencies } from '../registerControllerDependencies';
 import { IS_DEV_MODE } from '../environment';
 
@@ -43,6 +44,7 @@ function makeReducers() {
   return {
     appInitializer: AppInitializerStore.reducer,
     ingredient: IngredientStore.reducer,
+    dish: DishStore.reducer,
   };
 }
 
@@ -107,6 +109,7 @@ export async function configureRedux() {
   const restoredState: State = {
     appInitializer: new AppInitializerStore(storedState?.appInitializer),
     ingredient: new IngredientStore(storedState?.ingredient),
+    dish: new DishStore(storedState?.dish),
   };
 
   const store = configureStore({

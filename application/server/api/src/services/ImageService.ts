@@ -5,8 +5,10 @@ import { Logger, metadata } from '@food-captain/server-utils';
 export class ImageService {
   constructor(private readonly db: Database, private readonly logger: Logger) {}
 
-  allIdsAsync(...args: Parameters<Database['image']['allIdsAsync']>) {
-    return this.db.image.allIdsAsync(...args);
+  allShortInfoAsync(
+    ...args: Parameters<Database['image']['allShortInfoAsync']>
+  ) {
+    return this.db.image.allShortInfoAsync(...args);
   }
 
   getImageByIdAsync(...args: Parameters<Database['image']['byIdAsync']>) {

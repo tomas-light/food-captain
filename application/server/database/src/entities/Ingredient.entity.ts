@@ -5,3 +5,5 @@ export interface IngredientEntity extends Entity {
   name?: string;
   image_id?: number;
 }
+
+export interface NewIngredientEntity extends Omit<IngredientEntity, 'id'> {}

@@ -2,9 +2,11 @@ import { ChevronLeftIcon } from '@chakra-ui/icons';
 import { ComponentProps, FC, ForwardedRef, forwardRef } from 'react';
 import { ImageIcon } from './ImageIcon';
 import { ImageSearchIcon } from './ImageSearchIcon';
+import { ImagesIcon } from './ImagesIcon';
 import { LogoIcon } from './LogoIcon';
 import { MeatBallIcon } from './MeatBallIcon';
 import { NoImageIcon } from './NoImageIcon';
+import { PasteIcon } from './PasteIcon';
 import { PlatterIcon } from './PlatterIcon';
 import { SearchIcon } from './SearchIcon';
 import { TitleIcon } from './TitleIcon';
@@ -13,9 +15,11 @@ const variants = {
   chevronLeft: ChevronLeftIcon,
   image: ImageIcon,
   imageSearch: ImageSearchIcon,
+  images: ImagesIcon,
   logo: LogoIcon,
   meatBall: MeatBallIcon,
   noImage: NoImageIcon,
+  paste: PasteIcon,
   platter: PlatterIcon,
   search: SearchIcon,
   title: TitleIcon,

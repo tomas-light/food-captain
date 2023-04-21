@@ -8,10 +8,14 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { App } from '~/App';
+import { ManagementPage } from '~/management';
+import { AddDishPage } from '~/management/dish/AddDishPage';
+import { DishDetailsPage } from '~/management/dish/DishDetailsPage';
+import { EditDishPage } from '~/management/dish/EditDishPage';
 import { AddIngredientPage } from '~/management/ingredient/AddIngredientPage';
 import { EditIngredientPage } from '~/management/ingredient/EditIngredientPage';
 import { IngredientsPage } from '~/management/ingredient/IngredientsPage';
-import { ManagementPage } from '~/management';
+import { DishPage } from './management/dish/DishPage';
 import { appUrls } from './routing/appUrls';
 
 const FallbackRedirect = () => {
@@ -43,21 +47,20 @@ export const router = createBrowserRouter(
         <Route index element={<ManagementPage />} />
 
         <Route path={appUrls.management.dish.relativeUrl()}>
-          {/* <Route index element={<DishPage />} />*/}
-          <Route index element={<p>dish page</p>} />
+          <Route index element={<DishPage />} />
 
-          {/* <Route
-          path={appUrls.dish.add.relativeUrl()}
-          element={<AddDishPage />}
-        />
-
-        <Route path={appUrls.dish.dishId().relativeUrl()}>
           <Route
-            path={appUrls.dish.dishId().edit.relativeUrl()}
-            element={<EditDishPage />}
+            path={appUrls.management.dish.add.relativeUrl()}
+            element={<AddDishPage />}
           />
-          <Route index element={<DishDetailsPage />} />
-        </Route>*/}
+
+          <Route path={appUrls.management.dish.dishId().relativeUrl()}>
+            <Route
+              path={appUrls.management.dish.dishId().edit.relativeUrl()}
+              element={<EditDishPage />}
+            />
+            <Route index element={<DishDetailsPage />} />
+          </Route>
         </Route>
 
         <Route path={appUrls.management.menu.relativeUrl()}>

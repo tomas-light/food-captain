@@ -1,14 +1,14 @@
 {
   "ingredient": {
-    "one": "ингредиент",
+    "add": "$t(buttons.add) новый $t(ingredient.one)",
+    "delete": "$t(buttons.delete)",
+    "edit": "$t(buttons.edit)",
+    "image": "$t(common.image)",
     "many": "ингредиенты",
     "name": "$t(common.title)",
-    "image": "$t(common.image)",
     "new": "новый $t(ingredient.one)",
+    "one": "ингредиент",
     "open": "$t(buttons.open)",
-    "add": "$t(buttons.add) новый $t(ingredient.one)",
-    "edit": "$t(buttons.edit)",
-    "delete": "$t(buttons.delete)",
     "search": "поиск ингредиента"
   }
 }

@@ -10,6 +10,7 @@ export interface DishTable {
   allAsync(): Promise<DishEntity[]>;
 
   byIdAsync(id: number): Promise<DishEntity | undefined>;
+  byIdsAsync(ids: number[]): Promise<DishEntity[]>;
 
   byMenuIdAsync(menuId: number): Promise<MenuDishEntity[]>;
 

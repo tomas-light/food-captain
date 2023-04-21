@@ -1,15 +1,19 @@
 {
   "common": {
-    "id": "ID",
-    "name": "name",
-    "title": "title",
     "author": "author",
-    "image": "image",
-    "imageSearch": "search image",
-    "gallery": "gallery",
+    "choose": "choose",
+    "chooseFromGallery": "choose from gallery",
     "field": {
       "required": "required field.",
       "invalid": "field is invalid."
-    }
+    },
+    "gallery": "gallery",
+    "id": "ID",
+    "image": "image",
+    "imageSearch": "search image",
+    "name": "name",
+    "pasteFromBuffer": "paste from buffer",
+    "title": "title",
+    "uploadImage": "upload image"
   }
 }

@@ -6,6 +6,16 @@ export const chakraTheme = extendTheme({
     ...theme.colors,
   },
   components: {
+    IconButton: {
+      baseStyle: {
+        cursor: 'pointer',
+      },
+    },
+    CloseButton: {
+      baseStyle: {
+        cursor: 'pointer',
+      },
+    },
     Button: {
       baseStyle: {
         cursor: 'pointer',

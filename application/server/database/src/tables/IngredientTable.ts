@@ -1,5 +1,5 @@
 import { MakePropertiesOptional } from '../utils';
-import { IngredientEntity } from '../entities';
+import { IngredientEntity, NewIngredientEntity } from '../entities';
 
 export interface IngredientTable {
   allAsync(): Promise<IngredientEntity[]>;
@@ -7,9 +7,8 @@ export interface IngredientTable {
   byIdAsync(id: number): Promise<IngredientEntity | undefined>;
   byIdsAsync(ids: number[]): Promise<IngredientEntity[]>;
 
-  insertAsync(
-    entity: Omit<IngredientEntity, 'id'>
-  ): Promise<number | undefined>;
+  insertAsync(entity: NewIngredientEntity): Promise<number | undefined>;
+  insertMultipleAsync(entities: NewIngredientEntity[]): Promise<number[]>;
 
   updateAsync(
     entity: MakePropertiesOptional<IngredientEntity, 'name'>

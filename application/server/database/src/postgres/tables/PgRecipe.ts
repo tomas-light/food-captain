@@ -1,79 +1,170 @@
 import { QueryConfig } from 'pg';
 import {
-  ImageEntity,
   IngredientEntity,
   IngredientInRecipeEntity,
+  NewRecipeEntity,
   RecipeEntity,
 } from '../../entities';
 import {
   RecipeTable,
-  RecipeWithImageEntity,
   RecipeWithIngredientsEntity,
 } from '../../tables/RecipeTable';
 import { keyOf, MakePropertiesOptional } from '../../utils';
 import { PgTableBase } from '../base';
-import { PgImage } from './PgImage';
 import { PgIngredient } from './PgIngredient';
 import { PgIngredientInRecipe } from './PgIngredientInRecipe';
 
 export class PgRecipe extends PgTableBase<RecipeEntity> implements RecipeTable {
   protected tableName = 'recipe';
+
   static get table() {
     return `${this.schema}.recipe`;
   }
 
-  getWithIngredientsByIdAsync = async (
+  byIdsAsync = async (ids: number[]): Promise<RecipeEntity[]> => {
+    const queryConfig: QueryConfig = {
+      text: `
+        SELECT * 
+        FROM ${this.table} 
+        WHERE ${keyOf<RecipeEntity>('id')} in ($1);
+      `,
+      values: ids,
+    };
+
+    const queryResult = await this.query<RecipeEntity>(queryConfig);
+    return queryResult?.rows ?? [];
+  };
+
+  byIdWithIngredientsAsync = async (
     id: number
   ): Promise<RecipeWithIngredientsEntity | undefined> => {
+    type RecipeWithIngredientRecipe = RecipeEntity & IngredientInRecipeEntity;
+
     const queryConfig: QueryConfig = {
       text: `
         SELECT 
           _recipe.*, 
-          _image1.${keyOf<ImageEntity>('content')} as image,
-          _ingredient_in_recipe.${keyOf<IngredientInRecipeEntity>(
-            'ingredient_id'
-          )}, 
-          _ingredient_in_recipe.${keyOf<IngredientInRecipeEntity>(
-            'dimension_id'
-          )}, 
-          _ingredient_in_recipe.${keyOf<IngredientInRecipeEntity>('size')}, 
-          _ingredient.${keyOf<IngredientEntity>('name')} as ingredient_name, 
-          _ingredient.${keyOf<IngredientEntity>(
-            'image_id'
-          )} as ingredient_image_id, 
-          _image2.${keyOf<ImageEntity>('content')} as ingredient_image 
+          _ingredient_in_recipe.*
         FROM ${this.table} _recipe 
-        LEFT JOIN ${PgImage.table} _image1 on _recipe.${keyOf<RecipeEntity>(
-        'image_id'
-      )} = _image1.${keyOf<ImageEntity>('id')} 
         LEFT JOIN ${
           PgIngredientInRecipe.table
         } _ingredient_in_recipe on _recipe.${keyOf<RecipeEntity>(
         'id'
-      )} = _ingredient_in_recipe.${keyOf<IngredientInRecipeEntity>(
+      )} = _ingredient_in_recipe.${keyOf<RecipeWithIngredientRecipe>(
         'recipe_id'
       )} 
         JOIN ${
           PgIngredient.table
-        } _ingredient on _ingredient_in_recipe.${keyOf<IngredientInRecipeEntity>(
+        } _ingredient on _ingredient_in_recipe.${keyOf<RecipeWithIngredientRecipe>(
         'ingredient_id'
       )} = _ingredient.${keyOf<IngredientEntity>('id')} 
-        LEFT JOIN image _image2 on _ingredient.${keyOf<IngredientEntity>(
-          'image_id'
-        )} = _image2.${keyOf<ImageEntity>('id')} 
         WHERE _recipe.${keyOf<RecipeEntity>('id')} = $1;
       `,
       values: [id],
     };
 
-    const queryResult = await this.query<RecipeWithIngredientsEntity>(
+    const queryResult = await this.query<RecipeWithIngredientRecipe>(
       queryConfig
     );
-    return queryResult?.rows[0];
+
+    const rows = queryResult?.rows ?? [];
+    if (!rows.length) {
+      return undefined;
+    }
+
+    const [firstRow] = rows;
+    const recipeWithIngredients: RecipeWithIngredientsEntity = {
+      id: firstRow.id,
+      name: firstRow.name,
+      dish_id: firstRow.dish_id,
+      image_id: firstRow.image_id,
+      description: firstRow.description,
+      ingredients: [],
+    };
+
+    rows.forEach((row) => {
+      recipeWithIngredients.ingredients.push({
+        ingredient_id: row.ingredient_id,
+        dimension_id: row.dimension_id,
+        size: row.size,
+      });
+    });
+
+    return recipeWithIngredients;
+  };
+
+  byDishIdWithIngredientsAsync = async (
+    dishId: number
+  ): Promise<RecipeWithIngredientsEntity[]> => {
+    type RecipeWithIngredientRecipe = RecipeEntity & IngredientInRecipeEntity;
+
+    const queryConfig: QueryConfig = {
+      text: `
+        SELECT 
+          _recipe.*, 
+          _ingredient_in_recipe.*
+        FROM ${this.table} _recipe 
+        LEFT JOIN ${
+          PgIngredientInRecipe.table
+        } _ingredient_in_recipe on _recipe.${keyOf<RecipeEntity>(
+        'id'
+      )} = _ingredient_in_recipe.${keyOf<RecipeWithIngredientRecipe>(
+        'recipe_id'
+      )} 
+        JOIN ${
+          PgIngredient.table
+        } _ingredient on _ingredient_in_recipe.${keyOf<RecipeWithIngredientRecipe>(
+        'ingredient_id'
+      )} = _ingredient.${keyOf<IngredientEntity>('id')} 
+        WHERE _recipe.${keyOf<RecipeEntity>('dish_id')} = $1;
+      `,
+      values: [dishId],
+    };
+
+    const queryResult = await this.query<RecipeWithIngredientRecipe>(
+      queryConfig
+    );
+
+    const rows = queryResult?.rows ?? [];
+    if (!rows.length) {
+      return [];
+    }
+
+    const recipesMap = new Map<
+      RecipeWithIngredientsEntity['id'],
+      RecipeWithIngredientsEntity
+    >();
+    rows.forEach((row) => {
+      const recipe = recipesMap.get(row.id);
+      if (recipe) {
+        recipe.ingredients.push({
+          ingredient_id: row.ingredient_id,
+          dimension_id: row.dimension_id,
+          size: row.size,
+        });
+      } else {
+        recipesMap.set(row.id, {
+          id: row.id,
+          name: row.name,
+          dish_id: row.dish_id,
+          image_id: row.image_id,
+          description: row.description,
+          ingredients: [
+            {
+              ingredient_id: row.ingredient_id,
+              dimension_id: row.dimension_id,
+              size: row.size,
+            },
+          ],
+        });
+      }
+    });
+
+    return Array.from(recipesMap.values());
   };
 
   insertAsync = async (
-    entity: Omit<RecipeEntity, 'id'>
+    entity: NewRecipeEntity
   ): Promise<number | undefined> => {
     const queryConfig: QueryConfig = {
       text: `
@@ -102,8 +193,14 @@ export class PgRecipe extends PgTableBase<RecipeEntity> implements RecipeTable {
       RecipeEntity,
       'name' | 'dish_id' | 'image_id'
     >
-  ): Promise<RecipeWithImageEntity | undefined> => {
-    const queryConfig = this.makeUpdateQueryConfig(entity);
+  ): Promise<RecipeEntity | undefined> => {
+    const queryConfig = this.makeUpdateQueryConfig({
+      id: entity.id,
+      name: entity.name,
+      dish_id: entity.dish_id,
+      image_id: entity.image_id,
+      description: entity.description,
+    });
     if (!queryConfig) {
       return undefined;
     }

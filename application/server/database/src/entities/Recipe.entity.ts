@@ -7,3 +7,5 @@ export interface RecipeEntity extends Entity {
   image_id?: number;
   description?: string;
 }
+
+export interface NewRecipeEntity extends Omit<RecipeEntity, 'id'> {}

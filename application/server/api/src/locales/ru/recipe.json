@@ -1,10 +1,10 @@
 {
   "recipe": {
-    "one": "рецепт",
+    "description": "описание рецепта",
+    "image": "$t(common.image)",
+    "ingredients": "$t(ingredient.many)",
     "many": "рецепты",
     "name": "$t(common.title)",
-    "image": "$t(common.image)",
-    "description": "описание рецепта",
-    "ingredients": "$t(ingredient.many)"
+    "one": "рецепт"
   }
 }
