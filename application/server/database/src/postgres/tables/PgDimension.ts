@@ -33,11 +33,12 @@ export class PgDimension
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
-          ${keyOf<DimensionEntity>('name')}
+          ${keyOf<DimensionEntity>('name')},
+          ${keyOf<DimensionEntity>('short_name')}
         ) 
-        VALUES($1) RETURNING ${keyOf<DimensionEntity>('id')};
+        VALUES($1, $2) RETURNING ${keyOf<DimensionEntity>('id')};
       `,
-      values: [entity.name],
+      values: [entity.name, entity.short_name],
     };
 
     const queryResult = await this.query<DimensionEntity>(queryConfig);

@@ -3,10 +3,12 @@ import {
   IngredientInRecipeEntity,
   NewRecipeEntity,
   RecipeEntity,
+  RecipeTagEntity,
 } from '../entities';
 
-export interface RecipeWithIngredientsEntity extends RecipeEntity {
+export interface RecipeForViewEntity extends RecipeEntity {
   ingredients: Omit<IngredientInRecipeEntity, 'recipe_id'>[];
+  tags: Omit<RecipeTagEntity, 'recipe_id'>[];
 }
 
 export interface RecipeTable {
@@ -15,13 +17,9 @@ export interface RecipeTable {
   byIdAsync(id: number): Promise<RecipeEntity | undefined>;
   byIdsAsync(ids: number[]): Promise<RecipeEntity[]>;
 
-  byIdWithIngredientsAsync(
-    id: number
-  ): Promise<RecipeWithIngredientsEntity | undefined>;
+  byIdForViewAsync(id: number): Promise<RecipeForViewEntity | undefined>;
 
-  byDishIdWithIngredientsAsync(
-    dishId: number
-  ): Promise<RecipeWithIngredientsEntity[]>;
+  byDishIdForViewAsync(dishId: number): Promise<RecipeForViewEntity[]>;
 
   insertAsync(entity: NewRecipeEntity): Promise<number | undefined>;
 

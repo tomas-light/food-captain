@@ -1,10 +1,14 @@
 import { Request, Response } from 'express';
 import { api, delete_, get, post, put } from 'mvc-middleware';
 import { NewRecipeEntity, RecipeEntity } from '@food-captain/database';
-import { RecipeWithIngredientsEntity } from '@food-captain/database/src/tables';
+import { RecipeForViewEntity } from '@food-captain/database/src/tables';
 import { Logger } from '@food-captain/server-utils';
 import { NewImage } from '../services/ImageService';
-import { IngredientForRecipe, RecipeService } from '../services/RecipeService';
+import {
+  IngredientForRecipe,
+  RecipeService,
+  TagForRecipe,
+} from '../services/RecipeService';
 import { MakeOptional } from '../utils/MakeOptional';
 import BaseApiController from './BaseApiController';
 
@@ -97,14 +101,16 @@ export default class RecipeApiController extends BaseApiController {
 
 export interface RecipeDto extends RecipeEntity {}
 
-export interface RecipeWithIngredientsDto extends RecipeWithIngredientsEntity {}
+export interface RecipeWithIngredientsDto extends RecipeForViewEntity {}
 
 export interface NewRecipeDto extends NewRecipeEntity {
   image?: NewImage;
   ingredients: IngredientForRecipe[];
+  tags: TagForRecipe[];
 }
 
 export interface UpdatedRecipeDto extends MakeOptional<RecipeEntity, 'name'> {
   image?: NewImage;
   ingredients: IngredientForRecipe[];
+  tags: TagForRecipe[];
 }
