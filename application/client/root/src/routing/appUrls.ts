@@ -2,9 +2,9 @@ import { createObjectNiceWebRoutes } from 'nice-web-routes';
 
 export const appUrls = createObjectNiceWebRoutes()({
   management: {
-    dish: {
+    recipe: {
       add: {},
-      dishId: () => ({
+      recipeId: () => ({
         edit: {},
       }),
     },

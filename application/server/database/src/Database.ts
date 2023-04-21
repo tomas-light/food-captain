@@ -1,13 +1,8 @@
 import {
   DimensionTable,
   DishInMenuTable,
-  DishInSetTable,
-  DishSetTable,
-  DishTable,
   ImageTable,
   IngredientInRecipeTable,
-  IngredientInSetTable,
-  IngredientSetTable,
   IngredientTable,
   MenuInScheduleTable,
   MenuTable,
@@ -24,14 +19,9 @@ import {
 export abstract class Database {
   constructor(
     readonly dimension: DimensionTable,
-    readonly dish: DishTable,
     readonly dishInMenu: DishInMenuTable,
-    readonly dishInSet: DishInSetTable,
-    readonly dishSet: DishSetTable,
     readonly image: ImageTable,
     readonly ingredient: IngredientTable,
-    readonly ingredientInSet: IngredientInSetTable,
-    readonly ingredientSet: IngredientSetTable,
     readonly menu: MenuTable,
     readonly menuInSchedule: MenuInScheduleTable,
     readonly recipe: RecipeTable,

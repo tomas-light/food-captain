@@ -5,6 +5,11 @@
     "ingredients": "$t(ingredient.many)",
     "many": "рецепты",
     "name": "$t(common.title)",
-    "one": "рецепт"
+    "one": "рецепт",
+    "add": "$t(buttons.add) новый $t(recipe.one)",
+    "edit": "$t(buttons.edit) $t(recipe.one)",
+    "delete": "$t(buttons.delete) $t(recipe.one)",
+    "open": "$t(buttons.open)",
+    "search": "поиск рецепта"
   }
 }

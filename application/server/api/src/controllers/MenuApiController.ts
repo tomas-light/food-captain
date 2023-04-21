@@ -3,7 +3,7 @@ import { api, delete_, get, post, put } from 'mvc-middleware';
 import { Logger } from '@food-captain/server-utils';
 import { MenuService } from '../services/MenuService';
 import BaseApiController from './BaseApiController';
-import type { DishDto } from './DishApiController';
+import { RecipeDto } from './RecipeApiController';
 
 @api
 export default class MenuApiController extends BaseApiController {
@@ -16,13 +16,13 @@ export default class MenuApiController extends BaseApiController {
     super(logger, request, response);
   }
 
-  @get('menu')
+  @get('menus')
   async getMenusAsync() {
     const result = await this.menuService.getAllAsync();
     return this.ok(result);
   }
 
-  @get(':menuId')
+  @get('menu/:menuId')
   async getMenuByIdAsync(menuId: string) {
     const result = await this.menuService.getMenuByIdAsync(
       parseInt(menuId, 10)
@@ -34,27 +34,27 @@ export default class MenuApiController extends BaseApiController {
   async addMenuAsync(dto: MenuDto) {
     const createdMenu = await this.menuService.addAsync({
       ...dto,
-      dishes: dto.dishes?.map((dishDto) => ({
-        dish_id: dishDto.id,
-        order_number: dishDto.order,
+      recipes: dto.recipes?.map((recipeDto) => ({
+        recipe_id: recipeDto.id,
+        order_number: recipeDto.order,
       })),
     });
     return this.ok(createdMenu);
   }
 
-  @put(':menuId')
-  async updateMenuAsync(menuId: string, dto: MenuDto) {
-    const updatedMenu = await this.menuService.updateAsync({
-      ...dto,
-      dishes: dto.dishes?.map((dishDto) => ({
-        dish_id: dishDto.id,
-        order_number: dishDto.order,
-      })),
-    });
-    return this.ok(updatedMenu);
-  }
+  // @put('menu/:menuId')
+  // async updateMenuAsync(menuId: string, dto: MenuDto) {
+  //   const updatedMenu = await this.menuService.updateAsync({
+  //     ...dto,
+  //     recipes: dto.recipes?.map((dishDto) => ({
+  //       dish_id: dishDto.id,
+  //       order_number: dishDto.order,
+  //     })),
+  //   });
+  //   return this.ok(updatedMenu);
+  // }
 
-  @delete_(':menuId')
+  @delete_('menu/:menuId')
   async deleteMenuAsync(menuId: string) {
     const menu = await this.menuService.getMenuByIdAsync(parseInt(menuId, 10));
     if (!menu) {
@@ -70,8 +70,8 @@ export interface MenuDto {
   id: number;
   name?: string;
   author_id: number;
-  dishes?: DishInMenuDto[];
+  recipes?: DishInMenuDto[];
 }
-export interface DishInMenuDto extends DishDto {
+export interface DishInMenuDto extends RecipeDto {
   order?: number;
 }

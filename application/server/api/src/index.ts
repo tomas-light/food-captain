@@ -1,9 +1,4 @@
 export type { UserWithRoleDto } from './controllers/UserApiController';
-export type {
-  DishDto,
-  NewDishDto,
-  UpdatedDishDto,
-} from './controllers/DishApiController';
 export type { MenuDto, DishInMenuDto } from './controllers/MenuApiController';
 export type {
   IngredientDto,

@@ -5,6 +5,11 @@
     "ingredients": "$t(ingredient.many)",
     "many": "recipes",
     "name": "$t(common.title)",
-    "one": "recipe"
+    "one": "recipe",
+    "add": "$t(buttons.add) new $t(recipe.one)",
+    "edit": "$t(buttons.edit) $t(recipe.one)",
+    "delete": "$t(buttons.delete) $t(recipe.one)",
+    "open": "$t(buttons.open)",
+    "search": "search recipe"
   }
 }

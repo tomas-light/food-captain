@@ -22,7 +22,7 @@ export class PgDishInMenu
         SELECT * 
         FROM ${this.table} 
         WHERE ${keyOf<DishInMenuEntity>('menu_id')} = $1 
-        AND ${keyOf<DishInMenuEntity>('dish_id')} = $2;
+        AND ${keyOf<DishInMenuEntity>('recipe_id')} = $2;
       `,
       values: [menu_id, dish_id],
     };
@@ -36,12 +36,12 @@ export class PgDishInMenu
       text: `
         INSERT INTO ${this.table} (
           ${keyOf<DishInMenuEntity>('menu_id')}, 
-          ${keyOf<DishInMenuEntity>('dish_id')}, 
+          ${keyOf<DishInMenuEntity>('recipe_id')}, 
           ${keyOf<DishInMenuEntity>('order_number')} 
         ) 
         VALUES($1, $2, $3);
       `,
-      values: [entity.menu_id, entity.dish_id, entity.order_number],
+      values: [entity.menu_id, entity.recipe_id, entity.order_number],
     };
 
     const queryResult = await this.query<DishInMenuEntity>(queryConfig);
@@ -56,38 +56,38 @@ export class PgDishInMenu
         UPDATE ${this.table} 
         SET ${keyOf<DishInMenuEntity>('order_number')} = $1 
         WHERE ${keyOf<DishInMenuEntity>('menu_id')} = $2 
-        AND ${keyOf<DishInMenuEntity>('dish_id')} = $3;
+        AND ${keyOf<DishInMenuEntity>('recipe_id')} = $3;
       `,
-      values: [entity.order_number, entity.menu_id, entity.dish_id],
+      values: [entity.order_number, entity.menu_id, entity.recipe_id],
     };
 
     await this.query<DishInMenuEntity>(queryConfig);
-    return this.getAsync(entity.menu_id, entity.dish_id);
+    return this.getAsync(entity.menu_id, entity.recipe_id);
   };
 
   deleteAsync = async (
-    entity: Pick<DishInMenuEntity, 'menu_id' | 'dish_id'>
+    entity: Pick<DishInMenuEntity, 'menu_id' | 'recipe_id'>
   ): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.table} 
         WHERE ${keyOf<DishInMenuEntity>('menu_id')} = $1 
-        AND ${keyOf<DishInMenuEntity>('dish_id')} = $2;
+        AND ${keyOf<DishInMenuEntity>('recipe_id')} = $2;
       `,
-      values: [entity.menu_id, entity.dish_id],
+      values: [entity.menu_id, entity.recipe_id],
     };
 
     const queryResult = await this.query(queryConfig);
     return (queryResult?.rowCount ?? 0) > 0;
   };
 
-  deleteByIdsAsync = async (dish_ids: number[]): Promise<boolean> => {
+  deleteByIdsAsync = async (recipe_ids: number[]): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.table} 
-        WHERE ${keyOf<DishInMenuEntity>('dish_id')} in ($1);
+        WHERE ${keyOf<DishInMenuEntity>('recipe_id')} in ($1);
       `,
-      values: dish_ids,
+      values: recipe_ids,
     };
 
     const queryResult = await this.query(queryConfig);
@@ -107,13 +107,13 @@ export class PgDishInMenu
     return (queryResult?.rowCount ?? 0) > 0;
   };
 
-  deleteAllByDishIdAsync = async (dish_id: number): Promise<boolean> => {
+  deleteAllByDishIdAsync = async (recipe_id: number): Promise<boolean> => {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.table} 
-        WHERE ${keyOf<DishInMenuEntity>('dish_id')} = $1;
+        WHERE ${keyOf<DishInMenuEntity>('recipe_id')} = $1;
       `,
-      values: [dish_id],
+      values: [recipe_id],
     };
 
     const queryResult = await this.query(queryConfig);

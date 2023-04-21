@@ -1,5 +1,5 @@
 import { MakePropertiesOptional } from '../utils';
-import { DishEntity, MenuEntity } from '../entities';
+import { RecipeEntity, MenuEntity } from '../entities';
 
 export interface MenuWithDateEntity extends MenuEntity {
   date: Date;
@@ -7,11 +7,10 @@ export interface MenuWithDateEntity extends MenuEntity {
 
 export interface MenuWithDishesEntity
   extends MenuEntity,
-    Omit<DishEntity, 'id' | 'name'> {
-  dish_id: number;
-  dish_name: string;
+    Omit<RecipeEntity, 'id' | 'name'> {
+  recipe_id: number;
+  recipe_name: string;
   order_number?: number;
-  image?: string;
 }
 
 export interface MenuTable {

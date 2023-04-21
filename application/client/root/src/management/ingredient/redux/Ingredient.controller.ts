@@ -133,7 +133,9 @@ class IngredientController extends ControllerBase<State> {
     const { ingredients } = this.getState().ingredient;
 
     this.updateStore({
-      ingredients: ingredients.filter((dish) => dish.id !== ingredientId),
+      ingredients: ingredients.filter(
+        (ingredient) => ingredient.id !== ingredientId
+      ),
     });
     // todo: show toast success
 

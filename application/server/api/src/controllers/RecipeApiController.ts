@@ -29,20 +29,6 @@ export default class RecipeApiController extends BaseApiController {
     return this.ok(recipes);
   }
 
-  @get('recipes/:dishId')
-  async getByDishIdAsync(dishId: string) {
-    const id = parseInt(dishId, 10);
-
-    if (isNaN(id)) {
-      return this.badRequest('Dish id is invalid');
-    }
-
-    const recipes = await this.recipeService.getByDishIdWithIngredientsAsync(
-      id
-    );
-    return this.ok(recipes);
-  }
-
   @get('recipe/:recipeId')
   async getByIdAsync(recipeId: string) {
     const id = parseInt(recipeId, 10);
@@ -52,22 +38,6 @@ export default class RecipeApiController extends BaseApiController {
     }
 
     const recipe = await this.recipeService.getByIdAsync(id);
-    if (!recipe) {
-      return this.notFound('Recipe not found');
-    }
-
-    return this.ok(recipe);
-  }
-
-  @get('recipe/:recipeId/with-ingredients')
-  async getByIdWithIngredientsAsync(recipeId: string) {
-    const id = parseInt(recipeId, 10);
-
-    if (isNaN(id)) {
-      return this.badRequest('Recipe id is invalid');
-    }
-
-    const recipe = await this.recipeService.getByIdWithIngredientsAsync(id);
     if (!recipe) {
       return this.notFound('Recipe not found');
     }

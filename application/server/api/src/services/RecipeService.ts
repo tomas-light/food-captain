@@ -25,24 +25,12 @@ export class RecipeService {
     return this.db.recipe.allAsync(...args);
   }
 
-  getByDishIdWithIngredientsAsync(
-    ...args: Parameters<Database['recipe']['byDishIdForViewAsync']>
-  ) {
-    return this.db.recipe.byDishIdForViewAsync(...args);
-  }
-
   getManyAsync(...args: Parameters<Database['recipe']['byIdsAsync']>) {
     return this.db.recipe.byIdsAsync(...args);
   }
 
   getByIdAsync(...args: Parameters<Database['recipe']['byIdAsync']>) {
     return this.db.recipe.byIdAsync(...args);
-  }
-
-  getByIdWithIngredientsAsync(
-    ...args: Parameters<Database['recipe']['byIdForViewAsync']>
-  ) {
-    return this.db.recipe.byIdForViewAsync(...args);
   }
 
   async addAsync(
@@ -72,13 +60,15 @@ export class RecipeService {
         recipe_id: recipeId,
       }));
 
-    const areIngredientsAddedToRecipe =
-      await this.db.ingredientInRecipe.insertMultipleAsync(
-        ingredientInRecipeEntities
-      );
+    if (ingredientInRecipeEntities.length) {
+      const areIngredientsAddedToRecipe =
+        await this.db.ingredientInRecipe.insertMultipleAsync(
+          ingredientInRecipeEntities
+        );
 
-    if (!areIngredientsAddedToRecipe) {
-      this.logger.warning('Ingredients were not added to recipe in DB');
+      if (!areIngredientsAddedToRecipe) {
+        this.logger.warning('Ingredients were not added to recipe in DB');
+      }
     }
 
     const tagInRecipeEntities: RecipeTagEntity[] = newRecipe.tags.map(
@@ -88,12 +78,14 @@ export class RecipeService {
       })
     );
 
-    const areTagsAddedToRecipe = await this.db.recipeTag.insertMultipleAsync(
-      tagInRecipeEntities
-    );
+    if (tagInRecipeEntities.length) {
+      const areTagsAddedToRecipe = await this.db.recipeTag.insertMultipleAsync(
+        tagInRecipeEntities
+      );
 
-    if (!areTagsAddedToRecipe) {
-      this.logger.warning('Tags were not added to recipe in DB');
+      if (!areTagsAddedToRecipe) {
+        this.logger.warning('Tags were not added to recipe in DB');
+      }
     }
 
     return recipe;

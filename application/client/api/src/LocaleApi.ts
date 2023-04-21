@@ -6,7 +6,6 @@ export type LocaleResource =
   | 'buttons'
   | 'common'
   | 'dimension'
-  | 'dish'
   | 'ingredient'
   | 'menu'
   | 'recipe';

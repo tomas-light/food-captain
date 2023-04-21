@@ -23,7 +23,7 @@ export class UserService {
     const userId = await this.db.user.insertAsync({
       name: user.name,
       email: user.email,
-      password: user.password, // todo: add password encryption
+      login: user.login,
     });
 
     if (userId == null) {
@@ -44,7 +44,7 @@ export class UserService {
   }
 
   async updateAsync(
-    partialUser: MakeOptional<UserWithRoleEntity, 'name' | 'email' | 'password'>
+    partialUser: MakeOptional<UserWithRoleEntity, 'name' | 'email' | 'login'>
   ): Promise<UserWithRoleEntity | undefined> {
     const userEntity = await this.db.user.updateAsync(partialUser);
     if (!userEntity) {
@@ -55,7 +55,7 @@ export class UserService {
       id: userEntity.id,
       name: userEntity.name,
       email: userEntity.email,
-      password: userEntity.password,
+      login: userEntity.login,
     };
 
     if (partialUser.role_id != null) {
