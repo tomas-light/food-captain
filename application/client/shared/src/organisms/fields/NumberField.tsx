@@ -5,7 +5,9 @@ import {
   InputLeftElement,
   InputRightElement,
 } from '@chakra-ui/react';
+import clsx from 'clsx';
 import { ReactNode } from 'react';
+import classes from './NumberField.module.scss';
 
 type Props = Pick<InputGroupProps, 'size'> & {
   className?: string;
@@ -29,7 +31,7 @@ function NumberField(props: Props) {
   } = props;
 
   return (
-    <InputGroup className={className} size={size}>
+    <InputGroup className={clsx(classes.root, className)} size={size}>
       {prefix && (
         <InputLeftElement pointerEvents="none">{prefix}</InputLeftElement>
       )}

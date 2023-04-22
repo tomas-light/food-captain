@@ -167,6 +167,7 @@ export const RecipeTemplatePage: FC<Props> = (props) => {
       <div className={classes.tags}>
         <SelectField
           placeholder={t('recipe.addTag')}
+          styleVariant={'tiny-flushed'}
           options={tagDictionaries.options}
           isSearchable={true}
           value={null} // we don't need to display selected value here
@@ -276,6 +277,7 @@ export const RecipeTemplatePage: FC<Props> = (props) => {
 
                 <SelectField
                   className={classes.ingredientDimension}
+                  styleVariant={'tiny-flushed'}
                   value={dimensionOptions.optionsMap.get(dimension_id)}
                   options={dimensionOptions.options}
                   isSearchable
@@ -317,6 +319,8 @@ export const RecipeTemplatePage: FC<Props> = (props) => {
           label={t('recipe.name')}
           value={recipe.name ?? ''}
           onChange={onNameChanged}
+          icon={<Icon variant={'title'} />}
+          variant={'flushed'}
         />
         {/* todo: add description fields */}
       </div>

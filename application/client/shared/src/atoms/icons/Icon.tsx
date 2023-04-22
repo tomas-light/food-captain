@@ -1,5 +1,7 @@
 import { ChevronLeftIcon } from '@chakra-ui/icons';
 import { ComponentProps, FC, ForwardedRef, forwardRef } from 'react';
+import { ChevronDownIcon } from './ChevronDownIcon';
+import { ChevronUpIcon } from './ChevronUpIcon';
 import { FireIcon } from './FireIcon';
 import { ImageIcon } from './ImageIcon';
 import { ImageSearchIcon } from './ImageSearchIcon';
@@ -18,6 +20,8 @@ import { UploadIcon } from './UploadIcon';
 
 const variants = {
   chevronLeft: ChevronLeftIcon,
+  chevronUp: ChevronUpIcon,
+  chevronDown: ChevronDownIcon,
   fire: FireIcon,
   image: ImageIcon,
   imageSearch: ImageSearchIcon,

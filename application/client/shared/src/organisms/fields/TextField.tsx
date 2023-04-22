@@ -1,8 +1,13 @@
-import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
+import {
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputProps,
+} from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import classes from './TextField.module.scss';
 
-type Props = {
+type Props = Pick<InputProps, 'variant'> & {
   className?: string;
   label: string;
   value: string;
@@ -21,6 +26,7 @@ function TextField(props: Props) {
     icon,
     disabled = false,
     autoFocus = false,
+    ...rest
   } = props;
 
   return (
@@ -33,6 +39,7 @@ function TextField(props: Props) {
         onChange={(event) => onChange(event.target.value)}
         isDisabled={disabled}
         autoFocus={autoFocus}
+        {...rest}
       />
     </InputGroup>
   );
