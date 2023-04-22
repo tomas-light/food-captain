@@ -10,6 +10,9 @@
     "edit": "$t(buttons.edit) $t(recipe.one)",
     "delete": "$t(buttons.delete) $t(recipe.one)",
     "open": "$t(buttons.open)",
-    "search": "search recipe"
+    "search": "search recipe",
+    "kcal": "kcal",
+    "minutes":"min",
+    "addTag": "add tag"
   }
 }

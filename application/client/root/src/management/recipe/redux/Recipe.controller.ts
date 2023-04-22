@@ -7,8 +7,8 @@ import {
   WatchedController,
 } from 'redux-controller-middleware';
 import { RecipeForViewDto } from '@food-captain/api';
-import { RecipeApi } from '@food-captain/client-api';
-import { NewRecipe, Recipe, UpdatedRecipe } from '~/models';
+import { RecipeApi, TagApi } from '@food-captain/client-api';
+import { NewRecipe, NewTag, Recipe, Tag, UpdatedRecipe } from '~/models';
 import { RecipeStore } from './Recipe.store';
 import { State } from '~State';
 
@@ -16,7 +16,8 @@ import { State } from '~State';
 class RecipeController extends ControllerBase<State> {
   constructor(
     middleware: Middleware<State>,
-    private readonly recipeApi: RecipeApi
+    private readonly recipeApi: RecipeApi,
+    private readonly tagApi: TagApi
   ) {
     super(middleware);
   }
@@ -48,6 +49,57 @@ class RecipeController extends ControllerBase<State> {
       recipesAreLoading: false,
       recipesMap: recipesMap,
     });
+  }
+
+  @watch
+  async loadTags() {
+    this.updateStore({ tagsAreLoading: true });
+
+    const response = await this.tagApi.getAllAsync();
+    if (response.isFailed() || !response.data) {
+      this.updateStore({
+        tagsAreLoading: false,
+        tagsMap: new Map(),
+      });
+
+      return;
+    }
+
+    const tagsMap = new Map();
+    response.data.forEach((tag) => {
+      tagsMap.set(tag.id, tag);
+    });
+
+    this.updateStore({
+      tagsAreLoading: false,
+      tagsMap: tagsMap,
+    });
+  }
+
+  @watch
+  async addTag(
+    action: Action<{
+      newTag: NewTag;
+      getCreatedTag?: (createdTag: Tag) => void;
+    }>
+  ) {
+    const { newTag, getCreatedTag } = action.payload;
+
+    const recipeResponse = await this.tagApi.addAsync(newTag);
+    if (recipeResponse.isFailed() || !recipeResponse.data) {
+      return;
+    }
+
+    const { tagsMap } = this.getState().recipe;
+    const newTagsMap = new Map(tagsMap);
+
+    newTagsMap.set(recipeResponse.data.id, recipeResponse.data);
+
+    this.updateStore({
+      tagsMap: newTagsMap,
+    });
+
+    getCreatedTag?.(recipeResponse.data);
   }
 
   @watch

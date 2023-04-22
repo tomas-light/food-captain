@@ -7,7 +7,7 @@ import classes from './Image.module.scss';
 type Props = Pick<
   ImageProps,
   'src' | 'className' | 'onClick' | 'onDoubleClick'
-> & {};
+>;
 
 const Image: FC<Props> = (props) => {
   const { className, src, ...rest } = props;
@@ -17,23 +17,18 @@ const Image: FC<Props> = (props) => {
   const hasNoImage = !src || errorOnLoad;
 
   return (
-    <div className={className}>
-      <div className={classes.positionContainer}>
-        <ChakraImage
-          className={clsx(classes.image, {
-            [classes.withoutImage]: hasNoImage,
-          })}
-          src={src}
-          borderRadius={8}
-          border={'1px'}
-          onError={(event) => {
-            setErrorOnLoad(true);
-          }}
-          {...rest}
-        />
-        {hasNoImage && <Icon className={classes.icon} variant={'noImage'} />}
-      </div>
-    </div>
+    <ChakraImage
+      className={clsx(classes.image, className, {
+        [classes.withoutImage]: hasNoImage,
+      })}
+      src={src}
+      borderRadius={8}
+      border={'1px'}
+      onError={(event) => {
+        setErrorOnLoad(true);
+      }}
+      {...rest}
+    />
   );
 };
 

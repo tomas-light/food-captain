@@ -1,22 +1,40 @@
-import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
+import {
+  Input,
+  InputGroup,
+  InputLeftElement,
+  useMergeRefs,
+} from '@chakra-ui/react';
 import clsx from 'clsx';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  forwardRef,
+  ForwardRefRenderFunction,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { guid } from '@food-captain/client-utils';
 import { Icon } from '../../atoms/icons';
 import classes from './ImageField.module.scss';
 
 type Props = {
   className?: string;
-  label: string;
+  label?: string;
   onChange: (imageFile: File) => void;
 };
 
-function ImageField(props: Props) {
+const ImageField: ForwardRefRenderFunction<HTMLInputElement, Props> = (
+  props,
+  ref
+) => {
   const { className, label, onChange } = props;
 
   const [, rerender] = useState({});
   const inputRef = useRef<HTMLInputElement>(null);
   const inputId = useMemo(() => guid(), []);
+
+  const mergedRef = useMergeRefs(ref, inputRef);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -30,16 +48,18 @@ function ImageField(props: Props) {
         <Icon variant={'image'} />
       </InputLeftElement>
 
-      <label
-        htmlFor={inputId}
-        className={clsx(classes.label, inputRef.current?.className)}
-      >
-        {label}
-      </label>
+      {label && (
+        <label
+          htmlFor={inputId}
+          className={clsx(classes.label, inputRef.current?.className)}
+        >
+          {label}
+        </label>
+      )}
 
       <Input
         id={inputId}
-        ref={inputRef}
+        ref={mergedRef}
         placeholder={label}
         hidden
         type="file"
@@ -56,7 +76,9 @@ function ImageField(props: Props) {
       />
     </InputGroup>
   );
-}
+};
 
-export { ImageField };
+const componentWithRef = forwardRef(ImageField);
+
+export { componentWithRef as ImageField };
 export type { Props as ImageFieldProps };

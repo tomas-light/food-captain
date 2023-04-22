@@ -30,11 +30,12 @@ export class PgTag extends PgTableBase<TagEntity> implements TagTable {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
-          ${keyOf<TagEntity>('name')}
+          ${keyOf<TagEntity>('name')},
+          ${keyOf<TagEntity>('color')}
         ) 
-        VALUES($1) RETURNING ${keyOf<TagEntity>('id')};
+        VALUES($1, $2) RETURNING ${keyOf<TagEntity>('id')};
       `,
-      values: [entity.name],
+      values: [entity.name, entity.color],
     };
 
     const queryResult = await this.query<TagEntity>(queryConfig);
@@ -48,8 +49,9 @@ export class PgTag extends PgTableBase<TagEntity> implements TagTable {
       (sql, entity) => {
         const parameterExpression: string[] = [
           `$${parameterOrder++}`, // name
+          `$${parameterOrder++}`, // color
         ];
-        const values = [entity.name];
+        const values = [entity.name, entity.color];
 
         sql.parameterExpression.push(`(${parameterExpression.join(',')})`);
         sql.values.push(...values);
@@ -64,7 +66,8 @@ export class PgTag extends PgTableBase<TagEntity> implements TagTable {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.table} (
-          ${keyOf<TagEntity>('name')}
+          ${keyOf<TagEntity>('name')},
+          ${keyOf<TagEntity>('color')}
         ) 
         VALUES 
             ${parameterExpression.join(',')}

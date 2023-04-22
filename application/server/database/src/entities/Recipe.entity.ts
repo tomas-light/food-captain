@@ -11,7 +11,7 @@ export interface RecipeEntity extends Entity {
   name?: string;
   image_id?: number;
   description?: RecipeDescription;
-  kcal?: string;
+  kcal?: number;
   portion_weight_in_grams?: number;
   cooking_time_in_minutes?: number;
 }

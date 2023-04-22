@@ -20,28 +20,13 @@ const RecipeDetails = (props: Props) => {
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { ingredients, dimensions } = useSelector((state) => state.ingredient);
+  const { ingredientsMap, dimensionsMap } = useSelector(
+    (state) => state.ingredient
+  );
   const imageApi = use(ImageApi);
 
-  useLocaleResource('dish');
+  useLocaleResource('ingredient');
   useLocaleResource('recipe');
-
-  const ingredientsMap = useMemo(
-    () =>
-      ingredients.reduce((map, ingredient) => {
-        map.set(ingredient.id, ingredient);
-        return map;
-      }, new Map<Ingredient['id'], Ingredient>()),
-    [ingredients]
-  );
-  const dimensionsMap = useMemo(
-    () =>
-      dimensions.reduce((map, dimension) => {
-        map.set(dimension.id, dimension);
-        return map;
-      }, new Map<Dimension['id'] | null | undefined, Dimension>()),
-    [dimensions]
-  );
 
   useEffect(() => {
     dispatch(IngredientController.loadIngredients());
@@ -85,7 +70,7 @@ const RecipeDetails = (props: Props) => {
       })}
 
       <label>{t('recipe.description')}</label>
-      <p>{recipe.description}</p>
+      <p>{recipe.description ? JSON.stringify(recipe.description) : ''}</p>
 
       {/* <div
         style={{

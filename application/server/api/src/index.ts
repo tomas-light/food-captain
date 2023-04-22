@@ -14,4 +14,6 @@ export type {
   UpdatedRecipeDto,
   RecipeDto,
   RecipeForViewDto,
+  RecipeIngredientDto,
 } from './controllers/RecipeApiController';
+export type { TagDto, NewTagDto } from './controllers/TagApiController';

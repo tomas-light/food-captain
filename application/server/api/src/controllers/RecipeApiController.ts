@@ -73,14 +73,16 @@ export interface RecipeDto extends RecipeEntity {}
 
 export interface RecipeForViewDto extends RecipeForViewEntity {}
 
+export interface RecipeIngredientDto extends IngredientForRecipe {}
+
 export interface NewRecipeDto extends NewRecipeEntity {
   image?: NewImage;
-  ingredients: IngredientForRecipe[];
+  ingredients: RecipeIngredientDto[];
   tags: TagForRecipe[];
 }
 
 export interface UpdatedRecipeDto extends MakeOptional<RecipeEntity, 'name'> {
   image?: NewImage;
-  ingredients: IngredientForRecipe[];
+  ingredients: RecipeIngredientDto[];
   tags: TagForRecipe[];
 }
