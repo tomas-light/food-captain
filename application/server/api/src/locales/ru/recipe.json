@@ -13,6 +13,9 @@
     "search": "поиск рецепта",
     "kcal": "Ккал",
     "minutes":"мин",
-    "addTag": "добавить тег"
+    "addTag": "добавить тег",
+    "addTextDescription": "добавить текст",
+    "addStepDescription": "добавить шаг",
+    "instruction": "рецептура"
   }
 }

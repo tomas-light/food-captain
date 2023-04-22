@@ -1,6 +1,10 @@
 import { Entity } from './Entity';
 
 export interface RecipeDescription {
+  blocks: RecipeDescriptionBlock[];
+}
+
+export interface RecipeDescriptionBlock {
   type: 'text' | 'step';
   order: number;
   content: string; // todo: rich text format?

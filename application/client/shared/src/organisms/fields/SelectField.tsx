@@ -26,7 +26,7 @@ function SelectField<TOption extends Option>(props: Props<TOption>) {
     if (styleVariant === 'tiny-flushed') {
       style.IndicatorSeparator = () => null as any;
       style.DropdownIndicator = (indicatorProps) => (
-        <div {...indicatorProps} className={classes.chevronContainer}>
+        <div className={classes.chevronContainer}>
           <Icon
             height={16}
             viewBox={'3 3 16 16'}

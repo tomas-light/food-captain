@@ -144,6 +144,9 @@
 }
 .description {
   grid-area: description;
+  display: grid;
+  grid-auto-flow: row;
+  grid-row-gap: 36px;
 
   & > div:nth-of-type(1) {
     width: 222px;
@@ -179,5 +182,16 @@
     grid-area: delete-button;
     color: map.get($destructive, main);
     border: none;
+  }
+}
+
+.addDescriptionButton {
+  width: fit-content;
+
+  & > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: map.get($primary, main);
   }
 }

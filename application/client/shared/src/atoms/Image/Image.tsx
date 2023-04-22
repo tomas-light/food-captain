@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import { FC, useState } from 'react';
 import { Image as ChakraImage, ImageProps } from '@chakra-ui/react';
-import { Icon } from '../icons';
 import classes from './Image.module.scss';
 
 type Props = Pick<

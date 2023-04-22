@@ -1,16 +1,24 @@
+import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { guid } from '@food-captain/client-utils';
 import {
   Button,
   Icon,
   IconButton,
   NumberField,
   TextField,
+  TextAreaField,
   Typography,
 } from '@food-captain/client-shared';
 import { useLocaleResource } from '~/config/i18next';
 import { useSelector } from '~/config/redux/useSelector';
-import { NewRecipe, Recipe, RecipeIngredient } from '~/models';
+import {
+  NewRecipe,
+  Recipe,
+  RecipeDescriptionBlock,
+  RecipeIngredient,
+} from '~/models';
 import { EditableImage, GalleryModal, GalleryModalRef } from '~/templates';
 import { IngredientsModal, IngredientsModalRef } from './IngredientsModal';
 import { RecipeIngredients, RecipeIngredientsProps } from './RecipeIngredients';
@@ -30,6 +38,15 @@ type Props = Pick<
       minutes: Recipe['cooking_time_in_minutes'] | null
     ) => void;
     onAddIngredient: (newIngredient: RecipeIngredient) => void;
+
+    onAddDescriptionBlock: (descriptionBlock: RecipeDescriptionBlock) => void;
+    onChangeDescriptionBlock: (
+      descriptionBlock: RecipeDescriptionBlock
+    ) => void;
+    onDeleteDescriptionBlock: (
+      descriptionBlock: RecipeDescriptionBlock
+    ) => void;
+
     saveButtonLabelKey: string;
     onSave: () => void;
   };
@@ -47,6 +64,9 @@ export const RecipeTemplatePage: FC<Props> = (props) => {
     onDeleteIngredient,
     onAddTag,
     onDeleteTag,
+    onAddDescriptionBlock,
+    onChangeDescriptionBlock,
+    onDeleteDescriptionBlock,
     onSave,
   } = props;
 
@@ -136,7 +156,79 @@ export const RecipeTemplatePage: FC<Props> = (props) => {
           variant={'flushed'}
         />
 
-        <IconButton icon={<Icon variant={'plus'} />} />
+        {(recipe.description?.blocks ?? []).map((block) => {
+          switch (block.type) {
+            case 'step':
+            case 'text':
+              return (
+                <TextAreaField
+                  key={block.reactId}
+                  label={t('recipe.instruction')}
+                  value={block.content ?? ''}
+                  onChange={(newValue) => {
+                    onChangeDescriptionBlock({
+                      ...block,
+                      content: newValue,
+                    });
+                  }}
+                  // icon={<Icon variant={'title'} />}
+                />
+              );
+
+            default:
+              return (
+                <TextAreaField
+                  key={block.reactId}
+                  label={t('recipe.instruction')}
+                  value={block.content ?? ''}
+                  onChange={(newValue) => {
+                    onChangeDescriptionBlock({
+                      ...block,
+                      content: newValue,
+                    });
+                  }}
+                  // icon={<Icon variant={'title'} />}
+                />
+              );
+          }
+        })}
+
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            className={classes.addDescriptionButton}
+            title={t('buttons.add') ?? ''}
+          >
+            <Icon variant={'plus'} />
+          </MenuButton>
+
+          <MenuList>
+            <MenuItem
+              onClick={() => {
+                onAddDescriptionBlock({
+                  type: 'text',
+                  reactId: guid(),
+                  content: '',
+                  order: recipe.description?.blocks.length ?? 0,
+                });
+              }}
+            >
+              {t('recipe.addTextDescription')}
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                onAddDescriptionBlock({
+                  type: 'step',
+                  reactId: guid(),
+                  content: '',
+                  order: recipe.description?.blocks.length ?? 0,
+                });
+              }}
+            >
+              {t('recipe.addStepDescription')}
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </div>
 
       <Button className={classes.saveButton} onClick={onSave}>

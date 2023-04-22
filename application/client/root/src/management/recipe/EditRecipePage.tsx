@@ -141,6 +141,57 @@ export const EditRecipePage = () => {
           };
         });
       }}
+      onAddDescriptionBlock={(newBlock) => {
+        setRecipe((_recipe) => {
+          if (!_recipe?.description) {
+            return _recipe;
+          }
+
+          return {
+            ..._recipe,
+            description: {
+              blocks: (_recipe.description?.blocks ?? []).concat([newBlock]),
+            },
+          };
+        });
+      }}
+      onChangeDescriptionBlock={(changedBlock) => {
+        setRecipe((_recipe) => {
+          if (!_recipe?.description) {
+            return _recipe;
+          }
+
+          const blockIndex = _recipe.description.blocks.findIndex(
+            ({ reactId }) => changedBlock.reactId === reactId
+          );
+          const updatedBlocks = _recipe.description.blocks.slice();
+          updatedBlocks.splice(blockIndex, 1, changedBlock);
+          return {
+            ..._recipe,
+            description: {
+              blocks: updatedBlocks,
+            },
+          };
+        });
+      }}
+      onDeleteDescriptionBlock={(deletableBlock) => {
+        setRecipe((_recipe) => {
+          if (!_recipe?.description) {
+            return _recipe;
+          }
+
+          const blocks = _recipe.description.blocks.filter(
+            ({ reactId }) => reactId !== deletableBlock.reactId
+          );
+
+          return {
+            ..._recipe,
+            description: {
+              blocks: blocks,
+            },
+          };
+        });
+      }}
       saveButtonLabelKey={'buttons.save'}
       onSave={onSave}
     />

@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
 import { api, delete_, get, post, put } from 'mvc-middleware';
-import { NewRecipeEntity, RecipeEntity } from '@food-captain/database';
+import {
+  NewRecipeEntity,
+  RecipeDescription,
+  RecipeDescriptionBlock,
+  RecipeEntity,
+} from '@food-captain/database';
 import { RecipeForViewEntity } from '@food-captain/database/src/tables';
 import { Logger } from '@food-captain/server-utils';
 import { NewImage } from '../services/ImageService';
@@ -87,3 +92,8 @@ export interface UpdatedRecipeDto extends MakeOptional<RecipeEntity, 'name'> {
   ingredients: RecipeIngredientDto[];
   tags: TagForRecipe[];
 }
+
+export type {
+  RecipeDescription as RecipeDescriptionDto,
+  RecipeDescriptionBlock as RecipeDescriptionBlockDto,
+};

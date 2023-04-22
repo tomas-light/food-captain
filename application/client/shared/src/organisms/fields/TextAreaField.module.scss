@@ -1,0 +1,7 @@
+.input {
+  white-space: pre;
+}
+
+.input::placeholder {
+  text-transform: capitalize;
+}

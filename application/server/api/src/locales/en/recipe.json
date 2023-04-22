@@ -13,6 +13,9 @@
     "search": "search recipe",
     "kcal": "kcal",
     "minutes":"min",
-    "addTag": "add tag"
+    "addTag": "add tag",
+    "addTextDescription": "add text",
+    "addStepDescription": "add step",
+    "instruction": "instruction"
   }
 }

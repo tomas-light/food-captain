@@ -134,7 +134,20 @@ class RecipeController extends ControllerBase<State> {
   ) {
     const { recipe, callback } = action.payload;
 
-    const recipeResponse = await this.recipeApi.addAsync(recipe);
+    const recipeWithCorrectDescription: typeof recipe = {
+      ...recipe,
+      description: {
+        blocks: (recipe.description?.blocks ?? []).map((block) => ({
+          content: block.content,
+          order: block.order,
+          type: block.type,
+        })),
+      },
+    };
+
+    const recipeResponse = await this.recipeApi.addAsync(
+      recipeWithCorrectDescription
+    );
     if (recipeResponse.isFailed() || !recipeResponse.data) {
       return;
     }
@@ -160,7 +173,20 @@ class RecipeController extends ControllerBase<State> {
   ) {
     const { recipe, callback } = action.payload;
 
-    const recipeResponse = await this.recipeApi.updateAsync(recipe);
+    const recipeWithCorrectDescription: typeof recipe = {
+      ...recipe,
+      description: {
+        blocks: (recipe.description?.blocks ?? []).map((block) => ({
+          content: block.content,
+          order: block.order,
+          type: block.type,
+        })),
+      },
+    };
+
+    const recipeResponse = await this.recipeApi.updateAsync(
+      recipeWithCorrectDescription
+    );
     if (recipeResponse.isFailed() || !recipeResponse.data) {
       return;
     }
