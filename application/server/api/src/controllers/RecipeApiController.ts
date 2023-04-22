@@ -74,6 +74,7 @@ export interface RecipeDto extends RecipeEntity {}
 export interface RecipeForViewDto extends RecipeForViewEntity {}
 
 export interface RecipeIngredientDto extends IngredientForRecipe {}
+export interface RecipeTagDto extends TagForRecipe {}
 
 export interface NewRecipeDto extends NewRecipeEntity {
   image?: NewImage;
