@@ -6,9 +6,10 @@ import {
   watch,
   WatchedController,
 } from 'redux-controller-middleware';
-import { RecipeForViewDto } from '@food-captain/api';
+import { NewRecipeDto, RecipeForViewDto } from '@food-captain/api';
 import { RecipeApi, TagApi } from '@food-captain/client-api';
-import { NewTag, Recipe, Tag, UpdatedRecipe } from '~/models';
+import { guid } from '@food-captain/client-utils';
+import { NewRecipe, NewTag, Recipe, Tag } from '~/models';
 import { RecipeStore } from './Recipe.store';
 import { State } from '~State';
 
@@ -40,9 +41,12 @@ class RecipeController extends ControllerBase<State> {
       return;
     }
 
-    const recipesMap = new Map();
+    const recipesMap = new Map<Recipe['id'], Recipe>();
     response.data.forEach((recipe) => {
-      recipesMap.set(recipe.id, recipe);
+      recipesMap.set(
+        recipe.id,
+        this.mapRecipeDescriptionDtoToDescription(recipe)
+      );
     });
 
     this.updateStore({
@@ -120,7 +124,10 @@ class RecipeController extends ControllerBase<State> {
     const { recipesMap } = this.getState().recipe;
     const newRecipesMap = new Map(recipesMap);
 
-    newRecipesMap.set(recipeResponse.data.id, recipeResponse.data);
+    const recipe = this.mapRecipeDescriptionDtoToDescription(
+      recipeResponse.data
+    );
+    newRecipesMap.set(recipe.id, recipe);
 
     this.updateStore({
       recipesAreLoading: false,
@@ -131,21 +138,13 @@ class RecipeController extends ControllerBase<State> {
   @watch
   async addRecipe(action: Action<{ callback?: () => void }>) {
     const { callback } = action.payload;
-    const { editedRecipe: recipe } = this.getState().recipe;
-    if (!recipe) {
+    const { editedRecipe } = this.getState().recipe;
+    if (!editedRecipe) {
       return;
     }
 
-    const recipeWithCorrectDescription: typeof recipe = {
-      ...recipe,
-      description: {
-        blocks: (recipe.description?.blocks ?? []).map((block) => ({
-          content: block.content,
-          order: block.order,
-          type: block.type,
-        })),
-      },
-    };
+    const recipeWithCorrectDescription: typeof editedRecipe =
+      this.mapRecipeDescriptionToDescriptionDto(editedRecipe);
 
     const recipeResponse = await this.recipeApi.addAsync(
       recipeWithCorrectDescription
@@ -157,7 +156,10 @@ class RecipeController extends ControllerBase<State> {
     const { recipesMap } = this.getState().recipe;
     const newRecipesMap = new Map(recipesMap);
 
-    newRecipesMap.set(recipeResponse.data.id, recipeResponse.data);
+    const recipe = this.mapRecipeDescriptionDtoToDescription(
+      recipeResponse.data
+    );
+    newRecipesMap.set(recipe.id, recipe);
 
     this.updateStore({
       recipesMap: newRecipesMap,
@@ -167,16 +169,8 @@ class RecipeController extends ControllerBase<State> {
     callback?.();
   }
 
-  @watch
-  async updateRecipe(
-    action: Action<{
-      recipe: UpdatedRecipe;
-      callback?: () => void;
-    }>
-  ) {
-    const { recipe, callback } = action.payload;
-
-    const recipeWithCorrectDescription: typeof recipe = {
+  private mapRecipeDescriptionToDescriptionDto<T extends NewRecipe>(recipe: T) {
+    return {
       ...recipe,
       description: {
         blocks: (recipe.description?.blocks ?? []).map((block) => ({
@@ -186,6 +180,37 @@ class RecipeController extends ControllerBase<State> {
         })),
       },
     };
+  }
+
+  private mapRecipeDescriptionDtoToDescription<T extends NewRecipeDto>(
+    recipeDto: T
+  ) {
+    return {
+      ...recipeDto,
+      description: {
+        blocks:
+          recipeDto.description?.blocks.map((block) => ({
+            ...block,
+            reactId: guid(),
+          })) ?? [],
+      },
+    };
+  }
+
+  @watch
+  async updateRecipe(
+    action: Action<{
+      callback?: () => void;
+    }>
+  ) {
+    const { callback } = action.payload;
+    const { editedRecipe } = this.getState().recipe;
+    if (!editedRecipe || !('id' in editedRecipe)) {
+      return;
+    }
+
+    const recipeWithCorrectDescription: Recipe =
+      this.mapRecipeDescriptionToDescriptionDto(editedRecipe);
 
     const recipeResponse = await this.recipeApi.updateAsync(
       recipeWithCorrectDescription
@@ -197,7 +222,10 @@ class RecipeController extends ControllerBase<State> {
     const { recipesMap } = this.getState().recipe;
     const newRecipesMap = new Map(recipesMap);
 
-    newRecipesMap.set(recipeResponse.data.id, recipeResponse.data);
+    const recipe = this.mapRecipeDescriptionDtoToDescription(
+      recipeResponse.data
+    );
+    newRecipesMap.set(recipe.id, recipe);
 
     this.updateStore({
       recipesMap: newRecipesMap,

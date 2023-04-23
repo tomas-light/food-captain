@@ -43,7 +43,7 @@ function NumberField(props: Props) {
         variant={'flushed'}
         onChange={(event) => {
           const newValue = event.target.value;
-          const parsed = parseInt(newValue, 10);
+          const parsed = parseFloat(newValue);
           if (isNaN(parsed)) {
             onChange(null);
           } else {

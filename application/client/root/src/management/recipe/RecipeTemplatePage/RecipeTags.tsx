@@ -50,7 +50,7 @@ const RecipeTags: FC<Props> = (props) => {
   }, [tagsMap]);
 
   return (
-    <div className={clsx(classes.tags, className)}>
+    <div className={clsx(classes.root, className)}>
       <SelectField
         placeholder={t('recipe.addTag')}
         styleVariant={'tiny-flushed'}
@@ -62,6 +62,10 @@ const RecipeTags: FC<Props> = (props) => {
         }}
         onKeyDown={(event) => {
           if (event.key === 'Enter') {
+            if (!newTagName?.trim()) {
+              return;
+            }
+
             const existedColors = new Set(
               Array.from(tagsMap.values()).map((tag) => tag.color)
             );
