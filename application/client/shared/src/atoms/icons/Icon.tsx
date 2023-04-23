@@ -1,28 +1,52 @@
 import { ChevronLeftIcon } from '@chakra-ui/icons';
 import { ComponentProps, FC, ForwardedRef, forwardRef } from 'react';
+import { ChevronDownIcon } from './ChevronDownIcon';
+import { ChevronUpIcon } from './ChevronUpIcon';
+import { FireIcon } from './FireIcon';
 import { ImageIcon } from './ImageIcon';
 import { ImageSearchIcon } from './ImageSearchIcon';
 import { ImagesIcon } from './ImagesIcon';
 import { LogoIcon } from './LogoIcon';
 import { MeatBallIcon } from './MeatBallIcon';
+import { MinusIcon } from './MinusIcon';
 import { NoImageIcon } from './NoImageIcon';
 import { PasteIcon } from './PasteIcon';
 import { PlatterIcon } from './PlatterIcon';
+import { PlusIcon } from './PlusIcon';
+import { RtfBoldIcon } from './RtfBoldIcon';
+import { RtfItalicIcon } from './RtfItalicIcon';
+import { RtfListBulletIcon } from './RtfListBulletIcon';
+import { RtfListNumericIcon } from './RtfListNumericIcon';
+import { RtfUnderlineIcon } from './RtfUnderlineIcon';
 import { SearchIcon } from './SearchIcon';
+import { TimerIcon } from './TimerIcon';
 import { TitleIcon } from './TitleIcon';
+import { UploadIcon } from './UploadIcon';
 
 const variants = {
+  chevronDown: ChevronDownIcon,
   chevronLeft: ChevronLeftIcon,
+  chevronUp: ChevronUpIcon,
+  fire: FireIcon,
   image: ImageIcon,
   imageSearch: ImageSearchIcon,
   images: ImagesIcon,
   logo: LogoIcon,
   meatBall: MeatBallIcon,
+  minus: MinusIcon,
   noImage: NoImageIcon,
   paste: PasteIcon,
   platter: PlatterIcon,
+  plus: PlusIcon,
+  rtfBold: RtfBoldIcon,
+  rtfItalic: RtfItalicIcon,
+  rtfListBullet: RtfListBulletIcon,
+  rtfListNumeric: RtfListNumericIcon,
+  rtfUnderline: RtfUnderlineIcon,
   search: SearchIcon,
+  timer: TimerIcon,
   title: TitleIcon,
+  upload: UploadIcon,
 };
 
 type Variants = typeof variants;

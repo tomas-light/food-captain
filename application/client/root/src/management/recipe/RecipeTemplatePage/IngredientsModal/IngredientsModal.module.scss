@@ -1,0 +1,22 @@
+.gallery {
+  grid-area: gallery;
+  display: grid;
+  grid-template-areas:
+    "search"
+    "."
+    "ingredients"
+  ;
+  grid-template-rows: auto 24px auto 24px auto;
+}
+
+.galleryTitle {
+  text-transform: capitalize;
+}
+
+.search {
+  grid-area: search;
+}
+
+.ingredients {
+  grid-area: ingredients;
+}

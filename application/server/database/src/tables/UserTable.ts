@@ -19,7 +19,7 @@ export interface UserTable {
   insertAsync(entity: Omit<UserEntity, 'id'>): Promise<number | undefined>;
 
   updateAsync(
-    entity: MakePropertiesOptional<UserEntity, 'name' | 'email' | 'password'>
+    entity: MakePropertiesOptional<UserEntity, 'name' | 'email' | 'login'>
   ): Promise<UserWithRoleEntity | undefined>;
 
   deleteByIdAsync(id: number): Promise<boolean>;

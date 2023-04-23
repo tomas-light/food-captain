@@ -1,0 +1,6 @@
+@use "sass:map";
+@import '../../colors';
+
+.root {
+  border-color: map.get($default, main);
+}

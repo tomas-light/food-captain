@@ -7,15 +7,15 @@ import {
 } from '@food-captain/database';
 import { Logger, metadata } from '@food-captain/server-utils';
 import { MakeOptional } from '../utils/MakeOptional';
-import { DishService } from './DishService';
 import { Menu } from './models/Menu';
+import { RecipeService } from './RecipeService';
 import { UserService } from './UserService';
 
 @metadata
 export class MenuService {
   constructor(
     private readonly db: Database,
-    private readonly dishService: DishService,
+    private readonly recipeService: RecipeService,
     private readonly userService: UserService,
     private readonly logger: Logger
   ) {}
@@ -43,31 +43,31 @@ export class MenuService {
       }
     });
 
-    const menuIds = menus.map((menu) => menu.id);
-    const menuDishes = await this.db.dish.byMenuIdsAsync(menuIds);
-
-    const menuDishMap = new Map<Menu['id'], Menu['dishes']>();
-    menuDishes.forEach((menuDish) => {
-      // if (menuDish.menu_id == null) {
-      //   return;
-      // }
-
-      const menuDishesPomace = menuDishMap.get(menuDish.menu_id);
-      const dish = {
-        dish_id: menuDish.id,
-        order_number: menuDish.order_number,
-      };
-
-      if (menuDishesPomace) {
-        menuDishesPomace.push(dish);
-      } else {
-        menuDishMap.set(menuDish.menu_id, [dish]);
-      }
-    });
-
-    menus.forEach((menu) => {
-      menu.dishes = menuDishMap.get(menu.id);
-    });
+    // const menuIds = menus.map((menu) => menu.id);
+    // const recipes = await this.db.recipe.byMenuIdsAsync(menuIds);
+    //
+    // const menuDishMap = new Map<Menu['id'], Menu['recipes']>();
+    // recipes.forEach((menuDish) => {
+    //   // if (menuDish.menu_id == null) {
+    //   //   return;
+    //   // }
+    //
+    //   const menuDishesPomace = menuDishMap.get(menuDish.menu_id);
+    //   const dish = {
+    //     dish_id: menuDish.id,
+    //     order_number: menuDish.order_number,
+    //   };
+    //
+    //   if (menuDishesPomace) {
+    //     menuDishesPomace.push(dish);
+    //   } else {
+    //     menuDishMap.set(menuDish.menu_id, [dish]);
+    //   }
+    // });
+    //
+    // menus.forEach((menu) => {
+    //   menu.recipes = menuDishMap.get(menu.id);
+    // });
 
     return menus;
   }
@@ -85,8 +85,8 @@ export class MenuService {
     const menu = Mapper.map(MenuEntity, Menu, menuEntity);
 
     for await (const entity of menuWithDishesEntities) {
-      menu.dishes?.push({
-        dish_id: entity.dish_id,
+      menu.recipes?.push({
+        recipe_id: entity.recipe_id,
         order_number: entity.order_number,
       });
     }
@@ -111,11 +111,11 @@ export class MenuService {
       return undefined;
     }
 
-    if (menu.dishes == null) {
+    if (menu.recipes == null) {
       return menu as Menu;
     }
 
-    for await (const dish of menu.dishes) {
+    for await (const dish of menu.recipes) {
       await this.db.dishInMenu.insertAsync({
         ...dish,
         menu_id: menu.id,
@@ -129,57 +129,57 @@ export class MenuService {
     return new Date(Date.now()); // todo: do we need UTC conversation here?
   }
 
-  async updateAsync(
-    menu: MakeOptional<Menu, 'create_date' | 'last_update'>
-  ): Promise<Menu | undefined> {
-    menu.last_update = this.getDateNow().toISOString();
-
-    const entity = Mapper.map(Menu, MenuEntity, menu);
-
-    const menuEntity = await this.db.menu.updateAsync(entity);
-    if (!menuEntity) {
-      return undefined;
-    }
-
-    const dishMap = new Map(
-      menu.dishes?.map((dish) => [dish.dish_id, dish]) ?? []
-    );
-
-    const dishesIdForDelete: number[] = [];
-    const menuDishes = await this.db.dish.byMenuIdAsync(menuEntity.id);
-
-    const dishIdsBeforeUpdate = new Set(menuDishes.map((dish) => dish.id));
-
-    dishIdsBeforeUpdate.forEach((dishId) => {
-      if (!dishMap.has(dishId)) {
-        dishesIdForDelete.push(dishId);
-      }
-    });
-
-    const dishesForAdding: Omit<DishInMenuEntity, 'menu_id'>[] = [];
-
-    dishMap.forEach((menuDish, dishId) => {
-      if (!dishIdsBeforeUpdate.has(dishId)) {
-        dishesForAdding.push({
-          dish_id: dishId,
-          order_number: menuDish.order_number,
-        });
-      }
-    });
-
-    // todo: no need to wait promise resolving
-    if (dishesIdForDelete.length) {
-      await this.db.dishInMenu.deleteByIdsAsync(dishesIdForDelete);
-    }
-
-    // todo: use bulk insert
-    for await (const dish of dishesForAdding) {
-      await this.db.dishInMenu.insertAsync({
-        ...dish,
-        menu_id: menuEntity.id,
-      });
-    }
-  }
+  // async updateAsync(
+  //   menu: MakeOptional<Menu, 'create_date' | 'last_update'>
+  // ): Promise<Menu | undefined> {
+  //   menu.last_update = this.getDateNow().toISOString();
+  //
+  //   const entity = Mapper.map(Menu, MenuEntity, menu);
+  //
+  //   const menuEntity = await this.db.menu.updateAsync(entity);
+  //   if (!menuEntity) {
+  //     return undefined;
+  //   }
+  //
+  //   const dishMap = new Map(
+  //     menu.recipes?.map((dish) => [dish.recipe_id, dish]) ?? []
+  //   );
+  //
+  //   const dishesIdForDelete: number[] = [];
+  //   const recipes = await this.db.recipe.byMenuIdAsync(menuEntity.id);
+  //
+  //   const dishIdsBeforeUpdate = new Set(recipes.map((dish) => dish.id));
+  //
+  //   dishIdsBeforeUpdate.forEach((dishId) => {
+  //     if (!dishMap.has(dishId)) {
+  //       dishesIdForDelete.push(dishId);
+  //     }
+  //   });
+  //
+  //   const dishesForAdding: Omit<DishInMenuEntity, 'menu_id'>[] = [];
+  //
+  //   dishMap.forEach((menuDish, dishId) => {
+  //     if (!dishIdsBeforeUpdate.has(dishId)) {
+  //       dishesForAdding.push({
+  //         recipe_id: dishId,
+  //         order_number: menuDish.order_number,
+  //       });
+  //     }
+  //   });
+  //
+  //   // todo: no need to wait promise resolving
+  //   if (dishesIdForDelete.length) {
+  //     await this.db.dishInMenu.deleteByIdsAsync(dishesIdForDelete);
+  //   }
+  //
+  //   // todo: use bulk insert
+  //   for await (const dish of dishesForAdding) {
+  //     await this.db.dishInMenu.insertAsync({
+  //       ...dish,
+  //       menu_id: menuEntity.id,
+  //     });
+  //   }
+  // }
 
   async deleteAsync(menu: Menu): Promise<boolean> {
     const menuWasDeletedFromSchedules =

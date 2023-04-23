@@ -1,45 +1,61 @@
 import {
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  FormLabel,
-  FormControl,
+  Input,
+  InputGroup,
+  InputGroupProps,
+  InputLeftElement,
+  InputRightElement,
 } from '@chakra-ui/react';
+import clsx from 'clsx';
+import { ReactNode } from 'react';
+import classes from './NumberField.module.scss';
 
-type Props = {
-  label: string;
+type Props = Pick<InputGroupProps, 'size'> & {
+  className?: string;
+  placeholder?: string;
   value: number;
   onChange: (value: number | null) => void;
+  prefix?: ReactNode;
+  suffix?: string;
 };
 
 function NumberField(props: Props) {
-  const { label, value, onChange } = props;
+  const {
+    //
+    size,
+    className,
+    placeholder,
+    value,
+    onChange,
+    prefix,
+    suffix,
+  } = props;
 
   return (
-    <FormControl>
-      <FormLabel>{label}</FormLabel>
-      <NumberInput
-        placeholder={label}
+    <InputGroup className={clsx(classes.root, className)} size={size}>
+      {prefix && (
+        <InputLeftElement pointerEvents="none">{prefix}</InputLeftElement>
+      )}
+      <Input
+        placeholder={placeholder}
         value={value}
         step={1}
-        onChange={(newValue) => {
-          const parsed = parseInt(newValue, 10);
+        type={'number'}
+        variant={'flushed'}
+        onChange={(event) => {
+          const newValue = event.target.value;
+          const parsed = parseFloat(newValue);
           if (isNaN(parsed)) {
             onChange(null);
           } else {
             onChange(parsed);
           }
         }}
-      >
-        <NumberInputField />
-        <NumberInputStepper>
-          <NumberIncrementStepper />
-          <NumberDecrementStepper />
-        </NumberInputStepper>
-      </NumberInput>
-    </FormControl>
+      />
+
+      {suffix && (
+        <InputRightElement pointerEvents="none">{suffix}</InputRightElement>
+      )}
+    </InputGroup>
   );
 }
 

@@ -10,8 +10,8 @@ export const ManagementPage: FC = () => {
   const [cards] = useState<CardProps[]>([
     { url: appUrls.management.menu.url(), labelKey: 'menu.many' },
     {
-      url: appUrls.management.dish.url(),
-      labelKey: 'dish.many',
+      url: appUrls.management.recipe.url(),
+      labelKey: 'recipe.many',
     },
     {
       url: appUrls.management.ingredient.url(),
@@ -19,9 +19,9 @@ export const ManagementPage: FC = () => {
     },
   ]);
 
+  useLocaleResource('recipe');
   useLocaleResource('ingredient');
   useLocaleResource('menu');
-  useLocaleResource('dish');
 
   return (
     <div className={classes.root}>

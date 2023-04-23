@@ -5,7 +5,7 @@ export interface DishInMenuTable {
 
   getAsync(
     menu_id: number,
-    dish_id: number
+    recipe_id: number
   ): Promise<DishInMenuEntity | undefined>;
 
   insertAsync(entity: DishInMenuEntity): Promise<boolean>;
@@ -13,7 +13,7 @@ export interface DishInMenuTable {
   updateAsync(entity: DishInMenuEntity): Promise<DishInMenuEntity | undefined>;
 
   deleteAsync(
-    entity: Pick<DishInMenuEntity, 'menu_id' | 'dish_id'>
+    entity: Pick<DishInMenuEntity, 'menu_id' | 'recipe_id'>
   ): Promise<boolean>;
 
   deleteByIdsAsync(dish_ids: number[]): Promise<boolean>;

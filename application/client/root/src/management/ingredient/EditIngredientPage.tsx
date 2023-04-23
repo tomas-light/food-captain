@@ -32,22 +32,18 @@ const EditIngredientPage = () => {
 
   useLocaleResource('ingredient');
 
-  const ingredients = useSelector((state) => state.ingredient.ingredients);
+  const { ingredientsMap } = useSelector((state) => state.ingredient);
 
-  const storedIngredient = useSelector((state) =>
-    state.ingredient.ingredients.find(
-      (_ingredient) => _ingredient.id === ingredientId
-    )
-  );
+  const storedIngredient = ingredientsMap.get(ingredientId);
 
   useEffect(() => {
-    if (!ingredients.length) {
-      dispatch(IngredientController.loadIngredients());
-    }
+    dispatch(IngredientController.loadIngredients());
   }, []);
 
   useEffect(() => {
-    setIngredient(storedIngredient);
+    if (storedIngredient) {
+      setIngredient(storedIngredient);
+    }
   }, [storedIngredient]);
 
   const [ingredient, setIngredient] = useState<Ingredient | undefined>(

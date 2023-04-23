@@ -7,7 +7,7 @@ import {
 } from 'redux-controller-middleware';
 import type { Action } from 'redux-controller-middleware';
 import { DimensionApi, IngredientApi } from '@food-captain/client-api';
-import { Ingredient, NewIngredient } from '~/models';
+import { Dimension, Ingredient, NewIngredient } from '~/models';
 import { IngredientStore } from './Ingredient.store';
 import { State } from '~State';
 
@@ -33,15 +33,23 @@ class IngredientController extends ControllerBase<State> {
     if (response.isFailed() || !response.data) {
       // todo: show toast fail
       this.updateStore({
-        ingredients: [],
+        ingredientsMap: new Map(),
         ingredientsAreLoading: false,
       });
 
       return;
     }
 
+    const ingredientsMap = new Map<
+      Ingredient['id'] | null | undefined,
+      Ingredient
+    >();
+    response.data.forEach((dto) => {
+      ingredientsMap.set(dto.id, dto);
+    });
+
     this.updateStore({
-      ingredients: response.data,
+      ingredientsMap: ingredientsMap,
       ingredientsAreLoading: false,
     });
   }
@@ -54,22 +62,33 @@ class IngredientController extends ControllerBase<State> {
     if (response.isFailed() || !response.data) {
       // todo: show toast fail
       this.updateStore({
-        dimensions: [],
+        dimensionsMap: new Map(),
         dimensionsAreLoading: false,
       });
 
       return;
     }
 
+    const dimensionsMap = new Map<
+      Dimension['id'] | null | undefined,
+      Dimension
+    >();
+    response.data.forEach((dto) => {
+      dimensionsMap.set(dto.id, dto);
+    });
+
     this.updateStore({
-      dimensions: response.data,
+      dimensionsMap: dimensionsMap,
       dimensionsAreLoading: false,
     });
   }
 
   @watch
   async addIngredient(
-    action: Action<{ ingredient: NewIngredient; callback?: () => void }>
+    action: Action<{
+      ingredient: NewIngredient;
+      callback?: (ingredient: Ingredient) => void;
+    }>
   ) {
     const { ingredient, callback } = action.payload;
 
@@ -79,14 +98,16 @@ class IngredientController extends ControllerBase<State> {
       return;
     }
 
-    const { ingredients } = this.getState().ingredient;
+    const { ingredientsMap } = this.getState().ingredient;
+    const newMap = new Map(ingredientsMap);
+    newMap.set(response.data.id, response.data);
 
     this.updateStore({
-      ingredients: ingredients.concat(response.data),
+      ingredientsMap: newMap,
     });
     // todo: show toast success
 
-    callback?.();
+    callback?.(response.data);
   }
 
   @watch
@@ -101,12 +122,12 @@ class IngredientController extends ControllerBase<State> {
       return;
     }
 
-    const { ingredients } = this.getState().ingredient;
+    const { ingredientsMap } = this.getState().ingredient;
+    const newMap = new Map(ingredientsMap);
+    newMap.set(response.data.id, response.data);
 
     this.updateStore({
-      ingredients: ingredients
-        .filter((_ingredient) => _ingredient.id !== ingredient.id)
-        .concat(response.data),
+      ingredientsMap: newMap,
     });
     // todo: show toast success
 
@@ -130,10 +151,12 @@ class IngredientController extends ControllerBase<State> {
       return;
     }
 
-    const { ingredients } = this.getState().ingredient;
+    const { ingredientsMap } = this.getState().ingredient;
+    const newMap = new Map(ingredientsMap);
+    newMap.delete(ingredientId);
 
     this.updateStore({
-      ingredients: ingredients.filter((dish) => dish.id !== ingredientId),
+      ingredientsMap: newMap,
     });
     // todo: show toast success
 

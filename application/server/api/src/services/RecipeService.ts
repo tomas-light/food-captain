@@ -1,14 +1,14 @@
 import {
   Database,
-  ImageEntity,
   IngredientInRecipeEntity,
   NewRecipeEntity,
   RecipeEntity,
+  RecipeTagEntity,
 } from '@food-captain/database';
 import { Logger, metadata } from '@food-captain/server-utils';
 import { MakeOptional } from '../utils/MakeOptional';
 import { DimensionService } from './DimensionService';
-import { ImageService, NewImage } from './ImageService';
+import { ImageService } from './ImageService';
 import { IngredientService } from './IngredientService';
 
 @metadata
@@ -25,12 +25,6 @@ export class RecipeService {
     return this.db.recipe.allAsync(...args);
   }
 
-  getByDishIdWithIngredientsAsync(
-    ...args: Parameters<Database['recipe']['byDishIdWithIngredientsAsync']>
-  ) {
-    return this.db.recipe.byDishIdWithIngredientsAsync(...args);
-  }
-
   getManyAsync(...args: Parameters<Database['recipe']['byIdsAsync']>) {
     return this.db.recipe.byIdsAsync(...args);
   }
@@ -39,15 +33,10 @@ export class RecipeService {
     return this.db.recipe.byIdAsync(...args);
   }
 
-  getByIdWithIngredientsAsync(
-    ...args: Parameters<Database['recipe']['byIdWithIngredientsAsync']>
-  ) {
-    return this.db.recipe.byIdWithIngredientsAsync(...args);
-  }
-
   async addAsync(
     newRecipe: NewRecipeEntity & {
       ingredients: IngredientForRecipe[];
+      tags: TagForRecipe[];
     }
   ): Promise<RecipeEntity | undefined> {
     const recipe = newRecipe as unknown as RecipeEntity;
@@ -71,13 +60,32 @@ export class RecipeService {
         recipe_id: recipeId,
       }));
 
-    const areIngredientsAddedToRecipe =
-      await this.db.ingredientInRecipe.insertMultipleAsync(
-        ingredientInRecipeEntities
+    if (ingredientInRecipeEntities.length) {
+      const areIngredientsAddedToRecipe =
+        await this.db.ingredientInRecipe.insertMultipleAsync(
+          ingredientInRecipeEntities
+        );
+
+      if (!areIngredientsAddedToRecipe) {
+        this.logger.warning('Ingredients were not added to recipe in DB');
+      }
+    }
+
+    const tagInRecipeEntities: RecipeTagEntity[] = newRecipe.tags.map(
+      (tag) => ({
+        ...tag,
+        recipe_id: recipeId,
+      })
+    );
+
+    if (tagInRecipeEntities.length) {
+      const areTagsAddedToRecipe = await this.db.recipeTag.insertMultipleAsync(
+        tagInRecipeEntities
       );
 
-    if (!areIngredientsAddedToRecipe) {
-      this.logger.warning('Ingredients were not added to recipe in DB');
+      if (!areTagsAddedToRecipe) {
+        this.logger.warning('Tags were not added to recipe in DB');
+      }
     }
 
     return recipe;
@@ -86,6 +94,7 @@ export class RecipeService {
   async updateAsync(
     recipe: MakeOptional<RecipeEntity, 'name'> & {
       ingredients: IngredientForRecipe[];
+      tags: TagForRecipe[];
     }
   ): Promise<RecipeEntity | undefined> {
     const recipeEntity = await this.db.recipe.updateAsync(recipe);
@@ -93,6 +102,19 @@ export class RecipeService {
       return undefined;
     }
 
+    await this.updateIngredientsInRecipe(recipe);
+    await this.updateTagsInRecipe(recipe);
+
+    return {
+      ...recipeEntity,
+    };
+  }
+
+  private async updateIngredientsInRecipe(
+    recipe: Pick<RecipeEntity, 'id'> & {
+      ingredients: IngredientForRecipe[];
+    }
+  ) {
     const recipeIngredients =
       await this.db.ingredientInRecipe.getByRecipeIdAsync(recipe.id);
     const recipeIngredientsSet = new Set(
@@ -162,10 +184,56 @@ export class RecipeService {
         this.logger.warning('Ingredients were not added to recipe in DB');
       }
     }
+  }
 
-    return {
-      ...recipeEntity,
-    };
+  private async updateTagsInRecipe(
+    recipe: Pick<RecipeEntity, 'id'> & {
+      tags: TagForRecipe[];
+    }
+  ) {
+    const recipeTags = await this.db.recipeTag.getByRecipeIdAsync(recipe.id);
+    const recipeTagsSet = new Set(
+      recipeTags.map((ingredient) => ingredient.tag_id)
+    );
+
+    const tagsToAdd: TagForRecipe[] = [];
+    const tagsToRemove: TagForRecipe[] = [];
+
+    const newRecipeTagsSet = new Set(recipe.tags.map((tag) => tag.tag_id));
+    recipeTags.forEach((existedTag) => {
+      if (!newRecipeTagsSet.has(existedTag.tag_id)) {
+        tagsToRemove.push(existedTag);
+      }
+    });
+
+    recipe.tags.forEach((tag) => {
+      if (!recipeTagsSet.has(tag.tag_id)) {
+        tagsToAdd.push(tag);
+      }
+    });
+
+    if (tagsToRemove.length) {
+      const areIngredientsRemovedToRecipe =
+        await this.db.recipeTag.deleteMultipleAsync(
+          recipe.id,
+          tagsToRemove.map((tag) => tag.tag_id)
+        );
+      if (!areIngredientsRemovedToRecipe) {
+        this.logger.warning('Tags were not removed from recipe in DB');
+      }
+    }
+
+    if (tagsToAdd.length) {
+      const areTagsAddedToRecipe = await this.db.recipeTag.insertMultipleAsync(
+        tagsToAdd.map((tag) => ({
+          ...tag,
+          recipe_id: recipe.id,
+        }))
+      );
+      if (!areTagsAddedToRecipe) {
+        this.logger.warning('Tags were not added to recipe in DB');
+      }
+    }
   }
 
   async deleteAsync(recipe: RecipeEntity): Promise<boolean> {
@@ -199,3 +267,4 @@ export class RecipeService {
 
 export interface IngredientForRecipe
   extends Omit<IngredientInRecipeEntity, 'recipe_id'> {}
+export interface TagForRecipe extends Omit<RecipeTagEntity, 'recipe_id'> {}

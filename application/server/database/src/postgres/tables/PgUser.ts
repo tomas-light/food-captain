@@ -63,11 +63,11 @@ export class PgUser extends PgTableBase<UserEntity> implements UserTable {
         INSERT INTO ${this.table} (
           ${keyOf<UserEntity>('name')}, 
           ${keyOf<UserEntity>('email')}, 
-          ${keyOf<UserEntity>('password')}
+          ${keyOf<UserEntity>('login')}
         ) 
         VALUES($1, $2, $3) RETURNING ${keyOf<UserEntity>('id')};
       `,
-      values: [entity.name, entity.email, entity.password],
+      values: [entity.name, entity.email, entity.login],
     };
 
     const queryResult = await this.query<UserEntity>(queryConfig);
@@ -75,7 +75,7 @@ export class PgUser extends PgTableBase<UserEntity> implements UserTable {
   };
 
   updateAsync = async (
-    entity: MakePropertiesOptional<UserEntity, 'name' | 'email' | 'password'>
+    entity: MakePropertiesOptional<UserEntity, 'name' | 'email' | 'login'>
   ): Promise<UserEntity | undefined> => {
     const queryConfig = this.makeUpdateQueryConfig(entity);
     if (!queryConfig) {

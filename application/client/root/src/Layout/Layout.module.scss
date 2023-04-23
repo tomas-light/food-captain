@@ -1,0 +1,26 @@
+.root {
+  background-color: rgb(255, 255, 255);
+  height: 100vh;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.main {
+  height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  position: relative;
+
+  padding: 48px;
+
+  @media (max-width: 768px) {
+    padding: 36px;
+  }
+  @media (max-width: 480px) {
+    padding: 24px;
+  }
+  @media (max-width: 320px) {
+    padding: 16px;
+  }
+}

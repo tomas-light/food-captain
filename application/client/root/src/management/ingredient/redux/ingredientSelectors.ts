@@ -1,8 +1,15 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { State } from '~State';
 
+export const selectIngredients = createSelector(
+  (state: State) => state.ingredient.ingredientsMap,
+  (ingredientsMap) => {
+    return Array.from(ingredientsMap.values());
+  }
+);
+
 export const selectIngredientsBySearchString = createSelector(
-  (state: State) => state.ingredient.ingredients,
+  selectIngredients,
   (state: State, searchString: string) => searchString,
   (ingredients, searchString) => {
     searchString = searchString?.trim() ?? '';

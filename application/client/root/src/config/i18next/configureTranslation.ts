@@ -10,7 +10,7 @@ export function configureTranslation() {
     .use(initReactI18next) // passes i18n down to react-i18next
     .use(LanguageDetector) // what is language in user browser
     .init({
-      debug: true,
+      // debug: true,
       // lng: 'ru',
       fallbackLng: 'en',
       resources: {},

@@ -1,0 +1,17 @@
+@import '~@food-captain/client-shared/src/atoms/Image/Image.module';
+
+.root {
+  grid-area: images;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, $imageSize);
+  gap: 24px;
+}
+
+.imageCard {
+  position: relative;
+}
+
+.imageCheckbox {
+  top: 8px;
+  right: 8px;
+}

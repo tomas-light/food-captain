@@ -38,6 +38,7 @@ export function cssRule(): Configuration {
                 modules: {
                   getLocalIdent: originalNamedIdentifier(),
                 },
+                url: false, // do not touch urls
               },
             },
 
@@ -63,6 +64,7 @@ export function cssRule(): Configuration {
                 modules: {
                   getLocalIdent: namedModuleIdentifier(),
                 },
+                url: false, // do not touch urls
               },
             },
 

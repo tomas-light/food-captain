@@ -1,10 +1,32 @@
 {
   "recipe": {
-    "description": "описание рецепта",
+    "description": {
+      "name": "описание рецепта",
+      "addText": "добавить текст",
+      "addStep": "добавить шаг",
+      "step": {
+        "name": "шаг # {{number}}",
+        "up": "поднять выше",
+        "down": "опустить ниже"
+      },
+      "deleteBlock": "удалить блок"
+    },
     "image": "$t(common.image)",
     "ingredients": "$t(ingredient.many)",
+    "newIngredient": "создать новый $t(ingredient.one)",
+    "addIngredient": "добавить $t(ingredient.one)",
+    "cancelNewIngredient": "не создавать $t(ingredient.one)",
     "many": "рецепты",
     "name": "$t(common.title)",
-    "one": "рецепт"
+    "one": "рецепт",
+    "add": "$t(buttons.add) новый $t(recipe.one)",
+    "edit": "$t(buttons.edit) $t(recipe.one)",
+    "delete": "$t(buttons.delete) $t(recipe.one)",
+    "open": "$t(buttons.open)",
+    "search": "поиск рецепта",
+    "kcal": "Ккал",
+    "minutes":"мин",
+    "addTag": "добавить тег",
+    "instruction": "рецептура"
   }
 }

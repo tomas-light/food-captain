@@ -1,10 +1,10 @@
 import { QueryConfig } from 'pg';
 import {
-  DishEntity,
   DishInMenuEntity,
   ImageEntity,
   MenuEntity,
   MenuInScheduleEntity,
+  RecipeEntity,
 } from '../../entities';
 import {
   MenuTable,
@@ -13,10 +13,10 @@ import {
 } from '../../tables/MenuTable';
 import { keyOf, MakePropertiesOptional, toIsoString } from '../../utils';
 import { PgTableBase } from '../base';
-import { PgDish } from './PgDish';
 import { PgDishInMenu } from './PgDishInMenu';
 import { PgImage } from './PgImage';
 import { PgMenuInSchedule } from './PgMenuInSchedule';
+import { PgRecipe } from './PgRecipe';
 
 export class PgMenu extends PgTableBase<MenuEntity> implements MenuTable {
   protected tableName = 'menu';
@@ -50,26 +50,25 @@ export class PgMenu extends PgTableBase<MenuEntity> implements MenuTable {
       text: `
         SELECT 
           _menu.*, 
-          _dish_in_menu.${keyOf<DishInMenuEntity>('dish_id')}, 
-          _dish.${keyOf<DishEntity>('name')} as ${keyOf<MenuWithDishesEntity>(
-        'dish_name'
-      )}, 
-          _dish.${keyOf<DishEntity>('description')}, 
-          _dish.${keyOf<DishEntity>('image_id')}, 
-          _dish_in_menu.${keyOf<DishInMenuEntity>('order_number')}, 
-          _image.${keyOf<ImageEntity>(
-            'content'
-          )} as ${keyOf<MenuWithDishesEntity>('image')} 
+          _dish_in_menu.${keyOf<DishInMenuEntity>('recipe_id')}, 
+          _recipe.${keyOf<RecipeEntity>(
+            'name'
+          )} as ${keyOf<MenuWithDishesEntity>('recipe_name')}, 
+          _recipe.${keyOf<RecipeEntity>('description')}, 
+          _recipe.${keyOf<RecipeEntity>('image_id')}, 
+          _dish_in_menu.${keyOf<DishInMenuEntity>('order_number')}
         FROM ${this.table} _menu 
         LEFT JOIN ${
           PgDishInMenu.table
         } _dish_in_menu on _menu.${keyOf<MenuEntity>(
         'id'
       )} = _dish_in_menu.${keyOf<DishInMenuEntity>('menu_id')} 
-        JOIN ${PgDish.table} _dish on _dish_in_menu.${keyOf<DishInMenuEntity>(
-        'dish_id'
-      )} = _dish.${keyOf<DishEntity>('id')} 
-        LEFT JOIN ${PgImage.table} _image on _dish.${keyOf<DishEntity>(
+        JOIN ${
+          PgRecipe.table
+        } _recipe on _dish_in_menu.${keyOf<DishInMenuEntity>(
+        'recipe_id'
+      )} = _recipe.${keyOf<RecipeEntity>('id')} 
+        LEFT JOIN ${PgImage.table} _image on _recipe.${keyOf<RecipeEntity>(
         'image_id'
       )} = _image.${keyOf<ImageEntity>('id')} 
         WHERE _menu.${keyOf<MenuEntity>('id')} = $1;

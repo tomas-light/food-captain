@@ -1,13 +1,19 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLocaleResource } from '~/config/i18next';
-import { NewIngredient } from '~/models';
+import { Ingredient, NewIngredient } from '~/models';
 import { appUrls } from '~/routing';
 import { IngredientPageTemplate } from './IngredientPageTemplate';
 import { IngredientController } from './redux/Ingredient.controller';
 
-const AddIngredientPage = () => {
+type Props = {
+  callback?: (newIngredient: Ingredient) => void;
+};
+
+export const AddIngredientPage: FC<Props> = (props) => {
+  const { callback } = props;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,7 +27,8 @@ const AddIngredientPage = () => {
     dispatch(
       IngredientController.addIngredient({
         ingredient,
-        callback: () => navigate(appUrls.management.ingredient.url()),
+        callback:
+          callback ?? (() => navigate(appUrls.management.ingredient.url())),
       })
     );
   };
@@ -43,5 +50,3 @@ const AddIngredientPage = () => {
     />
   );
 };
-
-export { AddIngredientPage };

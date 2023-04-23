@@ -1,10 +1,32 @@
 {
   "recipe": {
-    "description": "recipe description",
+    "description": {
+      "name": "recipe description",
+      "addText": "add text",
+      "addStep": "add step",
+      "step": {
+        "name": "step # {{number}}",
+        "up": "move up",
+        "down": "move down"
+      },
+      "deleteBlock": "delete block"
+    },
     "image": "$t(common.image)",
     "ingredients": "$t(ingredient.many)",
+    "newIngredient": "create new $t(ingredient.one)",
+    "addIngredient": "add $t(ingredient.one)",
+    "cancelNewIngredient": "cancel $t(ingredient.one) creating",
     "many": "recipes",
     "name": "$t(common.title)",
-    "one": "recipe"
+    "one": "recipe",
+    "add": "$t(buttons.add) new $t(recipe.one)",
+    "edit": "$t(buttons.edit) $t(recipe.one)",
+    "delete": "$t(buttons.delete) $t(recipe.one)",
+    "open": "$t(buttons.open)",
+    "search": "search recipe",
+    "kcal": "kcal",
+    "minutes":"min",
+    "addTag": "add tag",
+    "instruction": "instruction"
   }
 }

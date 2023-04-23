@@ -1,0 +1,9 @@
+@use "sass:map";
+@import '../../../colors';
+
+.active {
+  color: map.get($secondary, main);
+}
+.nonActive {
+  color: map.get($default, main);
+}

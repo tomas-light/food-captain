@@ -40,7 +40,9 @@ const ImageFieldWithPreview: FC<Props> = (props) => {
     <div className={clsx(classes.root, className)}>
       <ImageField
         className={classes.imageField}
-        label={imageId ? `#${imageId.toString()}` : t('common.uploadImage')}
+        label={
+          imageId ? `#${imageId.toString()}` : t('common.uploadImage') ?? ''
+        }
         onChange={uploadImage}
       />
 

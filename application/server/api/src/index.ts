@@ -1,9 +1,4 @@
 export type { UserWithRoleDto } from './controllers/UserApiController';
-export type {
-  DishDto,
-  NewDishDto,
-  UpdatedDishDto,
-} from './controllers/DishApiController';
 export type { MenuDto, DishInMenuDto } from './controllers/MenuApiController';
 export type {
   IngredientDto,
@@ -18,5 +13,10 @@ export type {
   NewRecipeDto,
   UpdatedRecipeDto,
   RecipeDto,
-  RecipeWithIngredientsDto,
+  RecipeForViewDto,
+  RecipeIngredientDto,
+  RecipeTagDto,
+  RecipeDescriptionDto,
+  RecipeDescriptionBlockDto,
 } from './controllers/RecipeApiController';
+export type { TagDto, NewTagDto } from './controllers/TagApiController';

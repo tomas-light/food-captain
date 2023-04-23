@@ -1,0 +1,23 @@
+@use "sass:map";
+@import '~@food-captain/client-shared/src/colors';
+
+.root {
+  display: grid;
+  grid-auto-flow: row;
+  grid-row-gap: 36px;
+
+  & > div:nth-of-type(1) {
+    width: 222px;
+  }
+}
+
+.addButton {
+  width: fit-content;
+
+  & > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: map.get($primary, main);
+  }
+}
