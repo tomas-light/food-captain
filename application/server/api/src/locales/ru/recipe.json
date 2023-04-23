@@ -25,7 +25,11 @@
     "open": "$t(buttons.open)",
     "search": "поиск рецепта",
     "kcal": "Ккал",
-    "minutes":"мин",
+    "minutes": "мин",
+    "view": {
+      "kcal": "{{kcal}} $t(recipe.kcal)",
+      "minutes": "{{minutes}} $t(recipe.minutes)"
+    },
     "addTag": "добавить тег",
     "instruction": "рецептура"
   }

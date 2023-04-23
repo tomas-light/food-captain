@@ -1,0 +1,154 @@
+@use "sass:map";
+@import '~@food-captain/client-shared/src/colors';
+
+.root {
+  display: grid;
+
+  @media (min-width: 320px) {
+    grid-template-areas:
+      "image"
+      "."
+      "stats"
+      "."
+      "ingredients"
+      "."
+      "description"
+  ;
+    grid-template-rows: 173px 24px auto 36px auto 36px auto;
+  }
+  @media (min-width: 480px) {
+    grid-template-rows: 259px 24px auto 36px auto 36px auto;
+  }
+  @media (min-width: 768px) {
+    grid-template-rows: 374px 24px auto 36px auto 36px auto;
+  }
+  @media (min-width: 1280px) {
+    grid-template-rows: 517px 24px auto 36px auto 36px auto;
+  }
+  @media (min-width: 1600px) {
+    grid-template-areas:
+      "image . ingredients"
+      ". . ."
+      "stats . ingredients"
+      ". . ."
+      "description . ingredients"
+  ;
+    grid-template-columns: 861px 40px 1fr;
+    grid-template-rows: 517px 24px auto 36px auto 36px auto;
+  }
+  @media (min-width: 1920px) {
+    grid-template-areas:
+      "image . description"
+      ". . ."
+      "stats . description"
+      ". . ."
+      "ingredients . description"
+  ;
+    grid-template-columns: 861px 40px 1fr;
+    grid-template-rows: 517px 24px auto 36px auto 36px auto;
+  }
+}
+
+.image {
+  grid-area: image;
+  width: 100%;
+  height: 100%;
+}
+.stats {
+  grid-area: stats;
+  display: grid;
+  grid-column-gap: 36px;
+  grid-row-gap: 16px;
+
+  @media (min-width: 480px) {
+    grid-auto-flow: row;
+  }
+  @media (min-width: 768px) {
+    grid-auto-flow: column;
+  }
+}
+
+.kcal {
+  display: flex;
+  column-gap: 16px;
+}
+
+.tags {
+  display: flex;
+  column-gap: 12px;
+  row-gap: 12px;
+}
+
+.ingredients {
+  grid-area: ingredients;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 230px));
+  grid-row-gap: 16px;
+  grid-column-gap: 36px;
+}
+
+.ingredient {
+  display: grid;
+  grid-template-areas:
+    "image name"
+    "image size"
+  ;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 100px 1fr;
+  grid-column-gap: 4px;
+  grid-row-gap: 4px;
+
+  .ingredientImage {
+    grid-area: image;
+    height: 100px;
+    width: 100px;
+  }
+  .ingredientName {
+    grid-area: name;
+  }
+  .ingredientSize {
+    grid-area: size;
+    font-weight: bold;
+  }
+}
+
+.description {
+  grid-area: description;
+  display: grid;
+  grid-auto-flow: row;
+  grid-row-gap: 36px;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 24px 12px 1fr;
+  grid-template-areas: "number . text";
+
+  & > span {
+    grid-area: number;
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: map.get($default, main);
+    color: map.get($default, text);
+  }
+  & > div {
+    grid-area: text;
+  }
+}
+
+.editButton {
+  position: absolute;
+  right: 48px;
+  top: 48px;
+
+  @media (min-width: 320px) {
+    display: none;
+  }
+  @media (min-width: 1280px) {
+    display: block;
+  }
+}

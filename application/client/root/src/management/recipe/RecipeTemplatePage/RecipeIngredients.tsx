@@ -83,14 +83,6 @@ const RecipeIngredients: FC<Props> = (props) => {
 
       <Typography>{t('recipe.ingredients')}</Typography>
 
-      {/* <IconButton
-        icon={<Icon variant={'plus'} />}
-        title={t('ingredient.add') ?? ''}
-        onClick={() => {
-          ingredientsModalRef.current?.onOpen();
-        }}
-      />*/}
-
       <Menu>
         <MenuButton
           as={IconButton}
