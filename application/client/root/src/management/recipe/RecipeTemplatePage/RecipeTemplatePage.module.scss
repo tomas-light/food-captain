@@ -1,0 +1,75 @@
+@use "sass:map";
+@import '~@food-captain/client-shared/src/colors';
+
+.root {
+  display: grid;
+
+  @media (min-width: 320px) {
+    grid-template-areas:
+      "image image image"
+      ". . ."
+      "kcal . tags"
+      ". . ."
+      "ingredients ingredients ingredients"
+      ". . ."
+      "description description description"
+  ;
+    grid-template-columns: auto 36px 1fr;
+    grid-template-rows: 374px 24px auto 36px auto 36px auto;
+  }
+  @media (min-width: 1280px) {
+    grid-template-areas:
+      "image . . . ingredients"
+      "image . kcal . ingredients"
+      "image . . . ingredients"
+      "image . tags . ingredients"
+      ". . . . ingredients"
+      "description description description . ingredients"
+  ;
+    grid-template-columns: 500px 24px 222px 40px 1fr;
+    grid-template-rows: 24px 64px 40px 372px 36px 1fr;
+  }
+  @media (min-width: 1600px) {
+    grid-template-areas:
+      "image . . . description"
+      "image . kcal . description"
+      "image . . . description"
+      "image . tags . description"
+      ". . . . description"
+      "ingredients ingredients ingredients . description"
+  ;
+    grid-template-columns: 500px 24px 222px 80px 1fr;
+    grid-template-rows: 24px 64px 40px 372px 36px 1fr;
+  }
+}
+
+.saveButton {
+  position: absolute;
+  right: 48px;
+  top: 48px;
+}
+
+.image {
+  grid-area: image;
+}
+.kcal {
+  grid-area: kcal;
+  display: grid;
+  grid-auto-columns: 1fr 1fr;
+  grid-row-gap: 16px;
+
+  & > div {
+    width: 140px;
+  }
+}
+
+.tags {
+  grid-area: tags;
+}
+
+.ingredients {
+  grid-area: ingredients;
+}
+.description {
+  grid-area: description;
+}

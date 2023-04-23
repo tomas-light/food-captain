@@ -5,7 +5,7 @@ import { useLocaleResource } from '~/config/i18next';
 import { IngredientController } from '~/management/ingredient/redux';
 import { NewRecipe, Tag } from '~/models';
 import { appUrls } from '~/routing';
-import { RecipeTemplatePage } from './RecipeTemplatePage';
+import { RecipeTemplatePage } from './RecipeTemplatePage/RecipeTemplatePage';
 import { RecipeController } from './redux/Recipe.controller';
 
 export const AddRecipePage = () => {

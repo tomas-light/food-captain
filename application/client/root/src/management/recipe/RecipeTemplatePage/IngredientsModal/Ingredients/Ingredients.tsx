@@ -17,7 +17,6 @@ type Props = {
 
 const Ingredients: FC<Props> = (props) => {
   const {
-    //
     className,
     ingredients,
     onIngredientClick,

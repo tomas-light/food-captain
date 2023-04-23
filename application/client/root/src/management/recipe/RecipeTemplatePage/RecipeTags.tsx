@@ -1,10 +1,11 @@
 import { Badge, CloseButton } from '@chakra-ui/react';
+import clsx from 'clsx';
 import { FC, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Option, SelectField } from '@food-captain/client-shared';
 import { useSelector } from '~/config/redux/useSelector';
 import { NewTag, RecipeTag, Tag } from '~/models';
-import classes from './RecipeTemplatePage.module.scss';
+import classes from './RecipeTags.module.scss';
 
 const colorSchemesMap = new Map<string | undefined, string>([
   ['#EDF2F7', 'gray'],
@@ -19,13 +20,14 @@ const colorSchemesMap = new Map<string | undefined, string>([
 const tagsColors = Array.from(colorSchemesMap.keys()) as string[];
 
 type Props = {
+  className?: string;
   tags: RecipeTag[];
   onAddTag: (tag: Tag | NewTag) => void;
   onDeleteTag: (tagId: Tag['id']) => void;
 };
 
 const RecipeTags: FC<Props> = (props) => {
-  const { tags, onAddTag, onDeleteTag } = props;
+  const { className, tags, onAddTag, onDeleteTag } = props;
 
   const { t } = useTranslation();
   const { tagsMap } = useSelector((state) => state.recipe);
@@ -48,7 +50,7 @@ const RecipeTags: FC<Props> = (props) => {
   }, [tagsMap]);
 
   return (
-    <div className={classes.tags}>
+    <div className={clsx(classes.tags, className)}>
       <SelectField
         placeholder={t('recipe.addTag')}
         styleVariant={'tiny-flushed'}

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Typography } from '@food-captain/client-shared';
 import { useLocaleResource } from '~/config/i18next';
 import { IngredientController } from '~/management/ingredient/redux';
-import { RecipeTemplatePage } from '~/management/recipe/RecipeTemplatePage';
+import { RecipeTemplatePage } from '~/management/recipe/RecipeTemplatePage/RecipeTemplatePage';
 import { Tag, UpdatedRecipe } from '~/models';
 import { appUrls } from '~/routing/appUrls';
 import { RecipeController } from './redux/Recipe.controller';

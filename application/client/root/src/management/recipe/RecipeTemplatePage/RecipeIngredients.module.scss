@@ -1,0 +1,67 @@
+@use "sass:map";
+@import '~@food-captain/client-shared/src/colors';
+
+.root {
+  display: grid;
+  grid-template-areas:
+    "title . add-button ."
+    "ingredients ingredients ingredients ingredients"
+;
+  grid-template-columns: auto 16px 40px 1fr;
+  grid-template-rows: auto 1fr;
+  grid-row-gap: 16px;
+
+  align-items: center;
+
+  @media (min-width: 1280px) and (max-width: 1600px) {
+    align-items: baseline;
+  }
+
+  & > p {
+    grid-area: title;
+    text-transform: capitalize;
+  }
+  & > button {
+    grid-area: add-button;
+    color: map.get($primary, main);
+  }
+  & > div {
+    grid-area: ingredients;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 212px);
+    grid-row-gap: 16px;
+    grid-column-gap: 36px;
+  }
+}
+
+.ingredient {
+  display: grid;
+  grid-template-areas:
+    "image name name"
+    "count dimension delete-button"
+;
+  grid-template-columns: 100px 80px 24px;
+  grid-column-gap: 4px;
+  grid-template-rows: 100px 24px;
+  grid-row-gap: 8px;
+
+  .ingredientImage {
+    grid-area: image;
+    height: 100px;
+    width: 100px;
+  }
+  .ingredientName {
+    grid-area: name;
+  }
+  .ingredientCount {
+    grid-area: count;
+  }
+  .ingredientDimension {
+    grid-area: dimension;
+  }
+  .ingredientDelete {
+    grid-area: delete-button;
+    color: map.get($destructive, main);
+    border: none;
+  }
+}
