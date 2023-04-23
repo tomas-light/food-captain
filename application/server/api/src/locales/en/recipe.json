@@ -1,6 +1,16 @@
 {
   "recipe": {
-    "description": "recipe description",
+    "description": {
+      "name": "recipe description",
+      "addText": "add text",
+      "addStep": "add step",
+      "step": {
+        "name": "step # {{number}}",
+        "up": "move up",
+        "down": "move down"
+      },
+      "deleteBlock": "delete block"
+    },
     "image": "$t(common.image)",
     "ingredients": "$t(ingredient.many)",
     "many": "recipes",
@@ -14,8 +24,6 @@
     "kcal": "kcal",
     "minutes":"min",
     "addTag": "add tag",
-    "addTextDescription": "add text",
-    "addStepDescription": "add step",
     "instruction": "instruction"
   }
 }

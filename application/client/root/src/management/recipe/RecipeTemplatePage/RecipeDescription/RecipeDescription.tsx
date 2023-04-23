@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import {
@@ -9,18 +9,23 @@ import {
   TextField,
 } from '@food-captain/client-shared';
 import { guid } from '@food-captain/client-utils';
+import {
+  DescriptionBlock,
+  DescriptionBlockProps,
+} from '~/management/recipe/RecipeTemplatePage/RecipeDescription/DescriptionBlock';
 import { Recipe, RecipeDescriptionBlock } from '~/models';
 import classes from './RecipeDescription.module.scss';
 
-type Props = {
+type Props = Pick<
+  DescriptionBlockProps,
+  'onChangeDescriptionBlock' | 'onDeleteDescriptionBlock'
+> & {
   className?: string;
   name: Recipe['name'];
   onNameChanged: (newName: Recipe['name']) => void;
 
   blocks: RecipeDescriptionBlock[];
   onAddDescriptionBlock: (descriptionBlock: RecipeDescriptionBlock) => void;
-  onChangeDescriptionBlock: (descriptionBlock: RecipeDescriptionBlock) => void;
-  onDeleteDescriptionBlock: (descriptionBlock: RecipeDescriptionBlock) => void;
 };
 
 export const RecipeDescription: FC<Props> = (props) => {
@@ -36,6 +41,13 @@ export const RecipeDescription: FC<Props> = (props) => {
   } = props;
 
   const { t } = useTranslation();
+  const orderedBlocks = useMemo(
+    () =>
+      blocks.sort(
+        (leftBlock, rightBlock) => leftBlock.order - rightBlock.order
+      ),
+    [blocks]
+  );
 
   return (
     <div className={clsx(classes.root, className)}>
@@ -47,42 +59,15 @@ export const RecipeDescription: FC<Props> = (props) => {
         variant={'flushed'}
       />
 
-      {blocks.map((block) => {
-        switch (block.type) {
-          case 'step':
-          case 'text':
-            return (
-              <TextAreaField
-                key={block.reactId}
-                label={t('recipe.instruction')}
-                value={block.content ?? ''}
-                onChange={(newValue) => {
-                  onChangeDescriptionBlock({
-                    ...block,
-                    content: newValue,
-                  });
-                }}
-                // icon={<Icon variant={'title'} />}
-              />
-            );
-
-          default:
-            return (
-              <TextAreaField
-                key={block.reactId}
-                label={t('recipe.instruction')}
-                value={block.content ?? ''}
-                onChange={(newValue) => {
-                  onChangeDescriptionBlock({
-                    ...block,
-                    content: newValue,
-                  });
-                }}
-                // icon={<Icon variant={'title'} />}
-              />
-            );
-        }
-      })}
+      {orderedBlocks.map((block) => (
+        <DescriptionBlock
+          key={block.reactId}
+          allBlocks={orderedBlocks}
+          block={block}
+          onChangeDescriptionBlock={onChangeDescriptionBlock}
+          onDeleteDescriptionBlock={onDeleteDescriptionBlock}
+        />
+      ))}
 
       <Menu>
         <MenuButton
@@ -104,7 +89,7 @@ export const RecipeDescription: FC<Props> = (props) => {
               });
             }}
           >
-            {t('recipe.addTextDescription')}
+            {t('recipe.description.addText')}
           </MenuItem>
           <MenuItem
             onClick={() => {
@@ -116,7 +101,7 @@ export const RecipeDescription: FC<Props> = (props) => {
               });
             }}
           >
-            {t('recipe.addStepDescription')}
+            {t('recipe.description.addStep')}
           </MenuItem>
         </MenuList>
       </Menu>

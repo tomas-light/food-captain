@@ -1,6 +1,16 @@
 {
   "recipe": {
-    "description": "описание рецепта",
+    "description": {
+      "name": "описание рецепта",
+      "addText": "добавить текст",
+      "addStep": "добавить шаг",
+      "step": {
+        "name": "шаг # {{number}}",
+        "up": "поднять выше",
+        "down": "опустить ниже"
+      },
+      "deleteBlock": "удалить блок"
+    },
     "image": "$t(common.image)",
     "ingredients": "$t(ingredient.many)",
     "many": "рецепты",
@@ -14,8 +24,6 @@
     "kcal": "Ккал",
     "minutes":"мин",
     "addTag": "добавить тег",
-    "addTextDescription": "добавить текст",
-    "addStepDescription": "добавить шаг",
     "instruction": "рецептура"
   }
 }
