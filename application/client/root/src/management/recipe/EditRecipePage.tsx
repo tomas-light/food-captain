@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { guid } from '@food-captain/client-utils';
 import { Typography } from '@food-captain/client-shared';
 import { useLocaleResource } from '~/config/i18next';
+import { useSelector } from '~/config/redux/useSelector';
 import { IngredientController } from '~/management/ingredient/redux';
 import { RecipeTemplatePage } from '~/management/recipe/RecipeTemplatePage/RecipeTemplatePage';
-import { Tag, UpdatedRecipe } from '~/models';
+import { RecipeEditorController } from '~/management/recipe/redux';
+import { Recipe, Tag } from '~/models';
 import { appUrls } from '~/routing/appUrls';
 import { RecipeController } from './redux/Recipe.controller';
-import { useRecipe } from './useRecipe';
 
 export const EditRecipePage = () => {
-  const { recipeId } = useParams();
+  const { recipeId: recipeIdString } = useParams();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,8 +27,44 @@ export const EditRecipePage = () => {
     dispatch(RecipeController.loadTags());
   }, []);
 
-  const loadedRecipe = useRecipe(recipeId);
-  const [recipe, setRecipe] = useState<UpdatedRecipe | undefined>(loadedRecipe);
+  const recipeId = useMemo(() => {
+    if (recipeIdString == null) {
+      return NaN;
+    }
+    return parseInt(recipeIdString, 10);
+  }, [recipeIdString]);
+
+  const { recipesMap } = useSelector((state) => state.recipe);
+  const recipe = useMemo<Recipe | undefined>(() => {
+    const loadedRecipe = recipesMap.get(recipeId);
+
+    if (!loadedRecipe) {
+      return undefined;
+    }
+
+    return {
+      ...loadedRecipe,
+      description: {
+        blocks:
+          loadedRecipe.description?.blocks.map((block) => ({
+            ...block,
+            reactId: guid(),
+          })) ?? [],
+      },
+    };
+  }, [recipeId, recipesMap]);
+
+  useEffect(() => {
+    if (!isNaN(recipeId)) {
+      dispatch(RecipeController.loadRecipeById({ recipeId: recipeId }));
+    }
+  }, [recipeId]);
+
+  const { editedRecipe } = useSelector((state) => state.recipe);
+
+  if (!editedRecipe) {
+    return null;
+  }
 
   const onSave = () => {
     if (recipe) {
@@ -45,73 +83,85 @@ export const EditRecipePage = () => {
 
   return (
     <RecipeTemplatePage
-      recipe={recipe}
+      recipe={editedRecipe}
       onNameChanged={(newName) => {
-        setRecipe((_recipe) => ({
-          ..._recipe!,
-          name: newName,
-        }));
+        dispatch(
+          RecipeEditorController.onChangeEditedRecipe({
+            updates: () => ({
+              name: newName,
+            }),
+          })
+        );
       }}
       onImageChanged={(imageId) => {
-        setRecipe((_recipe) => ({
-          ..._recipe!,
-          image_id: imageId,
-        }));
+        dispatch(
+          RecipeEditorController.onChangeEditedRecipe({
+            updates: () => ({
+              image_id: imageId,
+            }),
+          })
+        );
       }}
       onKcalChanged={(newKcal) => {
-        setRecipe((_recipe) => ({
-          ..._recipe!,
-          kcal: newKcal ?? undefined,
-        }));
+        dispatch(
+          RecipeEditorController.onChangeEditedRecipe({
+            updates: () => ({
+              kcal: newKcal ?? undefined,
+            }),
+          })
+        );
       }}
       onCookingTimeChanged={(newCookingTime) => {
-        setRecipe((_recipe) => ({
-          ..._recipe!,
-          cooking_time_in_minutes: newCookingTime ?? undefined,
-        }));
+        dispatch(
+          RecipeEditorController.onChangeEditedRecipe({
+            updates: () => ({
+              cooking_time_in_minutes: newCookingTime ?? undefined,
+            }),
+          })
+        );
       }}
       onAddIngredient={(newIngredient) => {
-        setRecipe((_recipe) => ({
-          ..._recipe!,
-          ingredients: _recipe!.ingredients.concat([newIngredient]),
-        }));
+        dispatch(
+          RecipeEditorController.onChangeEditedRecipe({
+            updates: (recipe) => ({
+              ingredients: recipe.ingredients.concat([newIngredient]),
+            }),
+          })
+        );
       }}
       onChangeIngredient={(changedIngredient) => {
-        setRecipe((_recipe) => {
-          const ingredientIndex = _recipe!.ingredients.findIndex(
-            ({ ingredient_id }) =>
-              changedIngredient.ingredient_id === ingredient_id
-          );
-          const updatedIngredients = [..._recipe!.ingredients];
-          updatedIngredients.splice(ingredientIndex, 1, changedIngredient);
-          return {
-            ..._recipe!,
-            ingredients: updatedIngredients,
-          };
-        });
+        dispatch(
+          RecipeEditorController.onChangeEditedRecipe({
+            updates: (recipe) => {
+              const ingredientIndex = recipe.ingredients.findIndex(
+                ({ ingredient_id }) =>
+                  changedIngredient.ingredient_id === ingredient_id
+              );
+              const updatedIngredients = [...recipe.ingredients];
+              updatedIngredients.splice(ingredientIndex, 1, changedIngredient);
+
+              return {
+                ingredients: updatedIngredients,
+              };
+            },
+          })
+        );
       }}
       onDeleteIngredient={(ingredientId) => {
-        setRecipe((_recipe) => {
-          const _ingredients = _recipe!.ingredients.filter(
-            ({ ingredient_id }) => ingredient_id !== ingredientId
-          );
-
-          return {
-            ..._recipe!,
-            ingredients: _ingredients,
-          };
-        });
+        dispatch(
+          RecipeEditorController.onChangeEditedRecipe({
+            updates: (recipe) => ({
+              ingredients: recipe.ingredients.filter(
+                ({ ingredient_id }) => ingredient_id !== ingredientId
+              ),
+            }),
+          })
+        );
       }}
       onAddTag={async (newTag) => {
+        let tagId: Tag['id'];
         if ('id' in newTag) {
-          setRecipe((_recipe) => ({
-            ..._recipe!,
-            tags: _recipe!.tags.concat([
-              {
-                tag_id: newTag.id,
-              },
-            ]),
-          }));
+          tagId = newTag.id;
         } else {
           const createdTag = await new Promise<Tag>((resolve) => {
             dispatch(
@@ -121,76 +171,83 @@ export const EditRecipePage = () => {
               })
             );
           });
-          setRecipe((_recipe) => ({
-            ..._recipe!,
-            tags: _recipe!.tags.concat([
-              {
-                tag_id: createdTag.id,
-              },
-            ]),
-          }));
+          tagId = createdTag.id;
         }
+
+        dispatch(
+          RecipeEditorController.onChangeEditedRecipe({
+            updates: (recipe) => ({
+              tags: recipe.tags.concat([
+                {
+                  tag_id: tagId,
+                },
+              ]),
+            }),
+          })
+        );
       }}
       onDeleteTag={(tagId) => {
-        setRecipe((_recipe) => {
-          const tags = _recipe!.tags.filter(({ tag_id }) => tag_id !== tagId);
-
-          return {
-            ..._recipe!,
-            tags: tags,
-          };
-        });
+        dispatch(
+          RecipeEditorController.onChangeEditedRecipe({
+            updates: (recipe) => ({
+              tags: recipe.tags.filter(({ tag_id }) => tag_id !== tagId),
+            }),
+          })
+        );
       }}
       onAddDescriptionBlock={(newBlock) => {
-        setRecipe((_recipe) => {
-          if (!_recipe?.description) {
-            return _recipe;
-          }
-
-          return {
-            ..._recipe,
-            description: {
-              blocks: (_recipe.description?.blocks ?? []).concat([newBlock]),
-            },
-          };
-        });
+        dispatch(
+          RecipeEditorController.onChangeEditedRecipe({
+            updates: (recipe) => ({
+              description: {
+                blocks: (recipe.description?.blocks ?? []).concat([newBlock]),
+              },
+            }),
+          })
+        );
       }}
       onChangeDescriptionBlock={(changedBlock) => {
-        setRecipe((_recipe) => {
-          if (!_recipe?.description) {
-            return _recipe;
-          }
+        dispatch(
+          RecipeEditorController.onChangeEditedRecipe({
+            updates: (recipe) => {
+              if (!recipe.description) {
+                return {};
+              }
 
-          const blockIndex = _recipe.description.blocks.findIndex(
-            ({ reactId }) => changedBlock.reactId === reactId
-          );
-          const updatedBlocks = _recipe.description.blocks.slice();
-          updatedBlocks.splice(blockIndex, 1, changedBlock);
-          return {
-            ..._recipe,
-            description: {
-              blocks: updatedBlocks,
+              const blockIndex = recipe.description.blocks.findIndex(
+                ({ reactId }) => changedBlock.reactId === reactId
+              );
+              const updatedBlocks = recipe.description.blocks.slice();
+              updatedBlocks.splice(blockIndex, 1, changedBlock);
+              return {
+                description: {
+                  blocks: updatedBlocks,
+                },
+              };
             },
-          };
-        });
+          })
+        );
       }}
       onDeleteDescriptionBlock={(deletableBlock) => {
-        setRecipe((_recipe) => {
-          if (!_recipe?.description) {
-            return _recipe;
-          }
+        dispatch(
+          RecipeEditorController.onChangeEditedRecipe({
+            updates: (recipe) => {
+              if (!recipe.description) {
+                return {};
+              }
 
-          const blocks = _recipe.description.blocks.filter(
-            ({ reactId }) => reactId !== deletableBlock.reactId
-          );
+              const blocks = recipe.description.blocks.filter(
+                ({ reactId }) => reactId !== deletableBlock.reactId
+              );
 
-          return {
-            ..._recipe,
-            description: {
-              blocks: blocks,
+              return {
+                description: {
+                  blocks: blocks,
+                },
+              };
             },
-          };
-        });
+          })
+        );
       }}
       saveButtonLabelKey={'buttons.save'}
       onSave={onSave}

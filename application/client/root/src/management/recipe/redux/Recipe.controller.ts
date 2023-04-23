@@ -8,7 +8,7 @@ import {
 } from 'redux-controller-middleware';
 import { RecipeForViewDto } from '@food-captain/api';
 import { RecipeApi, TagApi } from '@food-captain/client-api';
-import { NewRecipe, NewTag, Recipe, Tag, UpdatedRecipe } from '~/models';
+import { NewTag, Recipe, Tag, UpdatedRecipe } from '~/models';
 import { RecipeStore } from './Recipe.store';
 import { State } from '~State';
 
@@ -129,10 +129,12 @@ class RecipeController extends ControllerBase<State> {
   }
 
   @watch
-  async addRecipe(
-    action: Action<{ recipe: NewRecipe; callback?: () => void }>
-  ) {
-    const { recipe, callback } = action.payload;
+  async addRecipe(action: Action<{ callback?: () => void }>) {
+    const { callback } = action.payload;
+    const { editedRecipe: recipe } = this.getState().recipe;
+    if (!recipe) {
+      return;
+    }
 
     const recipeWithCorrectDescription: typeof recipe = {
       ...recipe,
@@ -159,6 +161,7 @@ class RecipeController extends ControllerBase<State> {
 
     this.updateStore({
       recipesMap: newRecipesMap,
+      editedRecipe: null,
     });
 
     callback?.();
@@ -198,6 +201,7 @@ class RecipeController extends ControllerBase<State> {
 
     this.updateStore({
       recipesMap: newRecipesMap,
+      editedRecipe: null,
     });
 
     callback?.();

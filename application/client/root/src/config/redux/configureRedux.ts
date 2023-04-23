@@ -116,7 +116,7 @@ export async function configureRedux() {
     preloadedState: restoredState,
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => {
-      const middlewares = [persistorMiddleware];
+      const middlewares = [];
 
       const defaultMiddleware = getDefaultMiddleware({
         thunk: false,
@@ -124,6 +124,7 @@ export async function configureRedux() {
       });
       middlewares.push(...defaultMiddleware);
       middlewares.push(middleware);
+      middlewares.push(persistorMiddleware);
 
       return middlewares;
     },
