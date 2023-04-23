@@ -76,7 +76,16 @@ const RecipePage = () => {
             </CardHeader>
 
             <CardBody paddingY={0} paddingX={'8px'}>
-              <Image src={ImageApi.makeUrl(recipe.image_id)} />
+              <Image
+                src={ImageApi.makeUrl(recipe.image_id)}
+                onClick={() => {
+                  navigate(
+                    appUrls.management.recipe
+                      .recipeId(recipe.id.toString())
+                      .url()
+                  );
+                }}
+              />
             </CardBody>
 
             <CardFooter

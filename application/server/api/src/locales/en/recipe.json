@@ -26,6 +26,10 @@
     "search": "search recipe",
     "kcal": "kcal",
     "minutes":"min",
+    "view": {
+      "kcal": "{{kcal}} $t(recipe.kcal)",
+      "minutes": "{{minutes}} $t(recipe.minutes)"
+    },
     "addTag": "add tag",
     "instruction": "instruction"
   }

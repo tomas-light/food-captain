@@ -4,20 +4,9 @@ import { FC, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Option, SelectField } from '@food-captain/client-shared';
 import { useSelector } from '~/config/redux/useSelector';
+import { colorSchemesMap, tagsColors } from '~/management/recipe/constants';
 import { NewTag, RecipeTag, Tag } from '~/models';
 import classes from './RecipeTags.module.scss';
-
-const colorSchemesMap = new Map<string | undefined, string>([
-  ['#EDF2F7', 'gray'],
-  ['#BEE3F8', 'blue'],
-  ['#B2F5EA', 'teal'],
-  ['#C6F6D5', 'green'],
-  ['#FED7D7', 'red'],
-  ['#E9D8FD', 'purple'],
-  ['#FED7E2', 'pink'],
-  ['#FEEBCB', 'orange'],
-]);
-const tagsColors = Array.from(colorSchemesMap.keys()) as string[];
 
 type Props = {
   className?: string;
