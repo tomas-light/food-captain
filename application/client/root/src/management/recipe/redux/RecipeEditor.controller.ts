@@ -42,21 +42,23 @@ class RecipeEditorController extends ControllerBase<State> {
   async startEditingRecipe(action: Action<{ recipeId: Recipe['id'] }>) {
     const { recipeId } = action.payload;
 
-    await new Promise<void>((resolve) => {
+    const recipe = await new Promise<Recipe>((resolve) => {
       this.dispatch(
-        RecipeController.loadRecipeById({ recipeId: recipeId }).addNextActions(
-          () => resolve()
-        )
+        RecipeController.loadRecipeById({
+          recipeId: recipeId,
+          callback: resolve,
+        })
       );
     });
 
-    const { editedRecipe, recipesMap } = this.getState().recipe;
-    const recipe = recipesMap.get(recipeId);
+    const { editedRecipe } = this.getState().recipe;
     if (!recipe) {
+      console.log('Recipe is not found in store');
       return;
     }
     if (editedRecipe && 'id' in editedRecipe && editedRecipe.id === recipeId) {
       // use restored draft
+      console.log('Use recipe draft to editing');
       return;
     }
 

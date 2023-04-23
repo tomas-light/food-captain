@@ -18,6 +18,7 @@ type Props = Pick<
     RecipeDescriptionProps,
     | 'onNameChanged'
     | 'onAddDescriptionBlock'
+    | 'onChangeDescriptionBlocks'
     | 'onChangeDescriptionBlock'
     | 'onDeleteDescriptionBlock'
   > & {
@@ -47,6 +48,7 @@ export const RecipeTemplatePage: FC<Props> = (props) => {
     onDeleteTag,
     onAddDescriptionBlock,
     onChangeDescriptionBlock,
+    onChangeDescriptionBlocks,
     onDeleteDescriptionBlock,
     onSave,
   } = props;
@@ -109,6 +111,7 @@ export const RecipeTemplatePage: FC<Props> = (props) => {
         onNameChanged={onNameChanged}
         blocks={recipe.description?.blocks ?? []}
         onAddDescriptionBlock={onAddDescriptionBlock}
+        onChangeDescriptionBlocks={onChangeDescriptionBlocks}
         onChangeDescriptionBlock={onChangeDescriptionBlock}
         onDeleteDescriptionBlock={onDeleteDescriptionBlock}
       />

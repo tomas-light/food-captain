@@ -179,6 +179,31 @@ export const RecipeEditor: FC<Props> = (props) => {
           })
         );
       }}
+      onChangeDescriptionBlocks={(changedBlocks) => {
+        dispatch(
+          RecipeEditorController.onChangeEditedRecipe({
+            updates: (recipe) => {
+              if (!recipe.description) {
+                return {};
+              }
+
+              const updatedBlocks = recipe.description.blocks.slice();
+              changedBlocks.forEach((block) => {
+                const blockIndex = recipe.description!.blocks.findIndex(
+                  ({ reactId }) => block.reactId === reactId
+                );
+                updatedBlocks.splice(blockIndex, 1, block);
+              });
+
+              return {
+                description: {
+                  blocks: updatedBlocks,
+                },
+              };
+            },
+          })
+        );
+      }}
       onDeleteDescriptionBlock={(deletableBlock) => {
         dispatch(
           RecipeEditorController.onChangeEditedRecipe({

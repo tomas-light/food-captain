@@ -1,8 +1,11 @@
+import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { use } from 'cheap-di-react';
 import clsx from 'clsx';
-import { FC, useMemo, useRef } from 'react';
+import { FC, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { guid } from '@food-captain/client-utils';
 import {
+  Button,
   Icon,
   IconButton,
   Image,
@@ -13,6 +16,7 @@ import {
 } from '@food-captain/client-shared';
 import { ImageApi } from '@food-captain/client-api';
 import { useSelector } from '~/config/redux/useSelector';
+import { AddIngredientPage } from '~/management/ingredient/AddIngredientPage';
 import { Ingredient, RecipeIngredient } from '~/models';
 import { IngredientsModal, IngredientsModalRef } from './IngredientsModal';
 import classes from './RecipeIngredients.module.scss';
@@ -37,6 +41,8 @@ const RecipeIngredients: FC<Props> = (props) => {
   const imageApi = use(ImageApi);
   const { t } = useTranslation();
   const ingredientsModalRef = useRef<IngredientsModalRef>(null);
+
+  const [mode, setMode] = useState<'create' | 'view'>('view');
 
   const { dimensionsMap, ingredientsMap } = useSelector(
     (state) => state.ingredient
@@ -77,84 +83,141 @@ const RecipeIngredients: FC<Props> = (props) => {
 
       <Typography>{t('recipe.ingredients')}</Typography>
 
-      <IconButton
+      {/* <IconButton
         icon={<Icon variant={'plus'} />}
         title={t('ingredient.add') ?? ''}
         onClick={() => {
           ingredientsModalRef.current?.onOpen();
         }}
-      />
+      />*/}
 
-      <div>
-        {ingredients.map(({ ingredient_id, size, dimension_id }) => {
-          const ingredient = ingredientsMap.get(ingredient_id);
+      <Menu>
+        <MenuButton
+          as={IconButton}
+          className={classes.addButton}
+          title={t('buttons.add') ?? ''}
+        >
+          <Icon variant={'plus'} />
+        </MenuButton>
 
-          return (
-            <div key={ingredient_id} className={classes.ingredient}>
-              <Image
-                className={classes.ingredientImage}
-                src={
-                  ingredient?.image_id
-                    ? imageApi.makeUrl(ingredient.image_id)
-                    : undefined
-                }
-              />
+        <MenuList>
+          <MenuItem
+            onClick={() => {
+              ingredientsModalRef.current?.onOpen();
+            }}
+          >
+            {t('recipe.addIngredient')}
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              setMode('create');
+            }}
+          >
+            {t('recipe.newIngredient')}
+          </MenuItem>
+        </MenuList>
+      </Menu>
 
-              <Typography className={classes.ingredientName}>
-                {ingredient?.name}
-              </Typography>
+      {mode === 'view' && (
+        <div className={classes.ingredients}>
+          {ingredients.map(({ ingredient_id, size, dimension_id }) => {
+            const ingredient = ingredientsMap.get(ingredient_id);
 
-              <NumberField
-                className={classes.ingredientCount}
-                placeholder={t('common.count') ?? ''}
-                size={'xs'}
-                value={size ?? 0}
-                onChange={(newSize) => {
-                  onChangeIngredient({
-                    ingredient_id,
-                    size: newSize ?? 0,
-                    dimension_id,
-                  });
-                }}
-              />
-
-              <SelectField
-                className={classes.ingredientDimension}
-                styleVariant={'tiny-flushed'}
-                value={dimensionOptions.optionsMap.get(dimension_id)}
-                options={dimensionOptions.options}
-                isSearchable
-                filterOption={(filterOption, inputValue) => {
-                  if (inputValue) {
-                    const searchString = inputValue.trim().toLowerCase();
-                    if (filterOption.data.name.includes(searchString)) {
-                      return true;
-                    }
-                    return false;
+            return (
+              <div key={ingredient_id} className={classes.ingredient}>
+                <Image
+                  className={classes.ingredientImage}
+                  src={
+                    ingredient?.image_id
+                      ? imageApi.makeUrl(ingredient.image_id)
+                      : undefined
                   }
-                  return true;
-                }}
-                onChange={(newDimension) => {
-                  onChangeIngredient({
-                    ingredient_id,
-                    size,
-                    dimension_id: newDimension?.value,
-                  });
-                }}
-              />
+                />
 
-              <IconButton
-                size={'xs'}
-                className={classes.ingredientDelete}
-                icon={<Icon variant={'minus'} />}
-                onClick={() => {
-                  onDeleteIngredient(ingredient_id);
-                }}
-              />
-            </div>
-          );
-        })}
-      </div>
+                <Typography className={classes.ingredientName}>
+                  {ingredient?.name}
+                </Typography>
+
+                <NumberField
+                  className={classes.ingredientCount}
+                  placeholder={t('common.count') ?? ''}
+                  size={'xs'}
+                  value={size ?? 0}
+                  onChange={(newSize) => {
+                    onChangeIngredient({
+                      ingredient_id,
+                      size: newSize ?? 0,
+                      dimension_id,
+                    });
+                  }}
+                />
+
+                <SelectField
+                  className={classes.ingredientDimension}
+                  styleVariant={'tiny-flushed'}
+                  value={dimensionOptions.optionsMap.get(dimension_id)}
+                  options={dimensionOptions.options}
+                  isSearchable
+                  filterOption={(filterOption, inputValue) => {
+                    if (inputValue) {
+                      const searchString = inputValue.trim().toLowerCase();
+                      if (filterOption.data.name.includes(searchString)) {
+                        return true;
+                      }
+                      return false;
+                    }
+                    return true;
+                  }}
+                  onChange={(newDimension) => {
+                    onChangeIngredient({
+                      ingredient_id,
+                      size,
+                      dimension_id: newDimension?.value,
+                    });
+                  }}
+                />
+
+                <IconButton
+                  size={'xs'}
+                  className={classes.ingredientDelete}
+                  icon={<Icon variant={'minus'} />}
+                  onClick={() => {
+                    onDeleteIngredient(ingredient_id);
+                  }}
+                />
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {mode === 'create' && (
+        <div className={classes.newIngredientPage}>
+          <Button
+            color={'default'}
+            variant={'outline'}
+            onClick={() => {
+              setMode('view');
+            }}
+          >
+            {t('recipe.cancelNewIngredient')}
+          </Button>
+
+          <AddIngredientPage
+            callback={(ingredient) => {
+              const [anyDimension] = dimensionsMap.values();
+
+              onAddIngredient({
+                ingredient_id: ingredient.id,
+                dimension_id: anyDimension.id,
+                size: 0,
+              });
+
+              setMode('view');
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };

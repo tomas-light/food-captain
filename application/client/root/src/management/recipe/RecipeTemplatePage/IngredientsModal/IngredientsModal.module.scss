@@ -1,7 +1,11 @@
 .gallery {
   grid-area: gallery;
   display: grid;
-  grid-template-areas: "search" "." "ingredients";
+  grid-template-areas:
+    "search"
+    "."
+    "ingredients"
+  ;
   grid-template-rows: auto 24px auto 24px auto;
 }
 

@@ -107,8 +107,13 @@ class RecipeController extends ControllerBase<State> {
   }
 
   @watch
-  async loadRecipeById(action: Action<{ recipeId: RecipeForViewDto['id'] }>) {
-    const { recipeId } = action.payload;
+  async loadRecipeById(
+    action: Action<{
+      recipeId: RecipeForViewDto['id'];
+      callback?: (recipe: Recipe) => void;
+    }>
+  ) {
+    const { recipeId, callback } = action.payload;
 
     this.updateStore({ recipesAreLoading: true });
 
@@ -133,6 +138,8 @@ class RecipeController extends ControllerBase<State> {
       recipesAreLoading: false,
       recipesMap: newRecipesMap,
     });
+
+    callback?.(recipe);
   }
 
   @watch

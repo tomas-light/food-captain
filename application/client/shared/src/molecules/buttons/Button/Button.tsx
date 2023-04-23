@@ -9,7 +9,7 @@ type Props = PropsWithChildren<
     state?: ButtonState;
     onClick?: () => void;
     color?: keyof (typeof theme)['colors'];
-  } & Pick<ButtonProps, 'size' | 'onMouseDown'>
+  } & Pick<ButtonProps, 'size' | 'onMouseDown' | 'variant'>
 >;
 
 const Button = (props: Props) => {

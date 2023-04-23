@@ -1,24 +1,18 @@
 import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import clsx from 'clsx';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
-import {
-  Icon,
-  IconButton,
-  TextAreaField,
-  TextField,
-} from '@food-captain/client-shared';
 import { guid } from '@food-captain/client-utils';
-import {
-  DescriptionBlock,
-  DescriptionBlockProps,
-} from '~/management/recipe/RecipeTemplatePage/RecipeDescription/DescriptionBlock';
+import { Icon, IconButton, TextField } from '@food-captain/client-shared';
 import { Recipe, RecipeDescriptionBlock } from '~/models';
+import { DescriptionBlock, DescriptionBlockProps } from './DescriptionBlock';
 import classes from './RecipeDescription.module.scss';
 
 type Props = Pick<
   DescriptionBlockProps,
-  'onChangeDescriptionBlock' | 'onDeleteDescriptionBlock'
+  | 'onChangeDescriptionBlock'
+  | 'onChangeDescriptionBlocks'
+  | 'onDeleteDescriptionBlock'
 > & {
   className?: string;
   name: Recipe['name'];
@@ -36,6 +30,7 @@ export const RecipeDescription: FC<Props> = (props) => {
 
     blocks,
     onAddDescriptionBlock,
+    onChangeDescriptionBlocks,
     onChangeDescriptionBlock,
     onDeleteDescriptionBlock,
   } = props;
@@ -64,6 +59,7 @@ export const RecipeDescription: FC<Props> = (props) => {
           key={block.reactId}
           allBlocks={orderedBlocks}
           block={block}
+          onChangeDescriptionBlocks={onChangeDescriptionBlocks}
           onChangeDescriptionBlock={onChangeDescriptionBlock}
           onDeleteDescriptionBlock={onDeleteDescriptionBlock}
         />

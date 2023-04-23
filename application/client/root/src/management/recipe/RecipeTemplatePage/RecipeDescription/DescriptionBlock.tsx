@@ -15,8 +15,9 @@ import classes from './DescriptionBlock.module.scss';
 type Props = {
   allBlocks: RecipeDescriptionBlock[];
   block: RecipeDescriptionBlock;
-  onChangeDescriptionBlock: (descriptionBlock: RecipeDescriptionBlock) => void;
-  onDeleteDescriptionBlock: (descriptionBlock: RecipeDescriptionBlock) => void;
+  onChangeDescriptionBlock: (changedBlock: RecipeDescriptionBlock) => void;
+  onChangeDescriptionBlocks: (changedBlocks: RecipeDescriptionBlock[]) => void;
+  onDeleteDescriptionBlock: (deletingBlock: RecipeDescriptionBlock) => void;
 };
 
 export const DescriptionBlock: FC<Props> = (props) => {
@@ -24,6 +25,7 @@ export const DescriptionBlock: FC<Props> = (props) => {
     allBlocks,
     block,
     onChangeDescriptionBlock,
+    onChangeDescriptionBlocks,
     onDeleteDescriptionBlock,
   } = props;
 
@@ -63,14 +65,24 @@ export const DescriptionBlock: FC<Props> = (props) => {
                 return;
               }
 
-              onChangeDescriptionBlock({
-                ...previousBlock,
-                order: block.order,
-              });
-              onChangeDescriptionBlock({
-                ...block,
-                order: previousBlock.order,
-              });
+              onChangeDescriptionBlocks([
+                {
+                  ...previousBlock,
+                  order: block.order,
+                },
+                {
+                  ...block,
+                  order: previousBlock.order,
+                },
+              ]);
+              // onChangeDescriptionBlock({
+              //   ...previousBlock,
+              //   order: block.order,
+              // });
+              // onChangeDescriptionBlock({
+              //   ...block,
+              //   order: previousBlock.order,
+              // });
             }}
           />
           <IconButton
@@ -83,14 +95,24 @@ export const DescriptionBlock: FC<Props> = (props) => {
                 return;
               }
 
-              onChangeDescriptionBlock({
-                ...nextBlock,
-                order: block.order,
-              });
-              onChangeDescriptionBlock({
-                ...block,
-                order: nextBlock.order,
-              });
+              onChangeDescriptionBlocks([
+                {
+                  ...nextBlock,
+                  order: block.order,
+                },
+                {
+                  ...block,
+                  order: nextBlock.order,
+                },
+              ]);
+              // onChangeDescriptionBlock({
+              //   ...nextBlock,
+              //   order: block.order,
+              // });
+              // onChangeDescriptionBlock({
+              //   ...block,
+              //   order: nextBlock.order,
+              // });
             }}
           />
 

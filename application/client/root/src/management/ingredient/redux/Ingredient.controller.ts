@@ -85,7 +85,10 @@ class IngredientController extends ControllerBase<State> {
 
   @watch
   async addIngredient(
-    action: Action<{ ingredient: NewIngredient; callback?: () => void }>
+    action: Action<{
+      ingredient: NewIngredient;
+      callback?: (ingredient: Ingredient) => void;
+    }>
   ) {
     const { ingredient, callback } = action.payload;
 
@@ -104,7 +107,7 @@ class IngredientController extends ControllerBase<State> {
     });
     // todo: show toast success
 
-    callback?.();
+    callback?.(response.data);
   }
 
   @watch

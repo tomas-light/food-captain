@@ -26,12 +26,30 @@
     grid-area: add-button;
     color: map.get($primary, main);
   }
-  & > div {
-    grid-area: ingredients;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 212px);
-    grid-row-gap: 16px;
-    grid-column-gap: 36px;
+}
+
+.ingredients {
+  grid-area: ingredients;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 212px);
+  grid-row-gap: 16px;
+  grid-column-gap: 36px;
+}
+
+.newIngredientPage {
+  grid-area: ingredients;
+  display: grid;
+  grid-row-gap: 24px;
+}
+
+.addButton {
+  width: fit-content;
+
+  & > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: map.get($primary, main);
   }
 }
 
