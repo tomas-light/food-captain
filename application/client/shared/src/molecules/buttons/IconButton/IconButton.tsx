@@ -24,7 +24,7 @@ const IconButton = (props: Props, ref: ForwardedRef<HTMLButtonElement>) => {
         icon={children ?? icon}
         variant={'outline'}
         aria-label={title}
-        disabled={state.disabled}
+        isDisabled={state.disabled}
         isLoading={state.loading}
       />
     </Tooltip>
