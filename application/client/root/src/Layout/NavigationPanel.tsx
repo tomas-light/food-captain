@@ -18,7 +18,19 @@ export const NavigationPanel = () => {
   const [playMeatBallSlap] = useState(() => {
     const audio = new Audio('/sounds/meatBall_slap.mp3');
     return () => {
-      audio.play();
+      audio.play().catch(function (error) {
+        if (error instanceof Error) {
+          if (
+            error.message.includes(
+              "failed because the user didn't interact with the document first"
+            )
+          ) {
+            // valid behaviour, no need to spam errors
+            return;
+          }
+        }
+        throw error;
+      });
     };
   });
 
