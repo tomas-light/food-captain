@@ -84,7 +84,7 @@ export const RecipeDescription: FC<Props> = (props) => {
               onAddDescriptionBlock({
                 type: 'text',
                 reactId: guid(),
-                content: '',
+                content: [],
                 order: blocks.length ?? 0,
               });
             }}
@@ -96,7 +96,7 @@ export const RecipeDescription: FC<Props> = (props) => {
               onAddDescriptionBlock({
                 type: 'step',
                 reactId: guid(),
-                content: '',
+                content: [],
                 order: blocks.length ?? 0,
               });
             }}

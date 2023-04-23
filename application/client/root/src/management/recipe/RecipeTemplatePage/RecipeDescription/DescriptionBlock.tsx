@@ -1,9 +1,12 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  ApplyFormatIconButton,
+  ApplyListIconButton,
   Icon,
   IconButton,
-  TextAreaField,
+  RichTextField,
+  RichTextFieldRef,
   Typography,
 } from '@food-captain/client-shared';
 import { RecipeDescriptionBlock } from '~/models';
@@ -25,6 +28,8 @@ export const DescriptionBlock: FC<Props> = (props) => {
   } = props;
 
   const { t } = useTranslation();
+  const richTextFieldRef = useRef<RichTextFieldRef>(null);
+
   const previousBlocks = useMemo(
     () => allBlocks.filter((_block) => _block.order < block.order),
     [allBlocks, block]
@@ -89,17 +94,31 @@ export const DescriptionBlock: FC<Props> = (props) => {
             }}
           />
 
-          <div className={classes.field}>
-            <TextAreaField
-              label={t('recipe.instruction')}
-              value={block.content ?? ''}
+          <div className={classes.rtfToolbar}>
+            <ApplyFormatIconButton
+              editor={richTextFieldRef.current?.editor}
+              format="bold"
+              icon="rtfBold"
+            />
+            <ApplyListIconButton
+              editor={richTextFieldRef.current?.editor}
+              list="bullet"
+              icon="rtfListBullet"
+            />
+          </div>
+
+          <div className={classes.stepBlock}>
+            <RichTextField
+              ref={richTextFieldRef}
+              hideToolbar
+              placeholder={t('recipe.instruction')}
+              value={block.content}
               onChange={(newValue) => {
                 onChangeDescriptionBlock({
                   ...block,
                   content: newValue,
                 });
               }}
-              // icon={<Icon variant={'title'} />}
             />
             <IconButton
               title={t('recipe.description.deleteBlock') ?? ''}
@@ -115,17 +134,31 @@ export const DescriptionBlock: FC<Props> = (props) => {
     case 'text':
     default:
       return (
-        <div className={classes.field}>
-          <TextAreaField
-            label={t('recipe.instruction')}
-            value={block.content ?? ''}
+        <div className={classes.textBlock}>
+          <div className={classes.rtfToolbar}>
+            <ApplyFormatIconButton
+              editor={richTextFieldRef.current?.editor}
+              format="bold"
+              icon="rtfBold"
+            />
+            <ApplyListIconButton
+              editor={richTextFieldRef.current?.editor}
+              list="bullet"
+              icon="rtfListBullet"
+            />
+          </div>
+
+          <RichTextField
+            ref={richTextFieldRef}
+            hideToolbar
+            placeholder={t('recipe.instruction')}
+            value={block.content}
             onChange={(newValue) => {
               onChangeDescriptionBlock({
                 ...block,
                 content: newValue,
               });
             }}
-            // icon={<Icon variant={'title'} />}
           />
           <IconButton
             title={t('recipe.description.deleteBlock') ?? ''}

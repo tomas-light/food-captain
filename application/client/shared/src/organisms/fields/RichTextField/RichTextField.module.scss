@@ -1,0 +1,16 @@
+@use "sass:map";
+@import '../../../colors';
+
+.toolbar {
+  button {
+    border: none;
+  }
+}
+
+.editor {
+  border-width: 1px;
+  border-style: solid;
+  border-color: map.get($border, light);
+  border-radius: 6px;
+  padding: 4px 8px;
+}

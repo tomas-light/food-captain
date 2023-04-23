@@ -11,15 +11,24 @@ type Props = Partial<TooltipProps> &
     children?: IconButtonProps['icon'];
     state?: ButtonState;
     className?: string;
+    color?: string;
   };
 
 const IconButton = (props: Props, ref: ForwardedRef<HTMLButtonElement>) => {
-  const { state = {}, title = 'Icon button', icon, children, ...rest } = props;
+  const {
+    state = {},
+    title = 'Icon button',
+    color = 'default',
+    icon,
+    children,
+    ...rest
+  } = props;
 
   return (
     <Tooltip title={title}>
       <ChakraIconButton
         {...rest}
+        colorScheme={color}
         ref={ref}
         icon={children ?? icon}
         variant={'outline'}

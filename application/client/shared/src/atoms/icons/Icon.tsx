@@ -13,15 +13,20 @@ import { NoImageIcon } from './NoImageIcon';
 import { PasteIcon } from './PasteIcon';
 import { PlatterIcon } from './PlatterIcon';
 import { PlusIcon } from './PlusIcon';
+import { RtfBoldIcon } from './RtfBoldIcon';
+import { RtfItalicIcon } from './RtfItalicIcon';
+import { RtfListBulletIcon } from './RtfListBulletIcon';
+import { RtfListNumericIcon } from './RtfListNumericIcon';
+import { RtfUnderlineIcon } from './RtfUnderlineIcon';
 import { SearchIcon } from './SearchIcon';
 import { TimerIcon } from './TimerIcon';
 import { TitleIcon } from './TitleIcon';
 import { UploadIcon } from './UploadIcon';
 
 const variants = {
+  chevronDown: ChevronDownIcon,
   chevronLeft: ChevronLeftIcon,
   chevronUp: ChevronUpIcon,
-  chevronDown: ChevronDownIcon,
   fire: FireIcon,
   image: ImageIcon,
   imageSearch: ImageSearchIcon,
@@ -33,6 +38,11 @@ const variants = {
   paste: PasteIcon,
   platter: PlatterIcon,
   plus: PlusIcon,
+  rtfBold: RtfBoldIcon,
+  rtfItalic: RtfItalicIcon,
+  rtfListBullet: RtfListBulletIcon,
+  rtfListNumeric: RtfListNumericIcon,
+  rtfUnderline: RtfUnderlineIcon,
   search: SearchIcon,
   timer: TimerIcon,
   title: TitleIcon,

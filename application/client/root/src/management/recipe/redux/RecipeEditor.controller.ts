@@ -6,7 +6,8 @@ import {
   watch,
   WatchedController,
 } from 'redux-controller-middleware';
-import { NewRecipe } from '~/models';
+import { RecipeController } from '~/management/recipe/redux/Recipe.controller';
+import { NewRecipe, Recipe } from '~/models';
 import { RecipeStore } from './Recipe.store';
 import { State } from '~State';
 
@@ -35,6 +36,33 @@ class RecipeEditorController extends ControllerBase<State> {
         },
       });
     }
+  }
+
+  @watch
+  async startEditingRecipe(action: Action<{ recipeId: Recipe['id'] }>) {
+    const { recipeId } = action.payload;
+
+    await new Promise<void>((resolve) => {
+      this.dispatch(
+        RecipeController.loadRecipeById({ recipeId: recipeId }).addNextActions(
+          () => resolve()
+        )
+      );
+    });
+
+    const { editedRecipe, recipesMap } = this.getState().recipe;
+    const recipe = recipesMap.get(recipeId);
+    if (!recipe) {
+      return;
+    }
+    if (editedRecipe && 'id' in editedRecipe && editedRecipe.id === recipeId) {
+      // use restored draft
+      return;
+    }
+
+    this.updateStore({
+      editedRecipe: recipe,
+    });
   }
 
   @watch

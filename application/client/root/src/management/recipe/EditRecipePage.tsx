@@ -6,6 +6,7 @@ import { useLocaleResource } from '~/config/i18next';
 import { useSelector } from '~/config/redux/useSelector';
 import { IngredientController } from '~/management/ingredient/redux';
 import { RecipeEditor } from '~/management/recipe/RecipeEditor';
+import { RecipeEditorController } from '~/management/recipe/redux';
 import { appUrls } from '~/routing/appUrls';
 import { RecipeController } from './redux/Recipe.controller';
 
@@ -34,8 +35,8 @@ export const EditRecipePage = () => {
   const { recipesMap } = useSelector((state) => state.recipe);
 
   useEffect(() => {
-    if (!isNaN(recipeId)) {
-      dispatch(RecipeController.loadRecipeById({ recipeId: recipeId }));
+    if (recipeId != null) {
+      dispatch(RecipeEditorController.startEditingRecipe({ recipeId }));
     }
   }, [recipeId]);
 

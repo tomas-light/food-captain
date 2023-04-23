@@ -13,7 +13,8 @@
 
   align-items: center;
 
-  @media (min-width: 1280px) and (max-width: 1600px) {
+  @media (min-width: 1280px) and (max-width: 1600px),
+  (min-width: 1600px) {
     align-items: baseline;
   }
 

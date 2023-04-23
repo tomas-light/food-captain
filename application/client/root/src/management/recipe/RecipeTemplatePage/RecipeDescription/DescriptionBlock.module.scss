@@ -1,12 +1,19 @@
 @use "sass:map";
 @import '~@food-captain/client-shared/src/colors';
 
-.field {
+.textBlock {
   display: grid;
+  grid-template-areas: "rtf-toolbar ." "field delete-button";
   grid-template-columns: 1fr auto;
+  grid-row-gap: 8px;
   grid-column-gap: 8px;
 
+  & > div:nth-of-type(2) {
+    grid-area: field;
+  }
+
   & > button {
+    grid-area: delete-button;
     border: none;
 
     & > svg {
@@ -15,13 +22,40 @@
   }
 }
 
+.stepBlock {
+  display: grid;
+  grid-template-areas: "field delete-button";
+  grid-template-columns: 1fr auto;
+  grid-column-gap: 8px;
+
+  & > div:nth-of-type(1) {
+    grid-area: field;
+  }
+
+  & > button {
+    grid-area: delete-button;
+    border: none;
+
+    & > svg {
+      color: map.get($destructive, main);
+    }
+  }
+}
+
+.rtfToolbar {
+  grid-area: rtf-toolbar;
+  button {
+    border: none;
+  }
+}
+
 .step {
   display: grid;
   grid-template-areas:
-    "step up-button down-button ."
-    "field field field field"
+    "step up-button down-button rtf-toolbar ."
+    "field field field field field"
   ;
-  grid-template-columns: auto auto auto 1fr;
+  grid-template-columns: auto auto auto auto 1fr;
   grid-column-gap: 8px;
   grid-row-gap: 8px;
   align-items: center;
@@ -32,18 +66,22 @@
   }
   & > button {
     border: none;
+  }
+  & > button:nth-of-type(1) {
+    grid-area: up-button;
 
     & > svg {
       color: map.get($primary, main);
     }
   }
-  & > button:nth-of-type(1) {
-    grid-area: up-button;
-  }
   & > button:nth-of-type(2) {
     grid-area: down-button;
+
+    & > svg {
+      color: map.get($primary, main);
+    }
   }
-  & > div {
+  & > div:nth-of-type(2) {
     grid-area: field;
   }
 }

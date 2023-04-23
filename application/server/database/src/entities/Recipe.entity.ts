@@ -7,7 +7,7 @@ export interface RecipeDescription {
 export interface RecipeDescriptionBlock {
   type: 'text' | 'step';
   order: number;
-  content: string; // todo: rich text format?
+  content: any[]; // rich text format
 }
 
 export interface RecipeEntity extends Entity {
