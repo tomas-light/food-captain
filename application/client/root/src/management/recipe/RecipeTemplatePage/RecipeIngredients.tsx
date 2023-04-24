@@ -3,7 +3,6 @@ import { use } from 'cheap-di-react';
 import clsx from 'clsx';
 import { FC, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { guid } from '@food-captain/client-utils';
 import {
   Button,
   Icon,
@@ -24,7 +23,7 @@ import classes from './RecipeIngredients.module.scss';
 type Props = {
   className?: string;
   ingredients: RecipeIngredient[];
-  onAddIngredient: (newIngredient: RecipeIngredient) => void;
+  onAddIngredients: (newIngredients: RecipeIngredient[]) => void;
   onChangeIngredient: (changedIngredient: RecipeIngredient) => void;
   onDeleteIngredient: (ingredientId: Ingredient['id']) => void;
 };
@@ -33,7 +32,7 @@ const RecipeIngredients: FC<Props> = (props) => {
   const {
     className,
     ingredients,
-    onAddIngredient,
+    onAddIngredients,
     onChangeIngredient,
     onDeleteIngredient,
   } = props;
@@ -69,14 +68,16 @@ const RecipeIngredients: FC<Props> = (props) => {
     <div className={clsx(classes.root, className)}>
       <IngredientsModal
         addedIngredients={ingredients}
-        onChoose={(ingredientId) => {
+        onChoose={(ingredientIds) => {
           const [anyDimension] = dimensionsMap.values();
 
-          onAddIngredient({
-            ingredient_id: ingredientId,
-            dimension_id: anyDimension.id,
-            size: 0,
-          });
+          onAddIngredients(
+            ingredientIds.map((id) => ({
+              ingredient_id: id,
+              dimension_id: anyDimension.id,
+              size: 0,
+            }))
+          );
         }}
         ref={ingredientsModalRef}
       />
@@ -199,11 +200,13 @@ const RecipeIngredients: FC<Props> = (props) => {
             callback={(ingredient) => {
               const [anyDimension] = dimensionsMap.values();
 
-              onAddIngredient({
-                ingredient_id: ingredient.id,
-                dimension_id: anyDimension.id,
-                size: 0,
-              });
+              onAddIngredients([
+                {
+                  ingredient_id: ingredient.id,
+                  dimension_id: anyDimension.id,
+                  size: 0,
+                },
+              ]);
 
               setMode('view');
             }}

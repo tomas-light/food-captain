@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocaleResource } from '~/config/i18next';
 import { useSelector } from '~/config/redux/useSelector';
-import { Tag } from '~/models';
+import { Ingredient, RecipeIngredient, Tag } from '~/models';
 import { RecipeTemplatePage } from './RecipeTemplatePage';
 import { RecipeEditorController } from './redux';
 import { RecipeController } from './redux/Recipe.controller';
@@ -65,12 +65,22 @@ export const RecipeEditor: FC<Props> = (props) => {
           })
         );
       }}
-      onAddIngredient={(newIngredient) => {
+      onAddIngredients={(newIngredients) => {
         dispatch(
           RecipeEditorController.onChangeEditedRecipe({
-            updates: (recipe) => ({
-              ingredients: recipe.ingredients.concat([newIngredient]),
-            }),
+            updates: (recipe) => {
+              const ingredients = new Map<Ingredient['id'], RecipeIngredient>();
+              recipe.ingredients.forEach((ingredient) => {
+                ingredients.set(ingredient.ingredient_id, ingredient);
+              });
+              newIngredients.forEach((ingredient) => {
+                ingredients.set(ingredient.ingredient_id, ingredient);
+              });
+
+              return {
+                ingredients: Array.from(ingredients.values()),
+              };
+            },
           })
         );
       }}

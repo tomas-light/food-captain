@@ -8,7 +8,7 @@ import classes from './ManagementPage.module.scss';
 
 export const ManagementPage: FC = () => {
   const [cards] = useState<CardProps[]>([
-    { url: appUrls.management.menu.url(), labelKey: 'menu.many' },
+    // { url: appUrls.management.menu.url(), labelKey: 'menu.many' },
     {
       url: appUrls.management.recipe.url(),
       labelKey: 'recipe.many',

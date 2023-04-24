@@ -11,7 +11,7 @@ import classes from './RecipeTemplatePage.module.scss';
 
 type Props = Pick<
   RecipeIngredientsProps,
-  'onAddIngredient' | 'onChangeIngredient' | 'onDeleteIngredient'
+  'onAddIngredients' | 'onChangeIngredient' | 'onDeleteIngredient'
 > &
   Pick<RecipeTagsProps, 'onAddTag' | 'onDeleteTag'> &
   Pick<
@@ -40,7 +40,7 @@ export const RecipeTemplatePage: FC<Props> = (props) => {
     onImageChanged,
     onKcalChanged,
     onCookingTimeChanged,
-    onAddIngredient,
+    onAddIngredients,
     onChangeIngredient,
     onDeleteIngredient,
     onAddTag,
@@ -101,7 +101,7 @@ export const RecipeTemplatePage: FC<Props> = (props) => {
       <RecipeIngredients
         className={classes.ingredients}
         ingredients={recipe.ingredients}
-        onAddIngredient={onAddIngredient}
+        onAddIngredients={onAddIngredients}
         onChangeIngredient={onChangeIngredient}
         onDeleteIngredient={onDeleteIngredient}
       />
