@@ -109,7 +109,7 @@ export const chakraTheme = extendTheme({
             case 'destructive':
               return {
                 bg: 'destructive.outline.main',
-                color: 'destructive.main',
+                color: 'destructive.text',
                 _active: {
                   bg: 'destructive.outline.pressed',
                   disabled: {

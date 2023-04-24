@@ -43,14 +43,20 @@ export const EditRecipePage = () => {
   const onSave = () => {
     dispatch(
       RecipeController.updateRecipe({
-        callback: () => navigate(appUrls.management.recipe.url()),
+        callback: () =>
+          navigate(
+            appUrls.management.recipe.recipeId(recipeId.toString()).url()
+          ),
       })
     );
+  };
+  const onResetDraft = () => {
+    dispatch(RecipeEditorController.resetDraft({ mode: 'edit' }));
   };
 
   if (!recipesMap.has(recipeId)) {
     return <Typography>Dish recipe not found (id: {recipeId})</Typography>;
   }
 
-  return <RecipeEditor onSave={onSave} />;
+  return <RecipeEditor onSave={onSave} onResetDraft={onResetDraft} />;
 };

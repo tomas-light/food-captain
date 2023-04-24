@@ -30,7 +30,10 @@ function makeColor(
 
 const primary = makeColor(106, 27, 154, 'white');
 const secondary = makeColor(49, 151, 149, 'white');
-const destructive = makeColor(247, 203, 1, 'black');
+const destructive = {
+  ...makeColor(247, 203, 1, 'white'),
+  text: 'rgba(0, 0, 0, 0.87)',
+};
 
 const notify = {
   success: {

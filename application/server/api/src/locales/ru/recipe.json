@@ -31,6 +31,7 @@
       "minutes": "{{minutes}} $t(recipe.minutes)"
     },
     "addTag": "добавить тег",
-    "instruction": "рецептура"
+    "instruction": "рецептура",
+    "resetDraft": "очистить черновик"
   }
 }

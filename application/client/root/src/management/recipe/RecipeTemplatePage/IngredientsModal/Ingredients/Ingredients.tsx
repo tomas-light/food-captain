@@ -11,7 +11,7 @@ type Props = {
   className?: string;
   ingredients: Ingredient[];
   onIngredientClick?: (ingredientId: number, isDoubleClick?: true) => void;
-  selectedIngredientId?: number;
+  selectedIngredientIds: Set<Ingredient['id']>;
   searchString?: string;
 };
 
@@ -21,7 +21,7 @@ const Ingredients: FC<Props> = (props) => {
     ingredients,
     onIngredientClick,
     searchString,
-    selectedIngredientId,
+    selectedIngredientIds,
   } = props;
 
   const imageApi = use(ImageApi);
@@ -59,7 +59,7 @@ const Ingredients: FC<Props> = (props) => {
             <Checkbox
               className={classes.imageCheckbox}
               position={'absolute'}
-              isChecked={ingredient.id === selectedIngredientId}
+              isChecked={selectedIngredientIds.has(ingredient.id)}
               disabled
             />
           </div>

@@ -11,6 +11,7 @@ import {
 import {
   ForwardedRef,
   forwardRef,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useState,
@@ -24,7 +25,7 @@ import classes from './IngredientsModal.module.scss';
 
 type Props<T extends { ingredient_id: Ingredient['id'] }> = {
   addedIngredients: T[];
-  onChoose: (ingredientId: number) => void;
+  onChoose: (ingredientIds: Ingredient['id'][]) => void;
 };
 
 type IngredientsModalRef = {
@@ -43,51 +44,61 @@ function IngredientsModal<T extends { ingredient_id: Ingredient['id'] }>(
 
   const { ingredientsMap } = useSelector((state) => state.ingredient);
 
-  const addedIngredientIds = useMemo(
-    () =>
-      new Set<Ingredient['id']>(
-        addedIngredients.map((ingredient) => ingredient.ingredient_id)
-      ),
-    [addedIngredients]
-  );
-
-  const notAddedIngredients = useMemo(
-    () =>
-      Array.from(ingredientsMap.values()).filter(
-        (ingredient) => !addedIngredientIds.has(ingredient.id)
-      ),
-    [addedIngredientIds, ingredientsMap]
-  );
-
   const [searchedIngredientName, setSearchedIngredientName] = useState('');
-  const [selectedIngredientId, setSelectedIngredientId] = useState<
-    Ingredient['id'] | undefined
-  >(undefined);
+  const [selectedIngredientIds, setSelectedIngredientIds] = useState<
+    Set<Ingredient['id']>
+  >(new Set());
+
+  const [notAddedIngredients, setNotAddedIngredients] = useState<Ingredient[]>(
+    []
+  );
+
+  useEffect(() => {
+    const selectedIdsSet = new Set<Ingredient['id']>(
+      addedIngredients.map((ingredient) => ingredient.ingredient_id)
+    );
+    setSelectedIngredientIds(selectedIdsSet);
+    setNotAddedIngredients(
+      Array.from(ingredientsMap.values()).filter(
+        (ingredient) => !selectedIdsSet.has(ingredient.id)
+      )
+    );
+  }, [addedIngredients]);
 
   const onCloseAndClean = () => {
     onClose();
-    setSelectedIngredientId(undefined);
+    setSelectedIngredientIds(new Set());
   };
 
   const onConfirmChoice = () => {
-    if (selectedIngredientId != null) {
-      onChoose(selectedIngredientId);
+    if (selectedIngredientIds != null) {
+      onChoose(Array.from(selectedIngredientIds.values()));
       onCloseAndClean();
     }
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onCloseAndClean} size={'5xl'}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onCloseAndClean}
+      size={'5xl'}
+      isCentered={true}
+    >
       <ModalOverlay />
 
-      <ModalContent>
-        <ModalHeader className={classes.galleryTitle}>
+      <ModalContent
+        className={classes.modalContent}
+        display={'grid'}
+        marginTop={'unset'}
+        marginBottom={'unset'}
+      >
+        <ModalHeader className={classes.header}>
           {t('ingredient.many')}
         </ModalHeader>
 
         <ModalCloseButton size={'lg'} />
 
-        <ModalBody className={classes.gallery}>
+        <ModalBody className={classes.body}>
           <TextField
             className={classes.search}
             icon={<Icon variant={'search'} />}
@@ -100,19 +111,24 @@ function IngredientsModal<T extends { ingredient_id: Ingredient['id'] }>(
             className={classes.ingredients}
             searchString={searchedIngredientName}
             ingredients={notAddedIngredients}
-            onIngredientClick={(ingredientId, isDoubleClick) => {
-              setSelectedIngredientId(ingredientId);
-              if (isDoubleClick) {
-                onConfirmChoice();
-              }
+            onIngredientClick={(ingredientId) => {
+              setSelectedIngredientIds((selected) => {
+                const newSet = new Set(selected);
+                if (newSet.has(ingredientId)) {
+                  newSet.delete(ingredientId);
+                } else {
+                  newSet.add(ingredientId);
+                }
+                return newSet;
+              });
             }}
-            selectedIngredientId={selectedIngredientId}
+            selectedIngredientIds={selectedIngredientIds}
           />
         </ModalBody>
 
         <ModalFooter>
           <Button
-            disabled={selectedIngredientId == null}
+            disabled={selectedIngredientIds == null}
             onClick={onConfirmChoice}
           >
             {t('common.choose')}

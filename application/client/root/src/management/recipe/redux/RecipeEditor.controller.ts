@@ -24,18 +24,23 @@ class RecipeEditorController extends ControllerBase<State> {
   @watch
   startEditingNewRecipe() {
     const { editedRecipe } = this.getState().recipe;
-    if (!editedRecipe) {
-      this.updateStore({
-        editedRecipe: {
-          name: '',
-          description: {
-            blocks: [],
-          },
-          ingredients: [],
-          tags: [],
-        },
-      });
+
+    const hasNewRecipeDraft = editedRecipe && !('id' in editedRecipe);
+    if (hasNewRecipeDraft) {
+      // do not override draft if it exists
+      return;
     }
+
+    this.updateStore({
+      editedRecipe: {
+        name: '',
+        description: {
+          blocks: [],
+        },
+        ingredients: [],
+        tags: [],
+      },
+    });
   }
 
   @watch
@@ -56,15 +61,46 @@ class RecipeEditorController extends ControllerBase<State> {
       console.log('Recipe is not found in store');
       return;
     }
-    if (editedRecipe && 'id' in editedRecipe && editedRecipe.id === recipeId) {
-      // use restored draft
-      console.log('Use recipe draft to editing');
+
+    const hasTheRecipeDraft =
+      editedRecipe && 'id' in editedRecipe && editedRecipe.id === recipeId;
+    if (hasTheRecipeDraft) {
+      // do not override draft if it exists
       return;
     }
 
     this.updateStore({
       editedRecipe: recipe,
     });
+  }
+
+  @watch
+  resetDraft(action: Action<{ mode: 'create' | 'edit' }>) {
+    const { mode } = action.payload;
+
+    if (mode === 'create') {
+      this.updateStore({
+        editedRecipe: {
+          name: '',
+          description: {
+            blocks: [],
+          },
+          ingredients: [],
+          tags: [],
+        },
+      });
+    } else {
+      const { editedRecipe, recipesMap } = this.getState().recipe;
+
+      if (editedRecipe && 'id' in editedRecipe) {
+        const recipe = recipesMap.get(editedRecipe.id);
+        if (recipe) {
+          this.updateStore({
+            editedRecipe: recipe,
+          });
+        }
+      }
+    }
   }
 
   @watch
