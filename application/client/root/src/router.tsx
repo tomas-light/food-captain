@@ -63,10 +63,6 @@ export const router = createBrowserRouter(
           </Route>
         </Route>
 
-        <Route path={appUrls.management.menu.relativeUrl()}>
-          <Route index element={<p>menu page</p>} />
-        </Route>
-
         <Route path={appUrls.management.ingredient.relativeUrl()}>
           <Route index element={<IngredientsPage />} />
 

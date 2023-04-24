@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Icon, Typography } from '@food-captain/client-shared';
 import { useLocaleResource } from '~/config/i18next';
+import { useTranslation } from '~/config/i18next/TranslationContext';
 import { appUrls } from '~/routing';
 import classes from './ManagementPage.module.scss';
 

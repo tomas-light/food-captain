@@ -1,6 +1,16 @@
 {
   "navigation": {
     "management": "management",
-    "randomizer": "randomizer"
+    "randomizer": "randomizer",
+
+    "management_recipe": "recipes",
+    "management_recipe_view": "view",
+    "management_recipe_edit": "edit recipe",
+    "management_recipe_add": "add recipe",
+
+    "management_ingredient": "ingredients",
+    "management_ingredient_view": "view",
+    "management_ingredient_edit": "edit ingredient",
+    "management_ingredient_add": "add ingredient"
   }
 }

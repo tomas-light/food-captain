@@ -1,6 +1,5 @@
 import { Card, CardBody, CardFooter, CardHeader } from '@chakra-ui/react';
 import { useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -12,6 +11,7 @@ import {
 } from '@food-captain/client-shared';
 import { ImageApi } from '@food-captain/client-api';
 import { useLocaleResource } from '~/config/i18next';
+import { useTranslation } from '~/config/i18next/TranslationContext';
 import { useSelector } from '~/config/redux/useSelector';
 import { RecipeController } from '~/management/recipe/redux';
 import { Recipe } from '~/models';

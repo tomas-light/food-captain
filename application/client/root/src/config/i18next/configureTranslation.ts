@@ -1,9 +1,10 @@
 import { use } from 'cheap-di-react';
 import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { initReactI18next } from 'react-i18next';
 import { LocaleApi, LocaleResource } from '@food-captain/client-api';
+import { TranslationContext } from './TranslationContext';
 
 export function configureTranslation() {
   i18next
@@ -31,11 +32,11 @@ const loadedResources = new Set<string>();
 export function useLocaleResource(resource: LocaleResource) {
   const localeApi = use(LocaleApi);
   const [loading, setLoading] = useState(false);
+  const { resourceLoaded } = useContext(TranslationContext);
 
   useEffect(() => {
     (async () => {
       if (loadedResources.has(resource)) {
-        // console.log(`resource ${resource} is already loaded`);
         setLoading(true);
         return;
       }
@@ -43,17 +44,17 @@ export function useLocaleResource(resource: LocaleResource) {
       loadedResources.add(resource);
 
       setLoading(true);
-      // console.log(`resource ${resource} is loading`);
+
       try {
         const userLocale = i18next.language;
 
         const response = await localeApi.getAsync(userLocale, resource);
         if (response.isOk()) {
           i18next.addResourceBundle(userLocale, 'translation', response.data);
+          resourceLoaded();
         }
       } finally {
         setLoading(false);
-        // console.log(`resource ${resource} is loaded`);
       }
     })();
   }, []);

@@ -1,10 +1,10 @@
 import { Link } from '@chakra-ui/react';
 import clsx from 'clsx';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { Icon, IconVariant } from '@food-captain/client-shared';
 import { useLocaleResource } from '~/config/i18next';
+import { useTranslation } from '~/config/i18next/TranslationContext';
 import { appUrls } from '~/routing/appUrls';
 import classes from './NavigationPanel.module.scss';
 

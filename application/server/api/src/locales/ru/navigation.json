@@ -1,6 +1,16 @@
 {
   "navigation": {
     "management": "управление",
-    "randomizer": "рандомайзер"
+    "randomizer": "рандомайзер",
+
+    "management_recipe": "рецепты",
+    "management_recipe_view": "просмотр",
+    "management_recipe_edit": "изменить рецепт",
+    "management_recipe_add": "добавить рецепт",
+
+    "management_ingredient": "ингредиенты",
+    "management_ingredient_view": "просмотр",
+    "management_ingredient_edit": "изменить ингредиент",
+    "management_ingredient_add": "добавить ингредиент"
   }
 }

@@ -1,9 +1,13 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
-import { NiceWebRoutesNode } from 'nice-web-routes';
-import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { NavLink, useLocation } from 'react-router-dom';
-import { appUrls } from '~/routing';
+import { useContext, useEffect, useMemo } from 'react';
+import { matchPath, NavLink, useLocation } from 'react-router-dom';
+import { useLocaleResource } from '~/config/i18next';
+import { useTranslation } from '~/config/i18next/TranslationContext';
+import {
+  makeDocumentTitle,
+  NavigationBarContext,
+} from '~/Layout/NavigationBarContext';
+import { appUrlTranslationKey } from '~/routing';
 import classes from './NavigationBar.module.scss';
 
 // my/page/subpage
@@ -15,8 +19,16 @@ type Breadcrumb = {
 };
 
 export const NavigationBar = () => {
-  const { t } = useTranslation();
+  const translation = useTranslation();
+  const { t } = translation;
   const location = useLocation();
+  const { title, setTitle } = useContext(NavigationBarContext);
+
+  useLocaleResource('navigation');
+
+  useEffect(() => {
+    setTitle(undefined);
+  }, [location.pathname]);
 
   const breadcrumbs = useMemo<Breadcrumb[]>(() => {
     const urlParts = location.pathname
@@ -30,41 +42,65 @@ export const NavigationBar = () => {
 
     const parts = urlParts.slice();
     let currentPart = parts.shift();
-    let urlsNode = appUrls[
-      currentPart as keyof typeof appUrls
-    ] as NiceWebRoutesNode<any, any>;
+    let currentUrl = URL_PARTS_SEPARATOR + (currentPart ?? '');
 
-    while (currentPart && urlsNode) {
+    const urls = Array.from(appUrlTranslationKey.keys());
+
+    while (currentPart) {
+      let name = currentPart;
+
+      // do not touch id
+      if (isNaN(parseInt(currentPart, 10))) {
+        const url = urls.find(
+          (_url) =>
+            matchPath(
+              {
+                path: _url,
+                end: true,
+              },
+              currentUrl
+            ) != null
+        );
+        if (url) {
+          name = appUrlTranslationKey.get(url)!;
+        }
+      }
+
       breadcrumbs.push({
-        name: currentPart,
-        url: urlsNode.url(),
+        name: name,
+        url: currentUrl,
       });
       currentPart = parts.shift();
-      urlsNode = urlsNode[
-        currentPart as keyof typeof appUrls
-      ] as NiceWebRoutesNode<any, any>;
+      currentUrl += URL_PARTS_SEPARATOR + currentPart;
     }
 
     return breadcrumbs;
   }, [location.pathname]);
 
+  useEffect(() => {
+    const last = breadcrumbs.at(-1);
+    if (last) {
+      document.title = makeDocumentTitle(t(last.name));
+    }
+  }, [breadcrumbs, translation]);
+
   return (
     <div className={classes.root}>
       <Breadcrumb>
-        {breadcrumbs.map((breadcrumb, index) => (
-          <BreadcrumbItem
-            key={breadcrumb.url}
-            isCurrentPage={index === breadcrumbs.length - 1}
-          >
-            <BreadcrumbLink
-              as={(props: { to: string }) => (
-                <NavLink {...props} to={breadcrumb.url} />
-              )}
-            >
-              {breadcrumb.name}
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-        ))}
+        {breadcrumbs.map((breadcrumb, index) => {
+          const isCurrentPage = index === breadcrumbs.length - 1;
+          return (
+            <BreadcrumbItem key={breadcrumb.url} isCurrentPage={isCurrentPage}>
+              <BreadcrumbLink
+                as={(props: { to: string }) => (
+                  <NavLink {...props} to={breadcrumb.url} />
+                )}
+              >
+                {isCurrentPage && title ? title : t(breadcrumb.name)}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          );
+        })}
       </Breadcrumb>
     </div>
   );
