@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import { Icon } from '@food-captain/client-shared';
+import { Icon, IconVariant } from '@food-captain/client-shared';
 import { useLocaleResource } from '~/config/i18next';
 import { appUrls } from '~/routing/appUrls';
 import classes from './NavigationPanel.module.scss';
@@ -11,7 +11,21 @@ import classes from './NavigationPanel.module.scss';
 type NavigationElement = {
   url: string;
   labelKey: string;
+  icon: IconVariant;
 };
+
+const navigationElements: NavigationElement[] = [
+  {
+    url: appUrls.management.url(),
+    labelKey: 'navigation.management',
+    icon: 'steeringWheel',
+  },
+  {
+    url: appUrls.randomizer.url(),
+    labelKey: 'navigation.randomizer',
+    icon: 'compass',
+  },
+];
 
 export const NavigationPanel = () => {
   const { t } = useTranslation();
@@ -36,14 +50,6 @@ export const NavigationPanel = () => {
 
   useLocaleResource('navigation');
 
-  const [navigationElements] = useState<NavigationElement[]>([
-    { url: appUrls.management.url(), labelKey: 'navigation.management' },
-    {
-      url: appUrls.randomizer.url(),
-      labelKey: 'navigation.randomizer',
-    },
-  ]);
-
   return (
     <div className={classes.root}>
       <div className={classes.relativeContainerForMeatBall}>
@@ -51,7 +57,7 @@ export const NavigationPanel = () => {
 
         {navigationElements.map((element) => (
           <Link
-            as={(props: { to: string }) => (
+            as={(props: { to: string; children: string }) => (
               <div
                 className={classes.linkContainer}
                 ref={(div) => {
@@ -72,7 +78,10 @@ export const NavigationPanel = () => {
                       [classes.active]: isActive,
                     })
                   }
-                />
+                >
+                  <Icon variant={element.icon} />
+                  <span>{props.children}</span>
+                </NavLink>
                 <div className={classes.meatBall}></div>
               </div>
             )}

@@ -1,23 +1,52 @@
-@use '~@food-captain/client-shared/src/colors';
 @use "sass:map";
+@import '~@food-captain/client-shared/src/colors';
 
 $panelPadding: 16px;
 
 .root {
   padding: $panelPadding;
-  width: 184px;
-  background-color: map.get(colors.$default, main);
+  background-color: map.get($default, main);
+
+  @media (min-width: 320px), (max-width: 320px) {
+    width: 100%;
+  }
+  @media (min-width: 768px) {
+    width: auto;
+  }
+  @media (min-width: 1280px) {
+    width: 184px;
+  }
 }
 
 .relativeContainerForMeatBall {
   display: flex;
-  flex-direction: column;
-  row-gap: 16px;
   position: relative;
+
+  @media (min-width: 320px), (max-width: 320px) {
+    flex-direction: row;
+    column-gap: 16px;
+  }
+  @media (min-width: 768px) {
+    flex-direction: column;
+    row-gap: 16px;
+  }
 }
 
 .logo {
   align-self: center;
+
+  @media (min-width: 320px), (max-width: 320px) {
+    height: 32px;
+    width: 32px;
+  }
+  @media (min-width: 768px) {
+    height: 40px;
+    width: 40px;
+  }
+  @media (min-width: 1280px) {
+    height: 80px;
+    width: 80px;
+  }
 }
 
 .linkContainer {
@@ -27,9 +56,6 @@ $panelPadding: 16px;
 }
 
 .link {
-  padding: 4px 8px;
-  text-transform: capitalize;
-  color: map.get(colors.$default, text);
 
   &.inactive {
     &:hover {
@@ -53,6 +79,57 @@ $panelPadding: 16px;
       animation-duration: 0.3s, 0.7s;
     }
   }
+
+  @media (min-width: 320px), (max-width: 320px) {
+    color: map.get($primary, main);
+    background-color: map.get(map.get($primary, outline), main);
+    border-radius: 6px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+
+    & svg {
+      display: unset;
+    }
+    & span {
+      display: none;
+    }
+  }
+  @media (min-width: 480px) {
+    height: 40px;
+    width: 40px;
+  }
+  @media (min-width: 768px) {
+  }
+  @media (min-width: 1280px) {
+    height: auto;
+    width: auto;
+
+    display: unset;
+    align-items: unset;
+    justify-content: unset;
+
+    padding: 4px 8px;
+    text-transform: capitalize;
+
+    color: map.get($default, text);
+    background-color: unset;
+    border-radius: unset;
+
+    & svg {
+      display: none;
+    }
+    & span {
+      display: unset;
+    }
+  }
+  @media (min-width: 1600px) {
+  }
+  @media (min-width: 1920px) {
+  }
 }
 
 .meatBall {
@@ -66,7 +143,23 @@ $panelPadding: 16px;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   position: absolute;
-  right: 0;
+
+  @media (min-width: 320px), (max-width: 320px) {
+    margin-top: 22px;
+    margin-left: 4px;
+  }
+  @media (min-width: 480px) {
+    margin-left: 12px;
+  }
+  @media (min-width: 768px) {
+    margin-left: unset;
+    margin-right: -22px;
+    right: 0;
+  }
+  @media (min-width: 1280px) {
+    margin-top: unset;
+    margin-right: unset;
+  }
 }
 
 @keyframes meatBallFall {

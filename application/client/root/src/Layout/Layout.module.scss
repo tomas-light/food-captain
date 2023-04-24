@@ -3,7 +3,15 @@
   height: 100vh;
   position: relative;
   display: grid;
-  grid-template-columns: auto 1fr;
+
+  @media (min-width: 320px), (max-width: 320px) {
+    grid-template-columns: none;
+    grid-template-rows: auto 1fr;
+  }
+  @media (min-width: 768px) {
+    grid-template-columns: auto 1fr;
+    grid-template-rows: none;
+  }
 }
 
 .main {
@@ -14,13 +22,16 @@
 
   padding: 48px;
 
-  @media (max-width: 768px) {
-    padding: 36px;
+  @media (min-width: 320px), (max-width: 320px) {
+    padding: 16px;
   }
-  @media (max-width: 480px) {
+  @media (min-width: 480px) {
     padding: 24px;
   }
-  @media (max-width: 320px) {
-    padding: 16px;
+  @media (min-width: 768px) {
+    padding: 36px;
+  }
+  @media (min-width: 1280px) {
+    padding: 48px;
   }
 }
