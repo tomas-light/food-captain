@@ -65,7 +65,8 @@ export async function configureRedux() {
   }
 
   const { debouncedCallback: saveStateToDevice } = debounce({
-    callback: (state: State) => {
+    callback: (api: MiddlewareAPI<Dispatch, State>) => {
+      const state = api.getState();
       const preparedState = stringifyState(state);
       const json = JSON.stringify(preparedState);
       deviceStorage.set(persistedState.key, json);
@@ -94,9 +95,7 @@ export async function configureRedux() {
   ) => {
     return (next: Dispatch) => {
       return (action: AnyAction) => {
-        const state = api.getState();
-        saveStateToDevice(state);
-
+        saveStateToDevice(api);
         next(action);
       };
     };
