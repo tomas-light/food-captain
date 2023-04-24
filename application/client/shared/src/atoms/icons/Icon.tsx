@@ -2,6 +2,7 @@ import { ChevronLeftIcon } from '@chakra-ui/icons';
 import { ComponentProps, FC, ForwardedRef, forwardRef } from 'react';
 import { ChevronDownIcon } from './ChevronDownIcon';
 import { ChevronUpIcon } from './ChevronUpIcon';
+import { CompassIcon } from './CompassIcon';
 import { FireIcon } from './FireIcon';
 import { ImageIcon } from './ImageIcon';
 import { ImageSearchIcon } from './ImageSearchIcon';
@@ -19,6 +20,7 @@ import { RtfListBulletIcon } from './RtfListBulletIcon';
 import { RtfListNumericIcon } from './RtfListNumericIcon';
 import { RtfUnderlineIcon } from './RtfUnderlineIcon';
 import { SearchIcon } from './SearchIcon';
+import { SteeringWheelIcon } from './SteeringWheelIcon';
 import { TimerIcon } from './TimerIcon';
 import { TitleIcon } from './TitleIcon';
 import { UploadIcon } from './UploadIcon';
@@ -27,6 +29,7 @@ const variants = {
   chevronDown: ChevronDownIcon,
   chevronLeft: ChevronLeftIcon,
   chevronUp: ChevronUpIcon,
+  compass: CompassIcon,
   fire: FireIcon,
   image: ImageIcon,
   imageSearch: ImageSearchIcon,
@@ -44,6 +47,7 @@ const variants = {
   rtfListNumeric: RtfListNumericIcon,
   rtfUnderline: RtfUnderlineIcon,
   search: SearchIcon,
+  steeringWheel: SteeringWheelIcon,
   timer: TimerIcon,
   title: TitleIcon,
   upload: UploadIcon,

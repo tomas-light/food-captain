@@ -74,28 +74,29 @@ export const RecipeTemplatePage: FC<Props> = (props) => {
         }}
       />
 
-      <div className={classes.kcal}>
-        <NumberField
-          value={recipe.kcal ?? 0}
-          onChange={onKcalChanged}
-          prefix={<Icon variant={'fire'} />}
-          suffix={t('recipe.kcal') ?? ''}
-        />
+      <div className={classes.stats}>
+        <div className={classes.kcal}>
+          <NumberField
+            value={recipe.kcal ?? 0}
+            onChange={onKcalChanged}
+            prefix={<Icon variant={'fire'} />}
+            suffix={t('recipe.kcal') ?? ''}
+          />
 
-        <NumberField
-          value={recipe.cooking_time_in_minutes ?? 0}
-          onChange={onCookingTimeChanged}
-          prefix={<Icon variant={'timer'} />}
-          suffix={t('recipe.minutes') ?? ''}
+          <NumberField
+            value={recipe.cooking_time_in_minutes ?? 0}
+            onChange={onCookingTimeChanged}
+            prefix={<Icon variant={'timer'} />}
+            suffix={t('recipe.minutes') ?? ''}
+          />
+        </div>
+
+        <RecipeTags
+          tags={recipe.tags}
+          onAddTag={onAddTag}
+          onDeleteTag={onDeleteTag}
         />
       </div>
-
-      <RecipeTags
-        className={classes.tags}
-        tags={recipe.tags}
-        onAddTag={onAddTag}
-        onDeleteTag={onDeleteTag}
-      />
 
       <RecipeIngredients
         className={classes.ingredients}

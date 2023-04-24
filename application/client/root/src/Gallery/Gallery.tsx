@@ -1,4 +1,4 @@
-import { Checkbox } from '@chakra-ui/react';
+import { Radio } from '@chakra-ui/react';
 import { use } from 'cheap-di-react';
 import clsx from 'clsx';
 import { FC, useEffect, useState } from 'react';
@@ -58,9 +58,10 @@ const Gallery: FC<Props> = (props) => {
               }}
             />
 
-            <Checkbox
-              className={classes.imageCheckbox}
+            <Radio
               position={'absolute'}
+              top={'8px'}
+              right={'8px'}
               isChecked={image.id === selectedImageId}
               disabled
             />

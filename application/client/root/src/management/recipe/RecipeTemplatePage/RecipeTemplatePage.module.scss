@@ -3,68 +3,109 @@
 
 .root {
   display: grid;
+  padding-top: 24px;
 
-  @media (min-width: 320px) {
+  @media (min-width: 320px), (max-width: 320px) {
     grid-template-areas:
-      "image image image"
-      ". . ."
-      "kcal . tags"
-      ". . ."
-      "ingredients ingredients ingredients"
-      ". . ."
-      "description description description"
-  ;
-    grid-template-columns: auto 36px 1fr;
-    grid-template-rows: 374px 24px auto 36px auto 36px auto;
+      "image"
+      "stats"
+      "ingredients"
+      "description"
+    ;
+    grid-template-rows: 172px auto auto auto;
+    grid-row-gap: 24px;
+  }
+  @media (min-width: 480px) {
+    grid-template-rows: 260px auto auto auto;
+  }
+  @media (min-width: 768px) {
+    grid-template-rows: 300px auto auto auto;
   }
   @media (min-width: 1280px) {
     grid-template-areas:
-      "image . . . ingredients"
-      "image . kcal . ingredients"
-      "image . . . ingredients"
-      "image . tags . ingredients"
-      ". . . . ingredients"
-      "description description description . ingredients"
-  ;
-    grid-template-columns: 500px 24px 222px 40px 1fr;
-    grid-template-rows: 24px 64px 40px 372px 36px 1fr;
+      "image stats"
+      "ingredients ingredients"
+      "description description"
+    ;
+    grid-column-gap: 24px;
+    grid-template-columns: 500px 1fr;
   }
   @media (min-width: 1600px) {
     grid-template-areas:
-      "image . . . description"
-      "image . kcal . description"
-      "image . . . description"
-      "image . tags . description"
-      ". . . . description"
+      "image . stats . description"
       "ingredients ingredients ingredients . description"
-  ;
-    grid-template-columns: 500px 24px 222px 80px 1fr;
-    grid-template-rows: 24px 64px 40px 372px 36px 1fr;
+    ;
+    grid-template-columns: 500px 24px auto 80px 1fr;
   }
 }
 
 .saveButton {
   position: absolute;
-  right: 48px;
-  top: 48px;
+  @media (min-width: 320px), (max-width: 320px) {
+    right: 16px;
+    top: 16px;
+  }
+  @media (min-width: 480px) {
+    right: 24px;
+    top: 24px;
+  }
+  @media (min-width: 768px) {
+    right: 36px;
+    top: 36px;
+  }
+  @media (min-width: 1280px) {
+    right: 48px;
+    top: 48px;
+  }
 }
 
 .image {
   grid-area: image;
 }
-.kcal {
-  grid-area: kcal;
+
+.stats {
+  grid-area: stats;
   display: grid;
-  grid-auto-columns: 1fr 1fr;
-  grid-row-gap: 16px;
+
+  @media (min-width: 320px), (max-width: 320px) {
+    grid-template-rows: auto auto;
+    grid-row-gap: 16px;
+  }
+  @media (min-width: 480px) {
+    grid-row-gap: 24px;
+  }
+  @media (min-width: 768px) {
+    grid-template-rows: unset;
+    grid-template-columns: auto 1fr;
+    grid-column-gap: 36px;
+  }
+  @media (min-width: 1280px) {
+    grid-template-rows: auto 1fr;
+    grid-template-columns: unset;
+    grid-row-gap: 36px;
+  }
+}
+
+.kcal {
+  display: grid;
+
+  @media (min-width: 320px), (max-width: 320px) {
+    grid-template-rows: auto auto 1fr;
+    grid-row-gap: 16px;
+  }
+  @media (min-width: 480px) {
+    grid-template-rows: unset;
+    grid-template-columns: auto auto 1fr;
+    grid-column-gap: 16px;
+  }
+  @media (min-width: 1280px) {
+    grid-template-rows: auto auto 1fr;
+    grid-template-columns: unset;
+  }
 
   & > div {
     width: 140px;
   }
-}
-
-.tags {
-  grid-area: tags;
 }
 
 .ingredients {
