@@ -13,39 +13,35 @@
       "ingredients"
       "."
       "description"
-  ;
+    ;
     grid-template-rows: 173px 24px auto 36px auto 36px auto;
   }
   @media (min-width: 480px) {
     grid-template-rows: 259px 24px auto 36px auto 36px auto;
   }
   @media (min-width: 768px) {
-    grid-template-rows: 374px 24px auto 36px auto 36px auto;
-  }
-  @media (min-width: 1280px) {
-    grid-template-rows: 517px 24px auto 36px auto 36px auto;
-  }
-  @media (min-width: 1600px) {
     grid-template-areas:
-      "image . ingredients"
-      ". . ."
-      "stats . ingredients"
-      ". . ."
-      "description . ingredients"
+      "image ."
+      ". ."
+      "stats ."
+      ". ."
+      "ingredients ingredients"
+      ". ."
+      "description description"
   ;
-    grid-template-columns: 861px 40px 1fr;
-    grid-template-rows: 517px 24px auto 36px auto 36px auto;
+    grid-template-columns: 500px 1fr;
+    grid-template-rows: 300px 24px auto 36px auto 36px auto;
   }
   @media (min-width: 1920px) {
     grid-template-areas:
       "image . description"
-      ". . ."
+      ". . description"
       "stats . description"
-      ". . ."
+      ". . description"
       "ingredients . description"
-  ;
-    grid-template-columns: 861px 40px 1fr;
-    grid-template-rows: 517px 24px auto 36px auto 36px auto;
+    ;
+    grid-template-columns: 500px 40px 1fr;
+    grid-template-rows: 300px 24px auto 36px 1fr;
   }
 }
 
