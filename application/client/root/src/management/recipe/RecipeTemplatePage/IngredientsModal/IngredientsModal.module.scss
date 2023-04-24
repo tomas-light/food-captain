@@ -1,15 +1,24 @@
-.gallery {
-  grid-area: gallery;
+$margin: 24px;
+
+.modalContent {
+  max-height: calc(100vh - #{$margin} - #{$margin});
+  grid-template-rows: auto 1fr auto;
+  margin: auto;
+}
+
+.body {
   display: grid;
   grid-template-areas:
     "search"
-    "."
     "ingredients"
   ;
-  grid-template-rows: auto 24px auto 24px auto;
+  grid-row-gap: 24px;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  overflow-y: auto;
 }
 
-.galleryTitle {
+.header {
   text-transform: capitalize;
 }
 
@@ -19,4 +28,5 @@
 
 .ingredients {
   grid-area: ingredients;
+  overflow-y: auto;
 }

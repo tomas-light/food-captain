@@ -78,17 +78,27 @@ function IngredientsModal<T extends { ingredient_id: Ingredient['id'] }>(
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onCloseAndClean} size={'5xl'}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onCloseAndClean}
+      size={'5xl'}
+      isCentered={true}
+    >
       <ModalOverlay />
 
-      <ModalContent>
-        <ModalHeader className={classes.galleryTitle}>
+      <ModalContent
+        className={classes.modalContent}
+        display={'grid'}
+        marginTop={'unset'}
+        marginBottom={'unset'}
+      >
+        <ModalHeader className={classes.header}>
           {t('ingredient.many')}
         </ModalHeader>
 
         <ModalCloseButton size={'lg'} />
 
-        <ModalBody className={classes.gallery}>
+        <ModalBody className={classes.body}>
           <TextField
             className={classes.search}
             icon={<Icon variant={'search'} />}
