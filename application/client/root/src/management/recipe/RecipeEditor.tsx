@@ -9,10 +9,11 @@ import { RecipeController } from './redux/Recipe.controller';
 
 type Props = {
   onSave: () => void;
+  onResetDraft: () => void;
 };
 
 export const RecipeEditor: FC<Props> = (props) => {
-  const { onSave } = props;
+  const { onSave, onResetDraft } = props;
 
   const dispatch = useDispatch();
 
@@ -225,8 +226,8 @@ export const RecipeEditor: FC<Props> = (props) => {
           })
         );
       }}
-      saveButtonLabelKey={'buttons.save'}
       onSave={onSave}
+      onResetDraft={onResetDraft}
     />
   );
 };

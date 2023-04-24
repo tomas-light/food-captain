@@ -18,6 +18,7 @@ type Props = {
   onChangeDescriptionBlock: (changedBlock: RecipeDescriptionBlock) => void;
   onChangeDescriptionBlocks: (changedBlocks: RecipeDescriptionBlock[]) => void;
   onDeleteDescriptionBlock: (deletingBlock: RecipeDescriptionBlock) => void;
+  autoFocus?: boolean;
 };
 
 export const DescriptionBlock: FC<Props> = (props) => {
@@ -27,6 +28,7 @@ export const DescriptionBlock: FC<Props> = (props) => {
     onChangeDescriptionBlock,
     onChangeDescriptionBlocks,
     onDeleteDescriptionBlock,
+    autoFocus,
   } = props;
 
   const { t } = useTranslation();
@@ -75,14 +77,6 @@ export const DescriptionBlock: FC<Props> = (props) => {
                   order: previousBlock.order,
                 },
               ]);
-              // onChangeDescriptionBlock({
-              //   ...previousBlock,
-              //   order: block.order,
-              // });
-              // onChangeDescriptionBlock({
-              //   ...block,
-              //   order: previousBlock.order,
-              // });
             }}
           />
           <IconButton
@@ -105,14 +99,6 @@ export const DescriptionBlock: FC<Props> = (props) => {
                   order: nextBlock.order,
                 },
               ]);
-              // onChangeDescriptionBlock({
-              //   ...nextBlock,
-              //   order: block.order,
-              // });
-              // onChangeDescriptionBlock({
-              //   ...block,
-              //   order: nextBlock.order,
-              // });
             }}
           />
 
@@ -133,6 +119,7 @@ export const DescriptionBlock: FC<Props> = (props) => {
             <RichTextField
               ref={richTextFieldRef}
               hideToolbar
+              autoFocus={autoFocus}
               placeholder={t('recipe.instruction')}
               value={block.content}
               onChange={(newValue) => {
@@ -173,6 +160,7 @@ export const DescriptionBlock: FC<Props> = (props) => {
           <RichTextField
             ref={richTextFieldRef}
             hideToolbar
+            autoFocus={autoFocus}
             placeholder={t('recipe.instruction')}
             value={block.content}
             onChange={(newValue) => {

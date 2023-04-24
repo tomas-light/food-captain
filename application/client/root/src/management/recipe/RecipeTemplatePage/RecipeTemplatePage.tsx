@@ -29,14 +29,13 @@ type Props = Pick<
       minutes: Recipe['cooking_time_in_minutes'] | null
     ) => void;
 
-    saveButtonLabelKey: string;
     onSave: () => void;
+    onResetDraft: () => void;
   };
 
 export const RecipeTemplatePage: FC<Props> = (props) => {
   const {
     recipe,
-    saveButtonLabelKey,
     onNameChanged,
     onImageChanged,
     onKcalChanged,
@@ -51,6 +50,7 @@ export const RecipeTemplatePage: FC<Props> = (props) => {
     onChangeDescriptionBlocks,
     onDeleteDescriptionBlock,
     onSave,
+    onResetDraft,
   } = props;
 
   const { t } = useTranslation();
@@ -117,9 +117,17 @@ export const RecipeTemplatePage: FC<Props> = (props) => {
         onDeleteDescriptionBlock={onDeleteDescriptionBlock}
       />
 
-      <Button className={classes.saveButton} onClick={onSave}>
-        {t(saveButtonLabelKey)}
-      </Button>
+      <div className={classes.resultButtons}>
+        <Button
+          variant={'outline'}
+          color={'destructive'}
+          onClick={onResetDraft}
+        >
+          {t('recipe.resetDraft')}
+        </Button>
+
+        <Button onClick={onSave}>{t('buttons.save')}</Button>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import clsx from 'clsx';
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { guid } from '@food-captain/client-utils';
 import { Icon, IconButton, TextField } from '@food-captain/client-shared';
@@ -44,6 +44,19 @@ export const RecipeDescription: FC<Props> = (props) => {
     [blocks]
   );
 
+  const [canAutoFocus, setCanAutoFocus] = useState(false);
+
+  useEffect(() => {
+    // auto focus blocks only once after it added
+    // otherwise after draft resetting the block
+    // will be focused again
+    if (canAutoFocus) {
+      setTimeout(() => {
+        setCanAutoFocus(false);
+      }, 1000);
+    }
+  }, [canAutoFocus]);
+
   return (
     <div className={clsx(classes.root, className)}>
       <TextField
@@ -54,7 +67,7 @@ export const RecipeDescription: FC<Props> = (props) => {
         variant={'flushed'}
       />
 
-      {orderedBlocks.map((block) => (
+      {orderedBlocks.map((block, blockIndex) => (
         <DescriptionBlock
           key={block.reactId}
           allBlocks={orderedBlocks}
@@ -62,6 +75,7 @@ export const RecipeDescription: FC<Props> = (props) => {
           onChangeDescriptionBlocks={onChangeDescriptionBlocks}
           onChangeDescriptionBlock={onChangeDescriptionBlock}
           onDeleteDescriptionBlock={onDeleteDescriptionBlock}
+          autoFocus={canAutoFocus && blockIndex === orderedBlocks.length - 1}
         />
       ))}
 
@@ -77,24 +91,36 @@ export const RecipeDescription: FC<Props> = (props) => {
         <MenuList>
           <MenuItem
             onClick={() => {
-              onAddDescriptionBlock({
-                type: 'text',
-                reactId: guid(),
-                content: [],
-                order: blocks.length ?? 0,
-              });
+              // to be able to correct focus RTF element,
+              //  we have to wait till menu will be closed
+              //  before to add new item is added
+              setTimeout(() => {
+                setCanAutoFocus(true);
+                onAddDescriptionBlock({
+                  type: 'text',
+                  reactId: guid(),
+                  content: [],
+                  order: blocks.length ?? 0,
+                });
+              }, 50);
             }}
           >
             {t('recipe.description.addText')}
           </MenuItem>
           <MenuItem
             onClick={() => {
-              onAddDescriptionBlock({
-                type: 'step',
-                reactId: guid(),
-                content: [],
-                order: blocks.length ?? 0,
-              });
+              // to be able to correct focus RTF element,
+              //  we have to wait till menu will be closed
+              //  before to add new item is added
+              setTimeout(() => {
+                setCanAutoFocus(true);
+                onAddDescriptionBlock({
+                  type: 'step',
+                  reactId: guid(),
+                  content: [],
+                  order: blocks.length ?? 0,
+                });
+              }, 50);
             }}
           >
             {t('recipe.description.addStep')}

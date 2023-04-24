@@ -39,8 +39,11 @@
   }
 }
 
-.saveButton {
+.resultButtons {
+  display: flex;
+  column-gap: 16px;
   position: absolute;
+
   @media (min-width: 320px), (max-width: 320px) {
     right: 16px;
     top: 16px;

@@ -29,6 +29,9 @@ export const AddRecipePage = () => {
       })
     );
   };
+  const onResetDraft = () => {
+    dispatch(RecipeEditorController.resetDraft({ mode: 'create' }));
+  };
 
-  return <RecipeEditor onSave={onSave} />;
+  return <RecipeEditor onSave={onSave} onResetDraft={onResetDraft} />;
 };

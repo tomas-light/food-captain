@@ -34,18 +34,12 @@ type Props = {
   value: RtfElement[];
   onChange: (value: RtfElement[]) => void;
   disabled?: boolean;
+  autoFocus?: boolean;
   hideToolbar?: boolean;
 };
 
 const RichTextField = (props: Props, ref: ForwardedRef<RichTextFieldRef>) => {
-  const {
-    className,
-    placeholder,
-    value,
-    onChange,
-    disabled,
-    hideToolbar = false,
-  } = props;
+  const { className, value, onChange, hideToolbar = false, ...rest } = props;
 
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   useImperativeHandle(ref, () => ({ editor }), [editor]);
@@ -78,8 +72,7 @@ const RichTextField = (props: Props, ref: ForwardedRef<RichTextFieldRef>) => {
               typeof Editable
             >['renderLeaf']
           }
-          placeholder={placeholder}
-          disabled={disabled}
+          {...rest}
         />
       </Slate>
     </div>
