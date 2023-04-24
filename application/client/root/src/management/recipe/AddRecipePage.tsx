@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLocaleResource } from '~/config/i18next';
+import { useTranslation } from '~/config/i18next/TranslationContext';
+import { useTitle } from '~/Layout';
 import { IngredientController } from '~/management/ingredient/redux';
 import { RecipeEditor } from '~/management/recipe/RecipeEditor';
 import { appUrls } from '~/routing';
@@ -11,6 +13,7 @@ import { RecipeController } from './redux/Recipe.controller';
 export const AddRecipePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useLocaleResource('recipe');
   useLocaleResource('ingredient');
@@ -32,6 +35,8 @@ export const AddRecipePage = () => {
   const onResetDraft = () => {
     dispatch(RecipeEditorController.resetDraft({ mode: 'create' }));
   };
+
+  useTitle(t('navigation.management_recipe_add'));
 
   return <RecipeEditor onSave={onSave} onResetDraft={onResetDraft} />;
 };

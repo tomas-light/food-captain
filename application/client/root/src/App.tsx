@@ -14,6 +14,10 @@ import {
 } from '@food-captain/client-api';
 import { AppInitializer } from '~/appInitializer';
 import { configureTranslation } from '~/config/i18next';
+import {
+  TranslationContext,
+  TranslationContextType,
+} from '~/config/i18next/TranslationContext';
 import { Layout } from '~/Layout';
 import { RegisterNavigationInDI } from '~/routing/RegisterNavigationInDI';
 import { configureRedux } from './config/redux';
@@ -52,6 +56,13 @@ const App: FC<{ children: ReactElement }> = (props) => {
     })();
   }, []);
 
+  const [translationContext, setTranslationContext] =
+    useState<TranslationContextType>({
+      resourceLoaded: () => {
+        setTranslationContext((state) => ({ ...state }));
+      },
+    });
+
   if (!config) {
     return null;
   }
@@ -60,11 +71,13 @@ const App: FC<{ children: ReactElement }> = (props) => {
     <ChakraProvider resetCSS theme={chakraTheme}>
       <Provider store={config.store}>
         <DIOneTimeProvider parentContainer={config.container}>
-          <AppInitializer>
-            <Layout>{children}</Layout>
-          </AppInitializer>
+          <TranslationContext.Provider value={translationContext}>
+            <AppInitializer>
+              <Layout>{children}</Layout>
+            </AppInitializer>
 
-          <RegisterNavigationInDI container={config.container} />
+            <RegisterNavigationInDI container={config.container} />
+          </TranslationContext.Provider>
         </DIOneTimeProvider>
       </Provider>
     </ChakraProvider>

@@ -1,9 +1,9 @@
 import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import clsx from 'clsx';
 import { FC, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { guid } from '@food-captain/client-utils';
 import { Icon, IconButton, TextField } from '@food-captain/client-shared';
+import { guid } from '@food-captain/client-utils';
+import { useTranslation } from '~/config/i18next/TranslationContext';
 import { Recipe, RecipeDescriptionBlock } from '~/models';
 import { DescriptionBlock, DescriptionBlockProps } from './DescriptionBlock';
 import classes from './RecipeDescription.module.scss';

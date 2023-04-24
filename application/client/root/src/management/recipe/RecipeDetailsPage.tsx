@@ -1,7 +1,6 @@
 import { Badge } from '@chakra-ui/react';
 import { use } from 'cheap-di-react';
 import { useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +13,9 @@ import {
 } from '@food-captain/client-shared';
 import { ImageApi } from '@food-captain/client-api';
 import { useLocaleResource } from '~/config/i18next';
+import { useTranslation } from '~/config/i18next/TranslationContext';
 import { useSelector } from '~/config/redux/useSelector';
+import { useTitle } from '~/Layout';
 import { IngredientController } from '~/management/ingredient/redux';
 import { RecipeController } from '~/management/recipe/redux';
 import { appUrls } from '~/routing/appUrls';
@@ -71,6 +72,8 @@ export const RecipeDetailsPage = () => {
       sortedDescriptionBlocks.filter((block) => block.type === 'step') ?? [],
     [sortedDescriptionBlocks]
   );
+
+  useTitle(recipe?.name);
 
   if (!recipe) {
     return <Typography>Recipe not found (id: {recipeIdString})</Typography>;

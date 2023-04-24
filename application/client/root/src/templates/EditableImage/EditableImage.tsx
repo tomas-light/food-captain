@@ -1,7 +1,6 @@
 import { use } from 'cheap-di-react';
 import clsx from 'clsx';
 import { FC, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   Icon,
   IconButton,
@@ -9,6 +8,7 @@ import {
   ImageField,
 } from '@food-captain/client-shared';
 import { ImageApi } from '@food-captain/client-api';
+import { useTranslation } from '~/config/i18next/TranslationContext';
 import classes from './EditableImage.module.scss';
 
 type Props = {

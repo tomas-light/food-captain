@@ -2,7 +2,6 @@ import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { use } from 'cheap-di-react';
 import clsx from 'clsx';
 import { FC, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   Button,
   Icon,
@@ -14,6 +13,7 @@ import {
   Typography,
 } from '@food-captain/client-shared';
 import { ImageApi } from '@food-captain/client-api';
+import { useTranslation } from '~/config/i18next/TranslationContext';
 import { useSelector } from '~/config/redux/useSelector';
 import { AddIngredientPage } from '~/management/ingredient/AddIngredientPage';
 import { Ingredient, RecipeIngredient } from '~/models';

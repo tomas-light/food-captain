@@ -14,8 +14,8 @@ import {
   useImperativeHandle,
   useState,
 } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Button, Icon, TextField } from '@food-captain/client-shared';
+import { useTranslation } from '~/config/i18next/TranslationContext';
 import { Gallery } from '~/Gallery';
 import classes from './GalleryModal.module.scss';
 

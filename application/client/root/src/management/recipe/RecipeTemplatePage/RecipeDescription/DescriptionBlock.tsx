@@ -1,5 +1,4 @@
 import { FC, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   ApplyFormatIconButton,
   ApplyListIconButton,
@@ -9,6 +8,7 @@ import {
   RichTextFieldRef,
   Typography,
 } from '@food-captain/client-shared';
+import { useTranslation } from '~/config/i18next/TranslationContext';
 import { RecipeDescriptionBlock } from '~/models';
 import classes from './DescriptionBlock.module.scss';
 

@@ -13,11 +13,10 @@ import {
   forwardRef,
   useEffect,
   useImperativeHandle,
-  useMemo,
   useState,
 } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Button, Icon, TextField } from '@food-captain/client-shared';
+import { useTranslation } from '~/config/i18next/TranslationContext';
 import { useSelector } from '~/config/redux/useSelector';
 import { Ingredient } from '~/models';
 import { Ingredients } from './Ingredients';

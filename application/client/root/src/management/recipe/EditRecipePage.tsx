@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Typography } from '@food-captain/client-shared';
 import { useLocaleResource } from '~/config/i18next';
 import { useSelector } from '~/config/redux/useSelector';
+import { useTitle } from '~/Layout';
 import { IngredientController } from '~/management/ingredient/redux';
 import { RecipeEditor } from '~/management/recipe/RecipeEditor';
 import { RecipeEditorController } from '~/management/recipe/redux';
@@ -54,7 +55,11 @@ export const EditRecipePage = () => {
     dispatch(RecipeEditorController.resetDraft({ mode: 'edit' }));
   };
 
-  if (!recipesMap.has(recipeId)) {
+  const recipe = recipesMap.get(recipeId);
+
+  useTitle(recipe?.name);
+
+  if (!recipe) {
     return <Typography>Dish recipe not found (id: {recipeId})</Typography>;
   }
 
