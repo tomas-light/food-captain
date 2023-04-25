@@ -161,36 +161,15 @@ export class PgIngredientInRecipe
     recipe_id: number,
     ingredient_ids: number[]
   ): Promise<boolean> => {
-    // todo: does not work =(
-    // const queryConfig: QueryConfig = {
-    //   text: `
-    //     DELETE FROM ${this.table}
-    //     WHERE ${keyOf<IngredientInRecipeEntity>('recipe_id')} = $1
-    //     AND ${keyOf<IngredientInRecipeEntity>('ingredient_id')} in ($2);
-    //   `,
-    //   // second array does not work as argument
-    //   values: [recipe_id, ingredient_ids],
-    // };
-
-    // temp protection from SQL injection
-    if (typeof recipe_id !== 'number') {
-      throw new Error(`recipe_id is not a number! (${recipe_id})`);
-    }
-
-    if (ingredient_ids.some((id) => typeof id !== 'number')) {
-      throw new Error(
-        `some ingredient_id is not a number! (${ingredient_ids})`
-      );
-    }
-
     const queryConfig: QueryConfig = {
       text: `
-        DELETE FROM ${this.table} 
-        WHERE ${keyOf<IngredientInRecipeEntity>('recipe_id')} = ${recipe_id} 
+        DELETE FROM ${this.table}
+        WHERE ${keyOf<IngredientInRecipeEntity>('recipe_id')} = $1
         AND ${keyOf<IngredientInRecipeEntity>(
           'ingredient_id'
-        )} in (${ingredient_ids.join(',')});
+        )} = ANY($2::int4[]);
       `,
+      values: [recipe_id, ingredient_ids],
     };
 
     const queryResult = await this.query(queryConfig);

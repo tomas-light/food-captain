@@ -10,8 +10,7 @@ export interface RecipeDescriptionBlock {
   content: any[]; // rich text format
 }
 
-export interface RecipeEntity extends Entity {
-  id: number;
+export interface NewRecipeEntity extends Entity {
   name?: string;
   image_id?: number;
   description?: RecipeDescription;
@@ -20,4 +19,6 @@ export interface RecipeEntity extends Entity {
   cooking_time_in_minutes?: number;
 }
 
-export interface NewRecipeEntity extends Omit<RecipeEntity, 'id'> {}
+export interface RecipeEntity extends NewRecipeEntity {
+  id: number;
+}

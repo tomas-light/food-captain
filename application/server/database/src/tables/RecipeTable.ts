@@ -1,18 +1,28 @@
-import { MakePropertiesOptional } from '../utils';
 import {
   IngredientInRecipeEntity,
   NewRecipeEntity,
   RecipeEntity,
   RecipeTagEntity,
+  TagEntity,
 } from '../entities';
+import { MakePropertiesOptional } from '../utils';
 
 export interface RecipeForViewEntity extends RecipeEntity {
   ingredients: Omit<IngredientInRecipeEntity, 'recipe_id'>[];
   tags: Omit<RecipeTagEntity, 'recipe_id'>[];
 }
 
+export interface RecipeFilters {
+  tagIds?: TagEntity['id'][];
+  includedIngredientIds?: IngredientInRecipeEntity['ingredient_id'][];
+  excludedIngredientIds?: IngredientInRecipeEntity['ingredient_id'][];
+  kcalLimit?: RecipeEntity['kcal'];
+  cookingTimeLimit?: RecipeEntity['cooking_time_in_minutes'];
+}
+
 export interface RecipeTable {
   allAsync(): Promise<RecipeForViewEntity[]>;
+  filterAsync(filters: RecipeFilters): Promise<RecipeForViewEntity[]>;
 
   byIdAsync(id: number): Promise<RecipeForViewEntity | undefined>;
   byIdsAsync(ids: number[]): Promise<RecipeForViewEntity[]>;

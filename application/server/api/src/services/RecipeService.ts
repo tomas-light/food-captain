@@ -29,6 +29,10 @@ export class RecipeService {
     return this.db.recipe.byIdsAsync(...args);
   }
 
+  getByFilterAsync(...args: Parameters<Database['recipe']['filterAsync']>) {
+    return this.db.recipe.filterAsync(...args);
+  }
+
   getByIdAsync(...args: Parameters<Database['recipe']['byIdAsync']>) {
     return this.db.recipe.byIdAsync(...args);
   }

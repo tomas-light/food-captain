@@ -6,7 +6,10 @@ import {
   RecipeDescriptionBlock,
   RecipeEntity,
 } from '@food-captain/database';
-import { RecipeForViewEntity } from '@food-captain/database/src/tables';
+import {
+  RecipeFilters,
+  RecipeForViewEntity,
+} from '@food-captain/database/src/tables';
 import { Logger } from '@food-captain/server-utils';
 import { NewImage } from '../services/ImageService';
 import {
@@ -31,6 +34,12 @@ export default class RecipeApiController extends BaseApiController {
   @get('recipes')
   async getRecipesAsync() {
     const recipes = await this.recipeService.getAllAsync();
+    return this.ok(recipes);
+  }
+
+  @post('recipes-by-filter')
+  async getRecipesByFilterAsync(filters: RecipeFilters) {
+    const recipes = await this.recipeService.getByFilterAsync(filters);
     return this.ok(recipes);
   }
 
@@ -96,4 +105,5 @@ export interface UpdatedRecipeDto extends MakeOptional<RecipeEntity, 'name'> {
 export type {
   RecipeDescription as RecipeDescriptionDto,
   RecipeDescriptionBlock as RecipeDescriptionBlockDto,
+  RecipeFilters as RecipeFiltersDto,
 };
