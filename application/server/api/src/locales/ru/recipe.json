@@ -23,7 +23,7 @@
     "edit": "$t(buttons.edit) $t(recipe.one)",
     "delete": "$t(buttons.delete) $t(recipe.one)",
     "open": "$t(buttons.open)",
-    "search": "поиск рецепта",
+    "search": "название рецепта",
     "kcal": "Ккал",
     "minutes": "мин",
     "view": {
@@ -32,6 +32,31 @@
     },
     "addTag": "добавить тег",
     "instruction": "рецептура",
-    "resetDraft": "очистить черновик"
+    "resetDraft": "очистить черновик",
+    "sort": {
+      "ascending": "сейчас по возрастанию",
+      "descending": "сейчас по убыванию",
+      "byName": "по названию",
+      "byKcal": "по калорийности",
+      "byCookingTime": "по времени приготовления"
+    },
+    "filters": {
+      "title": "фильтры",
+      "apply": "применить",
+      "cancel": "отмена",
+      "search": "найти",
+      "clear": "очистить",
+      "includedTags": "теги",
+      "includedIngredients": "ингредиенты",
+      "excludedIngredients": "исключить ингредиенты",
+      "kcal": {
+        "title": "энергетическая ценность",
+        "remark": "1 порция, Ккал"
+      },
+      "cookingTime": {
+        "title": "время приготовления",
+        "remark": "минуты"
+      }
+    }
   }
 }

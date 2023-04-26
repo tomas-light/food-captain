@@ -1,4 +1,3 @@
-import { Badge } from '@chakra-ui/react';
 import { use } from 'cheap-di-react';
 import { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
@@ -6,7 +5,6 @@ import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import {
   Button,
-  Icon,
   Image,
   RichText,
   Typography,
@@ -17,9 +15,9 @@ import { useTranslation } from '~/config/i18next/TranslationContext';
 import { useSelector } from '~/config/redux/useSelector';
 import { useTitle } from '~/Layout';
 import { IngredientController } from '~/management/ingredient/redux';
-import { RecipeController } from '~/management/recipe/redux';
 import { appUrls } from '~/routing/appUrls';
-import { colorSchemesMap } from './constants';
+import { RecipeStats } from './RecipeStats';
+import { RecipeController } from './redux';
 import classes from './RecipeDetailsPage.module.scss';
 
 export const RecipeDetailsPage = () => {
@@ -33,7 +31,6 @@ export const RecipeDetailsPage = () => {
   const { dimensionsMap, ingredientsMap } = useSelector(
     (state) => state.ingredient
   );
-  const { tagsMap } = useSelector((state) => state.recipe);
 
   useLocaleResource('recipe');
   useLocaleResource('ingredient');
@@ -86,38 +83,14 @@ export const RecipeDetailsPage = () => {
         src={recipe.image_id ? imageApi.makeUrl(recipe.image_id) : undefined}
       />
 
-      <div className={classes.stats}>
-        <div className={classes.kcal}>
-          <Icon variant={'fire'} />
-          <Typography>
-            {t('recipe.view.kcal', { kcal: recipe.kcal ?? '-' })}
-          </Typography>
-
-          <Icon variant={'timer'} />
-          <Typography>
-            {t('recipe.view.minutes', {
-              minutes: recipe.cooking_time_in_minutes ?? '-',
-            })}
-          </Typography>
-        </div>
-
-        <div className={classes.tags}>
-          {recipe.tags.map(({ tag_id }) => {
-            const tag = tagsMap.get(tag_id);
-            const colorScheme = colorSchemesMap.get(tag?.color);
-            return (
-              <Badge
-                key={tag_id}
-                variant={'subtle'}
-                colorScheme={colorScheme}
-                as={'div'}
-              >
-                {tag?.name}
-              </Badge>
-            );
-          })}
-        </div>
-      </div>
+      <RecipeStats
+        classes={{
+          root: classes.stats,
+          kcal: classes.kcal,
+          tags: classes.tags,
+        }}
+        recipe={recipe}
+      />
 
       <div className={classes.ingredients}>
         {recipe.ingredients.map(({ ingredient_id, size, dimension_id }) => {
@@ -168,17 +141,36 @@ export const RecipeDetailsPage = () => {
         })}
       </div>
 
-      <Button
-        className={classes.editButton}
-        variant={'outline'}
-        onClick={() => {
-          navigate(
-            appUrls.management.recipe.recipeId(recipe.id.toString()).edit.url()
-          );
-        }}
-      >
-        {t('recipe.edit')}
-      </Button>
+      <div className={classes.buttons}>
+        <Button
+          className={classes.editButton}
+          variant={'outline'}
+          onClick={() => {
+            navigate(
+              appUrls.management.recipe
+                .recipeId(recipe.id.toString())
+                .edit.url()
+            );
+          }}
+        >
+          {t('recipe.edit')}
+        </Button>
+
+        <Button
+          className={classes.deleteButton}
+          color={'destructive'}
+          onClick={() => {
+            dispatch(
+              RecipeController.deleteRecipe({
+                recipeId: recipe.id,
+                callback: () => navigate(appUrls.management.recipe.url()),
+              })
+            );
+          }}
+        >
+          {t('recipe.delete')}
+        </Button>
+      </div>
     </div>
   );
 };

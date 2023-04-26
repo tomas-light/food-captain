@@ -1,0 +1,185 @@
+@use "sass:map";
+@import '~@food-captain/client-shared/src/colors';
+
+.root {
+  @media (min-width: 320px), (max-width: 320px) {
+  }
+  @media (min-width: 480px) {
+  }
+  @media (min-width: 768px) {
+  }
+  @media (min-width: 1280px) {
+    display: grid;
+    $breadCrumbsHeight: 40px;
+    height: calc(100% - #{$breadCrumbsHeight});
+    grid-template-areas: "content filters";
+    grid-template-rows: 1fr auto;
+    grid-column-gap: 20px;
+  }
+}
+
+.content {
+  display: grid;
+
+  @media (min-width: 320px), (max-width: 320px) {
+    grid-row-gap: 16px;
+    padding-top: 16px;
+    grid-template-areas: "header" "recipes";
+    grid-template-rows: auto 1fr;
+  }
+  @media (min-width: 480px) {
+    grid-row-gap: 24px;
+    padding-top: 24px;
+  }
+  @media (min-width: 1280px) {
+    grid-template-areas: "header" "recipes" "add-button";
+    grid-template-rows: auto 1fr auto;
+    overflow-y: hidden;
+  }
+}
+
+.filters {
+  grid-area: filters;
+}
+
+$fieldWidth: 222px;
+
+.header {
+  grid-area: header;
+  display: grid;
+  grid-template-areas: "search-field sort-button sort-field filters-button";
+  grid-template-columns: 1fr auto $fieldWidth auto;
+  grid-column-gap: 16px;
+
+  button {
+    border: none;
+  }
+}
+
+.searchField {
+  grid-area: search-field;
+}
+
+.sortButton {
+  grid-area: sort-button;
+}
+
+.sortField {
+  grid-area: sort-field;
+}
+
+.filtersButton {
+  grid-area: filters-button;
+
+  & > svg {
+    color: map.get($primary, main);
+  }
+
+  &Opened {
+    transform: rotate(-90deg);
+  }
+  &Closed {
+    transform: rotate(0deg);
+  }
+}
+
+.addButton {
+  grid-area: add-button;
+
+  // todo: uncomment after testing
+  //@media (min-width: 320px), (max-width: 320px) {
+  //  display: none;
+  //}
+  @media (min-width: 1280px) {
+    display: block;
+  }
+}
+
+$padding: 8px;
+
+.recipes {
+  grid-area: recipes;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 334px);
+  grid-column-gap: 36px;
+  align-items: flex-start;
+
+  @media (min-width: 320px), (max-width: 320px) {
+    grid-row-gap: 16px;
+  }
+  @media (min-width: 480px) {
+    grid-row-gap: 24px;
+  }
+  @media (min-width: 1280px) {
+    overflow-y: auto;
+  }
+}
+
+.recipe {
+  display: grid;
+  grid-template-areas:
+    "name name"
+    "image stats"
+  ;
+  grid-row-gap: 12px;
+  grid-column-gap: 12px;
+
+  @media (min-width: 320px), (max-width: 320px) {
+    $imageSize: 150px;
+
+    grid-template-columns: $imageSize 1fr;
+    grid-template-rows: auto $imageSize;
+    img {
+      height: $imageSize;
+      width: $imageSize;
+    }
+  }
+  @media (min-width: 1600px) {
+    $imageSize: 200px;
+
+    grid-template-columns: $imageSize 1fr;
+    grid-template-rows: auto $imageSize;
+    img {
+      height: $imageSize;
+      width: $imageSize;
+    }
+  }
+}
+
+.recipeName {
+  grid-area: name;
+}
+.recipeImage {
+  grid-area: image;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.stats {
+  grid-area: stats;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-row-gap: 24px;
+}
+
+.kcal {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-column-gap: 8px;
+  grid-row-gap: 8px;
+}
+
+.tags {
+  align-items: flex-start;
+  align-content: flex-start;
+  column-gap: 8px;
+  row-gap: 8px;
+  flex-wrap: wrap;
+
+  // prevents tags from overflowing and keep
+  // ability to read all of them
+  overflow: auto;
+}

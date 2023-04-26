@@ -1,0 +1,22 @@
+
+.tags {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  align-items: flex-start;
+
+  // badge
+  & > div {
+    display: grid;
+    grid-auto-flow: column;
+    grid-column-gap: 4px;
+    align-items: center;
+
+    // remove button in the badge
+    & > button {
+      display: inline-block;
+      height: 12px;
+      line-height: 0;
+    }
+  }
+}

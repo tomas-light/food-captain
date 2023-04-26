@@ -1,18 +1,18 @@
 import type { Action } from 'redux-controller-middleware';
 import {
-  ControllerBase,
   createAction,
   Middleware,
   watch,
   WatchedController,
 } from 'redux-controller-middleware';
-import { RecipeController } from '~/management/recipe/redux/Recipe.controller';
 import { NewRecipe, Recipe } from '~/models';
+import { RecipeController } from './Recipe.controller';
 import { RecipeStore } from './Recipe.store';
+import { RecipeBaseController } from './RecipeBase.controller';
 import { State } from '~State';
 
 @watch
-class RecipeEditorController extends ControllerBase<State> {
+class RecipeEditorController extends RecipeBaseController {
   constructor(middleware: Middleware<State>) {
     super(middleware);
   }

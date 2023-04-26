@@ -1,0 +1,65 @@
+@use "sass:map";
+@import '~@food-captain/client-shared/src/colors';
+
+.root {
+  height: 100%;
+  padding-left: 20px;
+  overflow-x: hidden;
+  transition: width ease-in 0.3s;
+
+  @media (min-width: 320px), (max-width: 320px) {
+    width: 100%;
+  }
+
+  &.opened {
+    @media (min-width: 1280px) {
+      width: 400px;
+    }
+  }
+
+  &.closed {
+    @media (min-width: 1280px) {
+      width: 0;
+    }
+  }
+}
+
+.layout {
+  height: 100%;
+  overflow-x: hidden;
+
+  padding-left: 24px;
+  padding-right: 4px; // to do not cut shadow of selected filters
+
+  border-left-color: map.get($text, light);
+  border-left-style: solid;
+  border-left-width: 1px;
+
+  display: grid;
+  row-gap: 16px;
+  grid-template-rows: auto 1fr auto;
+  align-content: flex-start;
+}
+
+.title {
+  display: flex;
+  column-gap: 12px;
+  align-items: center;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.buttons {
+  display: flex;
+  column-gap: 16px;
+  justify-content: flex-end;
+}
+

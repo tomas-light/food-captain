@@ -23,7 +23,7 @@
     "edit": "$t(buttons.edit) $t(recipe.one)",
     "delete": "$t(buttons.delete) $t(recipe.one)",
     "open": "$t(buttons.open)",
-    "search": "search recipe",
+    "search": "recipe name",
     "kcal": "kcal",
     "minutes":"min",
     "view": {
@@ -32,6 +32,31 @@
     },
     "addTag": "add tag",
     "instruction": "instruction",
-    "resetDraft": "reset draft"
+    "resetDraft": "reset draft",
+    "sort": {
+      "ascending": "now is ascending",
+      "descending": "now is descending",
+      "byName": "by name",
+      "byKcal": "by caloric",
+      "byCookingTime": "by cooking time"
+    },
+    "filters": {
+      "title": "filters",
+      "apply": "apply",
+      "cancel": "cancel",
+      "search": "search",
+      "clear": "clear all",
+      "includedTags": "tags",
+      "includedIngredients": "ingredients",
+      "excludedIngredients": "exclude ingredients",
+      "kcal": {
+        "title": "caloric value",
+        "remark": "1 portion, Kcal"
+      },
+      "cookingTime": {
+        "title": "Cooking time",
+        "remark": "minutes"
+      }
+    }
   }
 }

@@ -6,11 +6,9 @@ import { Provider } from 'react-redux';
 import { chakraTheme } from '@food-captain/client-shared';
 import {
   ApiInterceptor,
-  LocaleApi,
   LoggedApiError,
   LoggedApiRequest,
   LoggedApiResponse,
-  UserApi,
 } from '@food-captain/client-api';
 import { AppInitializer } from '~/appInitializer';
 import { configureTranslation } from '~/config/i18next';
@@ -49,10 +47,6 @@ const App: FC<{ children: ReactElement }> = (props) => {
           console.log('[API] error', error);
         }
       );
-      // todo: hack, type metadata is not emitted somehow...
-      const interceptor = container.resolve(ApiInterceptor);
-      container.registerType(UserApi).with(interceptor);
-      container.registerType(LocaleApi).with(interceptor);
     })();
   }, []);
 

@@ -15,7 +15,7 @@ import { IngredientsPage } from '~/management/ingredient/IngredientsPage';
 import { AddRecipePage } from '~/management/recipe/AddRecipePage';
 import { EditRecipePage } from '~/management/recipe/EditRecipePage';
 import { RecipeDetailsPage } from '~/management/recipe/RecipeDetailsPage';
-import { RecipePage } from './management/recipe/RecipePage';
+import { RecipesPage } from './management/recipe/RecipesPage';
 import { appUrls } from './routing/appUrls';
 
 const FallbackRedirect = () => {
@@ -47,7 +47,7 @@ export const router = createBrowserRouter(
         <Route index element={<ManagementPage />} />
 
         <Route path={appUrls.management.recipe.relativeUrl()}>
-          <Route index element={<RecipePage />} />
+          <Route index element={<RecipesPage />} />
 
           <Route
             path={appUrls.management.recipe.add.relativeUrl()}

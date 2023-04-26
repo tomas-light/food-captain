@@ -18,6 +18,7 @@
     "startOnly:host": "yarn workspace @food-captain/host run start-app",
     "startOnly:api": "yarn workspace @food-captain/api run start-app",
     "--": "",
+    "db&caddy": "npm-run-all --parallel db:docker:run caddy:run",
     "db:docker:run": "yarn workspace @food-captain/database db:docker:run",
     "caddy:run": "yarn workspace @food-captain/host caddy:run",
     "---": "",

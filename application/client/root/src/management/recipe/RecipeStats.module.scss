@@ -1,0 +1,30 @@
+@use "sass:map";
+@import '~@food-captain/client-shared/src/colors';
+
+.root {
+  display: grid;
+}
+
+.kcal {
+  display: flex;
+}
+
+.tags {
+  display: flex;
+}
+
+.timerGray {
+  color: map.get($text, light);
+}
+
+.timerGreen {
+  color: #259561;
+}
+
+.timerOrange {
+  color: #D1A405;
+}
+
+.timerRed {
+  color: #9B0414;
+}

@@ -1,9 +1,10 @@
 import {
   NewRecipeDto,
   RecipeDto,
+  RecipeFiltersDto,
   RecipeForViewDto,
   UpdatedRecipeDto,
-} from '@food-captain/api/src/controllers/RecipeApiController';
+} from '@food-captain/api';
 import { ApiBase } from './base/ApiBase';
 
 export class RecipeApi extends ApiBase {
@@ -13,6 +14,10 @@ export class RecipeApi extends ApiBase {
 
   async getByIdAsync(recipeId: RecipeForViewDto['id']) {
     return this.get<RecipeForViewDto>(`recipe/${recipeId}`);
+  }
+
+  async getRecipesByFilterAsync(filters: RecipeFiltersDto) {
+    return this.post<RecipeForViewDto[]>('recipes-by-filter', filters);
   }
 
   async addAsync(recipe: NewRecipeDto) {

@@ -1,20 +1,19 @@
 import type { Action } from 'redux-controller-middleware';
 import {
-  ControllerBase,
   createAction,
   Middleware,
   watch,
   WatchedController,
 } from 'redux-controller-middleware';
-import { NewRecipeDto, RecipeForViewDto } from '@food-captain/api';
 import { RecipeApi, TagApi } from '@food-captain/client-api';
-import { guid } from '@food-captain/client-utils';
-import { NewRecipe, NewTag, Recipe, Tag } from '~/models';
+import { RecipeForViewDto } from '@food-captain/api';
+import { NewTag, Recipe, Tag } from '~/models';
 import { RecipeStore } from './Recipe.store';
+import { RecipeBaseController } from './RecipeBase.controller';
 import { State } from '~State';
 
 @watch
-class RecipeController extends ControllerBase<State> {
+class RecipeController extends RecipeBaseController {
   constructor(
     middleware: Middleware<State>,
     private readonly recipeApi: RecipeApi,
@@ -53,6 +52,42 @@ class RecipeController extends ControllerBase<State> {
       recipesAreLoading: false,
       recipesMap: recipesMap,
     });
+  }
+
+  @watch
+  async loadRecipeById(
+    action: Action<{
+      recipeId: RecipeForViewDto['id'];
+      callback?: (recipe: Recipe) => void;
+    }>
+  ) {
+    const { recipeId, callback } = action.payload;
+
+    this.updateStore({ recipesAreLoading: true });
+
+    const recipeResponse = await this.recipeApi.getByIdAsync(recipeId);
+    if (recipeResponse.isFailed() || !recipeResponse.data) {
+      this.updateStore({
+        recipesAreLoading: false,
+      });
+
+      return;
+    }
+
+    const { recipesMap } = this.getState().recipe;
+    const newRecipesMap = new Map(recipesMap);
+
+    const recipe = this.mapRecipeDescriptionDtoToDescription(
+      recipeResponse.data
+    );
+    newRecipesMap.set(recipe.id, recipe);
+
+    this.updateStore({
+      recipesAreLoading: false,
+      recipesMap: newRecipesMap,
+    });
+
+    callback?.(recipe);
   }
 
   @watch
@@ -107,42 +142,6 @@ class RecipeController extends ControllerBase<State> {
   }
 
   @watch
-  async loadRecipeById(
-    action: Action<{
-      recipeId: RecipeForViewDto['id'];
-      callback?: (recipe: Recipe) => void;
-    }>
-  ) {
-    const { recipeId, callback } = action.payload;
-
-    this.updateStore({ recipesAreLoading: true });
-
-    const recipeResponse = await this.recipeApi.getByIdAsync(recipeId);
-    if (recipeResponse.isFailed() || !recipeResponse.data) {
-      this.updateStore({
-        recipesAreLoading: false,
-      });
-
-      return;
-    }
-
-    const { recipesMap } = this.getState().recipe;
-    const newRecipesMap = new Map(recipesMap);
-
-    const recipe = this.mapRecipeDescriptionDtoToDescription(
-      recipeResponse.data
-    );
-    newRecipesMap.set(recipe.id, recipe);
-
-    this.updateStore({
-      recipesAreLoading: false,
-      recipesMap: newRecipesMap,
-    });
-
-    callback?.(recipe);
-  }
-
-  @watch
   async addRecipe(action: Action<{ callback?: () => void }>) {
     const { callback } = action.payload;
     const { editedRecipe } = this.getState().recipe;
@@ -174,34 +173,6 @@ class RecipeController extends ControllerBase<State> {
     });
 
     callback?.();
-  }
-
-  private mapRecipeDescriptionToDescriptionDto<T extends NewRecipe>(recipe: T) {
-    return {
-      ...recipe,
-      description: {
-        blocks: (recipe.description?.blocks ?? []).map((block) => ({
-          content: block.content,
-          order: block.order,
-          type: block.type,
-        })),
-      },
-    };
-  }
-
-  private mapRecipeDescriptionDtoToDescription<T extends NewRecipeDto>(
-    recipeDto: T
-  ) {
-    return {
-      ...recipeDto,
-      description: {
-        blocks:
-          recipeDto.description?.blocks.map((block) => ({
-            ...block,
-            reactId: guid(),
-          })) ?? [],
-      },
-    };
   }
 
   @watch

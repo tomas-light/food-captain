@@ -3,6 +3,7 @@ import { ComponentProps, FC, ForwardedRef, forwardRef } from 'react';
 import { ChevronDownIcon } from './ChevronDownIcon';
 import { ChevronUpIcon } from './ChevronUpIcon';
 import { CompassIcon } from './CompassIcon';
+import { FilterIcon } from './FilterIcon';
 import { FireIcon } from './FireIcon';
 import { ImageIcon } from './ImageIcon';
 import { ImageSearchIcon } from './ImageSearchIcon';
@@ -20,6 +21,8 @@ import { RtfListBulletIcon } from './RtfListBulletIcon';
 import { RtfListNumericIcon } from './RtfListNumericIcon';
 import { RtfUnderlineIcon } from './RtfUnderlineIcon';
 import { SearchIcon } from './SearchIcon';
+import { SortDownIcon } from './SortDownIcon';
+import { SortUpIcon } from './SortUpIcon';
 import { SteeringWheelIcon } from './SteeringWheelIcon';
 import { TimerIcon } from './TimerIcon';
 import { TitleIcon } from './TitleIcon';
@@ -30,6 +33,7 @@ const variants = {
   chevronLeft: ChevronLeftIcon,
   chevronUp: ChevronUpIcon,
   compass: CompassIcon,
+  filter: FilterIcon,
   fire: FireIcon,
   image: ImageIcon,
   imageSearch: ImageSearchIcon,
@@ -47,6 +51,8 @@ const variants = {
   rtfListNumeric: RtfListNumericIcon,
   rtfUnderline: RtfUnderlineIcon,
   search: SearchIcon,
+  sortDown: SortDownIcon,
+  sortUp: SortUpIcon,
   steeringWheel: SteeringWheelIcon,
   timer: TimerIcon,
   title: TitleIcon,

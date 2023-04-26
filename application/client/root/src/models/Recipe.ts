@@ -6,6 +6,7 @@ import {
   RecipeTagDto,
   RecipeDescriptionDto,
   RecipeDescriptionBlockDto,
+  RecipeFiltersDto,
 } from '@food-captain/api';
 
 export interface Recipe extends Omit<RecipeForViewDto, 'description'> {
@@ -28,3 +29,5 @@ export interface RecipeDescription extends RecipeDescriptionDto {
 export interface RecipeDescriptionBlock extends RecipeDescriptionBlockDto {
   reactId?: string;
 }
+
+export interface RecipeFilters extends RecipeFiltersDto {}
