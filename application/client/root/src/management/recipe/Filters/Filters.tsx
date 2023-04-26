@@ -4,8 +4,10 @@ import { useDispatch } from 'react-redux';
 import { Button, Typography } from '@food-captain/client-shared';
 import { useTranslation } from '~/config/i18next/TranslationContext';
 import { useSelector } from '~/config/redux/useSelector';
+import { KcalFilter } from '~/management/recipe/Filters/KcalFilter';
 import { RecipeFiltersController } from '../redux/RecipeFilters.controller';
 import { Filter } from './Filter';
+import { IngredientsFilter } from './IngredientsFilter';
 import { TagsFilter } from './TagsFilter';
 import classes from './Filters.module.scss';
 
@@ -73,6 +75,69 @@ const Filters: FC<Props> = (props) => {
                 setStateFilters((state) => ({
                   ...state,
                   tagIds: update(state.tagIds),
+                }));
+              }}
+            />
+          </Filter>
+
+          <Filter
+            selected={Boolean(stateFilters.includedIngredientIds?.length)}
+            titleTranslationKey={'recipe.filters.includedIngredients'}
+            onClear={() => {
+              setStateFilters((state) => ({
+                ...state,
+                includedIngredientIds: undefined,
+              }));
+            }}
+          >
+            <IngredientsFilter
+              ingredientIds={stateFilters.includedIngredientIds}
+              onChangeIngredients={(update) => {
+                setStateFilters((state) => ({
+                  ...state,
+                  includedIngredientIds: update(state.includedIngredientIds),
+                }));
+              }}
+            />
+          </Filter>
+
+          <Filter
+            selected={Boolean(stateFilters.excludedIngredientIds?.length)}
+            titleTranslationKey={'recipe.filters.excludedIngredients'}
+            onClear={() => {
+              setStateFilters((state) => ({
+                ...state,
+                excludedIngredientIds: undefined,
+              }));
+            }}
+          >
+            <IngredientsFilter
+              ingredientIds={stateFilters.excludedIngredientIds}
+              onChangeIngredients={(update) => {
+                setStateFilters((state) => ({
+                  ...state,
+                  excludedIngredientIds: update(state.excludedIngredientIds),
+                }));
+              }}
+            />
+          </Filter>
+
+          <Filter
+            selected={stateFilters.kcalLimit != null}
+            titleTranslationKey={'recipe.filters.kcal.title'}
+            onClear={() => {
+              setStateFilters((state) => ({
+                ...state,
+                kcalLimit: undefined,
+              }));
+            }}
+          >
+            <KcalFilter
+              kcalLimit={stateFilters.kcalLimit}
+              onChange={(kcalLimit) => {
+                setStateFilters((state) => ({
+                  ...state,
+                  kcalLimit: kcalLimit,
                 }));
               }}
             />

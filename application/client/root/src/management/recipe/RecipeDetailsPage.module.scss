@@ -14,9 +14,11 @@
       "."
       "description";
     grid-template-rows: 173px 24px auto 36px auto 36px auto;
+    padding-right: 16px;
   }
   @media (min-width: 480px) {
     grid-template-rows: 259px 24px auto 36px auto 36px auto;
+    padding-right: 24px;
   }
   @media (min-width: 768px) {
     grid-template-areas:
@@ -29,6 +31,10 @@
       "description description";
     grid-template-columns: 500px 1fr;
     grid-template-rows: 300px 24px auto 36px auto 36px auto;
+    padding-right: 36px;
+  }
+  @media (min-width: 1280px) {
+    padding-right: 48px;
   }
   @media (min-width: 1920px) {
     grid-template-areas:

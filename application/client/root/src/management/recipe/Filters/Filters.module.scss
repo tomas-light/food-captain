@@ -3,7 +3,6 @@
 
 .root {
   height: 100%;
-  padding-left: 20px;
   overflow-x: hidden;
   transition: width ease-in 0.3s;
 
@@ -29,14 +28,13 @@
   overflow-x: hidden;
 
   padding-left: 24px;
-  padding-right: 4px; // to do not cut shadow of selected filters
 
   border-left-color: map.get($text, light);
   border-left-style: solid;
   border-left-width: 1px;
 
   display: grid;
-  row-gap: 16px;
+  row-gap: 8px;
   grid-template-rows: auto 1fr auto;
   align-content: flex-start;
 }
@@ -55,6 +53,10 @@
   display: flex;
   flex-direction: column;
   row-gap: 16px;
+  overflow-y: auto;
+  // to prevent shadows cutting when filters are overflowing
+  padding: 8px;
+  padding-right: 48px;
 }
 
 .buttons {

@@ -37,6 +37,18 @@ export default class RecipeApiController extends BaseApiController {
     return this.ok(recipes);
   }
 
+  @get('recipes/max-kcal')
+  async getMaxKcalAsync() {
+    const maxKcal = await this.recipeService.getMaxKcalAsync();
+    return this.ok({ maxKcal });
+  }
+
+  @get('recipes/max-cooking-time')
+  async getMaxCookingTimeAsync() {
+    const maxCookingTime = await this.recipeService.getMaxCookingTimeAsync();
+    return this.ok({ maxCookingTime });
+  }
+
   @post('recipes-by-filter')
   async getRecipesByFilterAsync(filters: RecipeFilters) {
     const recipes = await this.recipeService.getByFilterAsync(filters);
@@ -88,6 +100,7 @@ export interface RecipeDto extends RecipeEntity {}
 export interface RecipeForViewDto extends RecipeForViewEntity {}
 
 export interface RecipeIngredientDto extends IngredientForRecipe {}
+
 export interface RecipeTagDto extends TagForRecipe {}
 
 export interface NewRecipeDto extends NewRecipeEntity {

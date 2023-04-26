@@ -24,6 +24,11 @@ export interface RecipeTable {
   allAsync(): Promise<RecipeForViewEntity[]>;
   filterAsync(filters: RecipeFilters): Promise<RecipeForViewEntity[]>;
 
+  findMaxKcalAsync(): Promise<RecipeEntity['kcal'] | undefined>;
+  findMaxCookingTimeAsync(): Promise<
+    RecipeEntity['cooking_time_in_minutes'] | undefined
+  >;
+
   byIdAsync(id: number): Promise<RecipeForViewEntity | undefined>;
   byIdsAsync(ids: number[]): Promise<RecipeForViewEntity[]>;
   byMenuIdAsync(menu_id: number): Promise<RecipeForViewEntity[]>;

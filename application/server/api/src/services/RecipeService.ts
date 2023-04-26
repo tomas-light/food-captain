@@ -37,6 +37,16 @@ export class RecipeService {
     return this.db.recipe.byIdAsync(...args);
   }
 
+  getMaxKcalAsync(...args: Parameters<Database['recipe']['findMaxKcalAsync']>) {
+    return this.db.recipe.findMaxKcalAsync(...args);
+  }
+
+  getMaxCookingTimeAsync(
+    ...args: Parameters<Database['recipe']['findMaxCookingTimeAsync']>
+  ) {
+    return this.db.recipe.findMaxCookingTimeAsync(...args);
+  }
+
   async addAsync(
     newRecipe: NewRecipeEntity & {
       ingredients: IngredientForRecipe[];

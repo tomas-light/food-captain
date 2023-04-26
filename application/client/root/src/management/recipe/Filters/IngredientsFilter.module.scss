@@ -1,0 +1,26 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  align-items: flex-start;
+
+  // ingredient row
+  & > div {
+    display: grid;
+    grid-auto-flow: column;
+    grid-column-gap: 8px;
+    align-items: center;
+
+    & img {
+      height: 40px;
+      width: 40px;
+    }
+
+    // remove button
+    & > button {
+      display: inline-block;
+      height: 12px;
+      line-height: 0;
+    }
+  }
+}

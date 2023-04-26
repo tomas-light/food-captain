@@ -9,6 +9,12 @@ export class RecipeStore {
   filteredRecipesAreLoading: boolean;
   filteredRecipesMap: Map<Recipe['id'], Recipe>;
 
+  maxKcalIsLoading: boolean;
+  maxKcal: Recipe['kcal'] | undefined;
+
+  maxCookingTimeIsLoading: boolean;
+  maxCookingTime: Recipe['cooking_time_in_minutes'] | undefined;
+
   tagsAreLoading: boolean;
   tagsMap: Map<Tag['id'], Tag>;
 
@@ -21,6 +27,12 @@ export class RecipeStore {
     this.filters = store?.filters ?? {};
     this.filteredRecipesAreLoading = false;
     this.filteredRecipesMap = store?.filteredRecipesMap ?? new Map();
+
+    this.maxKcalIsLoading = false;
+    this.maxKcal = store?.maxKcal;
+
+    this.maxCookingTimeIsLoading = false;
+    this.maxCookingTime = store?.maxCookingTime;
 
     this.tagsAreLoading = false;
     this.tagsMap = store?.tagsMap ?? new Map();

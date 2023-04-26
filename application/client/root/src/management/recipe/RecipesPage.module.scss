@@ -13,8 +13,8 @@
     $breadCrumbsHeight: 40px;
     height: calc(100% - #{$breadCrumbsHeight});
     grid-template-areas: "content filters";
-    grid-template-rows: 1fr auto;
-    grid-column-gap: 20px;
+    grid-template-columns: 1fr auto;
+    grid-column-gap: 40px;
   }
 }
 

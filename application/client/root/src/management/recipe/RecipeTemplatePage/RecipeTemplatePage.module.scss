@@ -14,12 +14,15 @@
     ;
     grid-template-rows: 172px auto auto auto;
     grid-row-gap: 24px;
+    padding-right: 16px;
   }
   @media (min-width: 480px) {
     grid-template-rows: 260px auto auto auto;
+    padding-right: 24px;
   }
   @media (min-width: 768px) {
     grid-template-rows: 300px auto auto auto;
+    padding-right: 36px;
   }
   @media (min-width: 1280px) {
     grid-template-areas:
@@ -29,6 +32,7 @@
     ;
     grid-column-gap: 24px;
     grid-template-columns: 500px 1fr;
+    padding-right: 48px;
   }
   @media (min-width: 1600px) {
     grid-template-areas:

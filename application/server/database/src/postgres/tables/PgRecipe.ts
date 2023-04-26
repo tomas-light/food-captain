@@ -118,14 +118,14 @@ export class PgRecipe extends PgTableBase<RecipeEntity> implements RecipeTable {
     if (<keyof RecipeFilters>'kcalLimit' in filters) {
       values.push(filters.kcalLimit);
       conditions.push(`
-        _recipe.${keyOf<RecipeEntity>('kcal')} <= ${values.length}
+        _recipe.${keyOf<RecipeEntity>('kcal')} <= $${values.length}
       `);
     }
 
     if (<keyof RecipeFilters>'cookingTimeLimit' in filters) {
       values.push(filters.cookingTimeLimit);
       conditions.push(`
-        _recipe.${keyOf<RecipeEntity>('cooking_time_in_minutes')} <= ${
+        _recipe.${keyOf<RecipeEntity>('cooking_time_in_minutes')} <= $${
         values.length
       }
       `);
@@ -141,6 +141,27 @@ export class PgRecipe extends PgTableBase<RecipeEntity> implements RecipeTable {
     };
 
     return await this.getRecipeForViewEntitiesByQuery(queryConfig);
+  };
+
+  findMaxKcalAsync = async (): Promise<RecipeEntity['kcal'] | undefined> => {
+    const queryResult = await this.query<{
+      max: RecipeEntity['kcal'] | undefined;
+    }>(`
+        SELECT MAX(${PgRecipe.table}.${keyOf<RecipeEntity>('kcal')})
+        FROM ${this.table}`);
+    return queryResult?.rows[0]?.max;
+  };
+  findMaxCookingTimeAsync = async (): Promise<
+    RecipeEntity['cooking_time_in_minutes'] | undefined
+  > => {
+    const queryResult = await this.query<{
+      max: RecipeEntity['cooking_time_in_minutes'] | undefined;
+    }>(`
+        SELECT MAX(${PgRecipe.table}.${keyOf<RecipeEntity>(
+      'cooking_time_in_minutes'
+    )})
+        FROM ${this.table}`);
+    return queryResult?.rows[0]?.max;
   };
 
   byIdAsync = async (id: number): Promise<RecipeForViewEntity | undefined> => {

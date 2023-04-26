@@ -53,6 +53,48 @@ class RecipeFiltersController extends RecipeBaseController {
       filters,
     });
   }
+
+  @watch
+  async loadMaxKcal() {
+    this.updateStore({
+      maxKcalIsLoading: true,
+    });
+
+    const response = await this.recipeApi.getMaxKcalAsync();
+    if (response.isFailed() || !response.data) {
+      this.updateStore({
+        maxKcalIsLoading: false,
+      });
+
+      return;
+    }
+
+    this.updateStore({
+      maxKcalIsLoading: true,
+      maxKcal: response.data.maxKcal,
+    });
+  }
+
+  @watch
+  async loadMaxCookingTime() {
+    this.updateStore({
+      maxCookingTimeIsLoading: true,
+    });
+
+    const response = await this.recipeApi.getMaxCookingTimeAsync();
+    if (response.isFailed() || !response.data) {
+      this.updateStore({
+        maxCookingTimeIsLoading: false,
+      });
+
+      return;
+    }
+
+    this.updateStore({
+      maxCookingTimeIsLoading: true,
+      maxCookingTime: response.data.maxCookingTime,
+    });
+  }
 }
 
 const recipeFiltersController: WatchedController<RecipeFiltersController> =

@@ -20,6 +20,18 @@ export class RecipeApi extends ApiBase {
     return this.post<RecipeForViewDto[]>('recipes-by-filter', filters);
   }
 
+  async getMaxKcalAsync() {
+    return this.get<{ maxKcal: RecipeDto['kcal'] | undefined }>(
+      'recipes/max-kcal'
+    );
+  }
+
+  async getMaxCookingTimeAsync() {
+    return this.get<{
+      maxCookingTime: RecipeDto['cooking_time_in_minutes'] | undefined;
+    }>('recipes/max-cooking-time');
+  }
+
   async addAsync(recipe: NewRecipeDto) {
     return this.post<RecipeForViewDto>('recipe', recipe);
   }

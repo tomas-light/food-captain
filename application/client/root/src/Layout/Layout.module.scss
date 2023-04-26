@@ -20,18 +20,16 @@
   box-sizing: border-box;
   position: relative;
 
-  padding: 48px;
-
   @media (min-width: 320px), (max-width: 320px) {
-    padding: 16px;
+    padding: 16px 0 0 16px;
   }
   @media (min-width: 480px) {
-    padding: 24px;
+    padding: 24px 0 0 24px;
   }
   @media (min-width: 768px) {
-    padding: 36px;
+    padding: 36px 0 0 36px;
   }
   @media (min-width: 1280px) {
-    padding: 48px;
+    padding: 48px 0 0 48px;
   }
 }
