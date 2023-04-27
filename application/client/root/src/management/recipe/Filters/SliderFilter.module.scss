@@ -1,0 +1,13 @@
+@use "sass:map";
+@import '~@food-captain/client-shared/src/colors';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  align-items: center;
+
+  & > p {
+    color: map.get($text, medium);
+  }
+}

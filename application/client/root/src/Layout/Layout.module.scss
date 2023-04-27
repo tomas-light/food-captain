@@ -20,6 +20,10 @@
   box-sizing: border-box;
   position: relative;
 
+  scrollbar-color: #319795 #F3FBFC;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+
   @media (min-width: 320px), (max-width: 320px) {
     padding: 16px 0 0 16px;
   }

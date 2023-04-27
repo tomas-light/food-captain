@@ -1,0 +1,10 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  overflow-y: auto;
+  // to prevent shadows cutting when filters are overflowing
+  padding: 8px;
+  //padding-right: 48px;
+  scrollbar-gutter: stable;
+}

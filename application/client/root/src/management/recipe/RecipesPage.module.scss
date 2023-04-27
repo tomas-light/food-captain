@@ -1,12 +1,19 @@
 @use "sass:map";
 @import '~@food-captain/client-shared/src/colors';
 
+$breadCrumbsHeight: 40px;
+
 .root {
   @media (min-width: 320px), (max-width: 320px) {
+    padding-bottom: 16px;
   }
   @media (min-width: 480px) {
+    padding-bottom: 24px;
   }
   @media (min-width: 768px) {
+    padding-bottom: 36px;
+    $breadCrumbsHeight: 40px;
+    min-height: calc(100% - #{$breadCrumbsHeight});
   }
   @media (min-width: 1280px) {
     display: grid;
@@ -15,26 +22,29 @@
     grid-template-areas: "content filters";
     grid-template-columns: 1fr auto;
     grid-column-gap: 40px;
+    padding-bottom: 48px;
   }
 }
 
 .content {
   display: grid;
+  grid-template-areas: "header" "recipes";
+  grid-template-rows: auto 1fr;
 
   @media (min-width: 320px), (max-width: 320px) {
-    grid-row-gap: 16px;
-    padding-top: 16px;
-    grid-template-areas: "header" "recipes";
-    grid-template-rows: auto 1fr;
+    padding-right: 16px;
   }
   @media (min-width: 480px) {
-    grid-row-gap: 24px;
-    padding-top: 24px;
+    padding-right: 24px;
+  }
+  @media (min-width: 768px) {
+    padding-right: 36px;
   }
   @media (min-width: 1280px) {
-    grid-template-areas: "header" "recipes" "add-button";
-    grid-template-rows: auto 1fr auto;
+    padding-right: 0;
     overflow-y: hidden;
+    grid-template-areas: "header" "recipes" "." "add-button";
+    grid-template-rows: auto 1fr 24px auto;
   }
 }
 
@@ -45,6 +55,19 @@
 $fieldWidth: 222px;
 
 .header {
+  position: sticky;
+  background-color: white;
+  top: -$breadCrumbsHeight;
+
+  @media (min-width: 320px), (max-width: 320px) {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  @media (min-width: 480px) {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
   grid-area: header;
   display: grid;
   grid-template-areas: "search-field sort-button sort-field filters-button";
@@ -86,10 +109,9 @@ $fieldWidth: 222px;
 .addButton {
   grid-area: add-button;
 
-  // todo: uncomment after testing
-  //@media (min-width: 320px), (max-width: 320px) {
-  //  display: none;
-  //}
+  @media (min-width: 320px), (max-width: 320px) {
+    display: none;
+  }
   @media (min-width: 1280px) {
     display: block;
   }
@@ -103,6 +125,7 @@ $padding: 8px;
   grid-template-columns: repeat(auto-fill, 334px);
   grid-column-gap: 36px;
   align-items: flex-start;
+  align-content: flex-start;
 
   @media (min-width: 320px), (max-width: 320px) {
     grid-row-gap: 16px;
