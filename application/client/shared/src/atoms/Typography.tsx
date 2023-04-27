@@ -1,5 +1,5 @@
 import { Text } from '@chakra-ui/react';
-import { FC, ReactNode } from 'react';
+import { FC, ReactElement, ReactNode } from 'react';
 
 type Props = {
   size?: keyof typeof sizes;
@@ -7,6 +7,7 @@ type Props = {
   bold?: true;
   capitalize?: true;
   children: ReactNode;
+  icon?: ReactElement;
 };
 
 const sizes = {
@@ -18,7 +19,7 @@ const sizes = {
 };
 
 const Typography: FC<Props> = (props) => {
-  const { children, className, size = 16, bold, capitalize } = props;
+  const { children, icon, className, size = 16, bold, capitalize } = props;
 
   return (
     <Text
@@ -27,7 +28,11 @@ const Typography: FC<Props> = (props) => {
       fontWeight={bold && '600'}
       autoCapitalize={'sentences'}
       textTransform={capitalize && 'capitalize'}
+      display={icon && 'flex'}
+      columnGap={'8px'}
+      alignItems={'center'}
     >
+      {icon}
       {children}
     </Text>
   );

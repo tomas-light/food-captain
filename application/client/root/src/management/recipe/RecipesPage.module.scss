@@ -3,10 +3,15 @@
 
 .root {
   @media (min-width: 320px), (max-width: 320px) {
+    padding-bottom: 16px;
   }
   @media (min-width: 480px) {
+    padding-bottom: 24px;
   }
   @media (min-width: 768px) {
+    padding-bottom: 36px;
+    //$breadCrumbsHeight: 40px;
+    //min-height: calc(100% - #{$breadCrumbsHeight});
   }
   @media (min-width: 1280px) {
     display: grid;
@@ -15,25 +20,29 @@
     grid-template-areas: "content filters";
     grid-template-columns: 1fr auto;
     grid-column-gap: 40px;
+    padding-bottom: 48px;
   }
 }
 
 .content {
   display: grid;
+  grid-template-areas: "header" "recipes" "add-button";
+  grid-template-rows: auto 1fr auto;
 
   @media (min-width: 320px), (max-width: 320px) {
     grid-row-gap: 16px;
     padding-top: 16px;
-    grid-template-areas: "header" "recipes";
-    grid-template-rows: auto 1fr;
+    padding-right: 16px;
   }
   @media (min-width: 480px) {
     grid-row-gap: 24px;
     padding-top: 24px;
+    padding-right: 24px;
+  }
+  @media (min-width: 768px) {
+    padding-right: 36px;
   }
   @media (min-width: 1280px) {
-    grid-template-areas: "header" "recipes" "add-button";
-    grid-template-rows: auto 1fr auto;
     overflow-y: hidden;
   }
 }

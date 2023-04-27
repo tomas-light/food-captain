@@ -1,14 +1,24 @@
+import {
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+} from '@chakra-ui/react';
 import clsx from 'clsx';
 import { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, Typography } from '@food-captain/client-shared';
+import {
+  Button,
+  Typography,
+  useScreenBreakpoints,
+} from '@food-captain/client-shared';
 import { useTranslation } from '~/config/i18next/TranslationContext';
 import { useSelector } from '~/config/redux/useSelector';
-import { KcalFilter } from '~/management/recipe/Filters/KcalFilter';
 import { RecipeFiltersController } from '../redux/RecipeFilters.controller';
-import { Filter } from './Filter';
-import { IngredientsFilter } from './IngredientsFilter';
-import { TagsFilter } from './TagsFilter';
+import { FiltersBlocks } from './FiltersBlocks';
 import classes from './Filters.module.scss';
 
 type Props = {
@@ -22,6 +32,8 @@ const Filters: FC<Props> = (props) => {
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const screenBreakpoints = useScreenBreakpoints();
+
   const { filters } = useSelector((state) => state.recipe);
 
   const [stateFilters, setStateFilters] = useState(filters);
@@ -32,15 +44,73 @@ const Filters: FC<Props> = (props) => {
     }
   }, [filters]);
 
+  const onCancel = () => {
+    setStateFilters(filters);
+    onClose();
+  };
+
+  const onApply = () => {
+    dispatch(
+      RecipeFiltersController.loadRecipesByFilters({
+        filters: stateFilters,
+      }).addNextActions(() => onClose())
+    );
+  };
+
+  if (screenBreakpoints.more['1280']) {
+    return (
+      <div
+        className={clsx(classes.root, className, {
+          [classes.opened]: open,
+          [classes.closed]: !open,
+        })}
+      >
+        <div className={classes.layout}>
+          <div className={classes.title}>
+            <Typography capitalize>{t('recipe.filters.title')}</Typography>
+
+            <Button
+              className={clsx({
+                [classes.hidden]: Object.keys(stateFilters).length === 0,
+              })}
+              color={'default'}
+              variant={'ghost'}
+              size={'sm'}
+              onClick={() => {
+                setStateFilters(() => ({}));
+              }}
+            >
+              {t('recipe.filters.clear')}
+            </Button>
+          </div>
+
+          <FiltersBlocks filters={stateFilters} setFilters={setStateFilters} />
+
+          <div className={classes.buttons}>
+            <Button variant={'ghost'} color={'default'} onClick={onCancel}>
+              {t('recipe.filters.cancel')}
+            </Button>
+
+            <Button variant={'outline'} onClick={onApply}>
+              {t('recipe.filters.apply')}
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div
-      className={clsx(classes.root, className, {
-        [classes.opened]: open,
-        [classes.closed]: !open,
-      })}
+    <Drawer
+      isOpen={open}
+      placement="right"
+      onClose={onClose}
+      size={screenBreakpoints.more['768'] ? 'md' : 'full'}
     >
-      <div className={classes.layout}>
-        <div className={classes.title}>
+      <DrawerOverlay />
+      <DrawerContent>
+        <DrawerCloseButton />
+        <DrawerHeader className={classes.title}>
           <Typography capitalize>{t('recipe.filters.title')}</Typography>
 
           <Button
@@ -56,121 +126,23 @@ const Filters: FC<Props> = (props) => {
           >
             {t('recipe.filters.clear')}
           </Button>
-        </div>
+        </DrawerHeader>
 
-        <div className={classes.filters}>
-          <Filter
-            selected={Boolean(stateFilters.tagIds?.length)}
-            titleTranslationKey={'recipe.filters.includedTags'}
-            onClear={() => {
-              setStateFilters((state) => ({
-                ...state,
-                tagIds: undefined,
-              }));
-            }}
-          >
-            <TagsFilter
-              tagIds={stateFilters.tagIds}
-              onChangeTags={(update) => {
-                setStateFilters((state) => ({
-                  ...state,
-                  tagIds: update(state.tagIds),
-                }));
-              }}
-            />
-          </Filter>
+        <DrawerBody>
+          <FiltersBlocks filters={stateFilters} setFilters={setStateFilters} />
+        </DrawerBody>
 
-          <Filter
-            selected={Boolean(stateFilters.includedIngredientIds?.length)}
-            titleTranslationKey={'recipe.filters.includedIngredients'}
-            onClear={() => {
-              setStateFilters((state) => ({
-                ...state,
-                includedIngredientIds: undefined,
-              }));
-            }}
-          >
-            <IngredientsFilter
-              ingredientIds={stateFilters.includedIngredientIds}
-              onChangeIngredients={(update) => {
-                setStateFilters((state) => ({
-                  ...state,
-                  includedIngredientIds: update(state.includedIngredientIds),
-                }));
-              }}
-            />
-          </Filter>
-
-          <Filter
-            selected={Boolean(stateFilters.excludedIngredientIds?.length)}
-            titleTranslationKey={'recipe.filters.excludedIngredients'}
-            onClear={() => {
-              setStateFilters((state) => ({
-                ...state,
-                excludedIngredientIds: undefined,
-              }));
-            }}
-          >
-            <IngredientsFilter
-              ingredientIds={stateFilters.excludedIngredientIds}
-              onChangeIngredients={(update) => {
-                setStateFilters((state) => ({
-                  ...state,
-                  excludedIngredientIds: update(state.excludedIngredientIds),
-                }));
-              }}
-            />
-          </Filter>
-
-          <Filter
-            selected={stateFilters.kcalLimit != null}
-            titleTranslationKey={'recipe.filters.kcal.title'}
-            onClear={() => {
-              setStateFilters((state) => ({
-                ...state,
-                kcalLimit: undefined,
-              }));
-            }}
-          >
-            <KcalFilter
-              kcalLimit={stateFilters.kcalLimit}
-              onChange={(kcalLimit) => {
-                setStateFilters((state) => ({
-                  ...state,
-                  kcalLimit: kcalLimit,
-                }));
-              }}
-            />
-          </Filter>
-        </div>
-
-        <div className={classes.buttons}>
-          <Button
-            variant={'ghost'}
-            color={'default'}
-            onClick={() => {
-              setStateFilters(filters);
-              onClose();
-            }}
-          >
+        <DrawerFooter>
+          <Button variant={'ghost'} color={'default'} onClick={onCancel}>
             {t('recipe.filters.cancel')}
           </Button>
 
-          <Button
-            variant={'outline'}
-            onClick={() => {
-              dispatch(
-                RecipeFiltersController.loadRecipesByFilters({
-                  filters: stateFilters,
-                }).addNextActions(() => onClose())
-              );
-            }}
-          >
+          <Button variant={'outline'} onClick={onApply}>
             {t('recipe.filters.apply')}
           </Button>
-        </div>
-      </div>
-    </div>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   );
 };
 

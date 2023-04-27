@@ -1,4 +1,5 @@
-
+@use "sass:map";
+@import '~@food-captain/client-shared/src/colors';
 
 .filter {
   padding: 12px;
@@ -6,6 +7,10 @@
   grid-template-areas: "title" "." "search" "." "selected-elements";
   grid-template-rows: auto 8px auto 16px auto;
   border-radius: 6px;
+
+  @media (min-width: 768px) {
+    width: 376px;
+  }
 
   & > div:nth-of-type(1) {
     grid-area: title;
@@ -22,6 +27,12 @@
   &.selectedFilter {
     background: #FFFFFF;
     animation: shadow-pull 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+
+    .filterTitle {
+      button {
+        visibility: visible;
+      }
+    }
   }
 }
 
@@ -48,4 +59,12 @@
   column-gap: 8px;
   justify-content: space-between;
   align-items: center;
+
+  & > p {
+    color: map.get($text, medium);
+  }
+
+  button {
+    visibility: hidden;
+  }
 }

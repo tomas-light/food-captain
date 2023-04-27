@@ -12,7 +12,7 @@
 
   &.opened {
     @media (min-width: 1280px) {
-      width: 400px;
+      width: 460px;
     }
   }
 
@@ -49,19 +49,21 @@
   visibility: hidden;
 }
 
-.filters {
-  display: flex;
-  flex-direction: column;
-  row-gap: 16px;
-  overflow-y: auto;
-  // to prevent shadows cutting when filters are overflowing
-  padding: 8px;
-  padding-right: 48px;
-}
-
 .buttons {
   display: flex;
   column-gap: 16px;
   justify-content: flex-end;
-}
 
+  @media (min-width: 320px), (max-width: 320px) {
+    padding-right: 16px;
+  }
+  @media (min-width: 480px) {
+    padding-right: 24px;
+  }
+  @media (min-width: 768px) {
+    padding-right: 36px;
+  }
+  @media (min-width: 1280px) {
+    padding-right: 48px;
+  }
+}
