@@ -124,6 +124,7 @@ const RecipesPage = () => {
 
           <IconButton
             onClick={setAreFiltersOpen.toggle}
+            title={t('recipe.filters.title') ?? ''}
             className={clsx(classes.filtersButton, {
               [classes.filtersButtonOpened]: areFiltersOpen,
               [classes.filtersButtonClosed]: !areFiltersOpen,
