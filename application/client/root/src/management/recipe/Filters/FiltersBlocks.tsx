@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import clsx from 'clsx';
 import { Icon } from '@food-captain/client-shared';
 import { CookingTimeFilter } from '~/management/recipe/Filters/CookingTimeFilter';
 import { RecipeFilters } from '~/models';
@@ -9,6 +10,7 @@ import { TagsFilter } from './TagsFilter';
 import classes from './FiltersBlocks.module.scss';
 
 type Props = {
+  className?: string;
   filters: RecipeFilters;
   setFilters: (
     setter: RecipeFilters | ((filters: RecipeFilters) => RecipeFilters)
@@ -16,10 +18,10 @@ type Props = {
 };
 
 export const FiltersBlocks: FC<Props> = (props) => {
-  const { filters, setFilters } = props;
+  const { className, filters, setFilters } = props;
 
   return (
-    <div className={classes.root}>
+    <div className={clsx(classes.root, className)}>
       <Filter
         selected={Boolean(filters.tagIds?.length)}
         titleTranslationKey={'recipe.filters.includedTags'}

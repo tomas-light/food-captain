@@ -55,6 +55,14 @@ export default class RecipeApiController extends BaseApiController {
     return this.ok(recipes);
   }
 
+  @post('recipes-by-filter/random')
+  async getRandomRecipeByFilterAsync(filters: RecipeFilters) {
+    const recipe = await this.recipeService.getRandomRecipeByFilterAsync(
+      filters
+    );
+    return this.ok(recipe);
+  }
+
   @get('recipe/:recipeId')
   async getByIdAsync(recipeId: string) {
     const id = parseInt(recipeId, 10);

@@ -39,18 +39,48 @@ class RecipeFiltersController extends RecipeBaseController {
       return;
     }
 
+    const { recipesMap } = this.getState().recipe;
+    const updatedRecipesMap = new Map(recipesMap);
+
     const filteredRecipesMap = new Map<Recipe['id'], Recipe>();
-    response.data.forEach((recipe) => {
-      filteredRecipesMap.set(
-        recipe.id,
-        this.mapRecipeDescriptionDtoToDescription(recipe)
-      );
+    response.data.forEach((recipeDto) => {
+      const recipe = this.mapRecipeDescriptionDtoToDescription(recipeDto);
+      filteredRecipesMap.set(recipeDto.id, recipe);
+      updatedRecipesMap.set(recipeDto.id, recipe);
     });
 
     this.updateStore({
+      recipesMap: updatedRecipesMap,
       filteredRecipesAreLoading: false,
       filteredRecipesMap: filteredRecipesMap,
       filters,
+    });
+  }
+
+  @watch
+  async loadRandomRecipeByFilters(action: Action<{ filters: RecipeFilters }>) {
+    this.updateStore({
+      randomRecipe: null,
+      randomRecipeIsLoading: true,
+    });
+    const { filters } = action.payload;
+
+    const response = await this.recipeApi.getRandomRecipeByFilterAsync(filters);
+    if (response.isFailed() || !response.data) {
+      this.updateStore({
+        randomRecipeIsLoading: false,
+      });
+
+      return;
+    }
+
+    const randomRecipe = this.mapRecipeDescriptionDtoToDescription(
+      response.data
+    );
+
+    this.updateStore({
+      randomRecipeIsLoading: false,
+      randomRecipe: randomRecipe,
     });
   }
 
