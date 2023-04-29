@@ -20,6 +20,13 @@ export class RecipeApi extends ApiBase {
     return this.post<RecipeForViewDto[]>('recipes-by-filter', filters);
   }
 
+  async getRandomRecipeByFilterAsync(filters: RecipeFiltersDto) {
+    return this.post<RecipeForViewDto | undefined>(
+      'recipes-by-filter/random',
+      filters
+    );
+  }
+
   async getMaxKcalAsync() {
     return this.get<{ maxKcal: RecipeDto['kcal'] | undefined }>(
       'recipes/max-kcal'

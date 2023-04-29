@@ -17,6 +17,7 @@ import { ImageApi } from '@food-captain/client-api';
 import { useLocaleResource } from '~/config/i18next';
 import { useTranslation } from '~/config/i18next/TranslationContext';
 import { useSelector } from '~/config/redux/useSelector';
+import { IngredientController } from '~/management/ingredient/redux';
 import { Filters } from '~/management/recipe/Filters';
 import { selectFilteredRecipes } from '~/management/recipe/redux/recipeSelectors';
 import { SortEnum } from '~/management/recipe/SortEnum';
@@ -40,6 +41,13 @@ const RecipesPage = () => {
   const navigate = useNavigate();
 
   useLocaleResource('recipe');
+  useLocaleResource('ingredient');
+
+  useEffect(() => {
+    dispatch(IngredientController.loadIngredients());
+    dispatch(IngredientController.loadDimensions());
+    dispatch(RecipeController.loadTags());
+  }, []);
 
   const [searchString, setSearchString] = useState('');
   const [sortAscending, setSortAscending] = useState(true);

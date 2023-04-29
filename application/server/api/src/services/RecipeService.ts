@@ -33,6 +33,12 @@ export class RecipeService {
     return this.db.recipe.filterAsync(...args);
   }
 
+  getRandomRecipeByFilterAsync(
+    ...args: Parameters<Database['recipe']['takeRandomRecipeByFiltersAsync']>
+  ) {
+    return this.db.recipe.takeRandomRecipeByFiltersAsync(...args);
+  }
+
   getByIdAsync(...args: Parameters<Database['recipe']['byIdAsync']>) {
     return this.db.recipe.byIdAsync(...args);
   }

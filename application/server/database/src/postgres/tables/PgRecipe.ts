@@ -36,6 +36,12 @@ export class PgRecipe extends PgTableBase<RecipeEntity> implements RecipeTable {
           _recipe.*, 
           _recipe_tag.${keyOf<RecipeTagEntity>('tag_id')}, 
           _ingredient_in_recipe.*
+        ${this.prepareJoinsForQueryForView()}
+    `;
+  }
+
+  private prepareJoinsForQueryForView() {
+    return `
         FROM ${this.table} _recipe 
         LEFT JOIN ${
           PgIngredientInRecipe.table
@@ -68,68 +74,7 @@ export class PgRecipe extends PgTableBase<RecipeEntity> implements RecipeTable {
   filterAsync = async (
     filters: RecipeFilters
   ): Promise<RecipeForViewEntity[]> => {
-    const conditions: string[] = [];
-    const values: any[] = [];
-
-    if (<keyof RecipeFilters>'tagIds' in filters) {
-      values.push(filters.tagIds);
-      conditions.push(`
-        _recipe.${keyOf<RecipeEntity>('id')} in (
-            select ${PgRecipeTag.table}.${keyOf<RecipeTagEntity>('recipe_id')}
-            from ${PgRecipeTag.table}
-            where ${PgRecipeTag.table}.${keyOf<RecipeTagEntity>('tag_id')}
-              = ANY($${values.length}::int4[])
-          )
-      `);
-    }
-
-    if (<keyof RecipeFilters>'excludedIngredientIds' in filters) {
-      values.push(filters.excludedIngredientIds);
-      conditions.push(`
-        _recipe.${keyOf<RecipeEntity>('id')} not in (
-            select ${
-              PgIngredientInRecipe.table
-            }.${keyOf<IngredientInRecipeEntity>('recipe_id')}
-            from ${PgIngredientInRecipe.table}
-            where ${
-              PgIngredientInRecipe.table
-            }.${keyOf<IngredientInRecipeEntity>('ingredient_id')}
-              = ANY($${values.length}::int4[])
-          )
-      `);
-    }
-
-    if (<keyof RecipeFilters>'includedIngredientIds' in filters) {
-      values.push(filters.includedIngredientIds);
-      conditions.push(`
-        _recipe.${keyOf<RecipeEntity>('id')} in (
-            select ${
-              PgIngredientInRecipe.table
-            }.${keyOf<IngredientInRecipeEntity>('recipe_id')}
-            from ${PgIngredientInRecipe.table}
-            where ${
-              PgIngredientInRecipe.table
-            }.${keyOf<IngredientInRecipeEntity>('ingredient_id')}
-              = ANY($${values.length}::int4[])
-          )
-      `);
-    }
-
-    if (<keyof RecipeFilters>'kcalLimit' in filters) {
-      values.push(filters.kcalLimit);
-      conditions.push(`
-        _recipe.${keyOf<RecipeEntity>('kcal')} <= $${values.length}
-      `);
-    }
-
-    if (<keyof RecipeFilters>'cookingTimeLimit' in filters) {
-      values.push(filters.cookingTimeLimit);
-      conditions.push(`
-        _recipe.${keyOf<RecipeEntity>('cooking_time_in_minutes')} <= $${
-        values.length
-      }
-      `);
-    }
+    const { values, conditions } = this.buildFiltersSql(filters);
 
     const queryConfig: QueryConfig = {
       text: `
@@ -141,6 +86,106 @@ export class PgRecipe extends PgTableBase<RecipeEntity> implements RecipeTable {
     };
 
     return await this.getRecipeForViewEntitiesByQuery(queryConfig);
+  };
+
+  private buildFiltersSql(filters: RecipeFilters) {
+    const conditions: string[] = [];
+    const values: any[] = [];
+
+    if (<keyof RecipeFilters>'tagIds' in filters) {
+      values.push(filters.tagIds);
+      conditions.push(`_recipe.${keyOf<RecipeEntity>('id')} in (
+        select ${PgRecipeTag.table}.${keyOf<RecipeTagEntity>('recipe_id')}
+        from ${PgRecipeTag.table}
+        where ${PgRecipeTag.table}.${keyOf<RecipeTagEntity>('tag_id')}
+          = ANY($${values.length}::int4[])
+      )`);
+    }
+
+    if (<keyof RecipeFilters>'excludedIngredientIds' in filters) {
+      values.push(filters.excludedIngredientIds);
+      conditions.push(`_recipe.${keyOf<RecipeEntity>('id')} not in (
+        select ${PgIngredientInRecipe.table}.${keyOf<IngredientInRecipeEntity>(
+        'recipe_id'
+      )}
+        from ${PgIngredientInRecipe.table}
+        where ${PgIngredientInRecipe.table}.${keyOf<IngredientInRecipeEntity>(
+        'ingredient_id'
+      )}
+          = ANY($${values.length}::int4[])
+      )`);
+    }
+
+    if (<keyof RecipeFilters>'includedIngredientIds' in filters) {
+      values.push(filters.includedIngredientIds);
+      conditions.push(`_recipe.${keyOf<RecipeEntity>('id')} in (
+        select ${PgIngredientInRecipe.table}.${keyOf<IngredientInRecipeEntity>(
+        'recipe_id'
+      )}
+        from ${PgIngredientInRecipe.table}
+        where ${PgIngredientInRecipe.table}.${keyOf<IngredientInRecipeEntity>(
+        'ingredient_id'
+      )}
+          = ANY($${values.length}::int4[])
+      )`);
+    }
+
+    if (<keyof RecipeFilters>'kcalLimit' in filters) {
+      values.push(filters.kcalLimit);
+      conditions.push(
+        `_recipe.${keyOf<RecipeEntity>('kcal')} <= $${values.length}`
+      );
+    }
+
+    if (<keyof RecipeFilters>'cookingTimeLimit' in filters) {
+      values.push(filters.cookingTimeLimit);
+      conditions.push(
+        `_recipe.${keyOf<RecipeEntity>('cooking_time_in_minutes')} <= $${
+          values.length
+        }`
+      );
+    }
+
+    return { values, conditions };
+  }
+
+  takeRandomRecipeByFiltersAsync = async (
+    filters: RecipeFilters
+  ): Promise<RecipeForViewEntity | undefined> => {
+    const { values, conditions } = this.buildFiltersSql(filters);
+
+    conditions.push(`_recipe.${keyOf<RecipeEntity>('id')} in (
+      select r.${keyOf<RecipeEntity>('id')}
+      from ${this.table} r
+      limit 1
+      offset (
+        select (
+          floor(
+            random() * (
+              select count(*)
+              from public.recipe r
+              where r.id in (
+                select _recipe.id
+                ${this.prepareJoinsForQueryForView()}
+                ${
+                  conditions.length === 0
+                    ? ''
+                    : `where ${conditions.join(' and ')}`
+                }
+              )
+            ) + 1
+          )
+        )::int - 1
+      )
+    )`);
+
+    const queryConfig: QueryConfig = {
+      text: `${this.prepareQueryForView()} where ${conditions.join(' and ')};`,
+      values,
+    };
+
+    const recipes = await this.getRecipeForViewEntitiesByQuery(queryConfig);
+    return recipes[0];
   };
 
   findMaxKcalAsync = async (): Promise<RecipeEntity['kcal'] | undefined> => {

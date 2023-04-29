@@ -23,6 +23,9 @@ export interface RecipeFilters {
 export interface RecipeTable {
   allAsync(): Promise<RecipeForViewEntity[]>;
   filterAsync(filters: RecipeFilters): Promise<RecipeForViewEntity[]>;
+  takeRandomRecipeByFiltersAsync(
+    filters: RecipeFilters
+  ): Promise<RecipeForViewEntity | undefined>;
 
   findMaxKcalAsync(): Promise<RecipeEntity['kcal'] | undefined>;
   findMaxCookingTimeAsync(): Promise<

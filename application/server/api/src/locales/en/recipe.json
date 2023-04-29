@@ -57,6 +57,7 @@
         "title": "Cooking time",
         "remark": "minutes"
       }
-    }
+    },
+    "takeRandom": "random recipe"
   }
 }

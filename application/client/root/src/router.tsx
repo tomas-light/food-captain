@@ -14,6 +14,7 @@ import { EditIngredientPage } from '~/management/ingredient/EditIngredientPage';
 import { IngredientsPage } from '~/management/ingredient/IngredientsPage';
 import { AddRecipePage } from '~/management/recipe/AddRecipePage';
 import { EditRecipePage } from '~/management/recipe/EditRecipePage';
+import { RandomRecipePage } from '~/management/recipe/RandomRecipePage';
 import { RecipeDetailsPage } from '~/management/recipe/RecipeDetailsPage';
 import { RecipesPage } from './management/recipe/RecipesPage';
 import { appUrls } from './routing/appUrls';
@@ -86,7 +87,7 @@ export const router = createBrowserRouter(
       </Route>
 
       <Route path={appUrls.randomizer.relativeUrl()}>
-        <Route index element={<p>Randomizer page</p>} />
+        <Route index element={<RandomRecipePage />} />
       </Route>
 
       <Route path="*" element={<FallbackRedirect />} />

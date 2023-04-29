@@ -9,6 +9,9 @@ export class RecipeStore {
   filteredRecipesAreLoading: boolean;
   filteredRecipesMap: Map<Recipe['id'], Recipe>;
 
+  randomRecipeIsLoading: boolean;
+  randomRecipe: Recipe | null;
+
   maxKcalIsLoading: boolean;
   maxKcal: Recipe['kcal'] | undefined;
 
@@ -27,6 +30,9 @@ export class RecipeStore {
     this.filters = store?.filters ?? {};
     this.filteredRecipesAreLoading = false;
     this.filteredRecipesMap = store?.filteredRecipesMap ?? new Map();
+
+    this.randomRecipeIsLoading = false;
+    this.randomRecipe = store?.randomRecipe ?? null;
 
     this.maxKcalIsLoading = false;
     this.maxKcal = store?.maxKcal;
