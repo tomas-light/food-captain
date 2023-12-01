@@ -7,11 +7,11 @@
     "db:docker:run": "docker compose up"
   },
   "dependencies": {
-    "@food-captain/server-utils": "0.0.0",
-    "pg": "8.10.0"
+    "@food-captain/server-utils": "workspace:^",
+    "pg": "8.11.3"
   },
   "devDependencies": {
-    "@types/pg": "8.6.6",
-    "cheap-di": "3.4.0-alpha-0.1"
+    "@types/pg": "8.10.9",
+    "cheap-di": "4.0.0-rc-6"
   }
 }
