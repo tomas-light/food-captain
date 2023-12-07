@@ -18,7 +18,7 @@ import {
 } from '~/config/i18next/TranslationContext';
 import { Layout } from '~/Layout';
 import { RegisterNavigationInDI } from '~/routing/RegisterNavigationInDI';
-import { configureRedux } from './config/redux';
+import { configureRedux } from '~State';
 
 const dayjsAdapter = new DayjsAdapter(); // todo: share with Chakra UI ?
 configureTranslation();
@@ -36,7 +36,7 @@ const App: FC<{ children: ReactElement }> = (props) => {
 
       const { container } = _config;
 
-      container.registerType(ApiInterceptor).with(
+      container.registerImplementation(ApiInterceptor).inject(
         (request: LoggedApiRequest): void => {
           // console.log('[API] request', request);
         },

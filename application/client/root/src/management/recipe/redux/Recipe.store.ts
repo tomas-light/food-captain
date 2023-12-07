@@ -1,6 +1,7 @@
-import { createReducer } from 'redux-controller-middleware';
+import { storeSlice } from 'redux-controller-middleware';
 import { NewRecipe, Recipe, RecipeFilters, Tag } from '~/models';
 
+@storeSlice
 export class RecipeStore {
   recipesAreLoading: boolean;
   recipesMap: Map<Recipe['id'], Recipe>;
@@ -45,7 +46,4 @@ export class RecipeStore {
 
     this.editedRecipe = store?.editedRecipe ?? null;
   }
-
-  static update = 'RECIPE_update_store';
-  static reducer = createReducer(new RecipeStore(), RecipeStore.update);
 }

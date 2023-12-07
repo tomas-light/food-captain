@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { api, get } from 'mvc-middleware';
 import { Logger } from '@food-captain/server-utils';
-import BaseApiController from './BaseApiController';
+import { BaseApiController } from '../base/BaseApiController';
 
 const LOCALE_REGION_SEPARATOR = '-';
 const supportedLocales = ['ru', 'en'];

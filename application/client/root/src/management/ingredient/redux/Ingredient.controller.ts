@@ -1,17 +1,18 @@
+import type { Action } from 'redux-controller-middleware';
 import {
+  controller,
   ControllerBase,
-  createAction,
   Middleware,
-  watch,
+  reducer,
+  updateStoreSlice,
   WatchedController,
 } from 'redux-controller-middleware';
-import type { Action } from 'redux-controller-middleware';
 import { DimensionApi, IngredientApi } from '@food-captain/client-api';
 import { Dimension, Ingredient, NewIngredient } from '~/models';
 import { IngredientStore } from './Ingredient.store';
 import { State } from '~State';
 
-@watch
+@controller
 class IngredientController extends ControllerBase<State> {
   constructor(
     middleware: Middleware<State>,
@@ -22,10 +23,10 @@ class IngredientController extends ControllerBase<State> {
   }
 
   private updateStore(partialStore: Partial<IngredientStore>) {
-    this.dispatch(createAction(IngredientStore.update, partialStore));
+    this.dispatch(updateStoreSlice(IngredientStore)(partialStore));
   }
 
-  @watch
+  @reducer
   async loadIngredients() {
     this.updateStore({ ingredientsAreLoading: true });
 
@@ -54,7 +55,7 @@ class IngredientController extends ControllerBase<State> {
     });
   }
 
-  @watch
+  @reducer
   async loadDimensions() {
     this.updateStore({ dimensionsAreLoading: true });
 
@@ -83,7 +84,7 @@ class IngredientController extends ControllerBase<State> {
     });
   }
 
-  @watch
+  @reducer
   async addIngredient(
     action: Action<{
       ingredient: NewIngredient;
@@ -110,7 +111,7 @@ class IngredientController extends ControllerBase<State> {
     callback?.(response.data);
   }
 
-  @watch
+  @reducer
   async updateIngredient(
     action: Action<{ ingredient: Ingredient; callback?: () => void }>
   ) {
@@ -134,7 +135,7 @@ class IngredientController extends ControllerBase<State> {
     callback?.();
   }
 
-  @watch
+  @reducer
   async removeIngredient(
     action: Action<{ ingredientId: Ingredient['id']; callback?: () => void }>
   ) {

@@ -3,11 +3,13 @@ import {
   IngredientEntity,
   NewIngredientEntity,
 } from '@food-captain/database';
-import { Logger, metadata } from '@food-captain/server-utils';
+import { Logger } from '@food-captain/server-utils';
 
-@metadata
 export class IngredientService {
-  constructor(private readonly db: Database, private readonly logger: Logger) {}
+  constructor(
+    private readonly db: Database,
+    private readonly logger: Logger
+  ) {}
 
   getAllAsync(...args: Parameters<Database['ingredient']['allAsync']>) {
     return this.db.ingredient.allAsync(...args);
@@ -60,9 +62,8 @@ export class IngredientService {
   async addMultipleAsync(newIngredients: NewIngredientEntity[]) {
     const ingredients = newIngredients as IngredientEntity[];
 
-    const ingredientIds = await this.db.ingredient.insertMultipleAsync(
-      newIngredients
-    );
+    const ingredientIds =
+      await this.db.ingredient.insertMultipleAsync(newIngredients);
     if (ingredientIds == null) {
       this.logger.warning(
         `Ingredients are not inserted in DB (ingredient ids are ${

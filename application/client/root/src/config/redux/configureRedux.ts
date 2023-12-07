@@ -7,10 +7,14 @@ import {
   Middleware as ReduxMiddleware,
   MiddlewareAPI,
 } from 'redux';
-import { controllerMiddleware, InferState } from 'redux-controller-middleware';
 import {
-  DeviceStorage,
+  controllerMiddleware,
+  getReducersFromStoreSlices,
+  InferState,
+} from 'redux-controller-middleware';
+import {
   debounce,
+  DeviceStorage,
   parseState,
   stringifyState,
 } from '@food-captain/client-utils';
@@ -41,11 +45,11 @@ export const persistedState = {
 };
 
 function makeReducers() {
-  return {
-    appInitializer: AppInitializerStore.reducer,
-    ingredient: IngredientStore.reducer,
-    recipe: RecipeStore.reducer,
-  };
+  return getReducersFromStoreSlices({
+    appInitializer: AppInitializerStore,
+    ingredient: IngredientStore,
+    recipe: RecipeStore,
+  });
 }
 
 export type State = InferState<ReturnType<typeof makeReducers>>;

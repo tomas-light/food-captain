@@ -1,8 +1,9 @@
 import type { Action } from 'redux-controller-middleware';
 import {
-  createAction,
+  controller,
   Middleware,
-  watch,
+  reducer,
+  updateStoreSlice,
   WatchedController,
 } from 'redux-controller-middleware';
 import { RecipeApi } from '@food-captain/client-api';
@@ -11,7 +12,7 @@ import { RecipeStore } from './Recipe.store';
 import { RecipeBaseController } from './RecipeBase.controller';
 import { State } from '~State';
 
-@watch
+@controller
 class RecipeFiltersController extends RecipeBaseController {
   constructor(
     middleware: Middleware<State>,
@@ -21,10 +22,10 @@ class RecipeFiltersController extends RecipeBaseController {
   }
 
   private updateStore(partialStore: Partial<RecipeStore>) {
-    this.dispatch(createAction(RecipeStore.update, partialStore));
+    this.dispatch(updateStoreSlice(RecipeStore)(partialStore));
   }
 
-  @watch
+  @reducer
   async loadRecipesByFilters(action: Action<{ filters: RecipeFilters }>) {
     this.updateStore({ filteredRecipesAreLoading: true });
     const { filters } = action.payload;
@@ -57,7 +58,7 @@ class RecipeFiltersController extends RecipeBaseController {
     });
   }
 
-  @watch
+  @reducer
   async loadRandomRecipeByFilters(action: Action<{ filters: RecipeFilters }>) {
     this.updateStore({
       randomRecipe: null,
@@ -84,7 +85,7 @@ class RecipeFiltersController extends RecipeBaseController {
     });
   }
 
-  @watch
+  @reducer
   async loadMaxKcal() {
     this.updateStore({
       maxKcalIsLoading: true,
@@ -105,7 +106,7 @@ class RecipeFiltersController extends RecipeBaseController {
     });
   }
 
-  @watch
+  @reducer
   async loadMaxCookingTime() {
     this.updateStore({
       maxCookingTimeIsLoading: true,

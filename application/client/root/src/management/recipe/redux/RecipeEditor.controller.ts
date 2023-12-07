@@ -1,8 +1,9 @@
 import type { Action } from 'redux-controller-middleware';
 import {
-  createAction,
+  controller,
   Middleware,
-  watch,
+  reducer,
+  updateStoreSlice,
   WatchedController,
 } from 'redux-controller-middleware';
 import { NewRecipe, Recipe } from '~/models';
@@ -11,17 +12,17 @@ import { RecipeStore } from './Recipe.store';
 import { RecipeBaseController } from './RecipeBase.controller';
 import { State } from '~State';
 
-@watch
+@controller
 class RecipeEditorController extends RecipeBaseController {
   constructor(middleware: Middleware<State>) {
     super(middleware);
   }
 
   private updateStore(partialStore: Partial<RecipeStore>) {
-    this.dispatch(createAction(RecipeStore.update, partialStore));
+    this.dispatch(updateStoreSlice(RecipeStore)(partialStore));
   }
 
-  @watch
+  @reducer
   startEditingNewRecipe() {
     const { editedRecipe } = this.getState().recipe;
 
@@ -43,7 +44,7 @@ class RecipeEditorController extends RecipeBaseController {
     });
   }
 
-  @watch
+  @reducer
   async startEditingRecipe(action: Action<{ recipeId: Recipe['id'] }>) {
     const { recipeId } = action.payload;
 
@@ -74,7 +75,7 @@ class RecipeEditorController extends RecipeBaseController {
     });
   }
 
-  @watch
+  @reducer
   resetDraft(action: Action<{ mode: 'create' | 'edit' }>) {
     const { mode } = action.payload;
 
@@ -103,7 +104,7 @@ class RecipeEditorController extends RecipeBaseController {
     }
   }
 
-  @watch
+  @reducer
   onChangeEditedRecipe(
     action: Action<{ updates: (recipe: NewRecipe) => Partial<NewRecipe> }>
   ) {

@@ -5,7 +5,6 @@
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
-    "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -18,6 +17,7 @@
     "strictNullChecks": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ESNext"
+    "target": "ESNext",
+    "useDefineForClassFields": false
   }
 }

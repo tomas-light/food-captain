@@ -3,7 +3,7 @@ import { api, delete_, get, post, put } from 'mvc-middleware';
 import { IngredientEntity, NewIngredientEntity } from '@food-captain/database';
 import { Logger } from '@food-captain/server-utils';
 import { IngredientService } from '../services/IngredientService';
-import BaseApiController from './BaseApiController';
+import { BaseApiController } from '../base/BaseApiController';
 
 @api
 export default class IngredientApiController extends BaseApiController {
@@ -24,9 +24,8 @@ export default class IngredientApiController extends BaseApiController {
 
   @post('ingredients-by-ids')
   async getManyAsync(ingredientIds: IngredientEntity['id'][]) {
-    const ingredients = await this.ingredientService.getManyAsync(
-      ingredientIds
-    );
+    const ingredients =
+      await this.ingredientService.getManyAsync(ingredientIds);
     return this.ok(ingredients);
   }
 
@@ -60,17 +59,15 @@ export default class IngredientApiController extends BaseApiController {
 
   @post('ingredient')
   async addAsync(newIngredient: NewIngredientDto) {
-    const createdIngredient = await this.ingredientService.addAsync(
-      newIngredient
-    );
+    const createdIngredient =
+      await this.ingredientService.addAsync(newIngredient);
     return this.ok(createdIngredient);
   }
 
   @put('ingredient/:ingredientId')
   async updateAsync(ingredientId: string, ingredient: IngredientDto) {
-    const updatedIngredient = await this.ingredientService.updateAsync(
-      ingredient
-    );
+    const updatedIngredient =
+      await this.ingredientService.updateAsync(ingredient);
     if (!updatedIngredient) {
       return this.notFound('Ingredient not found');
     }

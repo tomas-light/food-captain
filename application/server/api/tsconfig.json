@@ -2,6 +2,14 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "resolveJsonModule": true,
-    "emitDecoratorMetadata": true
+    "plugins": [
+      {
+        "transform": "cheap-di-ts-transform",
+        "debug": true
+      }
+    ]
+  },
+  "ts-node": {
+    "compiler": "ts-patch/compiler"
   }
 }

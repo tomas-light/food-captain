@@ -1,5 +1,5 @@
 import { api, get, post } from 'mvc-middleware';
-import BaseApiController from './BaseApiController';
+import { BaseApiController } from '../base/BaseApiController';
 
 @api
 export default class CheckApiController extends BaseApiController {

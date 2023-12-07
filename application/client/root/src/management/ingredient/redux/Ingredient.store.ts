@@ -1,6 +1,7 @@
-import { createReducer } from 'redux-controller-middleware';
+import { storeSlice } from 'redux-controller-middleware';
 import { Dimension, Ingredient } from '~/models';
 
+@storeSlice
 export class IngredientStore {
   ingredientsAreLoading: boolean;
   ingredientsMap: Map<Ingredient['id'] | null | undefined, Ingredient>;
@@ -15,7 +16,4 @@ export class IngredientStore {
     this.dimensionsAreLoading = false;
     this.dimensionsMap = store?.dimensionsMap ?? new Map();
   }
-
-  static update = 'INGREDIENT_update_store';
-  static reducer = createReducer(new IngredientStore(), IngredientStore.update);
 }

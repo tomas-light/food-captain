@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { api, delete_, get, post, put } from 'mvc-middleware';
+import { api, delete_, get, post } from 'mvc-middleware';
 import { Logger } from '@food-captain/server-utils';
 import { MenuService } from '../services/MenuService';
-import BaseApiController from './BaseApiController';
+import { BaseApiController } from '../base/BaseApiController';
 import { RecipeDto } from './RecipeApiController';
 
 @api
