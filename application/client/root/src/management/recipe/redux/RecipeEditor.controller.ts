@@ -6,11 +6,11 @@ import {
   updateStoreSlice,
   WatchedController,
 } from 'redux-controller-middleware';
-import { NewRecipe, Recipe } from '~/models';
+import { State } from '../../../config/redux/index';
+import { NewRecipe, Recipe } from '../../../models/index';
 import { RecipeController } from './Recipe.controller';
 import { RecipeStore } from './Recipe.store';
 import { RecipeBaseController } from './RecipeBase.controller';
-import { State } from '~State';
 
 @controller
 class RecipeEditorController extends RecipeBaseController {

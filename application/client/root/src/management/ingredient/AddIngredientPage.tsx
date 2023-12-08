@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useLocaleResource } from '~/config/i18next';
-import { Ingredient, NewIngredient } from '~/models';
-import { appUrls } from '~/routing';
+import { Ingredient, NewIngredient } from '../../models';
+import { useLocaleResource } from '../../config/i18next';
+import { appUrls } from '../../routing';
 import { IngredientPageTemplate } from './IngredientPageTemplate';
 import { IngredientController } from './redux/Ingredient.controller';
 

@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { SortEnum } from '~/management/recipe/SortEnum';
-import { Recipe } from '~/models';
-import { State } from '~State';
+import { SortEnum } from '../SortEnum';
+import { Recipe } from '../../../models/index';
+import { State } from '../../../config/redux/index';
 
 const sortValueToPropertyMap = {
   [SortEnum.ByName]: 'name',

@@ -10,15 +10,15 @@ import {
   LoggedApiRequest,
   LoggedApiResponse,
 } from '@food-captain/client-api';
-import { AppInitializer } from '~/appInitializer';
-import { configureTranslation } from '~/config/i18next';
+import { configureTranslation } from './config/i18next';
+import { configureRedux } from './config/redux';
 import {
-  TranslationContext,
   TranslationContextType,
-} from '~/config/i18next/TranslationContext';
-import { Layout } from '~/Layout';
-import { RegisterNavigationInDI } from '~/routing/RegisterNavigationInDI';
-import { configureRedux } from '~State';
+  TranslationContext,
+} from './config/i18next/TranslationContext';
+import { AppInitializer } from './appInitializer';
+import { Layout } from './Layout';
+import { RegisterNavigationInDI } from './routing/RegisterNavigationInDI';
 
 const dayjsAdapter = new DayjsAdapter(); // todo: share with Chakra UI ?
 configureTranslation();

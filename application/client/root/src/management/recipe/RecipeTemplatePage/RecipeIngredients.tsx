@@ -13,10 +13,10 @@ import {
   Typography,
 } from '@food-captain/client-shared';
 import { ImageApi } from '@food-captain/client-api';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { useSelector } from '~/config/redux/useSelector';
-import { AddIngredientPage } from '~/management/ingredient/AddIngredientPage';
-import { Ingredient, RecipeIngredient } from '~/models';
+import { Ingredient, RecipeIngredient } from '../../../models';
+import { useTranslation } from '../../../config/i18next/TranslationContext';
+import { useSelector } from '../../../config/redux/useSelector';
+import { AddIngredientPage } from '../../ingredient/AddIngredientPage';
 import { IngredientsModal, IngredientsModalRef } from './IngredientsModal';
 import classes from './RecipeIngredients.module.scss';
 

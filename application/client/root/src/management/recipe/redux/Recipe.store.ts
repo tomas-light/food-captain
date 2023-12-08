@@ -1,5 +1,5 @@
 import { storeSlice } from 'redux-controller-middleware';
-import { NewRecipe, Recipe, RecipeFilters, Tag } from '~/models';
+import { NewRecipe, Recipe, RecipeFilters, Tag } from '../../../models/index';
 
 @storeSlice
 export class RecipeStore {

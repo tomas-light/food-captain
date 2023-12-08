@@ -3,8 +3,8 @@ import clsx from 'clsx';
 import { FC, useMemo } from 'react';
 import { RecipeDto, RecipeTagDto } from '@food-captain/api';
 import { Icon, Typography } from '@food-captain/client-shared';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { useSelector } from '~/config/redux/useSelector';
+import { useTranslation } from '../../config/i18next/TranslationContext';
+import { useSelector } from '../../config/redux/useSelector';
 import { colorSchemesMap } from './constants';
 import classes from './RecipeStats.module.scss';
 

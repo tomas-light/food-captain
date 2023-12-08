@@ -3,7 +3,7 @@ import { makeBaseConfig } from './config.base';
 
 async function makeProdConfig() {
   const baseConfig = await makeBaseConfig();
-  return merge(baseConfig('production'), {
+  return merge(baseConfig('development'), {
     optimization: {
       minimize: true,
       chunkIds: 'named',

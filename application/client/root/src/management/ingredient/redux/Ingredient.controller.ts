@@ -8,9 +8,9 @@ import {
   WatchedController,
 } from 'redux-controller-middleware';
 import { DimensionApi, IngredientApi } from '@food-captain/client-api';
-import { Dimension, Ingredient, NewIngredient } from '~/models';
+import { State } from '../../../config/redux/index';
+import { Dimension, Ingredient, NewIngredient } from '../../../models/index';
 import { IngredientStore } from './Ingredient.store';
-import { State } from '~State';
 
 @controller
 class IngredientController extends ControllerBase<State> {

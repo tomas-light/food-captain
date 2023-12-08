@@ -1,8 +1,8 @@
 import { ControllerBase } from 'redux-controller-middleware';
 import { NewRecipeDto } from '@food-captain/api';
 import { guid } from '@food-captain/client-utils';
-import { NewRecipe } from '~/models';
-import { State } from '~State';
+import { State } from '../../../config/redux/index';
+import { NewRecipe } from '../../../models/index';
 
 export class RecipeBaseController extends ControllerBase<State> {
   protected mapRecipeDescriptionToDescriptionDto<T extends NewRecipe>(

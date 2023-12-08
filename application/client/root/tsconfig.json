@@ -1,10 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "~State": ["src/config/redux/index"],
-      "~/*": ["src/*"]
-    }
+    "experimentalDecorators": true, // we use decorators from redux-controller-middleware, and ts-loader still does not support stage 3 decorators
+    "baseUrl": "src"
   }
 }

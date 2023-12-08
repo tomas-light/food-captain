@@ -8,10 +8,10 @@ import {
 } from 'redux-controller-middleware';
 import { RecipeApi, TagApi } from '@food-captain/client-api';
 import { RecipeForViewDto } from '@food-captain/api';
-import { NewTag, Recipe, Tag } from '~/models';
+import { State } from '../../../config/redux/index';
+import { NewTag, Recipe, Tag } from '../../../models';
 import { RecipeStore } from './Recipe.store';
 import { RecipeBaseController } from './RecipeBase.controller';
-import { State } from '~State';
 
 @controller
 class RecipeController extends RecipeBaseController {

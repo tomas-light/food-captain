@@ -3,8 +3,8 @@ import clsx from 'clsx';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { Icon, IconButton, TextField } from '@food-captain/client-shared';
 import { guid } from '@food-captain/client-utils';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { Recipe, RecipeDescriptionBlock } from '~/models';
+import { Recipe, RecipeDescriptionBlock } from '../../../../models';
+import { useTranslation } from '../../../../config/i18next/TranslationContext';
 import { DescriptionBlock, DescriptionBlockProps } from './DescriptionBlock';
 import classes from './RecipeDescription.module.scss';
 

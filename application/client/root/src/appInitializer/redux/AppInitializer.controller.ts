@@ -8,7 +8,7 @@ import {
   WatchedController,
 } from 'redux-controller-middleware';
 import { DeviceStorage } from '@food-captain/client-utils';
-import { persistedState, State } from '~/config/redux';
+import { persistedState, State } from '../../config/redux/index';
 import { AppInitializerStore } from './AppInitializer.store';
 
 @controller

@@ -2,10 +2,10 @@ import { Badge, CloseButton } from '@chakra-ui/react';
 import clsx from 'clsx';
 import { FC, useMemo, useState } from 'react';
 import { Option, SelectField } from '@food-captain/client-shared';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { useSelector } from '~/config/redux/useSelector';
-import { colorSchemesMap, tagsColors } from '~/management/recipe/constants';
-import { NewTag, RecipeTag, Tag } from '~/models';
+import { NewTag, RecipeTag, Tag } from '../../../models';
+import { useTranslation } from '../../../config/i18next/TranslationContext';
+import { useSelector } from '../../../config/redux/useSelector';
+import { colorSchemesMap, tagsColors } from '../constants';
 import classes from './RecipeTags.module.scss';
 
 type Props = {

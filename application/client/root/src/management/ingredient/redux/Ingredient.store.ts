@@ -1,5 +1,5 @@
 import { storeSlice } from 'redux-controller-middleware';
-import { Dimension, Ingredient } from '~/models';
+import { Dimension, Ingredient } from '../../../models/index';
 
 @storeSlice
 export class IngredientStore {

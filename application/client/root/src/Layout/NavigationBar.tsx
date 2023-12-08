@@ -1,13 +1,13 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 import { useContext, useEffect, useMemo } from 'react';
 import { matchPath, NavLink, useLocation } from 'react-router-dom';
-import { useLocaleResource } from '~/config/i18next';
-import { useTranslation } from '~/config/i18next/TranslationContext';
+import { useTranslation } from '../config/i18next/TranslationContext';
+import { useLocaleResource } from '../config/i18next';
+import { appUrlTranslationKey } from '../routing';
 import {
   makeDocumentTitle,
   NavigationBarContext,
-} from '~/Layout/NavigationBarContext';
-import { appUrlTranslationKey } from '~/routing';
+} from './NavigationBarContext';
 import classes from './NavigationBar.module.scss';
 
 // my/page/subpage

@@ -1,10 +1,10 @@
 import { FC, ReactNode, useState } from 'react';
-import { NavigationBar } from '~/Layout/NavigationBar';
-import {
-  NavigationBarContext,
-  NavigationBarContextType,
-} from '~/Layout/NavigationBarContext';
 import { NavigationPanel } from './NavigationPanel';
+import {
+  NavigationBarContextType,
+  NavigationBarContext,
+} from './NavigationBarContext';
+import { NavigationBar } from './NavigationBar';
 import classes from './Layout.module.scss';
 
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {

@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { State } from '~State';
+import { State } from '../../../config/redux/index';
 
 export const selectIngredients = createSelector(
   (state: State) => state.ingredient.ingredientsMap,

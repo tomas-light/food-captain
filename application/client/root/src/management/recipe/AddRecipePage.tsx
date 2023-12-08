@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useLocaleResource } from '~/config/i18next';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { useTitle } from '~/Layout';
-import { IngredientController } from '~/management/ingredient/redux';
-import { RecipeEditor } from '~/management/recipe/RecipeEditor';
-import { appUrls } from '~/routing';
-import { RecipeEditorController } from './redux';
+import { useTranslation } from '../../config/i18next/TranslationContext';
+import { useLocaleResource } from '../../config/i18next';
+import { IngredientController } from '../ingredient/redux';
+import { appUrls } from '../../routing';
+import { useTitle } from '../../Layout';
 import { RecipeController } from './redux/Recipe.controller';
+import { RecipeEditorController } from './redux';
+import { RecipeEditor } from './RecipeEditor';
 
 export const AddRecipePage = () => {
   const navigate = useNavigate();

@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { FC } from 'react';
 import { Image } from '@food-captain/client-shared';
 import { ImageApi } from '@food-captain/client-api';
-import { Ingredient } from '~/models';
+import { Ingredient } from '../../../../../models';
 import classes from './Ingredients.module.scss';
 
 type Props = {

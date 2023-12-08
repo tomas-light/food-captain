@@ -8,9 +8,9 @@ import {
   SelectField,
   Typography,
 } from '@food-captain/client-shared';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { useSelector } from '~/config/redux/useSelector';
-import { Ingredient } from '~/models';
+import { Ingredient } from '../../../models';
+import { useTranslation } from '../../../config/i18next/TranslationContext';
+import { useSelector } from '../../../config/redux/useSelector';
 import classes from './IngredientsFilter.module.scss';
 
 type Props = {

@@ -7,10 +7,10 @@ import {
   WatchedController,
 } from 'redux-controller-middleware';
 import { RecipeApi } from '@food-captain/client-api';
-import { Recipe, RecipeFilters } from '~/models';
+import { State } from '../../../config/redux/index';
+import { Recipe, RecipeFilters } from '../../../models/index';
 import { RecipeStore } from './Recipe.store';
 import { RecipeBaseController } from './RecipeBase.controller';
-import { State } from '~State';
 
 @controller
 class RecipeFiltersController extends RecipeBaseController {
