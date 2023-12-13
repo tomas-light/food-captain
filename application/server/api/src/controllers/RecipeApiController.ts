@@ -18,7 +18,7 @@ import {
   TagForRecipe,
 } from '../services/RecipeService';
 import { MakeOptional } from '../utils/MakeOptional';
-import BaseApiController from './BaseApiController';
+import { BaseApiController } from '../base/BaseApiController';
 
 @api
 export default class RecipeApiController extends BaseApiController {
@@ -57,9 +57,8 @@ export default class RecipeApiController extends BaseApiController {
 
   @post('recipes-by-filter/random')
   async getRandomRecipeByFilterAsync(filters: RecipeFilters) {
-    const recipe = await this.recipeService.getRandomRecipeByFilterAsync(
-      filters
-    );
+    const recipe =
+      await this.recipeService.getRandomRecipeByFilterAsync(filters);
     return this.ok(recipe);
   }
 

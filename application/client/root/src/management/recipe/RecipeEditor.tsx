@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocaleResource } from '~/config/i18next';
-import { useSelector } from '~/config/redux/useSelector';
-import { Ingredient, RecipeIngredient, Tag } from '~/models';
+import { useLocaleResource } from '../../config/i18next';
+import { useSelector } from '../../config/redux/useSelector';
+import { Ingredient, RecipeIngredient, Tag } from '../../models';
 import { RecipeTemplatePage } from './RecipeTemplatePage';
 import { RecipeEditorController } from './redux';
 import { RecipeController } from './redux/Recipe.controller';

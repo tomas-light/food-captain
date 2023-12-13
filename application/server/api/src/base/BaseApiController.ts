@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 import { MvcController } from 'mvc-middleware';
 import { Logger } from '@food-captain/server-utils';
 
-export default class BaseApiController extends MvcController {
+export class BaseApiController extends MvcController {
   constructor(
     protected readonly logger: Logger,
     request: Request,

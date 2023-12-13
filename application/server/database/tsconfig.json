@@ -1,7 +1,12 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
-  }
+    "composite": true,
+    "declaration": true
+  },
+  "references": [
+    {
+      "path": "../utils/tsconfig.json"
+    }
+  ]
 }

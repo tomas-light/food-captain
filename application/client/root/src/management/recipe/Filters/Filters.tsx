@@ -15,9 +15,9 @@ import {
   Typography,
   useScreenBreakpoints,
 } from '@food-captain/client-shared';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { useSelector } from '~/config/redux/useSelector';
 import { RecipeFiltersController } from '../redux/RecipeFilters.controller';
+import { useTranslation } from '../../../config/i18next/TranslationContext';
+import { useSelector } from '../../../config/redux/useSelector';
 import { FiltersBlocks } from './FiltersBlocks';
 import classes from './Filters.module.scss';
 

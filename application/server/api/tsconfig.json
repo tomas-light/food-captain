@@ -1,8 +1,26 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../tsconfig.json",,
   "compilerOptions": {
+    "composite": true,
+    "declaration": true,
     "resolveJsonModule": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
-  }
+    "plugins": [
+      {
+        "transform": "cheap-di-ts-transform",
+        "debug": true,
+        "addDetailsToUnknownParameters": true
+      }
+    ]
+  },
+  "ts-node": {
+    "compiler": "ts-patch/compiler"
+  },
+  "references": [
+    {
+      "path": "../database/tsconfig.json"
+    },
+    {
+      "path": "../utils/tsconfig.json"
+    }
+  ]
 }

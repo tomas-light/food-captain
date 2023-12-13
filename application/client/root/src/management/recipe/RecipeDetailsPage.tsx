@@ -10,14 +10,14 @@ import {
   Typography,
 } from '@food-captain/client-shared';
 import { ImageApi } from '@food-captain/client-api';
-import { useLocaleResource } from '~/config/i18next';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { useSelector } from '~/config/redux/useSelector';
-import { useTitle } from '~/Layout';
-import { IngredientController } from '~/management/ingredient/redux';
-import { appUrls } from '~/routing/appUrls';
-import { RecipeStats } from './RecipeStats';
+import { useTranslation } from '../../config/i18next/TranslationContext';
+import { useSelector } from '../../config/redux/useSelector';
+import { useLocaleResource } from '../../config/i18next';
+import { IngredientController } from '../ingredient/redux';
+import { useTitle } from '../../Layout';
+import { appUrls } from '../../routing';
 import { RecipeController } from './redux';
+import { RecipeStats } from './RecipeStats';
 import classes from './RecipeDetailsPage.module.scss';
 
 export const RecipeDetailsPage = () => {

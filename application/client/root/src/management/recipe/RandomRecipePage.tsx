@@ -3,15 +3,15 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ImageApi } from '@food-captain/client-api';
 import { Button, Image, Typography } from '@food-captain/client-shared';
-import { useLocaleResource } from '~/config/i18next';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { useSelector } from '~/config/redux/useSelector';
-import { IngredientController } from '~/management/ingredient/redux';
-import { RecipeController } from '~/management/recipe/redux';
-import { appUrls } from '~/routing/appUrls';
-import { FiltersBlocks } from './Filters/FiltersBlocks';
-import { RecipeFiltersController } from './redux/RecipeFilters.controller';
+import { useTranslation } from '../../config/i18next/TranslationContext';
+import { useLocaleResource } from '../../config/i18next';
+import { IngredientController } from '../ingredient/redux';
+import { useSelector } from '../../config/redux/useSelector';
+import { appUrls } from '../../routing';
+import { RecipeController } from './redux';
 import { RecipeStats } from './RecipeStats';
+import { RecipeFiltersController } from './redux/RecipeFilters.controller';
+import { FiltersBlocks } from './Filters/FiltersBlocks';
 import classes from './RandomRecipePage.module.scss';
 
 export const RandomRecipePage = () => {

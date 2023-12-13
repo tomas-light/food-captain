@@ -1,17 +1,11 @@
 import { Mapper } from '@tomas-light/mapper-js';
-import {
-  Database,
-  DishInMenuEntity,
-  MenuEntity,
-  UserEntity,
-} from '@food-captain/database';
-import { Logger, metadata } from '@food-captain/server-utils';
+import { Database, MenuEntity, UserEntity } from '@food-captain/database';
+import { Logger } from '@food-captain/server-utils';
 import { MakeOptional } from '../utils/MakeOptional';
 import { Menu } from './models/Menu';
 import { RecipeService } from './RecipeService';
 import { UserService } from './UserService';
 
-@metadata
 export class MenuService {
   constructor(
     private readonly db: Database,
@@ -73,9 +67,8 @@ export class MenuService {
   }
 
   async getMenuByIdAsync(menuId: number): Promise<Menu | undefined> {
-    const menuWithDishesEntities = await this.db.menu.getWithDishesByIdAsync(
-      menuId
-    );
+    const menuWithDishesEntities =
+      await this.db.menu.getWithDishesByIdAsync(menuId);
     if (!menuWithDishesEntities.length) {
       return undefined;
     }

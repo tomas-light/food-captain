@@ -4,7 +4,7 @@ import { api, delete_, get, post } from 'mvc-middleware';
 import { Logger } from '@food-captain/server-utils';
 import { ImageEntity } from '@food-captain/database';
 import { ImageService, NewImage } from '../services/ImageService';
-import BaseApiController from './BaseApiController';
+import { BaseApiController } from '../base/BaseApiController';
 
 const upload = multer({
   storage: memoryStorage(),

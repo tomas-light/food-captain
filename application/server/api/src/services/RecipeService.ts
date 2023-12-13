@@ -5,13 +5,12 @@ import {
   RecipeEntity,
   RecipeTagEntity,
 } from '@food-captain/database';
-import { Logger, metadata } from '@food-captain/server-utils';
+import { Logger } from '@food-captain/server-utils';
 import { MakeOptional } from '../utils/MakeOptional';
 import { DimensionService } from './DimensionService';
 import { ImageService } from './ImageService';
 import { IngredientService } from './IngredientService';
 
-@metadata
 export class RecipeService {
   constructor(
     private readonly db: Database,
@@ -99,9 +98,8 @@ export class RecipeService {
     );
 
     if (tagInRecipeEntities.length) {
-      const areTagsAddedToRecipe = await this.db.recipeTag.insertMultipleAsync(
-        tagInRecipeEntities
-      );
+      const areTagsAddedToRecipe =
+        await this.db.recipeTag.insertMultipleAsync(tagInRecipeEntities);
 
       if (!areTagsAddedToRecipe) {
         this.logger.warning('Tags were not added to recipe in DB');

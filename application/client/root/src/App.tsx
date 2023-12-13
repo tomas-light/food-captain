@@ -10,15 +10,15 @@ import {
   LoggedApiRequest,
   LoggedApiResponse,
 } from '@food-captain/client-api';
-import { AppInitializer } from '~/appInitializer';
-import { configureTranslation } from '~/config/i18next';
-import {
-  TranslationContext,
-  TranslationContextType,
-} from '~/config/i18next/TranslationContext';
-import { Layout } from '~/Layout';
-import { RegisterNavigationInDI } from '~/routing/RegisterNavigationInDI';
+import { configureTranslation } from './config/i18next';
 import { configureRedux } from './config/redux';
+import {
+  TranslationContextType,
+  TranslationContext,
+} from './config/i18next/TranslationContext';
+import { AppInitializer } from './appInitializer';
+import { Layout } from './Layout';
+import { RegisterNavigationInDI } from './routing/RegisterNavigationInDI';
 
 const dayjsAdapter = new DayjsAdapter(); // todo: share with Chakra UI ?
 configureTranslation();
@@ -36,7 +36,7 @@ const App: FC<{ children: ReactElement }> = (props) => {
 
       const { container } = _config;
 
-      container.registerType(ApiInterceptor).with(
+      container.registerImplementation(ApiInterceptor).inject(
         (request: LoggedApiRequest): void => {
           // console.log('[API] request', request);
         },

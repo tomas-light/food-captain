@@ -1,9 +1,11 @@
 import { Database, DimensionEntity } from '@food-captain/database';
-import { Logger, metadata } from '@food-captain/server-utils';
+import { Logger } from '@food-captain/server-utils';
 
-@metadata
 export class DimensionService {
-  constructor(private readonly db: Database, private readonly logger: Logger) {}
+  constructor(
+    private readonly db: Database,
+    private readonly logger: Logger
+  ) {}
 
   getAllAsync(...args: Parameters<Database['dimension']['allAsync']>) {
     return this.db.dimension.allAsync(...args);

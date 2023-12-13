@@ -1,11 +1,13 @@
 import { Database } from '@food-captain/database';
 import { UserWithRoleEntity } from '@food-captain/database/src/tables';
-import { Logger, metadata } from '@food-captain/server-utils';
+import { Logger } from '@food-captain/server-utils';
 import { MakeOptional } from '../utils/MakeOptional';
 
-@metadata
 export class UserService {
-  constructor(private readonly db: Database, private readonly logger: Logger) {}
+  constructor(
+    private readonly db: Database,
+    private readonly logger: Logger
+  ) {}
 
   getAllAsync(...args: Parameters<Database['user']['allWithRoleAsync']>) {
     return this.db.user.allWithRoleAsync(...args);

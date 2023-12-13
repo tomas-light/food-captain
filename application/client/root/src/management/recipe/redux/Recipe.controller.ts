@@ -1,18 +1,19 @@
 import type { Action } from 'redux-controller-middleware';
 import {
-  createAction,
+  controller,
   Middleware,
-  watch,
+  reducer,
+  updateStoreSlice,
   WatchedController,
 } from 'redux-controller-middleware';
 import { RecipeApi, TagApi } from '@food-captain/client-api';
 import { RecipeForViewDto } from '@food-captain/api';
-import { NewTag, Recipe, Tag } from '~/models';
+import { State } from '../../../config/redux/index';
+import { NewTag, Recipe, Tag } from '../../../models';
 import { RecipeStore } from './Recipe.store';
 import { RecipeBaseController } from './RecipeBase.controller';
-import { State } from '~State';
 
-@watch
+@controller
 class RecipeController extends RecipeBaseController {
   constructor(
     middleware: Middleware<State>,
@@ -23,10 +24,10 @@ class RecipeController extends RecipeBaseController {
   }
 
   private updateStore(partialStore: Partial<RecipeStore>) {
-    this.dispatch(createAction(RecipeStore.update, partialStore));
+    this.dispatch(updateStoreSlice(RecipeStore)(partialStore));
   }
 
-  @watch
+  @reducer
   async loadRecipes() {
     this.updateStore({ recipesAreLoading: true });
 
@@ -54,7 +55,7 @@ class RecipeController extends RecipeBaseController {
     });
   }
 
-  @watch
+  @reducer
   async loadRecipeById(
     action: Action<{
       recipeId: RecipeForViewDto['id'];
@@ -90,7 +91,7 @@ class RecipeController extends RecipeBaseController {
     callback?.(recipe);
   }
 
-  @watch
+  @reducer
   async loadTags() {
     this.updateStore({ tagsAreLoading: true });
 
@@ -115,7 +116,7 @@ class RecipeController extends RecipeBaseController {
     });
   }
 
-  @watch
+  @reducer
   async addTag(
     action: Action<{
       newTag: NewTag;
@@ -141,7 +142,7 @@ class RecipeController extends RecipeBaseController {
     getCreatedTag?.(recipeResponse.data);
   }
 
-  @watch
+  @reducer
   async addRecipe(action: Action<{ callback?: () => void }>) {
     const { callback } = action.payload;
     const { editedRecipe } = this.getState().recipe;
@@ -175,7 +176,7 @@ class RecipeController extends RecipeBaseController {
     callback?.();
   }
 
-  @watch
+  @reducer
   async updateRecipe(
     action: Action<{
       callback?: () => void;
@@ -213,7 +214,7 @@ class RecipeController extends RecipeBaseController {
     callback?.();
   }
 
-  @watch
+  @reducer
   async deleteRecipe(
     action: Action<{ recipeId: Recipe['id']; callback?: () => void }>
   ) {

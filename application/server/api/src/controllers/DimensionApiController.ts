@@ -3,7 +3,7 @@ import { api, delete_, get, post } from 'mvc-middleware';
 import { DimensionEntity } from '@food-captain/database';
 import { Logger } from '@food-captain/server-utils';
 import { DimensionService } from '../services/DimensionService';
-import BaseApiController from './BaseApiController';
+import { BaseApiController } from '../base/BaseApiController';
 
 @api
 export default class DimensionApiController extends BaseApiController {

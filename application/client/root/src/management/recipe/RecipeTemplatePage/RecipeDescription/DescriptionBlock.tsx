@@ -8,8 +8,8 @@ import {
   RichTextFieldRef,
   Typography,
 } from '@food-captain/client-shared';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { RecipeDescriptionBlock } from '~/models';
+import { RecipeDescriptionBlock } from '../../../../models';
+import { useTranslation } from '../../../../config/i18next/TranslationContext';
 import classes from './DescriptionBlock.module.scss';
 
 type Props = {

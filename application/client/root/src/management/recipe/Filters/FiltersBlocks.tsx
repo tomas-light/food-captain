@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import clsx from 'clsx';
 import { Icon } from '@food-captain/client-shared';
-import { CookingTimeFilter } from '~/management/recipe/Filters/CookingTimeFilter';
-import { RecipeFilters } from '~/models';
+import { RecipeFilters } from '../../../models';
 import { Filter } from './Filter';
 import { IngredientsFilter } from './IngredientsFilter';
 import { KcalFilter } from './KcalFilter';
 import { TagsFilter } from './TagsFilter';
+import { CookingTimeFilter } from './CookingTimeFilter';
 import classes from './FiltersBlocks.module.scss';
 
 type Props = {

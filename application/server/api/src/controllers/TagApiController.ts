@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 import { api, get, post } from 'mvc-middleware';
 import { Database, NewTagEntity, TagEntity } from '@food-captain/database';
 import { Logger } from '@food-captain/server-utils';
-import BaseApiController from './BaseApiController';
+import { BaseApiController } from '../base/BaseApiController';
 
 @api
 export default class TagApiController extends BaseApiController {

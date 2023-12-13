@@ -8,7 +8,7 @@ import {
   ImageField,
 } from '@food-captain/client-shared';
 import { ImageApi } from '@food-captain/client-api';
-import { useTranslation } from '~/config/i18next/TranslationContext';
+import { useTranslation } from '../../config/i18next/TranslationContext';
 import classes from './EditableImage.module.scss';
 
 type Props = {
@@ -94,9 +94,8 @@ const EditableImage: FC<Props> = (props) => {
                 throw new Error('Clipboard does not contain image data.');
               }
 
-              const imageBlob = await lastItemInClipboard.getType(
-                imageMimeType
-              );
+              const imageBlob =
+                await lastItemInClipboard.getType(imageMimeType);
 
               const [type, extension] = imageMimeType.split('/');
               const imageFile = new File(

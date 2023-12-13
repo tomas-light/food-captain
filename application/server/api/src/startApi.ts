@@ -1,6 +1,6 @@
 import http from 'http';
 import path from 'path';
-import bodyParser, { json } from 'body-parser';
+import { json } from 'body-parser';
 import cors from 'cors';
 import { container } from 'cheap-di';
 import cookieParser from 'cookie-parser';
@@ -21,7 +21,7 @@ import {
 import { ConsoleLogger } from './utils/ConsoleLogger';
 
 (async () => {
-  container.registerType(ConsoleLogger).as(Logger);
+  container.registerImplementation(ConsoleLogger).as(Logger);
 
   const app = express();
 

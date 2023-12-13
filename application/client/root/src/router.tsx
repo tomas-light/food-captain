@@ -7,17 +7,17 @@ import {
   Route,
   useNavigate,
 } from 'react-router-dom';
-import { App } from '~/App';
-import { ManagementPage } from '~/management';
-import { AddIngredientPage } from '~/management/ingredient/AddIngredientPage';
-import { EditIngredientPage } from '~/management/ingredient/EditIngredientPage';
-import { IngredientsPage } from '~/management/ingredient/IngredientsPage';
-import { AddRecipePage } from '~/management/recipe/AddRecipePage';
-import { EditRecipePage } from '~/management/recipe/EditRecipePage';
-import { RandomRecipePage } from '~/management/recipe/RandomRecipePage';
-import { RecipeDetailsPage } from '~/management/recipe/RecipeDetailsPage';
 import { RecipesPage } from './management/recipe/RecipesPage';
-import { appUrls } from './routing/appUrls';
+import { appUrls } from './routing';
+import { App } from './App';
+import { ManagementPage } from './management';
+import { AddRecipePage } from './management/recipe/AddRecipePage';
+import { EditRecipePage } from './management/recipe/EditRecipePage';
+import { RecipeDetailsPage } from './management/recipe/RecipeDetailsPage';
+import { IngredientsPage } from './management/ingredient/IngredientsPage';
+import { AddIngredientPage } from './management/ingredient/AddIngredientPage';
+import { EditIngredientPage } from './management/ingredient/EditIngredientPage';
+import { RandomRecipePage } from './management/recipe/RandomRecipePage';
 
 const FallbackRedirect = () => {
   const navigate = useNavigate();

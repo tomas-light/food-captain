@@ -1,24 +1,27 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { container } from 'cheap-di';
 import {
-  AnyAction,
   combineReducers,
   Dispatch,
   Middleware as ReduxMiddleware,
   MiddlewareAPI,
 } from 'redux';
-import { controllerMiddleware, InferState } from 'redux-controller-middleware';
 import {
-  DeviceStorage,
+  controllerMiddleware,
+  getReducersFromStoreSlices,
+  InferState,
+} from 'redux-controller-middleware';
+import {
   debounce,
+  DeviceStorage,
   parseState,
   stringifyState,
 } from '@food-captain/client-utils';
-import { AppInitializerStore } from '~/appInitializer/redux';
-import { IngredientStore } from '~/management/ingredient/redux';
-import { RecipeStore } from '~/management/recipe/redux';
 import { registerControllerDependencies } from '../registerControllerDependencies';
 import { IS_DEV_MODE } from '../environment';
+import { AppInitializerStore } from '../../appInitializer/redux/index';
+import { IngredientStore } from '../../management/ingredient/redux/index';
+import { RecipeStore } from '../../management/recipe/redux/index';
 
 const APPLICATION_STATE_VERSION = '1';
 
@@ -41,11 +44,11 @@ export const persistedState = {
 };
 
 function makeReducers() {
-  return {
-    appInitializer: AppInitializerStore.reducer,
-    ingredient: IngredientStore.reducer,
-    recipe: RecipeStore.reducer,
-  };
+  return getReducersFromStoreSlices({
+    appInitializer: AppInitializerStore,
+    ingredient: IngredientStore,
+    recipe: RecipeStore,
+  });
 }
 
 export type State = InferState<ReturnType<typeof makeReducers>>;
@@ -90,11 +93,9 @@ export async function configureRedux() {
   // actualize state version
   await deviceStorage.set(persistedState.versionKey, APPLICATION_STATE_VERSION);
 
-  const persistorMiddleware: ReduxMiddleware<Dispatch, State> = (
-    api: MiddlewareAPI<Dispatch, State>
-  ) => {
-    return (next: Dispatch) => {
-      return (action: AnyAction) => {
+  const persistorMiddleware: ReduxMiddleware<{}, State, Dispatch> = (api) => {
+    return (next) => {
+      return (action) => {
         saveStateToDevice(api);
         next(action);
       };
@@ -114,19 +115,11 @@ export async function configureRedux() {
   const store = configureStore({
     preloadedState: restoredState,
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => {
-      const middlewares = [];
-
-      const defaultMiddleware = getDefaultMiddleware({
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
         thunk: false,
         serializableCheck: false,
-      });
-      middlewares.push(...defaultMiddleware);
-      middlewares.push(middleware);
-      middlewares.push(persistorMiddleware);
-
-      return middlewares;
-    },
+      }).concat(middleware, persistorMiddleware),
   });
 
   return {

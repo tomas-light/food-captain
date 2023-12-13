@@ -26,7 +26,11 @@ export const RichText = (props: Props) => {
 
   return (
     <div className={className}>
-      <Slate editor={editor} value={value.length ? value : fallbackRtfElements}>
+      <Slate
+        editor={editor}
+        // @ts-expect-error
+        value={value.length ? value : fallbackRtfElements}
+      >
         <Editable
           renderElement={
             RenderedRtfElement as unknown as ComponentProps<
