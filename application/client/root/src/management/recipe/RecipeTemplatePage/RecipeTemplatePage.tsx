@@ -1,9 +1,13 @@
 import { FC, useRef } from 'react';
 import { Button, Icon, NumberField } from '@food-captain/client-shared';
-import { useLocaleResource } from '~/config/i18next';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { NewRecipe, Recipe } from '~/models';
-import { EditableImage, GalleryModal, GalleryModalRef } from '~/templates';
+import { NewRecipe, Recipe } from '../../../models';
+import { useTranslation } from '../../../config/i18next/TranslationContext';
+import {
+  EditableImage,
+  GalleryModal,
+  GalleryModalRef,
+} from '../../../templates';
+import { useLocaleResource } from '../../../config/i18next';
 import { RecipeDescription, RecipeDescriptionProps } from './RecipeDescription';
 import { RecipeIngredients, RecipeIngredientsProps } from './RecipeIngredients';
 import { RecipeTags, RecipeTagsProps } from './RecipeTags';

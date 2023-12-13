@@ -2,12 +2,12 @@ import { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Typography } from '@food-captain/client-shared';
-import { useLocaleResource } from '~/config/i18next';
-import { useSelector } from '~/config/redux/useSelector';
-import { IngredientPageTemplate } from '~/management/ingredient/IngredientPageTemplate';
-import { Ingredient } from '~/models';
-import { appUrls } from '~/routing';
+import { useLocaleResource } from '../../config/i18next';
+import { useSelector } from '../../config/redux/useSelector';
+import { Ingredient } from '../../models';
+import { appUrls } from '../../routing';
 import { IngredientController } from './redux/Ingredient.controller';
+import { IngredientPageTemplate } from './IngredientPageTemplate';
 
 function useIngredientId() {
   const { ingredientId } = useParams();

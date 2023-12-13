@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { SortEnum } from '~/management/recipe/SortEnum';
-import { Recipe } from '~/models';
-import { State } from '~State';
+import { SortEnum } from '../SortEnum';
+import { Recipe } from '../../../models/index';
+import { State } from '../../../config/redux/index';
 
 const sortValueToPropertyMap = {
   [SortEnum.ByName]: 'name',
@@ -12,14 +12,14 @@ const sortValueToPropertyMap = {
 };
 
 export const selectFilteredRecipes = createSelector(
-  (state: State) => state.recipe.filteredRecipesMap,
+  (state: State) => state.recipe.recipesMap,
   (state: State) => state.recipe.filters,
   (
     state: State,
     params: { searchString: string; isAscendingSort: boolean; sortBy: SortEnum }
   ) => params,
-  (filteredRecipesMap, filters, { searchString, isAscendingSort, sortBy }) => {
-    let recipes: Recipe[] = Array.from(filteredRecipesMap.values());
+  (recipesMap, filters, { searchString, isAscendingSort, sortBy }) => {
+    let recipes: Recipe[] = Array.from(recipesMap.values());
 
     searchString = searchString.trim().toLocaleLowerCase();
 

@@ -1,8 +1,8 @@
 import { FC, ReactElement, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Icon, Typography, Fade } from '@food-captain/client-shared';
-import { useLocaleResource } from '~/config/i18next';
-import { useSelector } from '~/config/redux/useSelector';
+import { useSelector } from '../config/redux/useSelector';
+import { useLocaleResource } from '../config/i18next';
 import { AppInitializerController } from './redux';
 import classes from './AppInitializer.module.scss';
 

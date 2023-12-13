@@ -1,10 +1,10 @@
 import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Slider, Typography } from '@food-captain/client-shared';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { useSelector } from '~/config/redux/useSelector';
-import { RecipeFilters } from '~/models';
 import { RecipeFiltersController } from '../redux/RecipeFilters.controller';
+import { RecipeFilters } from '../../../models';
+import { useTranslation } from '../../../config/i18next/TranslationContext';
+import { useSelector } from '../../../config/redux/useSelector';
 import classes from './SliderFilter.module.scss';
 
 type Props = {

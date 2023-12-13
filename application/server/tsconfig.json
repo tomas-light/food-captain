@@ -5,6 +5,7 @@
     "forceConsistentCasingInFileNames": true,
     "module": "CommonJS",
     "moduleResolution": "node",
+    "outDir": "../../dist",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,

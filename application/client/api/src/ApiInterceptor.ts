@@ -1,4 +1,3 @@
-import { metadata } from '@food-captain/client-utils';
 import axios, {
   AxiosError,
   AxiosInstance,
@@ -24,7 +23,6 @@ export type LoggedApiError =
       error: any;
     };
 
-@metadata
 export class ApiInterceptor {
   static singleton: ApiInterceptor;
   public authorizationToken?: string;

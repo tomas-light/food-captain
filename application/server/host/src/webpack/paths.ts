@@ -1,26 +1,45 @@
 import { join } from 'path';
 
-const host = join(__dirname, '..', '..');
-const server = join(host, '..');
-const application = join(server, '..');
-const nodeModules = join(application, '..', 'node_modules');
-const client = join(application, 'client');
-const clientRoot = join(client, 'root');
-const rootSrc = join(clientRoot, 'src');
-
 const paths = {
-  clientDist: join(application, 'dist', 'client'),
-  clientRoot,
-  client,
-  clientTsConfig: join(client, 'tsconfig.json'),
-  entries: {
-    index: join(rootSrc, 'index.ts'),
+  host: join(__dirname, '..', '..'),
+  get server() {
+    return join(this.host, '..');
   },
-  host,
-  hostEntryPoint: join(host, 'src', 'index.ts'),
-  nodeModules,
-  serverDist: join(application, 'dist', 'server'),
-  static: join(clientRoot, 'static'),
+  get application() {
+    return join(this.server, '..');
+  },
+  get nodeModules() {
+    return join(this.application, '..', 'node_modules');
+  },
+  get client() {
+    return join(this.application, 'client');
+  },
+  get clientRoot() {
+    return join(this.client, 'root');
+  },
+  get rootSrc() {
+    return join(this.clientRoot, 'src');
+  },
+  get clientDist() {
+    return join(this.application, 'dist', 'client');
+  },
+  get clientTsConfig() {
+    return join(this.client, 'tsconfig.json');
+  },
+  get entries() {
+    return {
+      index: join(this.rootSrc, 'index.ts'),
+    };
+  },
+  get hostEntryPoint() {
+    return join(this.host, 'src', 'index.ts');
+  },
+  get serverDist() {
+    return join(this.application, 'dist', 'server');
+  },
+  get static() {
+    return join(this.clientRoot, 'static');
+  },
   join: (...paths: string[]) => {
     return join(...paths);
   },

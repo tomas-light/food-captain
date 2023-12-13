@@ -1,13 +1,13 @@
 import { FC, useRef } from 'react';
 import { Button, Icon, TextField } from '@food-captain/client-shared';
-import { useLocaleResource } from '~/config/i18next';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { Ingredient, NewIngredient } from '~/models';
+import { Ingredient, NewIngredient } from '../../models';
+import { useTranslation } from '../../config/i18next/TranslationContext';
+import { useLocaleResource } from '../../config/i18next';
 import {
   GalleryModal,
   GalleryModalRef,
   ImageFieldWithPreview,
-} from '~/templates';
+} from '../../templates';
 import classes from './IngredientPageTemplate.module.scss';
 
 type Props = {

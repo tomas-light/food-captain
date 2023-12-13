@@ -1,27 +1,16 @@
 import type { Action } from 'redux-controller-middleware';
 import {
-  createAction,
-  Middleware,
-  watch,
+  controller,
+  reducer,
   WatchedController,
 } from 'redux-controller-middleware';
-import { NewRecipe, Recipe } from '~/models';
+import { NewRecipe, Recipe } from '../../../models/index';
 import { RecipeController } from './Recipe.controller';
-import { RecipeStore } from './Recipe.store';
 import { RecipeBaseController } from './RecipeBase.controller';
-import { State } from '~State';
 
-@watch
+@controller
 class RecipeEditorController extends RecipeBaseController {
-  constructor(middleware: Middleware<State>) {
-    super(middleware);
-  }
-
-  private updateStore(partialStore: Partial<RecipeStore>) {
-    this.dispatch(createAction(RecipeStore.update, partialStore));
-  }
-
-  @watch
+  @reducer
   startEditingNewRecipe() {
     const { editedRecipe } = this.getState().recipe;
 
@@ -31,7 +20,7 @@ class RecipeEditorController extends RecipeBaseController {
       return;
     }
 
-    this.updateStore({
+    this.updateStoreSlice({
       editedRecipe: {
         name: '',
         description: {
@@ -43,7 +32,7 @@ class RecipeEditorController extends RecipeBaseController {
     });
   }
 
-  @watch
+  @reducer
   async startEditingRecipe(action: Action<{ recipeId: Recipe['id'] }>) {
     const { recipeId } = action.payload;
 
@@ -69,17 +58,17 @@ class RecipeEditorController extends RecipeBaseController {
       return;
     }
 
-    this.updateStore({
+    this.updateStoreSlice({
       editedRecipe: recipe,
     });
   }
 
-  @watch
+  @reducer
   resetDraft(action: Action<{ mode: 'create' | 'edit' }>) {
     const { mode } = action.payload;
 
     if (mode === 'create') {
-      this.updateStore({
+      this.updateStoreSlice({
         editedRecipe: {
           name: '',
           description: {
@@ -95,7 +84,7 @@ class RecipeEditorController extends RecipeBaseController {
       if (editedRecipe && 'id' in editedRecipe) {
         const recipe = recipesMap.get(editedRecipe.id);
         if (recipe) {
-          this.updateStore({
+          this.updateStoreSlice({
             editedRecipe: recipe,
           });
         }
@@ -103,7 +92,7 @@ class RecipeEditorController extends RecipeBaseController {
     }
   }
 
-  @watch
+  @reducer
   onChangeEditedRecipe(
     action: Action<{ updates: (recipe: NewRecipe) => Partial<NewRecipe> }>
   ) {
@@ -114,7 +103,7 @@ class RecipeEditorController extends RecipeBaseController {
 
     const { updates } = action.payload;
 
-    this.updateStore({
+    this.updateStoreSlice({
       editedRecipe: {
         ...editedRecipe,
         ...updates(editedRecipe),

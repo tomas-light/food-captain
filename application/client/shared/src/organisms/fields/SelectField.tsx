@@ -1,9 +1,10 @@
-import { ReactNode, useMemo } from 'react';
+import { useMemo } from 'react';
 import Select, {
   Props as SelectProps,
   StylesConfig,
   components,
 } from 'react-select';
+import { CSSObjectWithLabel } from 'react-select/dist/declarations/src/types';
 import { Icon } from '../../atoms';
 import { theme } from '../../theme';
 import { Option } from './Option';
@@ -51,55 +52,59 @@ function SelectField<TOption extends Option>(props: Props<TOption>) {
   return (
     <Select
       {...selectProps}
-      styles={variantStyles[styleVariant]}
+      styles={variantStyles[styleVariant] as any}
       components={overriddenComponents}
     />
   );
 }
 
 const variantStyles: {
-  [variant in StyleVariants]: StylesConfig<any, false, any>;
+  [variant in StyleVariants]: StylesConfig;
 } = {
   default: {},
   'tiny-flushed': {
-    control: (base) => ({
-      ...base,
-      border: 'none',
-      borderBottomWidth: 1,
-      borderBottomStyle: 'solid',
-      borderBottomColor: theme.colors.default.main,
-      borderBottomRightRadius: 0,
-      borderBottomLeftRadius: 0,
+    control: (base) =>
+      ({
+        ...base,
+        border: 'none',
+        borderBottomWidth: 1,
+        borderBottomStyle: 'solid',
+        borderBottomColor: theme.colors.default.main,
+        borderBottomRightRadius: 0,
+        borderBottomLeftRadius: 0,
 
-      minHeight: 'unset',
-      fontSize: '16px',
-      lineHeight: '16px',
+        minHeight: 'unset',
+        fontSize: '16px',
+        lineHeight: '16px',
 
-      ':hover': {
-        borderColor: theme.colors.primary.main,
-      },
-    }),
-    valueContainer: (base) => ({
-      ...base,
-      padding: '0px 8px',
-      minHeight: 'unset',
-      fontSize: '16px',
-      lineHeight: '16px',
-    }),
-    input: (base) => ({
-      ...base,
-      minHeight: 'unset',
-      fontSize: '16px',
-      lineHeight: '16px',
-      margin: 0,
-      padding: 0,
-    }),
-    container: (base) => ({
-      ...base,
-      minHeight: 'unset',
-      fontSize: '16px',
-      lineHeight: '16px',
-    }),
+        ':hover': {
+          borderColor: theme.colors.primary.main,
+        },
+      }) as CSSObjectWithLabel,
+    valueContainer: (base) =>
+      ({
+        ...base,
+        padding: '0px 8px',
+        minHeight: 'unset',
+        fontSize: '16px',
+        lineHeight: '16px',
+      }) as CSSObjectWithLabel,
+    input: (base) =>
+      ({
+        ...base,
+        minHeight: 'unset',
+        fontSize: '16px',
+        lineHeight: '16px',
+        margin: 0,
+        padding: 0,
+      }) as CSSObjectWithLabel,
+    container: (base) =>
+      ({
+        ...base,
+        minHeight: 'unset',
+        fontSize: '16px',
+        lineHeight: '16px',
+      }) as CSSObjectWithLabel,
     placeholder: (base) => ({
       ...base,
     }),

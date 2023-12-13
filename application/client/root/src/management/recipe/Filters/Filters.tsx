@@ -10,14 +10,15 @@ import {
 import clsx from 'clsx';
 import { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { chainActions } from 'redux-controller-middleware';
 import {
   Button,
   Typography,
   useScreenBreakpoints,
 } from '@food-captain/client-shared';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { useSelector } from '~/config/redux/useSelector';
 import { RecipeFiltersController } from '../redux/RecipeFilters.controller';
+import { useTranslation } from '../../../config/i18next/TranslationContext';
+import { useSelector } from '../../../config/redux/useSelector';
 import { FiltersBlocks } from './FiltersBlocks';
 import classes from './Filters.module.scss';
 
@@ -51,9 +52,12 @@ const Filters: FC<Props> = (props) => {
 
   const onApply = () => {
     dispatch(
-      RecipeFiltersController.loadRecipesByFilters({
-        filters: stateFilters,
-      }).addNextActions(() => onClose())
+      chainActions(
+        RecipeFiltersController.loadRecipesByFilters({
+          filters: stateFilters,
+        }),
+        () => onClose()
+      )
     );
   };
 

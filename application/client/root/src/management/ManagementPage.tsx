@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon, Typography } from '@food-captain/client-shared';
-import { useLocaleResource } from '~/config/i18next';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { appUrls } from '~/routing';
+import { appUrls } from '../routing';
+import { useLocaleResource } from '../config/i18next';
+import { useTranslation } from '../config/i18next/TranslationContext';
 import classes from './ManagementPage.module.scss';
 
 export const ManagementPage: FC = () => {

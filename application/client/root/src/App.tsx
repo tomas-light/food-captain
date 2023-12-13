@@ -1,6 +1,6 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import DayjsAdapter from '@date-io/dayjs';
-import { DIOneTimeProvider } from 'cheap-di-react';
+import { DIProviderMemo } from 'cheap-di-react';
 import { FC, ReactElement, useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { chakraTheme } from '@food-captain/client-shared';
@@ -10,15 +10,15 @@ import {
   LoggedApiRequest,
   LoggedApiResponse,
 } from '@food-captain/client-api';
-import { AppInitializer } from '~/appInitializer';
-import { configureTranslation } from '~/config/i18next';
-import {
-  TranslationContext,
-  TranslationContextType,
-} from '~/config/i18next/TranslationContext';
-import { Layout } from '~/Layout';
-import { RegisterNavigationInDI } from '~/routing/RegisterNavigationInDI';
+import { configureTranslation } from './config/i18next';
 import { configureRedux } from './config/redux';
+import {
+  TranslationContextType,
+  TranslationContext,
+} from './config/i18next/TranslationContext';
+import { AppInitializer } from './appInitializer';
+import { Layout } from './Layout';
+import { RegisterNavigationInDI } from './routing/RegisterNavigationInDI';
 
 const dayjsAdapter = new DayjsAdapter(); // todo: share with Chakra UI ?
 configureTranslation();
@@ -36,7 +36,7 @@ const App: FC<{ children: ReactElement }> = (props) => {
 
       const { container } = _config;
 
-      container.registerType(ApiInterceptor).with(
+      container.registerImplementation(ApiInterceptor).inject(
         (request: LoggedApiRequest): void => {
           // console.log('[API] request', request);
         },
@@ -64,7 +64,7 @@ const App: FC<{ children: ReactElement }> = (props) => {
   return (
     <ChakraProvider resetCSS theme={chakraTheme}>
       <Provider store={config.store}>
-        <DIOneTimeProvider parentContainer={config.container}>
+        <DIProviderMemo parentContainer={config.container}>
           <TranslationContext.Provider value={translationContext}>
             <AppInitializer>
               <Layout>{children}</Layout>
@@ -72,7 +72,7 @@ const App: FC<{ children: ReactElement }> = (props) => {
 
             <RegisterNavigationInDI container={config.container} />
           </TranslationContext.Provider>
-        </DIOneTimeProvider>
+        </DIProviderMemo>
       </Provider>
     </ChakraProvider>
   );

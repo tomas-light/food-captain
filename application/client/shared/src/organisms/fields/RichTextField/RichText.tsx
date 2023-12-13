@@ -4,7 +4,6 @@ import { Editable, Slate, withReact } from 'slate-react';
 import { RenderedRtfChild } from './RenderedRtfChild';
 import { RenderedRtfElement } from './RenderedRtfElement';
 import { RtfElement } from './types';
-import classes from './RichTextField.module.scss';
 
 const fallbackRtfElements: RtfElement[] = [
   {
@@ -26,7 +25,10 @@ export const RichText = (props: Props) => {
 
   return (
     <div className={className}>
-      <Slate editor={editor} value={value.length ? value : fallbackRtfElements}>
+      <Slate
+        editor={editor}
+        initialValue={value.length ? value : fallbackRtfElements}
+      >
         <Editable
           renderElement={
             RenderedRtfElement as unknown as ComponentProps<

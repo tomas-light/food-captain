@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
-import { api, get } from 'mvc-middleware';
+import { api, GET } from 'mvc-middleware/stage2';
 import { Logger } from '@food-captain/server-utils';
-import BaseApiController from './BaseApiController';
+import { BaseApiController } from '../base/BaseApiController';
 
 const LOCALE_REGION_SEPARATOR = '-';
 const supportedLocales = ['ru', 'en'];
@@ -16,7 +16,7 @@ export default class LocaleApiController extends BaseApiController {
     super(logger, request, response);
   }
 
-  @get(':localeOrLocaleWithRegion/:resource')
+  @GET(':localeOrLocaleWithRegion/:resource')
   getLocaleResource(localeOrLocaleWithRegion: string, resource: string) {
     const locale = this.getLocale(localeOrLocaleWithRegion);
 

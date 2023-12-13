@@ -110,7 +110,7 @@ $fieldWidth: 222px;
   grid-area: add-button;
 
   @media (min-width: 320px), (max-width: 320px) {
-    display: none;
+    display: none; // recipes will be added only on computer, that is why we hide them on mobile devices
   }
   @media (min-width: 1280px) {
     display: block;

@@ -1,8 +1,31 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    // needed for ts-loader, because it still cannot work with stage 3 decorators
+    // ts-loader build this package because of client-api depends on it?
+    "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
-  }
+    "plugins": [
+      {
+        "transform": "cheap-di-ts-transform",
+        "debug": true,
+        "addDetailsToUnknownParameters": true,
+        // "logRegisteredMetadata": true
+      }
+    ],
+    "outDir": "./dist"
+  },
+  "ts-node": {
+    "compiler": "ts-patch/compiler"
+  },
+  "references": [
+    {
+      "path": "../database/tsconfig.json"
+    },
+    {
+      "path": "../utils/tsconfig.json"
+    }
+  ]
 }

@@ -10,11 +10,11 @@ import {
   Typography,
 } from '@food-captain/client-shared';
 import { ImageApi } from '@food-captain/client-api/src/ImageApi';
-import { useLocaleResource } from '~/config/i18next';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { useSelector } from '~/config/redux/useSelector';
-import { Ingredient } from '~/models';
-import { appUrls } from '~/routing/appUrls';
+import { useLocaleResource } from '../../config/i18next';
+import { useSelector } from '../../config/redux/useSelector';
+import { Ingredient } from '../../models';
+import { useTranslation } from '../../config/i18next/TranslationContext';
+import { appUrls } from '../../routing';
 import { IngredientController, selectIngredientsBySearchString } from './redux';
 import classes from './IngredientsPage.module.scss';
 

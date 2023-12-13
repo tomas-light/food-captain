@@ -1,9 +1,11 @@
 import { Database, ImageEntity } from '@food-captain/database';
-import { Logger, metadata } from '@food-captain/server-utils';
+import { Logger } from '@food-captain/server-utils';
 
-@metadata
 export class ImageService {
-  constructor(private readonly db: Database, private readonly logger: Logger) {}
+  constructor(
+    private readonly db: Database,
+    private readonly logger: Logger
+  ) {}
 
   allShortInfoAsync(
     ...args: Parameters<Database['image']['allShortInfoAsync']>

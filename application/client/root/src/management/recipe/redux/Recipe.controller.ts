@@ -1,18 +1,17 @@
 import type { Action } from 'redux-controller-middleware';
 import {
-  createAction,
+  controller,
   Middleware,
-  watch,
+  reducer,
   WatchedController,
 } from 'redux-controller-middleware';
-import { RecipeApi, TagApi } from '@food-captain/client-api';
 import { RecipeForViewDto } from '@food-captain/api';
-import { NewTag, Recipe, Tag } from '~/models';
-import { RecipeStore } from './Recipe.store';
+import { RecipeApi, TagApi } from '@food-captain/client-api';
+import { State } from '../../../config/redux/index';
+import { NewTag, Recipe, Tag } from '../../../models';
 import { RecipeBaseController } from './RecipeBase.controller';
-import { State } from '~State';
 
-@watch
+@controller
 class RecipeController extends RecipeBaseController {
   constructor(
     middleware: Middleware<State>,
@@ -22,17 +21,13 @@ class RecipeController extends RecipeBaseController {
     super(middleware);
   }
 
-  private updateStore(partialStore: Partial<RecipeStore>) {
-    this.dispatch(createAction(RecipeStore.update, partialStore));
-  }
-
-  @watch
+  @reducer
   async loadRecipes() {
-    this.updateStore({ recipesAreLoading: true });
+    this.updateStoreSlice({ recipesAreLoading: true });
 
     const response = await this.recipeApi.getAllAsync();
     if (response.isFailed() || !response.data) {
-      this.updateStore({
+      this.updateStoreSlice({
         recipesAreLoading: false,
         recipesMap: new Map(),
       });
@@ -48,13 +43,13 @@ class RecipeController extends RecipeBaseController {
       );
     });
 
-    this.updateStore({
+    this.updateStoreSlice({
       recipesAreLoading: false,
       recipesMap: recipesMap,
     });
   }
 
-  @watch
+  @reducer
   async loadRecipeById(
     action: Action<{
       recipeId: RecipeForViewDto['id'];
@@ -63,11 +58,11 @@ class RecipeController extends RecipeBaseController {
   ) {
     const { recipeId, callback } = action.payload;
 
-    this.updateStore({ recipesAreLoading: true });
+    this.updateStoreSlice({ recipesAreLoading: true });
 
     const recipeResponse = await this.recipeApi.getByIdAsync(recipeId);
     if (recipeResponse.isFailed() || !recipeResponse.data) {
-      this.updateStore({
+      this.updateStoreSlice({
         recipesAreLoading: false,
       });
 
@@ -82,7 +77,7 @@ class RecipeController extends RecipeBaseController {
     );
     newRecipesMap.set(recipe.id, recipe);
 
-    this.updateStore({
+    this.updateStoreSlice({
       recipesAreLoading: false,
       recipesMap: newRecipesMap,
     });
@@ -90,13 +85,13 @@ class RecipeController extends RecipeBaseController {
     callback?.(recipe);
   }
 
-  @watch
+  @reducer
   async loadTags() {
-    this.updateStore({ tagsAreLoading: true });
+    this.updateStoreSlice({ tagsAreLoading: true });
 
     const response = await this.tagApi.getAllAsync();
     if (response.isFailed() || !response.data) {
-      this.updateStore({
+      this.updateStoreSlice({
         tagsAreLoading: false,
         tagsMap: new Map(),
       });
@@ -109,13 +104,13 @@ class RecipeController extends RecipeBaseController {
       tagsMap.set(tag.id, tag);
     });
 
-    this.updateStore({
+    this.updateStoreSlice({
       tagsAreLoading: false,
       tagsMap: tagsMap,
     });
   }
 
-  @watch
+  @reducer
   async addTag(
     action: Action<{
       newTag: NewTag;
@@ -134,14 +129,14 @@ class RecipeController extends RecipeBaseController {
 
     newTagsMap.set(recipeResponse.data.id, recipeResponse.data);
 
-    this.updateStore({
+    this.updateStoreSlice({
       tagsMap: newTagsMap,
     });
 
     getCreatedTag?.(recipeResponse.data);
   }
 
-  @watch
+  @reducer
   async addRecipe(action: Action<{ callback?: () => void }>) {
     const { callback } = action.payload;
     const { editedRecipe } = this.getState().recipe;
@@ -167,7 +162,7 @@ class RecipeController extends RecipeBaseController {
     );
     newRecipesMap.set(recipe.id, recipe);
 
-    this.updateStore({
+    this.updateStoreSlice({
       recipesMap: newRecipesMap,
       editedRecipe: null,
     });
@@ -175,7 +170,7 @@ class RecipeController extends RecipeBaseController {
     callback?.();
   }
 
-  @watch
+  @reducer
   async updateRecipe(
     action: Action<{
       callback?: () => void;
@@ -205,7 +200,7 @@ class RecipeController extends RecipeBaseController {
     );
     newRecipesMap.set(recipe.id, recipe);
 
-    this.updateStore({
+    this.updateStoreSlice({
       recipesMap: newRecipesMap,
       editedRecipe: null,
     });
@@ -213,7 +208,7 @@ class RecipeController extends RecipeBaseController {
     callback?.();
   }
 
-  @watch
+  @reducer
   async deleteRecipe(
     action: Action<{ recipeId: Recipe['id']; callback?: () => void }>
   ) {
@@ -228,7 +223,7 @@ class RecipeController extends RecipeBaseController {
     const newRecipesMap = new Map(recipesMap);
     newRecipesMap.delete(recipeId);
 
-    this.updateStore({
+    this.updateStoreSlice({
       recipesMap: newRecipesMap,
     });
 

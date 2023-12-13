@@ -1,39 +1,38 @@
 import {
   chainActions,
+  controller,
   ControllerBase,
-  createAction,
   Middleware,
-  watch,
+  reducer,
   WatchedController,
 } from 'redux-controller-middleware';
 import { DeviceStorage } from '@food-captain/client-utils';
-import { persistedState, State } from '~/config/redux';
-import { AppInitializerStore } from './AppInitializer.store';
+import { persistedState, State } from '../../config/redux/index';
+import { AppInitializerStoreSlice } from './AppInitializer.storeSlice';
 
-@watch
-class AppInitializerController extends ControllerBase<State> {
+@controller
+class AppInitializerController extends ControllerBase<
+  AppInitializerStoreSlice,
+  State
+> {
   constructor(
     middleware: Middleware<State>,
     private readonly deviceStorage: DeviceStorage
   ) {
-    super(middleware);
+    super(middleware, AppInitializerStoreSlice);
   }
 
-  private updateStore(partialStore: Partial<AppInitializerStore>) {
-    this.dispatch(createAction(AppInitializerStore.update, partialStore));
-  }
-
-  @watch
+  @reducer
   initialized() {
     setTimeout(() => {
       console.log('AppInitializerController initialized');
-      this.updateStore({
+      this.updateStoreSlice({
         initialized: true,
       });
     }, 300);
   }
 
-  @watch
+  @reducer
   initialize() {
     const initAction = chainActions(
       // AuthorizationController.init(),
@@ -44,7 +43,7 @@ class AppInitializerController extends ControllerBase<State> {
     this.dispatch(initAction);
   }
 
-  @watch
+  @reducer
   // authorization is required for actions bellow
   initializeAfterLogin() {
     // const { authorizationToken } = this.getState().authorization;
@@ -59,14 +58,14 @@ class AppInitializerController extends ControllerBase<State> {
     // );
   }
 
-  @watch
+  @reducer
   disposed() {
-    this.updateStore({
+    this.updateStoreSlice({
       initialized: false,
     });
   }
 
-  @watch
+  @reducer
   async dispose() {
     await this.deviceStorage.remove(typeof persistedState.key);
 

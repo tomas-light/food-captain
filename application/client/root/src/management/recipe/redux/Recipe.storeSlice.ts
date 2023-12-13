@@ -1,7 +1,8 @@
-import { createReducer } from 'redux-controller-middleware';
-import { NewRecipe, Recipe, RecipeFilters, Tag } from '~/models';
+import { storeSlice } from 'redux-controller-middleware';
+import { NewRecipe, Recipe, RecipeFilters, Tag } from '../../../models/index';
 
-export class RecipeStore {
+@storeSlice
+export class RecipeStoreSlice {
   recipesAreLoading: boolean;
   recipesMap: Map<Recipe['id'], Recipe>;
 
@@ -23,7 +24,7 @@ export class RecipeStore {
 
   editedRecipe: NewRecipe | Recipe | null;
 
-  constructor(store?: RecipeStore) {
+  constructor(store?: RecipeStoreSlice) {
     this.recipesAreLoading = false;
     this.recipesMap = store?.recipesMap ?? new Map();
 
@@ -45,7 +46,4 @@ export class RecipeStore {
 
     this.editedRecipe = store?.editedRecipe ?? null;
   }
-
-  static update = 'RECIPE_update_store';
-  static reducer = createReducer(new RecipeStore(), RecipeStore.update);
 }

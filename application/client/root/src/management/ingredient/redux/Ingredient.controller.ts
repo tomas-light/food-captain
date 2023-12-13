@@ -1,38 +1,34 @@
+import type { Action } from 'redux-controller-middleware';
 import {
+  controller,
   ControllerBase,
-  createAction,
   Middleware,
-  watch,
+  reducer,
   WatchedController,
 } from 'redux-controller-middleware';
-import type { Action } from 'redux-controller-middleware';
 import { DimensionApi, IngredientApi } from '@food-captain/client-api';
-import { Dimension, Ingredient, NewIngredient } from '~/models';
-import { IngredientStore } from './Ingredient.store';
-import { State } from '~State';
+import { State } from '../../../config/redux/index';
+import { Dimension, Ingredient, NewIngredient } from '../../../models/index';
+import { IngredientStoreSlice } from './Ingredient.storeSlice';
 
-@watch
-class IngredientController extends ControllerBase<State> {
+@controller
+class IngredientController extends ControllerBase<IngredientStoreSlice, State> {
   constructor(
     middleware: Middleware<State>,
     private readonly ingredientApi: IngredientApi,
     private readonly dimensionApi: DimensionApi
   ) {
-    super(middleware);
+    super(middleware, IngredientStoreSlice);
   }
 
-  private updateStore(partialStore: Partial<IngredientStore>) {
-    this.dispatch(createAction(IngredientStore.update, partialStore));
-  }
-
-  @watch
+  @reducer
   async loadIngredients() {
-    this.updateStore({ ingredientsAreLoading: true });
+    this.updateStoreSlice({ ingredientsAreLoading: true });
 
     const response = await this.ingredientApi.getAllAsync();
     if (response.isFailed() || !response.data) {
       // todo: show toast fail
-      this.updateStore({
+      this.updateStoreSlice({
         ingredientsMap: new Map(),
         ingredientsAreLoading: false,
       });
@@ -48,20 +44,20 @@ class IngredientController extends ControllerBase<State> {
       ingredientsMap.set(dto.id, dto);
     });
 
-    this.updateStore({
+    this.updateStoreSlice({
       ingredientsMap: ingredientsMap,
       ingredientsAreLoading: false,
     });
   }
 
-  @watch
+  @reducer
   async loadDimensions() {
-    this.updateStore({ dimensionsAreLoading: true });
+    this.updateStoreSlice({ dimensionsAreLoading: true });
 
     const response = await this.dimensionApi.getAllAsync();
     if (response.isFailed() || !response.data) {
       // todo: show toast fail
-      this.updateStore({
+      this.updateStoreSlice({
         dimensionsMap: new Map(),
         dimensionsAreLoading: false,
       });
@@ -77,13 +73,13 @@ class IngredientController extends ControllerBase<State> {
       dimensionsMap.set(dto.id, dto);
     });
 
-    this.updateStore({
+    this.updateStoreSlice({
       dimensionsMap: dimensionsMap,
       dimensionsAreLoading: false,
     });
   }
 
-  @watch
+  @reducer
   async addIngredient(
     action: Action<{
       ingredient: NewIngredient;
@@ -102,7 +98,7 @@ class IngredientController extends ControllerBase<State> {
     const newMap = new Map(ingredientsMap);
     newMap.set(response.data.id, response.data);
 
-    this.updateStore({
+    this.updateStoreSlice({
       ingredientsMap: newMap,
     });
     // todo: show toast success
@@ -110,7 +106,7 @@ class IngredientController extends ControllerBase<State> {
     callback?.(response.data);
   }
 
-  @watch
+  @reducer
   async updateIngredient(
     action: Action<{ ingredient: Ingredient; callback?: () => void }>
   ) {
@@ -126,7 +122,7 @@ class IngredientController extends ControllerBase<State> {
     const newMap = new Map(ingredientsMap);
     newMap.set(response.data.id, response.data);
 
-    this.updateStore({
+    this.updateStoreSlice({
       ingredientsMap: newMap,
     });
     // todo: show toast success
@@ -134,7 +130,7 @@ class IngredientController extends ControllerBase<State> {
     callback?.();
   }
 
-  @watch
+  @reducer
   async removeIngredient(
     action: Action<{ ingredientId: Ingredient['id']; callback?: () => void }>
   ) {
@@ -155,7 +151,7 @@ class IngredientController extends ControllerBase<State> {
     const newMap = new Map(ingredientsMap);
     newMap.delete(ingredientId);
 
-    this.updateStore({
+    this.updateStoreSlice({
       ingredientsMap: newMap,
     });
     // todo: show toast success

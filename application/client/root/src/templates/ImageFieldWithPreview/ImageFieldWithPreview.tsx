@@ -8,7 +8,7 @@ import {
   ImageField,
 } from '@food-captain/client-shared';
 import { ImageApi } from '@food-captain/client-api';
-import { useTranslation } from '~/config/i18next/TranslationContext';
+import { useTranslation } from '../../config/i18next/TranslationContext';
 import classes from './ImageFieldWithPreview.module.scss';
 
 type Props = {

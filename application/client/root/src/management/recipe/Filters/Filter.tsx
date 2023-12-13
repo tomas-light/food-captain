@@ -7,7 +7,7 @@ import {
   Typography,
   useScreenBreakpoints,
 } from '@food-captain/client-shared';
-import { useTranslation } from '~/config/i18next/TranslationContext';
+import { useTranslation } from '../../../config/i18next/TranslationContext';
 import classes from './Filter.module.scss';
 
 type Props = {

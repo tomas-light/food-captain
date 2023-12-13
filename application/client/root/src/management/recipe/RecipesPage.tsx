@@ -14,16 +14,16 @@ import {
   useToggler,
 } from '@food-captain/client-shared';
 import { ImageApi } from '@food-captain/client-api';
-import { useLocaleResource } from '~/config/i18next';
-import { useTranslation } from '~/config/i18next/TranslationContext';
-import { useSelector } from '~/config/redux/useSelector';
-import { IngredientController } from '~/management/ingredient/redux';
-import { Filters } from '~/management/recipe/Filters';
-import { selectFilteredRecipes } from '~/management/recipe/redux/recipeSelectors';
-import { SortEnum } from '~/management/recipe/SortEnum';
-import { appUrls } from '~/routing/appUrls';
-import { RecipeStats } from './RecipeStats';
+import { useTranslation } from '../../config/i18next/TranslationContext';
+import { useLocaleResource } from '../../config/i18next';
+import { IngredientController } from '../ingredient/redux';
+import { useSelector } from '../../config/redux/useSelector';
+import { appUrls } from '../../routing';
+import { selectFilteredRecipes } from './redux/recipeSelectors';
+import { SortEnum } from './SortEnum';
 import { RecipeController } from './redux';
+import { RecipeStats } from './RecipeStats';
+import { Filters } from './Filters';
 import classes from './RecipesPage.module.scss';
 
 const sortTranslationKeys: {
@@ -47,6 +47,7 @@ const RecipesPage = () => {
     dispatch(IngredientController.loadIngredients());
     dispatch(IngredientController.loadDimensions());
     dispatch(RecipeController.loadTags());
+    dispatch(RecipeController.loadRecipes());
   }, []);
 
   const [searchString, setSearchString] = useState('');
@@ -81,17 +82,18 @@ const RecipesPage = () => {
 
   const [areFiltersOpen, setAreFiltersOpen] = useToggler();
 
-  const recipes = useSelector((state) =>
-    selectFilteredRecipes(state, {
+  const filterSettings = useMemo(
+    () => ({
       searchString,
       isAscendingSort: sortAscending,
       sortBy: selectedSort.value,
-    })
+    }),
+    [searchString, sortAscending, selectedSort.value]
   );
 
-  useEffect(() => {
-    dispatch(RecipeController.loadRecipes());
-  }, []);
+  const recipes = useSelector((state) =>
+    selectFilteredRecipes(state, filterSettings)
+  );
 
   return (
     <div className={classes.root}>

@@ -1,8 +1,6 @@
 import { DimensionDto, NewDimensionDto } from '@food-captain/api';
-import { metadata } from '@food-captain/client-utils';
 import { ApiBase } from './base/ApiBase';
 
-@metadata
 export class DimensionApi extends ApiBase {
   async getAllAsync() {
     return this.get<DimensionDto[]>('/dimensions');

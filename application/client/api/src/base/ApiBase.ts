@@ -1,5 +1,4 @@
 import { AxiosRequestConfig } from 'axios';
-import { metadata } from '@food-captain/client-utils';
 import { ApiInterceptor } from '../ApiInterceptor';
 import { API_BASE_URL } from './API_BASE_URL';
 import { ApiResponse } from './ApiResponse';
@@ -13,8 +12,7 @@ type Url =
       };
     };
 
-@metadata
-export abstract class ApiBase {
+export class ApiBase {
   constructor(private interceptor: ApiInterceptor) {
     if (!interceptor) {
       throw new Error("Can't instantiate Api. Have not enough arguments.");

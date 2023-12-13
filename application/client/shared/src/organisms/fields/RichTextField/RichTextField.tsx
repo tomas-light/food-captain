@@ -1,7 +1,5 @@
-import clsx from 'clsx';
 import {
   ComponentProps,
-  FC,
   ForwardedRef,
   forwardRef,
   useImperativeHandle,
@@ -48,7 +46,7 @@ const RichTextField = (props: Props, ref: ForwardedRef<RichTextFieldRef>) => {
     <div className={className}>
       <Slate
         editor={editor}
-        value={value.length ? value : fallbackRtfElements}
+        initialValue={value.length ? value : fallbackRtfElements}
         onChange={(newValue) => {
           onChange(newValue as RtfElement[]);
         }}
