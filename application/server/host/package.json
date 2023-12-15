@@ -14,7 +14,7 @@
     "serve-app": "ts-node src/index.ts"
   },
   "dependencies": {
-    "cheap-di": "4.0.0-rc-11",
+    "cheap-di": "4.0.0-rc-30",
     "compression": "1.7.4",
     "express": "4.18.2",
     "ts-node": "10.9.1"
@@ -26,7 +26,7 @@
     "@types/loader-utils": "2.0.6",
     "@types/node": "20.10.1",
     "@types/webpack-hot-middleware": "2.25.9",
-    "cheap-di-ts-transform": "1.0.0-rc-22",
+    "cheap-di-ts-transform": "1.0.0-rc-30",
     "clean-webpack-plugin": "4.0.0",
     "connect-history-api-fallback": "2.0.0",
     "copy-webpack-plugin": "11.0.0",

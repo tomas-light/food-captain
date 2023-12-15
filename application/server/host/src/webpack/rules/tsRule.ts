@@ -1,5 +1,5 @@
 import { transformer } from 'cheap-di-ts-transform';
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+// import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import type { Program } from 'typescript';
 import { Configuration } from 'webpack';
 import { paths } from '../paths';
@@ -33,6 +33,7 @@ export function tsRule(): Configuration {
                   {
                     debug: true,
                     addDetailsToUnknownParameters: true,
+                    logRegisteredMetadata: true,
                   }
                 ),
               ],

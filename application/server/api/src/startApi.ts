@@ -33,7 +33,7 @@ import { ConsoleLogger } from './utils/ConsoleLogger';
   }
 
   app.use(
-    cors({
+    cors(/* {
       origin: function (origin, callback) {
         if (origin && allowedOrigins.includes(origin)) {
           callback(null, true);
@@ -41,7 +41,7 @@ import { ConsoleLogger } from './utils/ConsoleLogger';
           callback(new Error(`${origin} not allowed by CORS`));
         }
       },
-    })
+    }*/)
   );
   // app.use(bodyParser.raw({ type: 'multipart/form-data', limit: '12mb' }));
 
