@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { api, get } from 'mvc-middleware';
+import { api, GET } from 'mvc-middleware/stage2';
 import { Logger } from '@food-captain/server-utils';
 import { BaseApiController } from '../base/BaseApiController';
 
@@ -16,7 +16,7 @@ export default class LocaleApiController extends BaseApiController {
     super(logger, request, response);
   }
 
-  @get(':localeOrLocaleWithRegion/:resource')
+  @GET(':localeOrLocaleWithRegion/:resource')
   getLocaleResource(localeOrLocaleWithRegion: string, resource: string) {
     const locale = this.getLocale(localeOrLocaleWithRegion);
 

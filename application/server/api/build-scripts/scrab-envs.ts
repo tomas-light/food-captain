@@ -25,9 +25,13 @@ async function readApiEnvContent() {
   const path = await import('path');
 
   // is executing from "food-captain/application/server/api" folder
-  const pathToEnvFile = path.join('envs', '.env.local');
+  const apiPathToEnvFile = path.join('envs', '.env.local');
+  const apiVariables = await readEnvContent(apiPathToEnvFile);
 
-  return await readEnvContent(pathToEnvFile);
+  const hostPathToEnvFile = path.join('..', 'host', 'envs', '.env.local');
+  const hostVariables = await readEnvContent(hostPathToEnvFile);
+
+  return apiVariables + hostVariables;
 }
 
 async function readDatabaseEnvContent() {

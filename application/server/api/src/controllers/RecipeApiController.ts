@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { api, delete_, get, post, put } from 'mvc-middleware';
+import { api, DELETE, GET, POST, PUT } from 'mvc-middleware/stage2';
 import {
   NewRecipeEntity,
   RecipeDescription,
@@ -31,38 +31,38 @@ export default class RecipeApiController extends BaseApiController {
     super(logger, request, response);
   }
 
-  @get('recipes')
+  @GET('recipes')
   async getRecipesAsync() {
     const recipes = await this.recipeService.getAllAsync();
     return this.ok(recipes);
   }
 
-  @get('recipes/max-kcal')
+  @GET('recipes/max-kcal')
   async getMaxKcalAsync() {
     const maxKcal = await this.recipeService.getMaxKcalAsync();
     return this.ok({ maxKcal });
   }
 
-  @get('recipes/max-cooking-time')
+  @GET('recipes/max-cooking-time')
   async getMaxCookingTimeAsync() {
     const maxCookingTime = await this.recipeService.getMaxCookingTimeAsync();
     return this.ok({ maxCookingTime });
   }
 
-  @post('recipes-by-filter')
+  @POST('recipes-by-filter')
   async getRecipesByFilterAsync(filters: RecipeFilters) {
     const recipes = await this.recipeService.getByFilterAsync(filters);
     return this.ok(recipes);
   }
 
-  @post('recipes-by-filter/random')
+  @POST('recipes-by-filter/random')
   async getRandomRecipeByFilterAsync(filters: RecipeFilters) {
     const recipe =
       await this.recipeService.getRandomRecipeByFilterAsync(filters);
     return this.ok(recipe);
   }
 
-  @get('recipe/:recipeId')
+  @GET('recipe/:recipeId')
   async getByIdAsync(recipeId: string) {
     const id = parseInt(recipeId, 10);
 
@@ -78,19 +78,19 @@ export default class RecipeApiController extends BaseApiController {
     return this.ok(recipe);
   }
 
-  @post('recipe')
+  @POST('recipe')
   async addRecipeAsync(recipe: NewRecipeDto) {
     const createdRecipe = await this.recipeService.addAsync(recipe);
     return this.ok(createdRecipe);
   }
 
-  @put('recipe/:recipeId')
+  @PUT('recipe/:recipeId')
   async updateRecipeAsync(recipeId: number, recipe: UpdatedRecipeDto) {
     const updatedRecipe = await this.recipeService.updateAsync(recipe);
     return this.ok(updatedRecipe);
   }
 
-  @delete_('recipe/:recipeId')
+  @DELETE('recipe/:recipeId')
   async deleteRecipeAsync(recipeId: number) {
     const recipe = await this.recipeService.getByIdAsync(recipeId);
     if (!recipe) {

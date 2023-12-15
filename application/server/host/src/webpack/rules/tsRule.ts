@@ -6,18 +6,18 @@ import { paths } from '../paths';
 
 export function tsRule(): Configuration {
   return {
-    plugins: [
-      new ForkTsCheckerWebpackPlugin({
-        typescript: {
-          // The equivalent of the --build flag for the tsc command -> build project
-          // and all its dependencies in project references.
-          build: true,
-
-          configFile: paths.clientTsConfig,
-          // mode: 'readonly', // don't write tsbuildinfo and d.ts on a disk,
-        },
-      }),
-    ],
+    // plugins: [
+    //   new ForkTsCheckerWebpackPlugin({
+    //     typescript: {
+    //       // The equivalent of the --build flag for the tsc command -> build project
+    //       // and all its dependencies in project references.
+    //       build: true,
+    //
+    //       configFile: paths.clientTsConfig,
+    //       // mode: 'readonly', // don't write tsbuildinfo and d.ts on a disk,
+    //     },
+    //   }),
+    // ],
     module: {
       rules: [
         {
@@ -25,6 +25,7 @@ export function tsRule(): Configuration {
           test: /\.tsx?$/,
           exclude: /\.test\.tsx?$/,
           options: {
+            configFile: paths.clientTsConfig,
             getCustomTransformers: (program: Program) => ({
               before: [
                 transformer(

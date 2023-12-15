@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { api, delete_, get, post, put } from 'mvc-middleware';
+import { api, DELETE, GET, POST, PUT } from 'mvc-middleware/stage2';
 import { IngredientEntity, NewIngredientEntity } from '@food-captain/database';
 import { Logger } from '@food-captain/server-utils';
 import { IngredientService } from '../services/IngredientService';
@@ -16,20 +16,20 @@ export default class IngredientApiController extends BaseApiController {
     super(logger, request, response);
   }
 
-  @get('ingredients')
+  @GET('ingredients')
   async getAllAsync() {
     const ingredients = await this.ingredientService.getAllAsync();
     return this.ok(ingredients);
   }
 
-  @post('ingredients-by-ids')
+  @POST('ingredients-by-ids')
   async getManyAsync(ingredientIds: IngredientEntity['id'][]) {
     const ingredients =
       await this.ingredientService.getManyAsync(ingredientIds);
     return this.ok(ingredients);
   }
 
-  @get('ingredient/:ingredientId')
+  @GET('ingredient/:ingredientId')
   async getByIdAsync(ingredientId: string) {
     const id = parseInt(ingredientId, 10);
 
@@ -45,7 +45,7 @@ export default class IngredientApiController extends BaseApiController {
     return this.ok(ingredient);
   }
 
-  // @get('ingredients/recipe/:recipeId')
+  // @GET('ingredients/recipe/:recipeId')
   // async getByRecipeIdAsync(recipeId: string) {
   //   const id = parseInt(recipeId, 10);
   //
@@ -57,14 +57,14 @@ export default class IngredientApiController extends BaseApiController {
   //   return this.ok(ingredients);
   // }
 
-  @post('ingredient')
+  @POST('ingredient')
   async addAsync(newIngredient: NewIngredientDto) {
     const createdIngredient =
       await this.ingredientService.addAsync(newIngredient);
     return this.ok(createdIngredient);
   }
 
-  @put('ingredient/:ingredientId')
+  @PUT('ingredient/:ingredientId')
   async updateAsync(ingredientId: string, ingredient: IngredientDto) {
     const updatedIngredient =
       await this.ingredientService.updateAsync(ingredient);
@@ -74,7 +74,7 @@ export default class IngredientApiController extends BaseApiController {
     return this.ok(updatedIngredient);
   }
 
-  @delete_('ingredient/:ingredientId')
+  @DELETE('ingredient/:ingredientId')
   async deleteAsync(ingredientId: string) {
     const id = parseInt(ingredientId, 10);
 

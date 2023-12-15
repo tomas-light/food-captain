@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { api, delete_, get, post } from 'mvc-middleware';
+import { api, DELETE, GET, POST } from 'mvc-middleware/stage2';
 import { Logger } from '@food-captain/server-utils';
 import { MenuService } from '../services/MenuService';
 import { BaseApiController } from '../base/BaseApiController';
@@ -16,13 +16,13 @@ export default class MenuApiController extends BaseApiController {
     super(logger, request, response);
   }
 
-  @get('menus')
+  @GET('menus')
   async getMenusAsync() {
     const result = await this.menuService.getAllAsync();
     return this.ok(result);
   }
 
-  @get('menu/:menuId')
+  @GET('menu/:menuId')
   async getMenuByIdAsync(menuId: string) {
     const result = await this.menuService.getMenuByIdAsync(
       parseInt(menuId, 10)
@@ -30,7 +30,7 @@ export default class MenuApiController extends BaseApiController {
     return this.ok(result);
   }
 
-  @post('menu')
+  @POST('menu')
   async addMenuAsync(dto: MenuDto) {
     const createdMenu = await this.menuService.addAsync({
       ...dto,
@@ -42,7 +42,7 @@ export default class MenuApiController extends BaseApiController {
     return this.ok(createdMenu);
   }
 
-  // @put('menu/:menuId')
+  // @PUT('menu/:menuId')
   // async updateMenuAsync(menuId: string, dto: MenuDto) {
   //   const updatedMenu = await this.menuService.updateAsync({
   //     ...dto,
@@ -54,7 +54,7 @@ export default class MenuApiController extends BaseApiController {
   //   return this.ok(updatedMenu);
   // }
 
-  @delete_('menu/:menuId')
+  @DELETE('menu/:menuId')
   async deleteMenuAsync(menuId: string) {
     const menu = await this.menuService.getMenuByIdAsync(parseInt(menuId, 10));
     if (!menu) {

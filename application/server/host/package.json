@@ -2,6 +2,7 @@
   "name": "@food-captain/host",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
+  "version": "0.0.0",
   "scripts": {
     "start": "run-s \"scrab-env\" start-app",
     "scrab-env": "ts-node build-scripts/scrab-envs.ts",
@@ -13,7 +14,7 @@
     "serve-app": "ts-node src/index.ts"
   },
   "dependencies": {
-    "cheap-di": "4.0.0-rc-10",
+    "cheap-di": "4.0.0-rc-11",
     "compression": "1.7.4",
     "express": "4.18.2",
     "ts-node": "10.9.1"
@@ -25,7 +26,7 @@
     "@types/loader-utils": "2.0.6",
     "@types/node": "20.10.1",
     "@types/webpack-hot-middleware": "2.25.9",
-    "cheap-di-ts-transform": "1.0.0-rc-20",
+    "cheap-di-ts-transform": "1.0.0-rc-22",
     "clean-webpack-plugin": "4.0.0",
     "connect-history-api-fallback": "2.0.0",
     "copy-webpack-plugin": "11.0.0",

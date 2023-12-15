@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { api, delete_, get, post, put } from 'mvc-middleware';
+import { api, DELETE, GET, POST, PUT } from 'mvc-middleware/stage2';
 import { UserWithRoleEntity } from '@food-captain/database';
 import { Logger } from '@food-captain/server-utils';
 import { UserService } from '../services/UserService';
@@ -16,31 +16,31 @@ export default class UserApiController extends BaseApiController {
     super(logger, request, response);
   }
 
-  @get('users')
+  @GET('users')
   async getUsersAsync() {
     const result = await this.userService.getAllAsync();
     return this.ok(result);
   }
 
-  @get('user/current')
+  @GET('user/current')
   async getCurrentUserAsync() {
     const result = await this.userService.getUserByIdAsync(1); // todo: get authorized user
     return this.ok(result);
   }
 
-  @post('user')
+  @POST('user')
   async addUserAsync(user: NewUserWithRoleDto) {
     const createdUser = await this.userService.addAsync(user);
     return this.ok(createdUser);
   }
 
-  @put('user/:userId')
+  @PUT('user/:userId')
   async updateUserAsync(userId: number, user: UserWithRoleDto) {
     const updatedUser = await this.userService.updateAsync(user);
     return this.ok(updatedUser);
   }
 
-  @delete_('user/:userId')
+  @DELETE('user/:userId')
   async deleteUserAsync(userId: number) {
     const user = await this.userService.getUserByIdAsync(userId);
     if (!user) {

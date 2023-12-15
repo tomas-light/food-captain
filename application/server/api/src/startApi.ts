@@ -17,6 +17,8 @@ import {
   POSTGRES_PASSWORD,
   POSTGRES_PORT,
   POSTGRES_USER,
+  HOST_HOST,
+  HOST_PORT,
 } from './environment';
 import { ConsoleLogger } from './utils/ConsoleLogger';
 
@@ -25,9 +27,20 @@ import { ConsoleLogger } from './utils/ConsoleLogger';
 
   const app = express();
 
+  const allowedOrigins = [`https://${HOST_HOST}`];
+  if (HOST_PORT) {
+    allowedOrigins.push(`https://${HOST_HOST}:${HOST_PORT}`);
+  }
+
   app.use(
     cors({
-      origin: 'https://food-captain.localhost',
+      origin: function (origin, callback) {
+        if (origin && allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error(`${origin} not allowed by CORS`));
+        }
+      },
     })
   );
   // app.use(bodyParser.raw({ type: 'multipart/form-data', limit: '12mb' }));
@@ -35,10 +48,12 @@ import { ConsoleLogger } from './utils/ConsoleLogger';
   app.use(json({ limit: '50mb' }) as RequestHandler);
   app.use(cookieParser());
   app.use((request, response, next) => {
-    response.setHeader(
-      'Access-Control-Allow-Origin',
-      'https://food-captain.localhost'
-    );
+    if (
+      request.headers.origin &&
+      allowedOrigins.includes(request.headers.origin)
+    ) {
+      response.setHeader('Access-Control-Allow-Origin', request.headers.origin);
+    }
     next();
   });
 
@@ -58,7 +73,7 @@ import { ConsoleLogger } from './utils/ConsoleLogger';
   const server = http.createServer(app);
 
   const host = API_HOST ?? 'localhost';
-  const port = API_PORT ? parseInt(API_PORT, 10) : 3000;
+  const port = API_PORT ? parseInt(API_PORT, 10) : 80;
 
   server.listen(port, host, () => {
     console.log('api has started');

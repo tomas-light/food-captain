@@ -1,5 +1,4 @@
 import { AxiosRequestConfig } from 'axios';
-import { inject } from 'cheap-di';
 import { ApiInterceptor } from '../ApiInterceptor';
 import { API_BASE_URL } from './API_BASE_URL';
 import { ApiResponse } from './ApiResponse';
@@ -13,7 +12,6 @@ type Url =
       };
     };
 
-@inject(ApiInterceptor)
 export class ApiBase {
   constructor(private interceptor: ApiInterceptor) {
     if (!interceptor) {

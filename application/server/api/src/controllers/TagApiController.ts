@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { api, get, post } from 'mvc-middleware';
+import { api, GET, POST } from 'mvc-middleware/stage2';
 import { Database, NewTagEntity, TagEntity } from '@food-captain/database';
 import { Logger } from '@food-captain/server-utils';
 import { BaseApiController } from '../base/BaseApiController';
@@ -15,19 +15,19 @@ export default class TagApiController extends BaseApiController {
     super(logger, request, response);
   }
 
-  @get('tags')
+  @GET('tags')
   async getAllAsync() {
     const tags = await this.db.tag.allAsync();
     return this.ok(tags);
   }
 
-  @post('tags-by-ids')
+  @POST('tags-by-ids')
   async getManyAsync(tagIds: TagEntity['id'][]) {
     const tags = await this.db.tag.byIdsAsync(tagIds);
     return this.ok(tags);
   }
 
-  @post('tag')
+  @POST('tag')
   async addAsync(newTag: NewTagDto) {
     const tagId = await this.db.tag.insertAsync(newTag);
     if (tagId == null) {

@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import multer, { memoryStorage } from 'multer';
-import { api, delete_, get, post } from 'mvc-middleware';
+import { api, DELETE, GET, POST } from 'mvc-middleware/stage2';
 import { Logger } from '@food-captain/server-utils';
 import { ImageEntity } from '@food-captain/database';
 import { ImageService, NewImage } from '../services/ImageService';
@@ -21,13 +21,13 @@ export default class ImageApiController extends BaseApiController {
     super(logger, request, response);
   }
 
-  @get('images')
+  @GET('images')
   async getAllAsync() {
     const images = await this.imageService.allShortInfoAsync();
     return this.ok(images);
   }
 
-  @get('image/:imageId')
+  @GET('image/:imageId')
   async getByIdAsync(imageId: string) {
     const id = parseInt(imageId, 10);
 
@@ -48,7 +48,7 @@ export default class ImageApiController extends BaseApiController {
     this.response.end(image.content);
   }
 
-  @post('image')
+  @POST('image')
   async addAsync() {
     try {
       const multerMiddleware = upload.single('imageFile');
@@ -85,7 +85,7 @@ export default class ImageApiController extends BaseApiController {
     }
   }
 
-  @delete_('image/:imageId')
+  @DELETE('image/:imageId')
   async deleteAsync(imageId: string) {
     const id = parseInt(imageId, 10);
 

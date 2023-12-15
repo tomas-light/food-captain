@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { api, delete_, get, post } from 'mvc-middleware';
+import { api, DELETE, GET, POST } from 'mvc-middleware/stage2';
 import { DimensionEntity } from '@food-captain/database';
 import { Logger } from '@food-captain/server-utils';
 import { DimensionService } from '../services/DimensionService';
@@ -16,19 +16,19 @@ export default class DimensionApiController extends BaseApiController {
     super(logger, request, response);
   }
 
-  @get('dimensions')
+  @GET('dimensions')
   async getAllAsync() {
     const dimensions = await this.dimensionService.getAllAsync();
     return this.ok(dimensions);
   }
 
-  @post('dimensions-by-ids')
+  @POST('dimensions-by-ids')
   async getManyAsync(dimensionIds: DimensionDto['id'][]) {
     const dimensions = await this.dimensionService.getManyAsync(dimensionIds);
     return this.ok(dimensions);
   }
 
-  @get('dimension/:dimensionId')
+  @GET('dimension/:dimensionId')
   async getByIdAsync(dimensionId: string) {
     const id = parseInt(dimensionId, 10);
 
@@ -44,13 +44,13 @@ export default class DimensionApiController extends BaseApiController {
     return this.ok(dimension);
   }
 
-  @post('dimension')
+  @POST('dimension')
   async addAsync(newDimension: NewDimensionDto) {
     const createdDimension = await this.dimensionService.addAsync(newDimension);
     return this.ok(createdDimension);
   }
 
-  @delete_('dimension/:dimensionId')
+  @DELETE('dimension/:dimensionId')
   async deleteAsync(dimensionId: string) {
     const id = parseInt(dimensionId, 10);
 

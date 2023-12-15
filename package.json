@@ -11,18 +11,20 @@
   ],
   "scripts": {
     "start": "npm-run-all --parallel db:docker:run start:host start:api",
-    "start:host": "yarn workspace @food-captain/host run start",
-    "start:api": "yarn workspace @food-captain/api run start",
+    "start:host": "npm run start --workspace @food-captain/host",
+    "start:api": "npm run start --workspace @food-captain/api",
     "-": "",
     "start:without-scrabing": "npm-run-all --parallel db:docker:run startOnly:host startOnly:api",
-    "startOnly:host": "yarn workspace @food-captain/host run start-app",
-    "startOnly:api": "yarn workspace @food-captain/api run start-app",
+    "startOnly:host": "npm run start-app --workspace @food-captain/host",
+    "startOnly:api": "npm run start-app --workspace @food-captain/api",
     "--": "",
     "db&caddy": "npm-run-all --parallel db:docker:run caddy:run",
-    "db:docker:run": "yarn workspace @food-captain/database db:docker:run",
-    "caddy:run": "yarn workspace @food-captain/host caddy:run",
+    "db:docker:run": "npm run db:docker:run --workspace @food-captain/database",
+    "caddy:run": "npm run caddy:run --workspace @food-captain/host",
     "---": "",
-    "test": "yarn workspaces run test"
+    "build:server": "npm run build:test --workspace @food-captain/api",
+    "build:client": "npm run build:test --workspace @food-captain/host",
+    "test": "npm run test --workspace"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "6.13.1",
