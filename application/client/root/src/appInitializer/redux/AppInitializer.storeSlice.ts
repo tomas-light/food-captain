@@ -1,10 +1,10 @@
 import { storeSlice } from 'redux-controller-middleware';
 
 @storeSlice
-export class AppInitializerStore {
+export class AppInitializerStoreSlice {
   initialized: boolean;
 
-  constructor(store?: AppInitializerStore) {
+  constructor(store?: AppInitializerStoreSlice) {
     this.initialized = false;
   }
 }

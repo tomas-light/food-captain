@@ -47,6 +47,7 @@ const RecipesPage = () => {
     dispatch(IngredientController.loadIngredients());
     dispatch(IngredientController.loadDimensions());
     dispatch(RecipeController.loadTags());
+    dispatch(RecipeController.loadRecipes());
   }, []);
 
   const [searchString, setSearchString] = useState('');
@@ -81,17 +82,18 @@ const RecipesPage = () => {
 
   const [areFiltersOpen, setAreFiltersOpen] = useToggler();
 
-  const recipes = useSelector((state) =>
-    selectFilteredRecipes(state, {
+  const filterSettings = useMemo(
+    () => ({
       searchString,
       isAscendingSort: sortAscending,
       sortBy: selectedSort.value,
-    })
+    }),
+    [searchString, sortAscending, selectedSort.value]
   );
 
-  useEffect(() => {
-    dispatch(RecipeController.loadRecipes());
-  }, []);
+  const recipes = useSelector((state) =>
+    selectFilteredRecipes(state, filterSettings)
+  );
 
   return (
     <div className={classes.root}>

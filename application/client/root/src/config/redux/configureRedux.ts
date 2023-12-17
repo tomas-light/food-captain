@@ -19,9 +19,9 @@ import {
 } from '@food-captain/client-utils';
 import { registerControllerDependencies } from '../registerControllerDependencies';
 import { IS_DEV_MODE } from '../environment';
-import { AppInitializerStore } from '../../appInitializer/redux/index';
-import { IngredientStore } from '../../management/ingredient/redux/index';
-import { RecipeStore } from '../../management/recipe/redux/index';
+import { AppInitializerStoreSlice } from '../../appInitializer/redux/index';
+import { IngredientStoreSlice } from '../../management/ingredient/redux/index';
+import { RecipeStoreSlice } from '../../management/recipe/redux/index';
 
 const APPLICATION_STATE_VERSION = '1';
 
@@ -45,9 +45,9 @@ export const persistedState = {
 
 function makeReducers() {
   return getReducersFromStoreSlices({
-    appInitializer: AppInitializerStore,
-    ingredient: IngredientStore,
-    recipe: RecipeStore,
+    appInitializer: AppInitializerStoreSlice,
+    ingredient: IngredientStoreSlice,
+    recipe: RecipeStoreSlice,
   });
 }
 
@@ -102,14 +102,12 @@ export async function configureRedux() {
     };
   };
 
-  const middleware = controllerMiddleware<State>({
-    getContainer: () => container,
-  });
+  const middleware = controllerMiddleware({ container });
 
   const restoredState: State = {
-    appInitializer: new AppInitializerStore(storedState?.appInitializer),
-    ingredient: new IngredientStore(storedState?.ingredient),
-    recipe: new RecipeStore(storedState?.recipe),
+    appInitializer: new AppInitializerStoreSlice(storedState?.appInitializer),
+    ingredient: new IngredientStoreSlice(storedState?.ingredient),
+    recipe: new RecipeStoreSlice(storedState?.recipe),
   };
 
   const store = configureStore({

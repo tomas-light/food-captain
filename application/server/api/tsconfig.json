@@ -12,7 +12,7 @@
         "transform": "cheap-di-ts-transform",
         "debug": true,
         "addDetailsToUnknownParameters": true,
-        // "logClassNames": true
+        // "logRegisteredMetadata": true
       }
     ],
     "outDir": "./dist"

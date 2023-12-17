@@ -3,13 +3,11 @@ import {
   controller,
   Middleware,
   reducer,
-  updateStoreSlice,
   WatchedController,
 } from 'redux-controller-middleware';
 import { RecipeApi } from '@food-captain/client-api';
 import { State } from '../../../config/redux/index';
 import { Recipe, RecipeFilters } from '../../../models/index';
-import { RecipeStore } from './Recipe.store';
 import { RecipeBaseController } from './RecipeBase.controller';
 
 @controller
@@ -21,18 +19,14 @@ class RecipeFiltersController extends RecipeBaseController {
     super(middleware);
   }
 
-  private updateStore(partialStore: Partial<RecipeStore>) {
-    this.dispatch(updateStoreSlice(RecipeStore)(partialStore));
-  }
-
   @reducer
   async loadRecipesByFilters(action: Action<{ filters: RecipeFilters }>) {
-    this.updateStore({ filteredRecipesAreLoading: true });
+    this.updateStoreSlice({ filteredRecipesAreLoading: true });
     const { filters } = action.payload;
 
     const response = await this.recipeApi.getRecipesByFilterAsync(filters);
     if (response.isFailed() || !response.data) {
-      this.updateStore({
+      this.updateStoreSlice({
         filteredRecipesAreLoading: false,
         filters,
       });
@@ -50,7 +44,7 @@ class RecipeFiltersController extends RecipeBaseController {
       updatedRecipesMap.set(recipeDto.id, recipe);
     });
 
-    this.updateStore({
+    this.updateStoreSlice({
       recipesMap: updatedRecipesMap,
       filteredRecipesAreLoading: false,
       filteredRecipesMap: filteredRecipesMap,
@@ -60,7 +54,7 @@ class RecipeFiltersController extends RecipeBaseController {
 
   @reducer
   async loadRandomRecipeByFilters(action: Action<{ filters: RecipeFilters }>) {
-    this.updateStore({
+    this.updateStoreSlice({
       randomRecipe: null,
       randomRecipeIsLoading: true,
     });
@@ -68,7 +62,7 @@ class RecipeFiltersController extends RecipeBaseController {
 
     const response = await this.recipeApi.getRandomRecipeByFilterAsync(filters);
     if (response.isFailed() || !response.data) {
-      this.updateStore({
+      this.updateStoreSlice({
         randomRecipeIsLoading: false,
       });
 
@@ -79,7 +73,7 @@ class RecipeFiltersController extends RecipeBaseController {
       response.data
     );
 
-    this.updateStore({
+    this.updateStoreSlice({
       randomRecipeIsLoading: false,
       randomRecipe: randomRecipe,
     });
@@ -87,20 +81,20 @@ class RecipeFiltersController extends RecipeBaseController {
 
   @reducer
   async loadMaxKcal() {
-    this.updateStore({
+    this.updateStoreSlice({
       maxKcalIsLoading: true,
     });
 
     const response = await this.recipeApi.getMaxKcalAsync();
     if (response.isFailed() || !response.data) {
-      this.updateStore({
+      this.updateStoreSlice({
         maxKcalIsLoading: false,
       });
 
       return;
     }
 
-    this.updateStore({
+    this.updateStoreSlice({
       maxKcalIsLoading: true,
       maxKcal: response.data.maxKcal,
     });
@@ -108,20 +102,20 @@ class RecipeFiltersController extends RecipeBaseController {
 
   @reducer
   async loadMaxCookingTime() {
-    this.updateStore({
+    this.updateStoreSlice({
       maxCookingTimeIsLoading: true,
     });
 
     const response = await this.recipeApi.getMaxCookingTimeAsync();
     if (response.isFailed() || !response.data) {
-      this.updateStore({
+      this.updateStoreSlice({
         maxCookingTimeIsLoading: false,
       });
 
       return;
     }
 
-    this.updateStore({
+    this.updateStoreSlice({
       maxCookingTimeIsLoading: true,
       maxCookingTime: response.data.maxCookingTime,
     });

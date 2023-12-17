@@ -4,31 +4,29 @@ import {
   ControllerBase,
   Middleware,
   reducer,
-  updateStoreSlice,
   WatchedController,
 } from 'redux-controller-middleware';
 import { DeviceStorage } from '@food-captain/client-utils';
 import { persistedState, State } from '../../config/redux/index';
-import { AppInitializerStore } from './AppInitializer.store';
+import { AppInitializerStoreSlice } from './AppInitializer.storeSlice';
 
 @controller
-class AppInitializerController extends ControllerBase<State> {
+class AppInitializerController extends ControllerBase<
+  AppInitializerStoreSlice,
+  State
+> {
   constructor(
     middleware: Middleware<State>,
     private readonly deviceStorage: DeviceStorage
   ) {
-    super(middleware);
-  }
-
-  private updateStore(partialStore: Partial<AppInitializerStore>) {
-    this.dispatch(updateStoreSlice(AppInitializerStore)(partialStore));
+    super(middleware, AppInitializerStoreSlice);
   }
 
   @reducer
   initialized() {
     setTimeout(() => {
       console.log('AppInitializerController initialized');
-      this.updateStore({
+      this.updateStoreSlice({
         initialized: true,
       });
     }, 300);
@@ -62,7 +60,7 @@ class AppInitializerController extends ControllerBase<State> {
 
   @reducer
   disposed() {
-    this.updateStore({
+    this.updateStoreSlice({
       initialized: false,
     });
   }

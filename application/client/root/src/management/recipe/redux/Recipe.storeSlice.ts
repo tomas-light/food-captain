@@ -2,7 +2,7 @@ import { storeSlice } from 'redux-controller-middleware';
 import { NewRecipe, Recipe, RecipeFilters, Tag } from '../../../models/index';
 
 @storeSlice
-export class RecipeStore {
+export class RecipeStoreSlice {
   recipesAreLoading: boolean;
   recipesMap: Map<Recipe['id'], Recipe>;
 
@@ -24,7 +24,7 @@ export class RecipeStore {
 
   editedRecipe: NewRecipe | Recipe | null;
 
-  constructor(store?: RecipeStore) {
+  constructor(store?: RecipeStoreSlice) {
     this.recipesAreLoading = false;
     this.recipesMap = store?.recipesMap ?? new Map();
 

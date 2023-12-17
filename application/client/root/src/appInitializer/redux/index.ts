@@ -1,2 +1,2 @@
 export * from './AppInitializer.controller';
-export * from './AppInitializer.store';
+export * from './AppInitializer.storeSlice';

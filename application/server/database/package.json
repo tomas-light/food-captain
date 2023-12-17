@@ -12,6 +12,6 @@
   },
   "devDependencies": {
     "@types/pg": "8.10.9",
-    "cheap-di": "4.0.0-rc-30"
+    "cheap-di": "4.0.0-rc-33"
   }
 }

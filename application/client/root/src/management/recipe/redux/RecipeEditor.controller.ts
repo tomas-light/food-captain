@@ -1,27 +1,15 @@
 import type { Action } from 'redux-controller-middleware';
 import {
   controller,
-  Middleware,
   reducer,
-  updateStoreSlice,
   WatchedController,
 } from 'redux-controller-middleware';
-import { State } from '../../../config/redux/index';
 import { NewRecipe, Recipe } from '../../../models/index';
 import { RecipeController } from './Recipe.controller';
-import { RecipeStore } from './Recipe.store';
 import { RecipeBaseController } from './RecipeBase.controller';
 
 @controller
 class RecipeEditorController extends RecipeBaseController {
-  constructor(middleware: Middleware<State>) {
-    super(middleware);
-  }
-
-  private updateStore(partialStore: Partial<RecipeStore>) {
-    this.dispatch(updateStoreSlice(RecipeStore)(partialStore));
-  }
-
   @reducer
   startEditingNewRecipe() {
     const { editedRecipe } = this.getState().recipe;
@@ -32,7 +20,7 @@ class RecipeEditorController extends RecipeBaseController {
       return;
     }
 
-    this.updateStore({
+    this.updateStoreSlice({
       editedRecipe: {
         name: '',
         description: {
@@ -70,7 +58,7 @@ class RecipeEditorController extends RecipeBaseController {
       return;
     }
 
-    this.updateStore({
+    this.updateStoreSlice({
       editedRecipe: recipe,
     });
   }
@@ -80,7 +68,7 @@ class RecipeEditorController extends RecipeBaseController {
     const { mode } = action.payload;
 
     if (mode === 'create') {
-      this.updateStore({
+      this.updateStoreSlice({
         editedRecipe: {
           name: '',
           description: {
@@ -96,7 +84,7 @@ class RecipeEditorController extends RecipeBaseController {
       if (editedRecipe && 'id' in editedRecipe) {
         const recipe = recipesMap.get(editedRecipe.id);
         if (recipe) {
-          this.updateStore({
+          this.updateStoreSlice({
             editedRecipe: recipe,
           });
         }
@@ -115,7 +103,7 @@ class RecipeEditorController extends RecipeBaseController {
 
     const { updates } = action.payload;
 
-    this.updateStore({
+    this.updateStoreSlice({
       editedRecipe: {
         ...editedRecipe,
         ...updates(editedRecipe),

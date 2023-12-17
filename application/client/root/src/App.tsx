@@ -1,6 +1,6 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import DayjsAdapter from '@date-io/dayjs';
-import { DIOneTimeProvider } from 'cheap-di-react';
+import { DIProviderMemo } from 'cheap-di-react';
 import { FC, ReactElement, useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { chakraTheme } from '@food-captain/client-shared';
@@ -64,7 +64,7 @@ const App: FC<{ children: ReactElement }> = (props) => {
   return (
     <ChakraProvider resetCSS theme={chakraTheme}>
       <Provider store={config.store}>
-        <DIOneTimeProvider parentContainer={config.container}>
+        <DIProviderMemo parentContainer={config.container}>
           <TranslationContext.Provider value={translationContext}>
             <AppInitializer>
               <Layout>{children}</Layout>
@@ -72,7 +72,7 @@ const App: FC<{ children: ReactElement }> = (props) => {
 
             <RegisterNavigationInDI container={config.container} />
           </TranslationContext.Provider>
-        </DIOneTimeProvider>
+        </DIProviderMemo>
       </Provider>
     </ChakraProvider>
   );

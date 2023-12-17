@@ -3,14 +3,12 @@ import {
   controller,
   Middleware,
   reducer,
-  updateStoreSlice,
   WatchedController,
 } from 'redux-controller-middleware';
-import { RecipeApi, TagApi } from '@food-captain/client-api';
 import { RecipeForViewDto } from '@food-captain/api';
+import { RecipeApi, TagApi } from '@food-captain/client-api';
 import { State } from '../../../config/redux/index';
 import { NewTag, Recipe, Tag } from '../../../models';
-import { RecipeStore } from './Recipe.store';
 import { RecipeBaseController } from './RecipeBase.controller';
 
 @controller
@@ -23,17 +21,13 @@ class RecipeController extends RecipeBaseController {
     super(middleware);
   }
 
-  private updateStore(partialStore: Partial<RecipeStore>) {
-    this.dispatch(updateStoreSlice(RecipeStore)(partialStore));
-  }
-
   @reducer
   async loadRecipes() {
-    this.updateStore({ recipesAreLoading: true });
+    this.updateStoreSlice({ recipesAreLoading: true });
 
     const response = await this.recipeApi.getAllAsync();
     if (response.isFailed() || !response.data) {
-      this.updateStore({
+      this.updateStoreSlice({
         recipesAreLoading: false,
         recipesMap: new Map(),
       });
@@ -49,7 +43,7 @@ class RecipeController extends RecipeBaseController {
       );
     });
 
-    this.updateStore({
+    this.updateStoreSlice({
       recipesAreLoading: false,
       recipesMap: recipesMap,
     });
@@ -64,11 +58,11 @@ class RecipeController extends RecipeBaseController {
   ) {
     const { recipeId, callback } = action.payload;
 
-    this.updateStore({ recipesAreLoading: true });
+    this.updateStoreSlice({ recipesAreLoading: true });
 
     const recipeResponse = await this.recipeApi.getByIdAsync(recipeId);
     if (recipeResponse.isFailed() || !recipeResponse.data) {
-      this.updateStore({
+      this.updateStoreSlice({
         recipesAreLoading: false,
       });
 
@@ -83,7 +77,7 @@ class RecipeController extends RecipeBaseController {
     );
     newRecipesMap.set(recipe.id, recipe);
 
-    this.updateStore({
+    this.updateStoreSlice({
       recipesAreLoading: false,
       recipesMap: newRecipesMap,
     });
@@ -93,11 +87,11 @@ class RecipeController extends RecipeBaseController {
 
   @reducer
   async loadTags() {
-    this.updateStore({ tagsAreLoading: true });
+    this.updateStoreSlice({ tagsAreLoading: true });
 
     const response = await this.tagApi.getAllAsync();
     if (response.isFailed() || !response.data) {
-      this.updateStore({
+      this.updateStoreSlice({
         tagsAreLoading: false,
         tagsMap: new Map(),
       });
@@ -110,7 +104,7 @@ class RecipeController extends RecipeBaseController {
       tagsMap.set(tag.id, tag);
     });
 
-    this.updateStore({
+    this.updateStoreSlice({
       tagsAreLoading: false,
       tagsMap: tagsMap,
     });
@@ -135,7 +129,7 @@ class RecipeController extends RecipeBaseController {
 
     newTagsMap.set(recipeResponse.data.id, recipeResponse.data);
 
-    this.updateStore({
+    this.updateStoreSlice({
       tagsMap: newTagsMap,
     });
 
@@ -168,7 +162,7 @@ class RecipeController extends RecipeBaseController {
     );
     newRecipesMap.set(recipe.id, recipe);
 
-    this.updateStore({
+    this.updateStoreSlice({
       recipesMap: newRecipesMap,
       editedRecipe: null,
     });
@@ -206,7 +200,7 @@ class RecipeController extends RecipeBaseController {
     );
     newRecipesMap.set(recipe.id, recipe);
 
-    this.updateStore({
+    this.updateStoreSlice({
       recipesMap: newRecipesMap,
       editedRecipe: null,
     });
@@ -229,7 +223,7 @@ class RecipeController extends RecipeBaseController {
     const newRecipesMap = new Map(recipesMap);
     newRecipesMap.delete(recipeId);
 
-    this.updateStore({
+    this.updateStoreSlice({
       recipesMap: newRecipesMap,
     });
 

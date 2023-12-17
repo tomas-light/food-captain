@@ -4,36 +4,31 @@ import {
   ControllerBase,
   Middleware,
   reducer,
-  updateStoreSlice,
   WatchedController,
 } from 'redux-controller-middleware';
 import { DimensionApi, IngredientApi } from '@food-captain/client-api';
 import { State } from '../../../config/redux/index';
 import { Dimension, Ingredient, NewIngredient } from '../../../models/index';
-import { IngredientStore } from './Ingredient.store';
+import { IngredientStoreSlice } from './Ingredient.storeSlice';
 
 @controller
-class IngredientController extends ControllerBase<State> {
+class IngredientController extends ControllerBase<IngredientStoreSlice, State> {
   constructor(
     middleware: Middleware<State>,
     private readonly ingredientApi: IngredientApi,
     private readonly dimensionApi: DimensionApi
   ) {
-    super(middleware);
-  }
-
-  private updateStore(partialStore: Partial<IngredientStore>) {
-    this.dispatch(updateStoreSlice(IngredientStore)(partialStore));
+    super(middleware, IngredientStoreSlice);
   }
 
   @reducer
   async loadIngredients() {
-    this.updateStore({ ingredientsAreLoading: true });
+    this.updateStoreSlice({ ingredientsAreLoading: true });
 
     const response = await this.ingredientApi.getAllAsync();
     if (response.isFailed() || !response.data) {
       // todo: show toast fail
-      this.updateStore({
+      this.updateStoreSlice({
         ingredientsMap: new Map(),
         ingredientsAreLoading: false,
       });
@@ -49,7 +44,7 @@ class IngredientController extends ControllerBase<State> {
       ingredientsMap.set(dto.id, dto);
     });
 
-    this.updateStore({
+    this.updateStoreSlice({
       ingredientsMap: ingredientsMap,
       ingredientsAreLoading: false,
     });
@@ -57,12 +52,12 @@ class IngredientController extends ControllerBase<State> {
 
   @reducer
   async loadDimensions() {
-    this.updateStore({ dimensionsAreLoading: true });
+    this.updateStoreSlice({ dimensionsAreLoading: true });
 
     const response = await this.dimensionApi.getAllAsync();
     if (response.isFailed() || !response.data) {
       // todo: show toast fail
-      this.updateStore({
+      this.updateStoreSlice({
         dimensionsMap: new Map(),
         dimensionsAreLoading: false,
       });
@@ -78,7 +73,7 @@ class IngredientController extends ControllerBase<State> {
       dimensionsMap.set(dto.id, dto);
     });
 
-    this.updateStore({
+    this.updateStoreSlice({
       dimensionsMap: dimensionsMap,
       dimensionsAreLoading: false,
     });
@@ -103,7 +98,7 @@ class IngredientController extends ControllerBase<State> {
     const newMap = new Map(ingredientsMap);
     newMap.set(response.data.id, response.data);
 
-    this.updateStore({
+    this.updateStoreSlice({
       ingredientsMap: newMap,
     });
     // todo: show toast success
@@ -127,7 +122,7 @@ class IngredientController extends ControllerBase<State> {
     const newMap = new Map(ingredientsMap);
     newMap.set(response.data.id, response.data);
 
-    this.updateStore({
+    this.updateStoreSlice({
       ingredientsMap: newMap,
     });
     // todo: show toast success
@@ -156,7 +151,7 @@ class IngredientController extends ControllerBase<State> {
     const newMap = new Map(ingredientsMap);
     newMap.delete(ingredientId);
 
-    this.updateStore({
+    this.updateStoreSlice({
       ingredientsMap: newMap,
     });
     // todo: show toast success

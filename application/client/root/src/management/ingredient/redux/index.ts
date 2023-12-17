@@ -1,3 +1,3 @@
 export * from './Ingredient.controller';
-export * from './Ingredient.store';
+export * from './Ingredient.storeSlice';
 export * from './ingredientSelectors';

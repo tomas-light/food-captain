@@ -46,8 +46,7 @@ const RichTextField = (props: Props, ref: ForwardedRef<RichTextFieldRef>) => {
     <div className={className}>
       <Slate
         editor={editor}
-        // @ts-expect-error
-        value={value.length ? value : fallbackRtfElements}
+        initialValue={value.length ? value : fallbackRtfElements}
         onChange={(newValue) => {
           onChange(newValue as RtfElement[]);
         }}
