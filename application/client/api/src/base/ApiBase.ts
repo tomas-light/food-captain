@@ -3,7 +3,7 @@ import { ApiInterceptor } from '../ApiInterceptor';
 import { API_BASE_URL } from './API_BASE_URL';
 import { ApiResponse } from './ApiResponse';
 
-type Url =
+export type Url =
   | string
   | {
       url: string;
@@ -92,5 +92,3 @@ export class ApiBase {
     >;
   }
 }
-
-export type { Url };

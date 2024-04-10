@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import type { Action } from 'redux-controller-middleware';
 import {
   controller,
@@ -30,6 +31,10 @@ class RecipeController extends RecipeBaseController {
       this.updateStoreSlice({
         recipesAreLoading: false,
         recipesMap: new Map(),
+      });
+      // todo: add localization
+      toast('Не удалось загрузить рецепты', {
+        type: 'error',
       });
 
       return;
@@ -65,6 +70,10 @@ class RecipeController extends RecipeBaseController {
       this.updateStoreSlice({
         recipesAreLoading: false,
       });
+      // todo: add localization
+      toast(`Не удалось загрузить рецепт #${recipeId}`, {
+        type: 'error',
+      });
 
       return;
     }
@@ -95,6 +104,10 @@ class RecipeController extends RecipeBaseController {
         tagsAreLoading: false,
         tagsMap: new Map(),
       });
+      // todo: add localization
+      toast('Не удалось загрузить теги', {
+        type: 'error',
+      });
 
       return;
     }
@@ -121,6 +134,10 @@ class RecipeController extends RecipeBaseController {
 
     const recipeResponse = await this.tagApi.addAsync(newTag);
     if (recipeResponse.isFailed() || !recipeResponse.data) {
+      // todo: add localization
+      toast('Не удалось добавить тег', {
+        type: 'error',
+      });
       return;
     }
 
@@ -132,6 +149,10 @@ class RecipeController extends RecipeBaseController {
     this.updateStoreSlice({
       tagsMap: newTagsMap,
     });
+    // todo: add localization
+    toast(`Тег "${newTag.name}" добавлен`, {
+      type: 'success',
+    });
 
     getCreatedTag?.(recipeResponse.data);
   }
@@ -141,6 +162,10 @@ class RecipeController extends RecipeBaseController {
     const { callback } = action.payload;
     const { editedRecipe } = this.getState().recipe;
     if (!editedRecipe) {
+      // todo: add localization
+      toast('Не удалось добавить рецепт', {
+        type: 'error',
+      });
       return;
     }
 
@@ -166,6 +191,10 @@ class RecipeController extends RecipeBaseController {
       recipesMap: newRecipesMap,
       editedRecipe: null,
     });
+    // todo: add localization
+    toast(`Рецепт "${recipe.name}" добавлен`, {
+      type: 'success',
+    });
 
     callback?.();
   }
@@ -179,6 +208,10 @@ class RecipeController extends RecipeBaseController {
     const { callback } = action.payload;
     const { editedRecipe } = this.getState().recipe;
     if (!editedRecipe || !('id' in editedRecipe)) {
+      // todo: add localization
+      toast('Не найден редактируемый рецепт в store', {
+        type: 'error',
+      });
       return;
     }
 
@@ -189,6 +222,10 @@ class RecipeController extends RecipeBaseController {
       recipeWithCorrectDescription
     );
     if (recipeResponse.isFailed() || !recipeResponse.data) {
+      // todo: add localization
+      toast('Не удалось сохранить рецепт', {
+        type: 'error',
+      });
       return;
     }
 
@@ -204,6 +241,10 @@ class RecipeController extends RecipeBaseController {
       recipesMap: newRecipesMap,
       editedRecipe: null,
     });
+    // todo: add localization
+    toast(`Рецепт "${recipe.name}" изменён`, {
+      type: 'success',
+    });
 
     callback?.();
   }
@@ -216,6 +257,10 @@ class RecipeController extends RecipeBaseController {
 
     const response = await this.recipeApi.deleteAsync(recipeId);
     if (response.isFailed() || !response.data) {
+      // todo: add localization
+      toast(`Не удалось удалить рецепт #${recipeId}`, {
+        type: 'error',
+      });
       return;
     }
 
@@ -225,6 +270,10 @@ class RecipeController extends RecipeBaseController {
 
     this.updateStoreSlice({
       recipesMap: newRecipesMap,
+    });
+    // todo: add localization
+    toast('Рецепт удалён', {
+      type: 'success',
     });
 
     callback?.();

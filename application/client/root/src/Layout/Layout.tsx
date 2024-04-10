@@ -1,4 +1,5 @@
 import { FC, ReactNode, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { NavigationPanel } from './NavigationPanel';
 import {
   NavigationBarContextType,
@@ -30,6 +31,7 @@ const Main: FC<{ children: ReactNode }> = ({ children }) => {
         <NavigationBar />
 
         {children}
+        <ToastContainer />
       </main>
     </NavigationBarContext.Provider>
   );

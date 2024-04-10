@@ -1,48 +1,39 @@
 import compression from 'compression';
-import express from 'express';
-import { ServerFactory } from './ServerFactory';
+import express, { type Express } from 'express';
 import { ServerStrategy } from './ServerStrategy';
 
-const notImplemented = (): any => {
-  throw new Error('Not implemented');
-};
-
-class Host {
+export class Host {
   private static singleton: Host | undefined = undefined;
-  server: ServerStrategy = {
-    sayHi: notImplemented,
-    handleStaticFiles: notImplemented,
-    handleSpaRoutes: async () => notImplemented(),
-    createAndRunServer: notImplemented,
-    waitInitialization: notImplemented,
-  };
-
   constructor() {
     if (!Host.singleton) {
       Host.singleton = this;
     }
-
     return Host.singleton;
   }
 
   async start() {
     const app = express();
 
-    this.server = new ServerFactory(app).server;
-    if (!this.server) {
-      console.error('Server is not created');
-      return;
-    }
-    await this.server.waitInitialization();
+    const server = chooseServer(app);
+    await server.waitInitialization();
 
-    this.server.sayHi();
+    server.sayHi();
 
     app.use(compression());
-    this.server.handleStaticFiles();
+    server.handleStaticFiles();
 
-    await this.server.createAndRunServer();
-    this.server.handleSpaRoutes();
+    await server.createAndRunServer();
+    server.handleSpaRoutes();
   }
 }
 
-export { Host };
+function chooseServer(app: Express): ServerStrategy {
+  // webpack will not include this code in prod because of tree shaking
+  if (process.env.NODE_ENV === 'development') {
+    const { DevelopmentServer } = require('./DevelopmentServer');
+    return new DevelopmentServer(app);
+  } else {
+    const { ProductionServer } = require('./ProductionServer');
+    return new ProductionServer(app);
+  }
+}

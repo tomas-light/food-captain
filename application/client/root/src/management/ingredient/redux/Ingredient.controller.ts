@@ -6,6 +6,7 @@ import {
   reducer,
   WatchedController,
 } from 'redux-controller-middleware';
+import { toast } from 'react-toastify';
 import { DimensionApi, IngredientApi } from '@food-captain/client-api';
 import { State } from '../../../config/redux/index';
 import { Dimension, Ingredient, NewIngredient } from '../../../models/index';
@@ -27,10 +28,13 @@ class IngredientController extends ControllerBase<IngredientStoreSlice, State> {
 
     const response = await this.ingredientApi.getAllAsync();
     if (response.isFailed() || !response.data) {
-      // todo: show toast fail
       this.updateStoreSlice({
         ingredientsMap: new Map(),
         ingredientsAreLoading: false,
+      });
+      // todo: add localization
+      toast('Не удалось загрузить ингредиенты', {
+        type: 'error',
       });
 
       return;
@@ -56,10 +60,13 @@ class IngredientController extends ControllerBase<IngredientStoreSlice, State> {
 
     const response = await this.dimensionApi.getAllAsync();
     if (response.isFailed() || !response.data) {
-      // todo: show toast fail
       this.updateStoreSlice({
         dimensionsMap: new Map(),
         dimensionsAreLoading: false,
+      });
+      // todo: add localization
+      toast('Не удалось загрузить размерности', {
+        type: 'error',
       });
 
       return;
@@ -90,7 +97,10 @@ class IngredientController extends ControllerBase<IngredientStoreSlice, State> {
 
     const response = await this.ingredientApi.addAsync(ingredient);
     if (response.isFailed() || !response.data) {
-      // todo: show toast fail
+      // todo: add localization
+      toast('Не удалось добавить ингредиент', {
+        type: 'error',
+      });
       return;
     }
 
@@ -101,7 +111,10 @@ class IngredientController extends ControllerBase<IngredientStoreSlice, State> {
     this.updateStoreSlice({
       ingredientsMap: newMap,
     });
-    // todo: show toast success
+    // todo: add localization
+    toast(`Ингредиент "${ingredient.name}" добавлен`, {
+      type: 'success',
+    });
 
     callback?.(response.data);
   }
@@ -114,7 +127,10 @@ class IngredientController extends ControllerBase<IngredientStoreSlice, State> {
 
     const response = await this.ingredientApi.updateAsync(ingredient);
     if (response.isFailed() || !response.data) {
-      // todo: show toast fail
+      // todo: add localization
+      toast('Не удалось обновить ингредиент', {
+        type: 'error',
+      });
       return;
     }
 
@@ -125,7 +141,10 @@ class IngredientController extends ControllerBase<IngredientStoreSlice, State> {
     this.updateStoreSlice({
       ingredientsMap: newMap,
     });
-    // todo: show toast success
+    // todo: add localization
+    toast(`Ингредиент "${ingredient.name}" обновлен`, {
+      type: 'success',
+    });
 
     callback?.();
   }
@@ -138,12 +157,18 @@ class IngredientController extends ControllerBase<IngredientStoreSlice, State> {
 
     const response = await this.ingredientApi.deleteAsync(ingredientId);
     if (response.isFailed() || !response.data) {
-      // todo: show toast fail
+      // todo: add localization
+      toast('Не удалось удалить ингредиент', {
+        type: 'error',
+      });
       return;
     }
 
     if (!response.data.removed) {
-      // todo: show toast fail
+      // todo: add localization
+      toast('Не удалось удалить ингредиент', {
+        type: 'error',
+      });
       return;
     }
 
@@ -154,7 +179,10 @@ class IngredientController extends ControllerBase<IngredientStoreSlice, State> {
     this.updateStoreSlice({
       ingredientsMap: newMap,
     });
-    // todo: show toast success
+    // todo: add localization
+    toast('Ингредиент удалён', {
+      type: 'success',
+    });
 
     callback?.();
   }
