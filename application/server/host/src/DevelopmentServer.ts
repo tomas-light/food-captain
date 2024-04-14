@@ -3,11 +3,13 @@ import { Express } from 'express';
 import webpack, { Configuration } from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import hotMiddleware from 'webpack-hot-middleware';
+import { HOST_HOST, HOST_PORT } from '@food-captain/client-api/src/environment';
 import { makeDevConfig } from './webpack/config.dev';
 import { BaseServer, ServerStrategy } from './ServerStrategy';
+import { HOST_SCHEMA } from './environment';
 
 export class DevelopmentServer extends BaseServer implements ServerStrategy {
-  protected startMessage = 'https://food-captain.localhost/';
+  protected startMessage = `Host has started ${HOST_SCHEMA}://${HOST_HOST}${HOST_PORT ? ':' + HOST_PORT : ''}`;
 
   constructor(app: Express) {
     super(app);

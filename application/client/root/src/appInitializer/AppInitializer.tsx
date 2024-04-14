@@ -1,8 +1,8 @@
 import { FC, ReactElement, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Icon, Typography, Fade } from '@food-captain/client-shared';
-import { useSelector } from '../config/redux/useSelector';
+import { Icon, Typography } from '@food-captain/client-shared';
 import { useLocaleResource } from '../config/i18next';
+import { useSelector } from '../config/redux/useSelector';
 import { AppInitializerController } from './redux';
 import classes from './AppInitializer.module.scss';
 
@@ -26,15 +26,13 @@ export const AppInitializer: FC<Props> = (props) => {
 
   if (!initialized || buttonsResourcesAreLoading || commonResourcesAreLoading) {
     return (
-      <Fade isOpen={true}>
-        <div className={classes.initialScreen}>
-          <div className={classes.logoContainer}>
-            <Icon variant={'logo'} />
-          </div>
-
-          <Typography size={20}>Loading...</Typography>
+      <div className={classes.initialScreen}>
+        <div className={classes.logoContainer}>
+          <Icon variant={'logo'} />
         </div>
-      </Fade>
+
+        <Typography size={20}>Loading...</Typography>
+      </div>
     );
   }
 

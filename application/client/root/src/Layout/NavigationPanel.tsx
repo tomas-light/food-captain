@@ -1,7 +1,7 @@
 import { Link } from '@chakra-ui/react';
 import clsx from 'clsx';
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Icon, IconVariant } from '@food-captain/client-shared';
 import { appUrls } from '../routing';
 import { useTranslation } from '../config/i18next/TranslationContext';
@@ -28,7 +28,9 @@ const navigationElements: NavigationElement[] = [
 ];
 
 export const NavigationPanel = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
+
   const [playMeatBallSlap] = useState(() => {
     const audio = new Audio('/sounds/meatBall_slap.mp3');
     return () => {
@@ -53,7 +55,11 @@ export const NavigationPanel = () => {
   return (
     <div className={classes.root}>
       <div className={classes.relativeContainerForMeatBall}>
-        <Icon className={classes.logo} variant={'logo'} />
+        <Icon
+          className={classes.logo}
+          variant={'logo'}
+          onClick={() => navigate(appUrls.url())}
+        />
 
         {navigationElements.map((element) => (
           <Link

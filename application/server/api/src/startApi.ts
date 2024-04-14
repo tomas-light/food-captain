@@ -19,6 +19,7 @@ import {
   POSTGRES_USER,
   HOST_HOST,
   HOST_PORT,
+  API_SCHEMA,
 } from './environment';
 import { ConsoleLogger } from './utils/ConsoleLogger';
 
@@ -72,10 +73,21 @@ import { ConsoleLogger } from './utils/ConsoleLogger';
 
   const server = http.createServer(app);
 
+  const schema = API_SCHEMA ?? 'http';
   const host = API_HOST ?? 'localhost';
-  const port = API_PORT ? parseInt(API_PORT, 10) : 80;
+
+  let port: number;
+  if (API_PORT) {
+    port = parseInt(API_PORT, 10);
+  } else {
+    if (schema === 'https') {
+      port = 443;
+    } else {
+      port = 80;
+    }
+  }
 
   server.listen(port, host, () => {
-    console.log('api has started');
+    console.log(`API has started ${schema}://${host}:${port}`);
   });
 })();

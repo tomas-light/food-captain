@@ -14,6 +14,7 @@ async function makeBaseConfig() {
         output: {
           path: paths.clientDist,
           publicPath: '/',
+          filename: '[name].[contenthash].js',
         },
         resolve: {
           extensions: ['.js', '.jsx', '.ts', '.tsx'],

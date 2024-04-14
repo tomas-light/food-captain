@@ -8,7 +8,7 @@ import {
 } from 'redux-controller-middleware';
 import { RecipeForViewDto } from '@food-captain/api';
 import { RecipeApi, TagApi } from '@food-captain/client-api';
-import { State } from '../../../config/redux/index';
+import { State } from '../../../config/redux';
 import { NewTag, Recipe, Tag } from '../../../models';
 import { RecipeBaseController } from './RecipeBase.controller';
 
