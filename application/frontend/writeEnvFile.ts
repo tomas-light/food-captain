@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 import yenv from 'yenv';
 import { type Env } from './env.yaml.js';
 
-export const paths = {
+const paths = {
   __dirname: path.dirname(fileURLToPath(import.meta.url)),
   get generatedEnvFile() {
     return path.join(this.__dirname, 'src', 'app', 'config', 'env.yaml.json');
@@ -21,12 +21,10 @@ export async function writeEnvFile() {
   try {
     env = yenv(paths.env, { logBeforeThrow: true, strict: false });
   } catch {
-    /* eslint-disable */
     console.error('[env] Is there env.yaml file?');
     console.group('[env] user environment:');
     console.info(process.env);
     console.groupEnd();
-    /* eslint-enable */
 
     env = {};
   }

@@ -1,10 +1,10 @@
 import { createRoot } from 'react-dom/client';
+import { App } from './app/App';
 
 const element = document.querySelector('html > body > main');
 if (element) {
   const root = createRoot(element);
-  root.render(<p>Hello world</p>);
+  root.render(<App />);
 } else {
-  // eslint-disable-next-line no-console
   console.warn('root element is not found in document');
 }

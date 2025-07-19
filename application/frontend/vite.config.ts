@@ -75,14 +75,6 @@ export default defineConfig(async ({ mode, isPreview }) => {
       // https setting enables http2 by default, but can be downgraded to http1 by setting proxy (https://vitejs.dev/config/server-options.html#server-https)
       proxy: {},
     },
-    test: {
-      environment: 'jsdom',
-      exclude: ['**/node_modules/**', '**/tests/**'],
-      coverage: {
-        provider: 'v8',
-        reporter: ['text', 'json', 'html'],
-      },
-    },
   } as UserConfig;
 });
 
