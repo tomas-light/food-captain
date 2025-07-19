@@ -1,17 +1,9 @@
-/.yarn/**            linguist-vendored
-/.yarn/releases/*    binary
-/.yarn/plugins/**/*  binary
-/.pnp.*              binary linguist-generated
+/.yarn/**                       linguist-vendored
+/.yarn/releases/*               binary
+/.yarn/plugins/**/*             binary
 
-# Autodetect text files
-* text=auto eol=lf
 
-# Definitively text files
-*ts text
-*tsx text
-*css text
-*js text
-*jsx text
-*yml text
-*json text
-*md text
+*                               text=auto eol=lf
+*.jpg                           binary
+*.png                           binary filter=lfs diff=lfs merge=lfs -text
+*.ico                           binary
