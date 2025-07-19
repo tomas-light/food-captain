@@ -13,3 +13,4 @@
 .idea
 
 node_modules
+/application/frontend/src/app/config/env.yaml.json

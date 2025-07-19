@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": [
+      /* support for import.meta.glob type that is used in i18nInit */
+      "vite/client"
+    ],
+    "module": "esnext",
+    "target": "esnext",
+
+    /* Bundler mode */
+    "allowSyntheticDefaultImports": true,
+    "declaration": false,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+
+    /* Linting */
+    "strict": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "~/shared/*": ["./src/shared/*"],
+      "~/entities/*": ["./src/entities/*"],
+      "~/features/*": ["./src/features/*"],
+      "~/widgets/*": ["./src/widgets/*"],
+      "~/pages/*": ["./src/pages/*"]
+    }
+  }
+}

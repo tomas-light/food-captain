@@ -1,0 +1,9 @@
+{
+  "apiBaseUrl": "/api/v1",
+
+  "mockApi": {
+  },
+
+  "feature": {
+  }
+}
