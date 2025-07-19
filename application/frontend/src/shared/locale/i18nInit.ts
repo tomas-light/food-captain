@@ -2,6 +2,7 @@ import i18n, { type Namespace } from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import { initReactI18next } from 'react-i18next';
+import { locales } from './Locale';
 
 const defaultNamespace = 'translation';
 
@@ -43,8 +44,8 @@ export function i18nInit<TLocale extends string>() {
     )
     .use(initReactI18next)
     .init({
-      supportedLngs: ['ru', 'en'],
-      fallbackLng: 'ru',
+      supportedLngs: locales,
+      fallbackLng: locales[0],
       // debug: true,
 
       react: {

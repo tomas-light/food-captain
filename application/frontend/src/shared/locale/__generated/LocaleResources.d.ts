@@ -1,3 +1,3 @@
 export interface LocaleResources {
-  "app.App.hello": null
+  "pages/home.HomePage.hello": null
 }
