@@ -32,23 +32,23 @@ function getPrettierLinting() {
   return {
     ...prettierConfig,
     files: ['**/*.{js,ts,tsx}'],
-    // rules: {
-    //   ...prettierConfig.rules,
-    //   'max-len': [
-    //     'warn',
-    //     {
-    //       code: 80,
-    //       comments: 120,
-    //       ignoreComments: true,
-    //       ignoreStrings: true, // ignores lines that contain a double-quoted or single-quoted string
-    //       ignoreTemplateLiterals: true, // ignores lines that contain a template literal
-    //       ignoreRegExpLiterals: true, // ignores lines that contain a RegExp literal
-    //       tabWidth: 2,
-    //     },
-    //   ],
-    //   quotes: [1, 'single', 'avoid-escape'],
-    //   'spaced-comment': ['error', 'always'],
-    //   curly: ['error', 'all'],
-    // },
+    rules: {
+      ...prettierConfig.rules,
+      // 'max-len': [
+      //   'warn',
+      //   {
+      //     code: 80,
+      //     comments: 120,
+      //     ignoreComments: true,
+      //     ignoreStrings: true, // ignores lines that contain a double-quoted or single-quoted string
+      //     ignoreTemplateLiterals: true, // ignores lines that contain a template literal
+      //     ignoreRegExpLiterals: true, // ignores lines that contain a RegExp literal
+      //     tabWidth: 2,
+      //   },
+      // ],
+      quotes: [1, 'single', 'avoid-escape'],
+      'spaced-comment': ['error', 'always'],
+      curly: ['error', 'all'],
+    },
   };
 }
