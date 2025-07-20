@@ -1,7 +1,7 @@
 export type Table<Key, Value> = {
   getAll(): Promise<Value[]>;
 
-  get(key: Key): Promise<Value | undefined>;
+  get(key: Key | undefined): Promise<Value | undefined>;
 
   insert(key: Key, value: Value): Promise<Key>;
 

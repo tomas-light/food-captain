@@ -53,6 +53,9 @@ function mapIdbToDatabase<Schema extends DBSchema>(
         return idbDatabase.getAll(tableName);
       },
       get(key) {
+        if (key == undefined) {
+          return Promise.resolve(undefined);
+        }
         return idbDatabase.get(tableName, key);
       },
       insert(key, value) {

@@ -1,5 +1,4 @@
 import { getFakeDatabase } from '../../fake-database/getFakeDatabase';
-import type { ImageTableEntity } from '../../fake-database/tables/ImageTable.entity';
 import type { IngredientDto } from '../dto/IngredientDto';
 import type { IngredientApiClient } from '../real/IngredientApiClient';
 import { fakeResponse } from './fakeResponse';
@@ -9,38 +8,24 @@ export const fakeIngredientApiClient: Partial<IngredientApiClient> = {
     const database = await getFakeDatabase();
     const allIngredients = await database.ingredient.getAll();
 
-    const imagePromises: Promise<ImageTableEntity | undefined>[] = [];
-
-    allIngredients.forEach((ingredient) => {
-      if (ingredient.image_id != null) {
-        imagePromises.push(database.image.get(ingredient.image_id));
-      }
-    });
-
-    const images = await Promise.all(imagePromises);
-
-    const imageUrlPromises: Promise<void>[] = [];
     const ingredients: IngredientDto[] = [];
 
-    for (let index = 0; index < allIngredients.length; index++) {
-      const ingredient = allIngredients[index];
+    const promises = allIngredients.map(async (ingredient) => {
+      let imageUrl: string | undefined = undefined;
 
-      const ingredientDto: IngredientDto = {
+      const image = await database.image.get(ingredient.image_id);
+      if (image) {
+        imageUrl = await toBase64(image.content);
+      }
+
+      ingredients.push({
         id: ingredient.id,
         name: ingredient.name,
-      };
+        imageUrl: imageUrl,
+      });
+    });
 
-      const image = images[index];
-      if (image) {
-        const promise = toBase64(image.content).then((url) => {
-          ingredientDto.imageUrl = url;
-        });
-        imageUrlPromises.push(promise);
-      }
-      ingredients.push(ingredientDto);
-    }
-
-    await Promise.all(imageUrlPromises);
+    await Promise.all(promises);
 
     return fakeResponse.ok(ingredients);
   },
