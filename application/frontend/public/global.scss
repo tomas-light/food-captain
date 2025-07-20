@@ -1,0 +1,37 @@
+@use './fonts/fonts';
+@include fonts.fontFaces;
+
+:root {
+  color-scheme: light dark;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  @include fonts.nunitoFontFamily;
+}
+
+body {
+  margin: 0 auto;
+  background: linear-gradient(180deg, #507080 0%, #d5c7c7 100%);
+  font-weight: 300;
+
+  input,
+  textarea {
+    font-weight: 300;
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

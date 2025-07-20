@@ -3,6 +3,7 @@ import { ApiClientProvider } from './ApiClientProvider';
 import { ConfigJsonProvider } from './ConfigJsonProvider';
 import envJson from './env.yaml.json' with { type: 'json' };
 import { TranslatesProvider } from './TranslatesProvider';
+import '../../../public/global.scss';
 
 export function App(props: PropsWithChildren) {
   const { children } = props;

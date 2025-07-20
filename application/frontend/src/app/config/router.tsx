@@ -1,6 +1,7 @@
 import { createBrowserRouter, Outlet, useRouteError } from 'react-router';
 import { InitLocaleToRoutes } from '~/shared/routes';
 import { addLocaleToRoutes } from '~/shared/routes/addLocaleToRoutes';
+import { AppLayout } from '../ui/AppLayout';
 import { App } from './App';
 import { PagesRouter } from './PagesRouter';
 
@@ -9,17 +10,17 @@ export const router = createBrowserRouter([
     path: '/*',
     element: <Outlet />,
     errorElement: <RouterRootErrorElement />,
-    children: addLocaleToRoutes()(
-      {
-        element: (
-          <InitLocaleToRoutes>
-            <App>
+    children: addLocaleToRoutes()({
+      element: (
+        <InitLocaleToRoutes>
+          <App>
+            <AppLayout>
               <PagesRouter />
-            </App>
-          </InitLocaleToRoutes>
-        ),
-      },
-    ),
+            </AppLayout>
+          </App>
+        </InitLocaleToRoutes>
+      ),
+    }),
   },
 ]);
 

@@ -80,7 +80,10 @@ export default defineConfig(async ({ mode, isPreview }) => {
 
 /** add aliases for font resources to include them into build pipeline (see /public/fonts/fonts.scss) */
 const fontAliases = {
-  ...[].reduce(
+  ...[
+    'Nunito-VariableFont_wght.ttf',
+    'Nunito-Italic-VariableFont_wght.ttf',
+  ].reduce(
     makeFontPathReducer((fontFileName) => paths.font(fontFileName)),
     {} as Record<string, string>
   ),
