@@ -2,6 +2,14 @@
   "apiBaseUrl": "/api/v1",
 
   "mockApi": {
+    "auth": true,
+    "dimension": true,
+    "image": true,
+    "ingredient":  true,
+    "menu": true,
+    "recipe":  true,
+    "tag": true,
+    "user":  true
   },
 
   "feature": {

@@ -1,5 +1,7 @@
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { PropsWithChildren } from 'react';
 import { ApiClientProvider } from './ApiClientProvider';
+import { ApiMockConfigProvider } from './ApiMockConfigProvider';
 import { ConfigJsonProvider } from './ConfigJsonProvider';
 import envJson from './env.yaml.json' with { type: 'json' };
 import { TranslatesProvider } from './TranslatesProvider';
@@ -11,7 +13,13 @@ export function App(props: PropsWithChildren) {
   return (
     <ConfigJsonProvider configJsonUrl={envJson.configJsonUrl}>
       <ApiClientProvider>
-        <TranslatesProvider>{children}</TranslatesProvider>
+        <TranslatesProvider>
+          <ApiMockConfigProvider>
+            {children}
+
+            <ReactQueryDevtools />
+          </ApiMockConfigProvider>
+        </TranslatesProvider>
       </ApiClientProvider>
     </ConfigJsonProvider>
   );

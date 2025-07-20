@@ -1,4 +1,4 @@
 export interface ActiveAuthTable {
-  key: 'authorizedUserLogin';
+  key: 'authorizedUserEmail';
   value: string;
 }
