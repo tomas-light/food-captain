@@ -5,7 +5,7 @@ export interface MenuTableEntity {
   /** iso */
   create_date: string;
   /** iso */
-  last_update: string;
+  last_update?: string;
   author_id?: UserTableEntity['id'];
   name?: string;
   order_number?: number;

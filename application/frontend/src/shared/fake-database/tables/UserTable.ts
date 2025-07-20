@@ -17,6 +17,7 @@ export function initUserTable(options: {
   const users: UserTableEntity[] = [fakeUserCredentials.artem];
 
   return {
+    users,
     saveUsers: () => {
       users.forEach((entity) => {
         void database.user.insert(entity.email, entity);

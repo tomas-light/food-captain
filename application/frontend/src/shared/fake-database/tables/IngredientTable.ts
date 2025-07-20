@@ -13,37 +13,36 @@ export function initIngredientTable(options: {
 }) {
   const { database } = options;
 
+  let id = 0;
   const ingredients: IngredientTableEntity[] = [
-    create(1, 'лук', 1),
-    create(2, 'Чеснок', 2),
-    create(7, 'Крабовые палочки', 7),
-    create(8, 'Томат', 8),
-    create(9, 'Красный болгарский перец', 6),
-    create(10, 'Сыр', 9),
-    create(11, 'Майонез', 10),
-    create(12, 'Говядина на кости', 14),
-    create(13, 'Картофель', 15),
-    create(14, 'Свёкла', 16),
-    create(15, 'Морковь', 17),
-    create(16, 'Томатная паста', 18),
-    create(17, 'Подсолнечное масло', 19),
-    create(18, 'Капуста', 20),
-    create(19, 'Лимонная кислота', 21),
-    create(20, 'Макароны', 23),
+    create('лук'),
+    create('Чеснок'),
+    create('Крабовые палочки'),
+    create('Томат'),
+    create('Красный болгарский перец'),
+    create('Сыр'),
+    create('Майонез'),
+    create('Говядина на кости'),
+    create('Картофель'),
+    create('Свёкла'),
+    create('Морковь'),
+    create('Томатная паста'),
+    create('Подсолнечное масло'),
+    create('Капуста'),
+    create('Лимонная кислота'),
+    create('Макароны'),
   ];
-  function create(
-    id: IngredientTableEntity['id'],
-    name: IngredientTableEntity['name'],
-    image_id: IngredientTableEntity['image_id']
-  ): IngredientTableEntity {
+
+  function create(name: IngredientTableEntity['name']): IngredientTableEntity {
     return {
-      id,
+      id: ++id,
       name,
-      image_id,
+      image_id: undefined,
     };
   }
 
   return {
+    ingredients,
     saveIngredients: () => {
       ingredients.forEach((dimension) => {
         void database.ingredient.insert(dimension.id, dimension);

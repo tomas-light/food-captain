@@ -19,7 +19,7 @@ export function initUserRoleTable(options: {
 
   const userRoles: UserRoleTableEntity[] = [
     {
-      role_id: 1,
+      role_id: 1, // admin role id
       user_id: fakeUserCredentials.artem.id,
     },
   ];

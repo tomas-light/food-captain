@@ -1,4 +1,6 @@
+import { faker } from '@faker-js/faker';
 import type { Database } from '../../database';
+import type { IngredientTableEntity } from './IngredientTable.entity';
 import type { RecipeTableEntity } from './RecipeTable.entity';
 import type { RecipeTagTableEntity } from './RecipeTagTable.entity';
 import type { TagTableEntity } from './TagTable.entity';
@@ -15,24 +17,26 @@ export function initRecipeTagTable(options: {
   database: Database<{
     recipeTag: RecipeTagTable;
   }>;
+  recipes: RecipeTableEntity[];
+  tags: TagTableEntity[];
 }) {
-  const { database } = options;
+  const { database, recipes, tags } = options;
 
-  const recipeTags: RecipeTagTableEntity[] = [
-    create(11, 8),
-    create(11, 3),
-    create(13, 3),
-  ];
+  const recipeTags: RecipeTagTableEntity[] = [];
 
-  function create(
-    recipe_id: RecipeTableEntity['id'],
-    tag_id: TagTableEntity['id']
-  ): RecipeTagTableEntity {
-    return {
-      recipe_id,
-      tag_id,
-    };
-  }
+  recipes.forEach((recipe) => {
+    const randomTags = faker.helpers.arrayElements(tags, {
+      min: 1,
+      max: tags.length,
+    });
+
+    randomTags.forEach((tag) => {
+      recipeTags.push({
+        recipe_id: recipe.id,
+        tag_id: tag.id,
+      });
+    });
+  });
 
   return {
     saveRecipeTags: () => {

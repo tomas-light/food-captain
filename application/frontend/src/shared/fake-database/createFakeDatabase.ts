@@ -8,7 +8,6 @@ import { initIngredientInRecipeTable } from './tables/IngredientInRecipeTable';
 import { initIngredientTable } from './tables/IngredientTable';
 import { initMenuInScheduleTable } from './tables/MenuInScheduleTable';
 import { initMenuTable } from './tables/MenuTable';
-import { initRecipeImageTable } from './tables/RecipeImageTable';
 import { initRecipeTable } from './tables/RecipeTable';
 import { initRecipeTagTable } from './tables/RecipeTagTable';
 import { initRoleTable } from './tables/RoleTable';
@@ -31,7 +30,6 @@ export async function createFakeDatabase() {
       menu: '',
       menuInSchedule: '',
       recipe: '',
-      recipeImage: '',
       recipeTag: '',
       role: '',
       schedule: '',
@@ -41,23 +39,35 @@ export async function createFakeDatabase() {
     }),
 
     initialTransactions: async (database) => {
-      const { saveDimensions } = initDimensionTable({ database });
-      const { saveDishesInMenu } = initDishInMenuTable({ database });
-      const { saveImages } = initImageTable({ database });
-      const { saveIngredientsInRecipes } = initIngredientInRecipeTable({
+      const { dimensions, saveDimensions } = initDimensionTable({ database });
+      const { recipes, saveRecipes } = initRecipeTable({ database });
+      const { ingredients, saveIngredients } = initIngredientTable({
         database,
       });
-      const { saveIngredients } = initIngredientTable({ database });
-      const { saveMenusInSchedule } = initMenuInScheduleTable({ database });
-      const { saveMenus } = initMenuTable({ database });
-      const { saveRecipeImages } = initRecipeImageTable({ database });
-      const { saveRecipes } = initRecipeTable({ database });
-      const { saveRecipeTags } = initRecipeTagTable({ database });
+      const { saveImages } = initImageTable({
+        database,
+        entitiesWithImages: [...recipes, ...ingredients],
+      });
+      const { saveIngredientsInRecipes } = initIngredientInRecipeTable({
+        database,
+        recipes,
+        dimensions,
+        ingredients,
+      });
+      const { users, saveUsers } = initUserTable({ database });
       const { saveRoles } = initRoleTable({ database });
-      const { saveSchedules } = initScheduleTable({ database });
-      const { saveTags } = initTagTable({ database });
       const { saveUserRoles } = initUserRoleTable({ database });
-      const { saveUsers } = initUserTable({ database });
+      const { saveMenus } = initMenuTable({ database, users });
+      const { tags, saveTags } = initTagTable({ database });
+      const { saveRecipeTags } = initRecipeTagTable({
+        database,
+        recipes,
+        tags,
+      });
+
+      const { saveMenusInSchedule } = initMenuInScheduleTable({ database });
+      const { saveDishesInMenu } = initDishInMenuTable({ database });
+      const { saveSchedules } = initScheduleTable({ database });
 
       saveDimensions();
       saveDishesInMenu();
@@ -66,7 +76,6 @@ export async function createFakeDatabase() {
       saveIngredients();
       saveMenusInSchedule();
       saveMenus();
-      saveRecipeImages();
       saveRecipes();
       saveRecipeTags();
       saveRoles();

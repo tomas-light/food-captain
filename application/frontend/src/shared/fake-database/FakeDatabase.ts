@@ -7,7 +7,6 @@ import type { IngredientInRecipeTable } from './tables/IngredientInRecipeTable';
 import type { IngredientTable } from './tables/IngredientTable';
 import type { MenuInScheduleTable } from './tables/MenuInScheduleTable';
 import type { MenuTable } from './tables/MenuTable';
-import type { RecipeImageTable } from './tables/RecipeImageTable';
 import type { RecipeTable } from './tables/RecipeTable';
 import type { RecipeTagTable } from './tables/RecipeTagTable';
 import type { RoleTable } from './tables/RoleTable';
@@ -26,7 +25,6 @@ export type FakeDatabaseSchema = {
   menu: MenuTable;
   menuInSchedule: MenuInScheduleTable;
   recipe: RecipeTable;
-  recipeImage: RecipeImageTable;
   recipeTag: RecipeTagTable;
   role: RoleTable;
   schedule: ScheduleTable;

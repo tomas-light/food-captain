@@ -13,25 +13,26 @@ export function initTagTable(options: {
 }) {
   const { database } = options;
 
+  let id = 0;
   const tags: TagTableEntity[] = [
-    create(1, 'Вегетерианское', '#EDF2F7'),
-    create(3, 'Мясное', '#BEE3F8'),
-    create(8, 'Суп', '#B2F5EA'),
+    create('Вегетерианское', '#EDF2F7'),
+    create('Мясное', '#BEE3F8'),
+    create('Суп', '#B2F5EA'),
   ];
 
   function create(
-    id: TagTableEntity['id'],
     name: TagTableEntity['name'],
     color: TagTableEntity['color']
   ): TagTableEntity {
     return {
-      id,
+      id: ++id,
       name,
       color,
     };
   }
 
   return {
+    tags,
     saveTags: () => {
       tags.forEach((tag) => {
         void database.tag.insert(tag.id, tag);

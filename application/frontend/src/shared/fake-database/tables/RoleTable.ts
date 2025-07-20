@@ -13,23 +13,22 @@ export function initRoleTable(options: {
 }) {
   const { database } = options;
 
+  let id = 0;
   const roles: RoleTableEntity[] = [
-    create(1, 'admin'),
-    create(2, 'user'),
-    create(3, 'guest'),
+    create('admin'),
+    create('user'),
+    create('guest'),
   ];
 
-  function create(
-    id: RoleTableEntity['id'],
-    name: RoleTableEntity['name']
-  ): RoleTableEntity {
+  function create(name: RoleTableEntity['name']): RoleTableEntity {
     return {
-      id,
+      id: ++id,
       name,
     };
   }
 
   return {
+    roles,
     saveRoles: () => {
       roles.forEach((role) => {
         void database.role.insert(role.id, role);

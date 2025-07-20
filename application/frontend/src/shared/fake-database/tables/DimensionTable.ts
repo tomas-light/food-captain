@@ -13,29 +13,30 @@ export function initDimensionTable(options: {
 }) {
   const { database } = options;
 
+  let id = 0;
   const dimensions: DimensionTableEntity[] = [
-    create(1, 'килограмм', 'кг'),
-    create(2, 'грамм', 'гр'),
-    create(3, 'штука', 'шт'),
-    create(4, 'литр', 'л'),
-    create(5, 'столовая ложка', 'ст.л'),
-    create(6, 'чайная ложка', 'чай.л'),
-    create(7, 'щепотка', 'щеп'),
+    create('килограмм', 'кг'),
+    create('грамм', 'гр'),
+    create('штука', 'шт'),
+    create('литр', 'л'),
+    create('столовая ложка', 'ст.л'),
+    create('чайная ложка', 'чай.л'),
+    create('щепотка', 'щеп'),
   ];
 
   function create(
-    id: DimensionTableEntity['id'],
     name: DimensionTableEntity['name'],
     short_name: DimensionTableEntity['short_name']
   ): DimensionTableEntity {
     return {
-      id,
+      id: ++id,
       name,
       short_name,
     };
   }
 
   return {
+    dimensions,
     saveDimensions: () => {
       dimensions.forEach((dimension) => {
         void database.dimension.insert(dimension.id, dimension);

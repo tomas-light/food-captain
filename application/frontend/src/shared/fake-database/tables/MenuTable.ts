@@ -1,7 +1,7 @@
+import { faker } from '@faker-js/faker/locale/ru';
 import type { Database } from '../../database';
-import { fakeUserCredentials } from '../fakeUserCredentials';
-import type { IngredientTableEntity } from './IngredientTable.entity';
 import type { MenuTableEntity } from './MenuTable.entity';
+import type { UserTableEntity } from './UserTable.entity';
 
 export interface MenuTable {
   key: MenuTableEntity['id'];
@@ -12,43 +12,56 @@ export function initMenuTable(options: {
   database: Database<{
     menu: MenuTable;
   }>;
+  users: UserTableEntity[];
 }) {
-  const { database } = options;
+  const { database, users } = options;
 
+  let id = 0;
   const menus: MenuTableEntity[] = [
-    create(
-      1,
-      '2021-02-24',
-      '2021-02-24',
-      fakeUserCredentials.artem.id,
-      'menu 1'
-    ),
-    create(
-      2,
-      '2021-02-24',
-      '2021-02-24',
-      fakeUserCredentials.artem.id,
-      'menu 2'
-    ),
+    {
+      id: ++id,
+      name: faker.food.dish(),
+      author_id: faker.helpers.arrayElement(users).id,
+      create_date: faker.date.past().toISOString(),
+      last_update: undefined,
+      order_number: undefined,
+    },
+    {
+      id: ++id,
+      name: faker.food.dish(),
+      author_id: faker.helpers.arrayElement(users).id,
+      create_date: faker.date.past().toISOString(),
+      last_update: undefined,
+      order_number: undefined,
+    },
+    {
+      id: ++id,
+      name: faker.food.dish(),
+      author_id: faker.helpers.arrayElement(users).id,
+      create_date: faker.date.past().toISOString(),
+      last_update: undefined,
+      order_number: undefined,
+    },
+    {
+      id: ++id,
+      name: faker.food.dish(),
+      author_id: faker.helpers.arrayElement(users).id,
+      create_date: faker.date.past().toISOString(),
+      last_update: undefined,
+      order_number: undefined,
+    },
+    {
+      id: ++id,
+      name: faker.food.dish(),
+      author_id: faker.helpers.arrayElement(users).id,
+      create_date: faker.date.past().toISOString(),
+      last_update: undefined,
+      order_number: undefined,
+    },
   ];
 
-  function create(
-    id: MenuTableEntity['id'],
-    create_date: MenuTableEntity['create_date'],
-    last_update: MenuTableEntity['last_update'],
-    author_id: MenuTableEntity['author_id'],
-    name: MenuTableEntity['name']
-  ): MenuTableEntity {
-    return {
-      id,
-      create_date,
-      last_update,
-      author_id,
-      name,
-    };
-  }
-
   return {
+    menus,
     saveMenus: () => {
       menus.forEach((menu) => {
         void database.menu.insert(menu.id, menu);
