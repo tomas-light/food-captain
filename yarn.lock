@@ -575,11 +575,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@faker-js/faker@npm:9.9.0":
+  version: 9.9.0
+  resolution: "@faker-js/faker@npm:9.9.0"
+  checksum: 10c0/02107cb6915217b4831fa4b261603165972eb7f09d2ab2e1d4b75807df2d425a2bac8621cddbfdcc158c2c447c2bce2e14939d51c4a63fbd832df55452e7f73c
+  languageName: node
+  linkType: hard
+
 "@food-captain/frontend@workspace:application/frontend":
   version: 0.0.0-use.local
   resolution: "@food-captain/frontend@workspace:application/frontend"
   dependencies:
     "@babel/plugin-syntax-import-attributes": "npm:7.27.1"
+    "@faker-js/faker": "npm:9.9.0"
     "@tomas-light/stylelint-config-idiomatic-order": "npm:1.0.1"
     "@types/node": "npm:^24.0.15"
     "@types/react": "npm:^19.1.8"
@@ -596,6 +604,7 @@ __metadata:
     i18next-browser-languagedetector: "npm:8.2.0"
     i18next-resources-for-ts: "npm:1.6.0"
     i18next-resources-to-backend: "npm:1.2.1"
+    idb: "npm:^8.0.3"
     nice-web-routes: "npm:2.0.0"
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
@@ -3482,6 +3491,13 @@ __metadata:
   dependencies:
     safer-buffer: "npm:>= 2.1.2 < 3.0.0"
   checksum: 10c0/98102bc66b33fcf5ac044099d1257ba0b7ad5e3ccd3221f34dd508ab4070edff183276221684e1e0555b145fce0850c9f7d2b60a9fcac50fbb4ea0d6e845a3b1
+  languageName: node
+  linkType: hard
+
+"idb@npm:^8.0.3":
+  version: 8.0.3
+  resolution: "idb@npm:8.0.3"
+  checksum: 10c0/421cd9a3281b7564528857031cc33fd9e95753f8191e483054cb25d1ceea7303a0d1462f4f69f5b41606f0f066156999e067478abf2460dfcf9cab80dae2a2b2
   languageName: node
   linkType: hard
 
