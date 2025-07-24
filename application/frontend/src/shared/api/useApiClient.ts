@@ -1,10 +1,10 @@
 import { useContext, useMemo } from 'react';
-import { getMockApiConfig, useConfigJson } from '../config/index';
+import { getMockApiConfig, useConfigJson } from '../config/';
 import { getShouldLogApi } from '../config/useApiLogConfig';
 import { getResponsesDelay } from '../config/useResponsesDelayConfig';
 import type { ApiClient } from './ApiClient';
 import { ApiClientContext } from './ApiClientContext';
-import { fakeApiLazyImports } from './fake/index';
+import { fakeApiLazyImports } from './fake/';
 import { consoleLogApiMiddleware } from './middlewares/consoleLogApiMiddleware';
 import { createProxyApiClient } from './middlewares/createProxyApiClient';
 import { delayApiMiddleware } from './middlewares/delayApiMiddleware';

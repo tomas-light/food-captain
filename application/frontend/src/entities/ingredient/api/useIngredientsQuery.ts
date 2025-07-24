@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { convertToMilliseconds } from '~/shared/date/index';
+import { useApiError } from '~/shared/api';
+import { convertToMilliseconds } from '~/shared/date/';
 import { getIngredientsQueryKey } from './queryKeys';
 import { useIngredientApi } from './useIngredientApi';
 
@@ -12,6 +13,8 @@ export function useIngredientsQuery() {
     queryKey: getIngredientsQueryKey(),
     queryFn: api.getIngredients,
   });
+
+  useApiError(query.error);
 
   return query;
 }

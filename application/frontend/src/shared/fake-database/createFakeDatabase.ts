@@ -1,4 +1,4 @@
-import { createDatabase } from '../database/index';
+import { createDatabase } from '../database/';
 import { databaseName, databaseVersion } from './consts';
 import type { FakeDatabaseSchema } from './FakeDatabase';
 import { initDimensionTable } from './tables/DimensionTable';

@@ -1,14 +1,18 @@
 import { Outlet, type RouteObject } from 'react-router';
-import { makeSuspendedElement } from '~/shared/routes/index';
-import { routes } from '~/shared/routes/routes';
+import { AfterLoginRedirector } from '~/entities/auth';
+import { makeSuspendedElement, routes } from '~/shared/routes';
 
 export function createHomeRoutes(): RouteObject[] {
   return [
     {
       path: routes.home.relativeUrl(),
-      element: makeSuspendedElement(
-        async () => (await import('../ui/HomePage')).HomePage,
-        <Outlet />
+      element: (
+        <AfterLoginRedirector>
+          {makeSuspendedElement(
+            async () => (await import('../ui/HomePage')).HomePage,
+            <Outlet />
+          )}
+        </AfterLoginRedirector>
       ),
     },
   ];

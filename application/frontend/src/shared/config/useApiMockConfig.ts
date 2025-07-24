@@ -1,4 +1,4 @@
-import { createStore } from '../store/index';
+import { createStore } from '../store/';
 import type { ConfigJson } from './ConfigJson';
 
 type ApiMockConfig = ConfigJson['mockApi'];

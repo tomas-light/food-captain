@@ -17,7 +17,7 @@ export function createStore<InitialState>(
       PersistOptions<InitialState>,
       'name' | 'version' | 'migrate' | 'partialize'
     >
-  >
+  > = {}
 ): UseBoundStore<Mutate<StoreApi<InitialState>, []>> {
   const { name, ...persistOptions } = options;
 

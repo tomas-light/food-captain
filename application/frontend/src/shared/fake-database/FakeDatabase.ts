@@ -1,4 +1,4 @@
-import type { Database } from '../database/index';
+import type { Database } from '../database/';
 import type { ActiveAuthTable } from './tables/ActiveAuthTable';
 import type { DimensionTable } from './tables/DimensionTable';
 import type { DishInMenuTable } from './tables/DishInMenuTable';

@@ -1,4 +1,4 @@
-import { createStore } from '../store/index';
+import { createStore } from '../store/';
 
 const useResponsesDelayConfig = createStore(
   {

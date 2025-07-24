@@ -1,5 +1,6 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { PropsWithChildren } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { ApiClientProvider } from './ApiClientProvider';
 import { ApiMockConfigProvider } from './ApiMockConfigProvider';
 import { ConfigJsonProvider } from './ConfigJsonProvider';
@@ -7,7 +8,7 @@ import envJson from './env.yaml.json' with { type: 'json' };
 import { TranslatesProvider } from './TranslatesProvider';
 import '../../../public/global.scss';
 
-export function App(props: PropsWithChildren) {
+export function AppProviders(props: PropsWithChildren) {
   const { children } = props;
 
   return (
@@ -18,6 +19,7 @@ export function App(props: PropsWithChildren) {
             {children}
 
             <ReactQueryDevtools />
+            <ToastContainer stacked position="bottom-center" />
           </ApiMockConfigProvider>
         </TranslatesProvider>
       </ApiClientProvider>

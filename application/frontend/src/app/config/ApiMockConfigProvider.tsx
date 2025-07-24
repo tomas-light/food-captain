@@ -3,7 +3,7 @@ import {
   type ConfigJson,
   useApiMockConfig,
   useConfigJson,
-} from '~/shared/config/index';
+} from '~/shared/config/';
 
 export function ApiMockConfigProvider(props: PropsWithChildren) {
   const { children } = props;

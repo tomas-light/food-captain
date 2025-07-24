@@ -31,7 +31,8 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-i18next": "15.6.0",
-    "react-router": "7.7.0"
+    "react-router": "7.7.0",
+    "react-toastify": "11.0.5"
   },
   "devDependencies": {
     "@babel/plugin-syntax-import-attributes": "7.27.1",
