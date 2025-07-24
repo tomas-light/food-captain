@@ -1,20 +1,17 @@
+import type { UserDto } from '../dto/UserDto';
 import { ApiBaseClient, ContentType } from './ApiBaseClient';
 
 export class AuthApiClient extends ApiBaseClient {
-  isAuthorized = async () => {
-    return this.request<boolean>({
+  getMe = async () => {
+    return this.request<UserDto>({
       method: 'GET',
-      url: '/auth/is-authorized',
+      url: '/auth/me',
       type: ContentType.Json,
       responseType: 'json',
     });
   };
 
-  login = async (payload: {
-    email: string;
-    password: string;
-    afterLoginNavigateUrl?: string;
-  }) => {
+  login = async (payload: { email: string; password: string }) => {
     return this.request({
       method: 'POST',
       url: '/auth/login',

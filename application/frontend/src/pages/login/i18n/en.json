@@ -1,0 +1,14 @@
+{
+  "LoginPage": {
+    "email": {
+      "label": "Email",
+      "placeholder": "Enter email",
+      "validation": {}
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Enter password",
+      "validation": {}
+    }
+  }
+}

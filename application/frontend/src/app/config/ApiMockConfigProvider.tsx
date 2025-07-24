@@ -1,4 +1,4 @@
-import { type PropsWithChildren, useEffect } from 'react';
+import { type PropsWithChildren, useEffect, useState } from 'react';
 import {
   type ConfigJson,
   useApiMockConfig,
@@ -10,6 +10,8 @@ export function ApiMockConfigProvider(props: PropsWithChildren) {
 
   const loadedConfig = useConfigJson();
   const loadedApiMock = loadedConfig?.mockApi;
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!loadedApiMock) {
@@ -29,7 +31,12 @@ export function ApiMockConfigProvider(props: PropsWithChildren) {
     }
 
     useApiMockConfig.setState(config);
+    setLoading(false);
   }, [loadedApiMock]);
+
+  if (loading) {
+    return null;
+  }
 
   return children;
 }

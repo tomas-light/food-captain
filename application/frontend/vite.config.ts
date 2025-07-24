@@ -84,7 +84,7 @@ const fontAliases = {
     'Nunito-VariableFont_wght.ttf',
     'Nunito-Italic-VariableFont_wght.ttf',
   ].reduce(
-    makeFontPathReducer((fontFileName) => paths.font(fontFileName)),
+    makeFontPathReducer((fontFileName) => `/fonts/${fontFileName}`),
     {} as Record<string, string>
   ),
 };
@@ -92,12 +92,12 @@ const fontAliases = {
 /**
  * @example
  * ['MyFont.woff2'].reduce(
- *   makeFontPathReducer((fontFileName) => paths.font(fontFileName)),
+ *     makeFontPathReducer((fontFileName) => `/fonts/${fontFileName}`),
  *   {} as Record<string, string>
  * ),
  * // result is
  * {
- *   '@MyFont.woff2': '/public/fonts/MyFont.woff2'
+ *   '@MyFont.woff2': '/fonts/MyFont.woff2'
  * }
  * */
 function makeFontPathReducer(makePath: (fontFileName: string) => string) {

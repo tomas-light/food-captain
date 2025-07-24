@@ -13,7 +13,7 @@ function createRoutes() {
   const children: RouteObject[] = [
     {
       path: '*',
-      element: <NavigateTo to={() => routes.home.url()} />,
+      element: <NavigateTo to={() => routes.home.url()} replace />,
     },
     ...createHomeRoutes(),
   ];

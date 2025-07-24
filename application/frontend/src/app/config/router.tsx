@@ -1,4 +1,5 @@
 import { createBrowserRouter, Outlet, useRouteError } from 'react-router';
+import { createLoginRoutes } from '~/pages/login';
 import { InitLocaleToRoutes } from '~/shared/routes';
 import { addLocaleToRoutes } from '~/shared/routes/addLocaleToRoutes';
 import { AppLayout } from '../ui/AppLayout';
@@ -10,16 +11,25 @@ export const router = createBrowserRouter([
     path: '/*',
     element: <Outlet />,
     errorElement: <RouterRootErrorElement />,
-    children: addLocaleToRoutes()({
+    children: addLocaleToRoutes({
       element: (
         <InitLocaleToRoutes>
           <AppProviders>
-            <AppLayout>
-              <PagesRouter />
-            </AppLayout>
+            <Outlet />
           </AppProviders>
         </InitLocaleToRoutes>
       ),
+      children: [
+        ...createLoginRoutes(),
+        {
+          path: '*',
+          element: (
+            <AppLayout>
+              <PagesRouter />
+            </AppLayout>
+          ),
+        },
+      ],
     }),
   },
 ]);

@@ -1,22 +1,27 @@
 import { getFakeDatabase } from '../../fake-database/getFakeDatabase';
+import type { UserDto } from '../dto/UserDto';
 import type { AuthApiClient } from '../real/AuthApiClient';
 import { fakeResponse } from './fakeResponse';
 
 export const fakeAuthApiClient: Partial<AuthApiClient> = {
-  isAuthorized: async () => {
+  getMe: async () => {
     const database = await getFakeDatabase();
     const userEmail = await database.activeAuth.get('authorizedUserEmail');
 
     if (userEmail == null) {
-      return fakeResponse.ok(false);
+      return fakeResponse.notAuthorized();
     }
 
     const user = await database.user.get(userEmail);
     if (!user) {
-      return fakeResponse.ok(false);
+      return fakeResponse.notAuthorized();
     }
 
-    return fakeResponse.ok(true);
+    return fakeResponse.ok<UserDto>({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    });
   },
 
   login: async (loginDto) => {
