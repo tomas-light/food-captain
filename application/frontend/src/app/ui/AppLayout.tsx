@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import { UserAvatar } from '~/entities/user';
+import { Header } from './header/Header';
 import classes from './AppLayout.module.scss';
 
 export function AppLayout(props: PropsWithChildren) {
@@ -7,11 +7,7 @@ export function AppLayout(props: PropsWithChildren) {
 
   return (
     <div className={classes.root}>
-      <header>
-        <nav></nav>
-
-        <UserAvatar />
-      </header>
+      <Header />
 
       <section>{children}</section>
     </div>

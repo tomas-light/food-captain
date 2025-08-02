@@ -2,7 +2,6 @@ import type {
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
-  ResponseType,
   GenericAbortSignal,
 } from 'axios';
 

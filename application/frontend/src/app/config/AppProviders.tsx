@@ -7,6 +7,7 @@ import { ConfigJsonProvider } from './ConfigJsonProvider';
 import envJson from './env.yaml.json' with { type: 'json' };
 import { TranslatesProvider } from './TranslatesProvider';
 import '../../../public/global.scss';
+import { WindowMediaContextProvider } from './WindowMediaContextProvider';
 
 export function AppProviders(props: PropsWithChildren) {
   const { children } = props;
@@ -16,10 +17,12 @@ export function AppProviders(props: PropsWithChildren) {
       <ApiClientProvider>
         <TranslatesProvider>
           <ApiMockConfigProvider>
-            {children}
+            <WindowMediaContextProvider>
+              {children}
 
-            <ReactQueryDevtools />
-            <ToastContainer stacked position="bottom-center" />
+              <ReactQueryDevtools />
+              <ToastContainer stacked position="bottom-center" />
+            </WindowMediaContextProvider>
           </ApiMockConfigProvider>
         </TranslatesProvider>
       </ApiClientProvider>
