@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import { Header } from './header/Header';
+import { Sidebar } from './sidebar/Sidebar';
 import classes from './AppLayout.module.scss';
 
 export function AppLayout(props: PropsWithChildren) {
@@ -9,7 +10,11 @@ export function AppLayout(props: PropsWithChildren) {
     <div className={classes.root}>
       <Header />
 
-      <section>{children}</section>
+      <main>
+        <section>{children}</section>
+
+        <Sidebar />
+      </main>
     </div>
   );
 }

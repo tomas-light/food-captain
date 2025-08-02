@@ -1,15 +1,12 @@
 .root {
   position: sticky;
   top: 0;
+  height: 40px;
   display: flex;
   column-gap: 16px;
   align-items: center;
   justify-content: space-between;
   padding: 0 48px;
-}
-
-.leftFlex {
-  display: flex;
 }
 
 .logoFlex {

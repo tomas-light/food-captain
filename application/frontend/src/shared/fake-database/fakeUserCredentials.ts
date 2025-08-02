@@ -4,7 +4,7 @@ export const fakeUserCredentials = {
   artem: {
     id: 1,
     email: 'artem@food-captain.com',
-    name: 'Artem Ignatev',
+    name: 'Артём Игнатьев',
     password: 'the-password',
   },
 } satisfies Record<string, UserTableEntity>;

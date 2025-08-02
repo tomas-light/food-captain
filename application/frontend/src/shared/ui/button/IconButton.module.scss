@@ -1,0 +1,15 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background-color: transparent;
+  color: var(--color-primary);
+  cursor: pointer;
+
+  &:hover {
+    background-color: light-dark(#e9ebef, #e9ebef);
+  }
+}

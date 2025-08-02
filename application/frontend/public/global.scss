@@ -3,6 +3,16 @@
 
 :root {
   color-scheme: light dark;
+
+  --color-primary: light-dark(#030213, oklch(98.5% 0 0deg));
+  --color-secondary: light-dark(
+    oklch(95% 0.0058 264.53deg),
+    oklch(26.9% 0 0deg)
+  );
+  --color-muted: light-dark(#ececf0, oklch(26.9% 0 0deg));
+  --color-muted-foreground: #717182;
+  --color-border: rgb(0 0 0 / 10%);
+  --color-destructive: #d4183d;
 }
 
 * {
@@ -22,7 +32,8 @@ body {
 
 body {
   margin: 0 auto;
-  background: linear-gradient(180deg, #507080 0%, #d5c7c7 100%);
+  background-color: light-dark(#fff, oklch(14.5% 0 0deg));
+  color: light-dark(oklch(14.5% 0 0deg), oklch(98.5% 0 0deg));
   font-weight: 300;
 
   input,
