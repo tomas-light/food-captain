@@ -1,0 +1,15 @@
+.root {
+  max-height: 32px;
+  display: flex;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.tag {
+  padding: 2px var(--spacing-2);
+  border-radius: var(--radius-full);
+  background-color: var(--color-secondary);
+  color: var(--color-secondary-text);
+  white-space: nowrap;
+}

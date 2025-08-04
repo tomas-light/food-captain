@@ -1,4 +1,5 @@
 import type { ImageTableEntity } from './ImageTable.entity';
+import type { TagTableEntity } from './TagTable.entity';
 
 export interface RecipeTableEntity {
   id: number;
@@ -6,10 +7,10 @@ export interface RecipeTableEntity {
   image_id?: ImageTableEntity['id'];
 
   /** краткое описание рецепта */
-  description?: string;
+  description: string;
 
   /** пошаговая инструкция приготовления (в формате markdown) */
-  formula?: string;
+  formula: string;
 
   /** Калорийность блюда на 100гр */
   kcal?: number;
@@ -19,4 +20,6 @@ export interface RecipeTableEntity {
 
   /** Время на приготовление блюда в минутах */
   cooking_time_in_minutes?: number;
+
+  tag_ids?: TagTableEntity['id'][];
 }

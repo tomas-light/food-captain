@@ -1,5 +1,7 @@
+import { faker } from '@faker-js/faker';
 import type { Database } from '../../database';
 import type { RecipeTableEntity } from './RecipeTable.entity';
+import type { TagTableEntity } from './TagTable.entity';
 
 export interface RecipeTable {
   key: RecipeTableEntity['id'];
@@ -10,8 +12,9 @@ export function initRecipeTable(options: {
   database: Database<{
     recipe: RecipeTable;
   }>;
+  tags: TagTableEntity[];
 }) {
-  const { database } = options;
+  const { database, tags } = options;
 
   let id = 0;
   const recipes: RecipeTableEntity[] = [
@@ -59,6 +62,12 @@ export function initRecipeTable(options: {
       cooking_time_in_minutes: 150,
       portion_weight_in_grams: undefined,
       image_id: undefined,
+      tag_ids: faker.helpers
+        .arrayElements(tags, {
+          min: 1,
+          max: tags.length,
+        })
+        .map((tag) => tag.id),
     },
     {
       id: ++id,
@@ -75,6 +84,12 @@ export function initRecipeTable(options: {
       cooking_time_in_minutes: 20,
       portion_weight_in_grams: undefined,
       image_id: undefined,
+      tag_ids: faker.helpers
+        .arrayElements(tags, {
+          min: 1,
+          max: tags.length,
+        })
+        .map((tag) => tag.id),
     },
   ];
 

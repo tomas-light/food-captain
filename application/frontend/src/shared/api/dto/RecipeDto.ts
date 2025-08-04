@@ -1,13 +1,15 @@
+import type { TagDto } from './TagDto';
+
 export interface RecipeDto {
   id: number;
   name: string;
   image_url?: string;
 
   /** краткое описание рецепта */
-  description?: string;
+  description: string;
 
   /** пошаговая инструкция приготовления (в формате markdown) */
-  formula?: string;
+  formula: string;
 
   /** Калорийность блюда на 100гр */
   kcal?: number;
@@ -17,4 +19,6 @@ export interface RecipeDto {
 
   /** Время на приготовление блюда в минутах */
   cooking_time_in_minutes?: number;
+
+  tag_ids: TagDto['id'][];
 }

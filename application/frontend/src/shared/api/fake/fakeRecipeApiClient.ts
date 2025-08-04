@@ -28,6 +28,7 @@ export const fakeRecipeApiClient: Partial<RecipeApiClient> = {
         portion_weight_in_grams: recipe.portion_weight_in_grams,
         cooking_time_in_minutes: recipe.cooking_time_in_minutes,
         image_url: imageUrl,
+        tag_ids: recipe.tag_ids ?? [],
       });
     });
 

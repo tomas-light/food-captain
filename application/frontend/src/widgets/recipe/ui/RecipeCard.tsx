@@ -1,4 +1,5 @@
 import { CookingTime, type Recipe } from '~/entities/recipe';
+import { TagsBadges } from '~/entities/tag';
 import { LikeRecipeIconButton } from '~/features/like-recipe';
 import { Image, Typography } from '~/shared/ui';
 import classes from './RecipeCard.module.scss';
@@ -28,7 +29,11 @@ export function RecipeCard(props: Props) {
 
       <section className={classes.content}>
         <header className={classes.header}>
-          <Typography component="h3" weight="semibold" className={classes.title}>
+          <Typography
+            component="h3"
+            weight="semibold"
+            className={classes.title}
+          >
             {recipe.name}
           </Typography>
 
@@ -36,6 +41,8 @@ export function RecipeCard(props: Props) {
             {recipe.description}
           </Typography>
         </header>
+
+        <TagsBadges tagIds={recipe.tagIds} />
       </section>
     </div>
   );

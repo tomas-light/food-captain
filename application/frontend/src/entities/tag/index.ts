@@ -1,0 +1,1 @@
+export { TagsBadges } from './ui/TagsBadges';

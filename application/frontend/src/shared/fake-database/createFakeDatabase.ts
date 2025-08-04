@@ -9,7 +9,6 @@ import { initIngredientTable } from './tables/IngredientTable';
 import { initMenuInScheduleTable } from './tables/MenuInScheduleTable';
 import { initMenuTable } from './tables/MenuTable';
 import { initRecipeTable } from './tables/RecipeTable';
-import { initRecipeTagTable } from './tables/RecipeTagTable';
 import { initRoleTable } from './tables/RoleTable';
 import { initScheduleTable } from './tables/ScheduleTable';
 import { initTagTable } from './tables/TagTable';
@@ -30,7 +29,6 @@ export async function createFakeDatabase() {
       menu: '',
       menuInSchedule: '',
       recipe: '',
-      recipeTag: '',
       role: '',
       schedule: '',
       tag: '',
@@ -41,7 +39,8 @@ export async function createFakeDatabase() {
 
     initialTransactions: async (database) => {
       const { dimensions, saveDimensions } = initDimensionTable({ database });
-      const { recipes, saveRecipes } = initRecipeTable({ database });
+      const { tags, saveTags } = initTagTable({ database });
+      const { recipes, saveRecipes } = initRecipeTable({ database, tags });
       const { ingredients, saveIngredients } = initIngredientTable({
         database,
       });
@@ -59,12 +58,6 @@ export async function createFakeDatabase() {
       const { saveRoles } = initRoleTable({ database });
       const { saveUserRoles } = initUserRoleTable({ database });
       const { saveMenus } = initMenuTable({ database, users });
-      const { tags, saveTags } = initTagTable({ database });
-      const { saveRecipeTags } = initRecipeTagTable({
-        database,
-        recipes,
-        tags,
-      });
 
       const { saveMenusInSchedule } = initMenuInScheduleTable({ database });
       const { saveDishesInMenu } = initDishInMenuTable({ database });
@@ -78,7 +71,6 @@ export async function createFakeDatabase() {
       saveMenusInSchedule();
       saveMenus();
       saveRecipes();
-      saveRecipeTags();
       saveRoles();
       saveSchedules();
       saveTags();

@@ -21,8 +21,11 @@ export function useRecipeLikeQuery(options: Options) {
 
     queryKey: getRecipeLikeQueryKey(recipeId),
     queryFn: async () => {
-      if (currentUser?.id == null || recipeId == null) {
-        throw new Error();
+      if (currentUser?.id == null) {
+        throw new Error('currentUser is not found');
+      }
+      if (recipeId == null) {
+        throw new Error('recipeId is required');
       }
 
       const existedLike = await api.getUserRecipeLikes(currentUser.id, [
