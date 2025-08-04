@@ -1,8 +1,8 @@
 .root {
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  background-color: var(--card);
+  background-color: #fff;
   box-shadow: var(--shadow-sm);
   cursor: pointer;
   transition: all var(--transition-normal);
@@ -19,16 +19,41 @@
     object-fit: cover;
     transition: transform var(--transition-normal);
   }
+
+  .likeButton {
+    position: absolute;
+    top: var(--spacing-2);
+    right: var(--spacing-2);
+  }
+
+  .cookingTime {
+    position: absolute;
+    bottom: var(--spacing-2);
+    left: var(--spacing-2);
+  }
 }
 
-.likeButton {
-  position: absolute;
-  top: var(--spacing-2);
-  right: var(--spacing-2);
-}
+.content {
+  padding: var(--spacing-4);
 
-.cookingTime {
-  position: absolute;
-  bottom: var(--spacing-2);
-  left: var(--spacing-2);
+  .header {
+    margin-bottom: var(--spacing-3);
+
+    .title {
+      display: -webkit-box;
+      overflow: hidden;
+      margin-bottom: var(--spacing-2);
+      -webkit-box-orient: vertical;
+      color: #0f0f0f;
+      -webkit-line-clamp: 2;
+    }
+
+    .description {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      color: var(--color-muted-foreground);
+      -webkit-line-clamp: 2;
+    }
+  }
 }

@@ -4,8 +4,12 @@ import classes from './Typography.module.scss';
 
 type Props = PropsWithChildren<
   HTMLAttributes<HTMLSpanElement> & {
+    /** @default 'span' */
+    component?: 'span' | 'p' | 'h1' | 'h2' | 'h3';
+
     /** @default 'md' */
     size?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl';
+
     /** @default 'normal' */
     weight?: 'normal' | 'medium' | 'semibold' | 'bold';
   }
@@ -14,6 +18,7 @@ type Props = PropsWithChildren<
 export function Typography(props: Props) {
   const {
     children,
+    component: Component = 'span',
     size = 'md',
     weight = 'normal',
     className,
@@ -21,7 +26,7 @@ export function Typography(props: Props) {
   } = props;
 
   return (
-    <span
+    <Component
       className={clsx(className, {
         [classes.sm]: size === 'sm',
         [classes.md]: size === 'md',
@@ -34,6 +39,6 @@ export function Typography(props: Props) {
       {...spanAttributes}
     >
       {children}
-    </span>
+    </Component>
   );
 }

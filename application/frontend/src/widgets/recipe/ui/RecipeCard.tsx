@@ -1,6 +1,6 @@
 import { CookingTime, type Recipe } from '~/entities/recipe';
 import { LikeRecipeIconButton } from '~/features/like-recipe';
-import { Image } from '~/shared/ui';
+import { Image, Typography } from '~/shared/ui';
 import classes from './RecipeCard.module.scss';
 
 type Props = {
@@ -12,7 +12,7 @@ export function RecipeCard(props: Props) {
 
   return (
     <div className={classes.root}>
-      <div className={classes.imageContainer}>
+      <section className={classes.imageContainer}>
         <Image src={recipe.imageUrl} className={classes.image} />
 
         <LikeRecipeIconButton
@@ -24,7 +24,19 @@ export function RecipeCard(props: Props) {
           cookingTime={recipe.cookingTimeInMinutes}
           className={classes.cookingTime}
         />
-      </div>
+      </section>
+
+      <section className={classes.content}>
+        <header className={classes.header}>
+          <Typography component="h3" weight="semibold" className={classes.title}>
+            {recipe.name}
+          </Typography>
+
+          <Typography component="p" size="sm" className={classes.description}>
+            {recipe.description}
+          </Typography>
+        </header>
+      </section>
     </div>
   );
 }
