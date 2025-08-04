@@ -29,7 +29,7 @@ export function useRecipeLikeQuery(options: Options) {
       const existedLike = await api.getUserRecipeLikes(currentUser.id, [
         recipeId,
       ]);
-      return existedLike.at(0) ?? null;
+      return existedLike.data?.at(0) ?? null;
     },
   });
 }

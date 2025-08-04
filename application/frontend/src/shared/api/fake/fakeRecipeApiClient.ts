@@ -23,6 +23,7 @@ export const fakeRecipeApiClient: Partial<RecipeApiClient> = {
         id: recipe.id,
         name: recipe.name,
         description: recipe.description,
+        formula: recipe.formula,
         kcal: recipe.kcal,
         portion_weight_in_grams: recipe.portion_weight_in_grams,
         cooking_time_in_minutes: recipe.cooking_time_in_minutes,

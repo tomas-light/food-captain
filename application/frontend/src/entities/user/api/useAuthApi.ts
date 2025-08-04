@@ -1,6 +1,4 @@
-import { useMemo } from 'react';
 import { useApiClient } from '~/shared/api';
-import { AuthApi } from './AuthApi';
 
 export function useAuthApi() {
   const apiClient = useApiClient('auth');
@@ -8,5 +6,5 @@ export function useAuthApi() {
     throw new Error('ApiClientContext is not found');
   }
 
-  return useMemo(() => new AuthApi(apiClient), [apiClient]);
+  return apiClient;
 }

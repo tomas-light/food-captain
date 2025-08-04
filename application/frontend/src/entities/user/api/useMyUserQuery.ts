@@ -11,6 +11,6 @@ export function useMyUserQuery() {
 
     queryKey: getMyUserAccountQueryKey(),
     queryFn: api.getMe,
-    retry: 0,
+    select: (response) => response.data,
   });
 }
