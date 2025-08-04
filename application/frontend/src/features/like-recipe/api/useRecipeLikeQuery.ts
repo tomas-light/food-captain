@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import type { Recipe } from '~/entities/recipe';
 import { useUserApi } from '~/entities/user';
 import { useMyUserQuery } from '~/entities/user/api/useMyUserQuery';
-import { useApiError } from '~/shared/api';
 import { convertToMilliseconds } from '~/shared/date';
 import { getRecipeLikeQueryKey } from './queryKeys';
 
@@ -17,7 +16,7 @@ export function useRecipeLikeQuery(options: Options) {
 
   const { data: currentUser } = useMyUserQuery();
 
-  const query = useQuery({
+  return useQuery({
     enabled: currentUser?.id != null && recipeId != null,
     staleTime: convertToMilliseconds(5, 'minutes'),
 
@@ -33,8 +32,4 @@ export function useRecipeLikeQuery(options: Options) {
       return existedLike.at(0) ?? null;
     },
   });
-
-  useApiError(query.error);
-
-  return query;
 }

@@ -1,11 +1,14 @@
+import type { Recipe } from '~/entities/recipe/crossExports';
 import type { UserApiClient } from '~/shared/api';
 import type { User } from '../model/User';
-import type { Recipe } from '~/entities/recipe/crossExports';
 
 export class UserApi {
   constructor(private readonly apiClient: UserApiClient) {}
 
-  getUserRecipeLikes = async (userId: User['id'], recipeIds?: Recipe['id'][]) => {
+  getUserRecipeLikes = async (
+    userId: User['id'],
+    recipeIds?: Recipe['id'][]
+  ) => {
     const response = await this.apiClient.getUserRecipeLikes(userId, recipeIds);
     return response.data;
   };

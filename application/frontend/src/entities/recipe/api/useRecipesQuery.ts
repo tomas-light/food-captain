@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { useApiError } from '~/shared/api';
 import { convertToMilliseconds } from '~/shared/date/';
 import { getRecipesQueryKey } from './queryKeys';
 import { useRecipeApi } from './useRecipeApi';
@@ -7,7 +6,7 @@ import { useRecipeApi } from './useRecipeApi';
 export function useRecipesQuery() {
   const api = useRecipeApi();
 
-  const query = useQuery({
+  return useQuery({
     staleTime: convertToMilliseconds(5, 'minutes'),
 
     queryKey: getRecipesQueryKey(),
@@ -15,8 +14,4 @@ export function useRecipesQuery() {
       return await api.getRecipes();
     },
   });
-
-  useApiError(query.error);
-
-  return query;
 }

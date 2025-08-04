@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 import { invalidateGetMyUserAccountQuery, useAuthApi } from '~/entities/user';
-import { useApiError } from '~/shared/api';
 import { routes } from '~/shared/routes';
 
 export function useLoginMutation() {
@@ -9,7 +8,7 @@ export function useLoginMutation() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const mutation = useMutation({
+  return useMutation({
     mutationKey: ['login'],
     mutationFn: api.login,
 
@@ -18,8 +17,4 @@ export function useLoginMutation() {
       void navigate(routes.recipes.url());
     },
   });
-
-  useApiError(mutation.error);
-
-  return mutation;
 }

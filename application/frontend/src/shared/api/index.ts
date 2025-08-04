@@ -1,7 +1,6 @@
 export { ApiClientContext } from './ApiClientContext';
 export { createApiClient } from './createApiClient';
 export { useApiClient } from './useApiClient';
-export { useApiError } from './useApiError';
 
 export { type AuthApiClient } from './real/AuthApiClient';
 export { type DimensionApiClient } from './real/DimensionApiClient';

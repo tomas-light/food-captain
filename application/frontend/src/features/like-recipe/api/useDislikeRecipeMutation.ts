@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { Recipe } from '~/entities/recipe';
 import { useUserApi } from '~/entities/user';
 import { useMyUserQuery } from '~/entities/user/api/useMyUserQuery';
-import { useApiError } from '~/shared/api';
 import { invalidateRecipeLikeQueryKey } from './queryKeys';
 
 export function useDislikeRecipeMutation() {
@@ -11,7 +10,7 @@ export function useDislikeRecipeMutation() {
   const queryClient = useQueryClient();
   const { data: currentUser } = useMyUserQuery();
 
-  const query = useMutation({
+  return useMutation({
     mutationKey: ['dislike recipe'],
     mutationFn: async (recipeId: Recipe['id']) => {
       if (currentUser) {
@@ -22,8 +21,4 @@ export function useDislikeRecipeMutation() {
       void invalidateRecipeLikeQueryKey(queryClient, recipeId);
     },
   });
-
-  useApiError(query.error);
-
-  return query;
 }

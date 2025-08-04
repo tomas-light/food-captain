@@ -1,6 +1,5 @@
 import { faker } from '@faker-js/faker';
 import type { Database } from '../../database';
-import type { IngredientTableEntity } from './IngredientTable.entity';
 import type { RecipeTableEntity } from './RecipeTable.entity';
 import type { RecipeTagTableEntity } from './RecipeTagTable.entity';
 import type { TagTableEntity } from './TagTable.entity';
