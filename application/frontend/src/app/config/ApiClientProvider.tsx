@@ -1,16 +1,16 @@
 import {
+  MutationCache,
+  QueryCache,
   QueryClient,
   QueryClientProvider,
-  QueryCache,
-  MutationCache,
 } from '@tanstack/react-query';
 import { type FC, type PropsWithChildren, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { setRouteToRedirectAfterLogin } from '~/entities/user';
-import type { ApiError } from '~/shared/api/ApiError';
+import type { ApiError } from '~/shared/api';
+import { ApiClientContext, createApiClient } from '~/shared/api';
 import { useConfigJson } from '~/shared/config';
-import { createApiClient, ApiClientContext } from '~/shared/api';
 import { routes } from '~/shared/routes';
 
 export const ApiClientProvider: FC<PropsWithChildren> = (props) => {

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { convertToMilliseconds } from '~/shared/date/';
+import { convertToMilliseconds } from '~/shared/date';
 import { getIngredientsQueryKey } from './queryKeys';
 import { useIngredientApi } from './useIngredientApi';
 

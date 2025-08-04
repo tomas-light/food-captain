@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { Recipe } from '~/entities/recipe';
-import { useUserApi } from '~/entities/user';
-import { useMyUserQuery } from '~/entities/user/api/useMyUserQuery';
+import { useMyUserQuery, useUserApi } from '~/entities/user';
 import { invalidateRecipeLikeQueryKey } from './queryKeys';
 
 export function useLikeRecipeMutation() {

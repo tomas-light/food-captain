@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { Heart, HeartOff } from 'lucide-react';
 import type { Recipe } from '~/entities/recipe';
-import { IconButton } from '~/shared/ui/button/IconButton';
+import { IconButton } from '~/shared/ui';
 import { useDislikeRecipeMutation } from '../api/useDislikeRecipeMutation';
 import { useLikeRecipeMutation } from '../api/useLikeRecipeMutation';
 import { useRecipeLikeQuery } from '../api/useRecipeLikeQuery';

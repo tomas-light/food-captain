@@ -100,7 +100,7 @@ function getImportLinting() {
           name: 'too-long-slices-imports-linter',
           version: '0.0.0',
           rules: {
-            index: {
+            tooLong: {
               create: (context) => ({
                 ImportDeclaration: (node) => {
                   const importPath = node.source.value;
@@ -152,6 +152,11 @@ function getImportLinting() {
                 group: 'sibling',
                 position: 'after',
               },
+              {
+                pattern: '~/**', // ~/entities
+                group: 'internal',
+                position: 'after',
+              },
             ],
             groups: [
               // import fs from 'fs';
@@ -184,6 +189,9 @@ function getImportLinting() {
           { fixMixedExportsWithInlineTypeSpecifier: true },
         ],
         'import/no-duplicates': 'warn',
+
+        'indexImports/index': 'error',
+        'tooLongSlicesImports/tooLong': 'error',
       },
     },
 

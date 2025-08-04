@@ -1,7 +1,6 @@
 import { createBrowserRouter, Outlet, useRouteError } from 'react-router';
 import { createLoginRoutes } from '~/pages/login';
-import { InitLocaleToRoutes } from '~/shared/routes';
-import { addLocaleToRoutes } from '~/shared/routes/addLocaleToRoutes';
+import { addLocaleToRoutes, InitLocaleToRoutes } from '~/shared/routes';
 import { AppLayout } from '../ui/AppLayout';
 import { AppProviders } from './AppProviders';
 import { PagesRouter } from './PagesRouter';

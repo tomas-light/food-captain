@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Outlet, type RouteObject, useRoutes } from 'react-router';
-import { createRecipesRoutes } from '~/pages/recipe/config/createRecipesRoutes';
-import { NavigateTo, routes } from '~/shared/routes/';
+import { createRecipesRoutes } from '~/pages/recipe';
+import { NavigateTo, routes } from '~/shared/routes';
 
 export function PagesRouter() {
   const pageRoutes = useMemo(() => createRoutes(), []);

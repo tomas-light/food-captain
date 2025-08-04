@@ -1,6 +1,6 @@
 import { type PropsWithChildren, useEffect, useState } from 'react';
-import type { ConfigJson } from '~/shared/config/ConfigJson';
-import { ConfigJsonContext } from '~/shared/config/ConfigJsonContext';
+import type { ConfigJson } from '~/shared/config';
+import { ConfigJsonContext } from '~/shared/config';
 
 type Props = PropsWithChildren<{
   configJsonUrl: string;

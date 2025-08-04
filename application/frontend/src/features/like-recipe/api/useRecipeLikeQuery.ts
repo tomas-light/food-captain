@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import type { Recipe } from '~/entities/recipe';
-import { useUserApi } from '~/entities/user';
-import { useMyUserQuery } from '~/entities/user/api/useMyUserQuery';
+import { useMyUserQuery, useUserApi } from '~/entities/user';
 import { convertToMilliseconds } from '~/shared/date';
 import { getRecipeLikeQueryKey } from './queryKeys';
 

@@ -1,8 +1,7 @@
 import { useRecipesQuery } from '~/entities/recipe';
 import { useTranslation } from '~/shared/locale';
-import { Skeleton } from '~/shared/ui';
-import { NotFound } from '~/shared/ui/NotFound';
-import { RecipeCard } from '../../../widgets/recipe/ui/RecipeCard';
+import { NotFound, Skeleton } from '~/shared/ui';
+import { RecipeCard } from '~/widgets/recipe';
 import classes from './RecipesPage.module.scss';
 
 export function RecipesPage() {

@@ -1,7 +1,6 @@
 import { Menu } from 'lucide-react';
 import { UserAvatar } from '~/entities/user';
-import { LogoSvg, Typography } from '~/shared/ui';
-import { IconButton } from '~/shared/ui/button/IconButton';
+import { IconButton, LogoSvg, Typography } from '~/shared/ui';
 import { toggleMobileSidebarExpanded } from '../../config/useMobileSidebarConfig';
 import classes from './MobileHeader.module.scss';
 
