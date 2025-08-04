@@ -15,7 +15,7 @@ export function useLoginMutation() {
 
     onSuccess: async () => {
       await invalidateGetMyUserAccountQuery(queryClient);
-      void navigate(routes.home.url());
+      void navigate(routes.recipes.url());
     },
   });
 

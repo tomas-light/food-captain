@@ -2,6 +2,7 @@ import { getFakeDatabase } from '../../fake-database/getFakeDatabase';
 import type { IngredientDto } from '../dto/IngredientDto';
 import type { IngredientApiClient } from '../real/IngredientApiClient';
 import { fakeResponse } from './fakeResponse';
+import { toBase64 } from './utils/toBase64';
 
 export const fakeIngredientApiClient: Partial<IngredientApiClient> = {
   getIngredients: async () => {
@@ -21,7 +22,7 @@ export const fakeIngredientApiClient: Partial<IngredientApiClient> = {
       ingredients.push({
         id: ingredient.id,
         name: ingredient.name,
-        imageUrl: imageUrl,
+        image_url: imageUrl,
       });
     });
 
@@ -30,12 +31,3 @@ export const fakeIngredientApiClient: Partial<IngredientApiClient> = {
     return fakeResponse.ok(ingredients);
   },
 };
-
-function toBase64(file: File) {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = reject;
-  });
-}

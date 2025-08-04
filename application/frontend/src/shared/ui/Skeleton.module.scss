@@ -1,0 +1,57 @@
+.root {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background-color: var(--color-muted);
+
+  &:before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    animation: shimmer 1.5s ease-in-out infinite;
+    background-size: 200% 100%;
+    content: '';
+
+    @media (prefers-color-scheme: light) {
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgb(255 255 255 / 40%) 50%,
+        transparent 100%
+      );
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgb(255 255 255 / 10%) 50%,
+        transparent 100%
+      );
+    }
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}

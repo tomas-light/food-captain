@@ -1,6 +1,6 @@
 export interface RecipeDto {
   id: number;
-  name?: string;
+  name: string;
   image_url?: string;
   /** markdown */
   description?: string;

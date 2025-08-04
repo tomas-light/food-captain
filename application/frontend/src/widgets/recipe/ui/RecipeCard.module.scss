@@ -1,0 +1,28 @@
+.root {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--card);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.imageContainer {
+  position: relative;
+  height: 192px;
+  overflow: hidden;
+
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+  }
+}
+
+.likeButton {
+  position: absolute;
+  top: var(--spacing-2);
+  right: var(--spacing-2);
+}

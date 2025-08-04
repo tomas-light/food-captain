@@ -35,6 +35,7 @@ export async function createFakeDatabase() {
       schedule: '',
       tag: '',
       user: '',
+      userRecipeLikes: '',
       userRole: '',
     }),
 
@@ -83,6 +84,8 @@ export async function createFakeDatabase() {
       saveTags();
       saveUserRoles();
       saveUsers();
+
+      await database.activeAuth.insert('authorizedUserId', users[0].id);
     },
   });
 }

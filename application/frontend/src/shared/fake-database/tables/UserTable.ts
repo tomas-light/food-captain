@@ -3,7 +3,7 @@ import { fakeUserCredentials } from '../fakeUserCredentials';
 import type { UserTableEntity } from './UserTable.entity';
 
 export interface UserTable {
-  key: UserTableEntity['email'];
+  key: UserTableEntity['id'];
   value: UserTableEntity;
 }
 
@@ -20,7 +20,7 @@ export function initUserTable(options: {
     users,
     saveUsers: () => {
       users.forEach((entity) => {
-        void database.user.insert(entity.email, entity);
+        void database.user.insert(entity.id, entity);
       });
     },
   };

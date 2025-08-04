@@ -1,4 +1,6 @@
+import type { UserTableEntity } from './UserTable.entity';
+
 export interface ActiveAuthTable {
-  key: 'authorizedUserEmail';
-  value: string;
+  key: 'authorizedUserId';
+  value: UserTableEntity['id'];
 }

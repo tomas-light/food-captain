@@ -12,4 +12,8 @@
   &:hover {
     background-color: light-dark(#e9ebef, #e9ebef);
   }
+
+  &.circle {
+    border-radius: 100%;
+  }
 }

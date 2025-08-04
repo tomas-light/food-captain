@@ -2,10 +2,12 @@ import { AxiosError, AxiosHeaders, type AxiosResponse } from 'axios';
 
 export const fakeResponse = {
   ok: okResponse,
+  noContent: noContentResponse,
   badRequest: badRequestResponse,
   notAuthorized: notAuthorizedResponse,
   notFound: notFoundResponse,
   conflict: conflictResponse,
+  forbidden: forbiddenResponse,
 };
 
 const axiosResponseMock = {
@@ -32,6 +34,23 @@ function okResponse<Response>(data?: Response) {
   return {
     data,
     status: 200,
+    statusText: 'ok',
+    ...axiosResponseMock,
+  };
+}
+
+/**
+ * @example
+ * const fakeApi = {
+ *   someMethod: async () => {
+ *     return fakeResponse.noContent();
+ *   }
+ * }
+ * */
+function noContentResponse(): AxiosResponse<undefined> {
+  return {
+    data: undefined,
+    status: 201,
     statusText: 'ok',
     ...axiosResponseMock,
   };
@@ -82,5 +101,20 @@ function notFoundResponse(error?: string): never {
 function conflictResponse(): never {
   const axiosError = new AxiosError();
   axiosError.status = 409;
+  throw axiosError;
+}
+
+
+/**
+ * @example
+ * const fakeApi = {
+ *   someMethod: async () => {
+ *     return fakeResponse.forbiddenResponse();
+ *   }
+ * }
+ * */
+function forbiddenResponse(): never {
+  const axiosError = new AxiosError('Forbidden');
+  axiosError.status = 403;
   throw axiosError;
 }

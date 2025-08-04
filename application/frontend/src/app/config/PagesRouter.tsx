@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Outlet, type RouteObject, useRoutes } from 'react-router';
-import { createHomeRoutes } from '~/pages/home/config/createHomeRoutes';
+import { createRecipesRoutes } from '~/pages/recipe/config/createRecipesRoutes';
 import { NavigateTo, routes } from '~/shared/routes/';
 
 export function PagesRouter() {
@@ -13,9 +13,9 @@ function createRoutes() {
   const children: RouteObject[] = [
     {
       path: '*',
-      element: <NavigateTo to={() => routes.home.url()} replace />,
+      element: <NavigateTo to={() => routes.recipes.url()} replace />,
     },
-    ...createHomeRoutes(),
+    ...createRecipesRoutes(),
   ];
 
   return [

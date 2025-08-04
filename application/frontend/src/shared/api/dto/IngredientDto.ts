@@ -1,5 +1,5 @@
 export interface IngredientDto {
   id: number;
   name?: string;
-  imageUrl?: string;
+  image_url?: string;
 }

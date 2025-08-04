@@ -1,0 +1,7 @@
+{
+  "RecipesPage": {
+    "title": "All Recipes",
+    "subtitle": "Discover {{count}} delicious recipes",
+    "notFound": "No recipes found matching your criteria"
+  }
+}

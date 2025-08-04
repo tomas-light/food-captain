@@ -1,5 +1,8 @@
+import type { RecipeDto } from '../dto/RecipeDto';
 import type { UserDto } from '../dto/UserDto';
+import type { UserRecipeLikeDto } from '../dto/UserRecipeLikeDto';
 import { ApiBaseClient, ContentType } from './ApiBaseClient';
+import { DefaultUrlBuilder } from 'nice-web-routes';
 
 export class UserApiClient extends ApiBaseClient {
   getUsers = async () => {
@@ -44,6 +47,54 @@ export class UserApiClient extends ApiBaseClient {
     return this.request<boolean>({
       method: 'DELETE',
       url: `/user/${userId}`,
+      type: ContentType.Json,
+      responseType: 'json',
+    });
+  };
+
+  getUserRecipeLikes = async (
+    userId: UserDto['id'],
+    recipeIds?: RecipeDto['id'][]
+  ) => {
+    const builder = new DefaultUrlBuilder().addSearchParamsIfExists(
+      `/user/${userId}/recipe-likes`
+    );
+    if (recipeIds?.length) {
+      builder.addSearchParamsIfExists({
+        'recipe-id': recipeIds.map((id) => id.toString()),
+      });
+    }
+
+    return this.request<UserRecipeLikeDto[]>({
+      method: 'GET',
+      url: builder.build(),
+      type: ContentType.Json,
+      responseType: 'json',
+    });
+  };
+
+  likeRecipe = async (userId: UserDto['id'], recipeId: RecipeDto['id']) => {
+    return this.request({
+      method: 'POST',
+      url: `/user/${userId}/recipe-likes/${recipeId}`,
+      type: ContentType.Json,
+      responseType: 'json',
+    });
+  };
+
+  dislikeRecipe = async (userId: UserDto['id'], recipeId: RecipeDto['id']) => {
+    return this.request({
+      method: 'PUT',
+      url: `/user/${userId}/recipe-likes/${recipeId}`,
+      type: ContentType.Json,
+      responseType: 'json',
+    });
+  };
+
+  unlikeRecipe = async (userId: UserDto['id'], recipeId: RecipeDto['id']) => {
+    return this.request({
+      method: 'DELETE',
+      url: `/user/${userId}/recipe-likes/${recipeId}`,
       type: ContentType.Json,
       responseType: 'json',
     });

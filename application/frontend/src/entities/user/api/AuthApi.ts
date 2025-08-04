@@ -1,4 +1,4 @@
-import type { AuthApiClient } from '~/shared/api/real/AuthApiClient';
+import type { AuthApiClient } from '~/shared/api';
 
 export class AuthApi {
   constructor(private readonly apiClient: AuthApiClient) {}

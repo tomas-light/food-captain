@@ -1,2 +1,2 @@
 export const databaseName = 'food-captain-mocks-database';
-export const databaseVersion = 1;
+export const databaseVersion = 3;

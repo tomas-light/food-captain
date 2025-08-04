@@ -6,13 +6,13 @@ import { fakeResponse } from './fakeResponse';
 export const fakeAuthApiClient: Partial<AuthApiClient> = {
   getMe: async () => {
     const database = await getFakeDatabase();
-    const userEmail = await database.activeAuth.get('authorizedUserEmail');
+    const userId = await database.activeAuth.get('authorizedUserId');
 
-    if (userEmail == null) {
+    if (userId == null) {
       return fakeResponse.notAuthorized();
     }
 
-    const user = await database.user.get(userEmail);
+    const user = await database.user.get(userId);
     if (!user) {
       return fakeResponse.notAuthorized();
     }
@@ -37,11 +37,11 @@ export const fakeAuthApiClient: Partial<AuthApiClient> = {
       return fakeResponse.badRequest('Invalid credentials');
     }
 
-    const hasKey = await database.activeAuth.get('authorizedUserEmail');
+    const hasKey = await database.activeAuth.get('authorizedUserId');
     if (hasKey) {
-      await database.activeAuth.update('authorizedUserEmail', user.email);
+      await database.activeAuth.update('authorizedUserId', user.id);
     } else {
-      await database.activeAuth.insert('authorizedUserEmail', user.email);
+      await database.activeAuth.insert('authorizedUserId', user.id);
     }
 
     return fakeResponse.ok();
@@ -49,7 +49,7 @@ export const fakeAuthApiClient: Partial<AuthApiClient> = {
 
   logout: async () => {
     const database = await getFakeDatabase();
-    await database.activeAuth.delete('authorizedUserEmail');
+    await database.activeAuth.delete('authorizedUserId');
     return fakeResponse.ok();
   },
 };

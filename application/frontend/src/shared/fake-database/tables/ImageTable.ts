@@ -26,9 +26,10 @@ export function initImageTable(options: {
       height: 200,
       width: 200,
     });
+    const blob = base64ToBlob(imageUri);
     const image: ImageTableEntity = {
       id: ++id,
-      content: new File([imageUri], '', { type: 'image/svg+xml' }),
+      content: new File([blob], '', { type: 'image/svg+xml' }),
     };
     images.push(image);
     entity.image_id = image.id;
@@ -41,4 +42,16 @@ export function initImageTable(options: {
       });
     },
   };
+}
+
+function base64ToBlob(base64String: string) {
+  // Remove the data URL prefix if present
+  const base64Data = base64String.split(',')[1] || base64String;
+  const binaryString = atob(base64Data);
+  const len = binaryString.length;
+  const bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return new Blob([bytes], { type: 'image/svg+xml' });
 }

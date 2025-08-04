@@ -12,6 +12,7 @@ import type { RecipeTagTable } from './tables/RecipeTagTable';
 import type { RoleTable } from './tables/RoleTable';
 import type { ScheduleTable } from './tables/ScheduleTable';
 import type { TagTable } from './tables/TagTable';
+import type { UserRecipeLikesTable } from './tables/UserRecipeLikesTable';
 import type { UserRoleTable } from './tables/UserRoleTable';
 import type { UserTable } from './tables/UserTable';
 
@@ -31,6 +32,7 @@ export type FakeDatabaseSchema = {
   tag: TagTable;
   user: UserTable;
   userRole: UserRoleTable;
+  userRecipeLikes: UserRecipeLikesTable;
 };
 
 export type FakeDatabase = Database<FakeDatabaseSchema>;

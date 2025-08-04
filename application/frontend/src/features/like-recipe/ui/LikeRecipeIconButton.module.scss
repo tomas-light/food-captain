@@ -1,0 +1,26 @@
+.root {
+  width: 32px;
+  height: 32px;
+  backdrop-filter: blur(4px);
+  background-color: rgb(255 255 255 / 90%);
+  color: var(--muted-foreground);
+  transition: all var(--transition-fast);
+
+  &:hover {
+    background-color: rgb(255 255 255 / 100%);
+    color: #dc2626;
+  }
+}
+
+.icon {
+  width: var(--spacing-4);
+  height: var(--spacing-4);
+}
+
+.liked {
+  color: #dc2626;
+}
+
+.disliked {
+  color: #dc2626;
+}

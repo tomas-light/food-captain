@@ -2,7 +2,7 @@ import type { ImageTableEntity } from './ImageTable.entity';
 
 export interface RecipeTableEntity {
   id: number;
-  name?: string;
+  name: string;
   image_id?: ImageTableEntity['id'];
   /** markdown */
   description?: string;
