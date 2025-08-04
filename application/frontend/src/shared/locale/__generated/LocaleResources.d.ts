@@ -1,4 +1,5 @@
 export interface LocaleResources {
+  "entities/recipe.CookingTime.time": null,
   "features/login.LoginButton.login": null,
   "pages/login.LoginPage.email.label": null,
   "pages/login.LoginPage.email.placeholder": null,

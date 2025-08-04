@@ -11,7 +11,7 @@ export function DesktopHeader(props: Props) {
     <header className={classes.root}>
       <div className={classes.logoFlex}>
         <LogoSvg />
-        <Typography bold>Food Captain</Typography>
+        <Typography weight="bold">Food Captain</Typography>
       </div>
 
       <UserAvatar />

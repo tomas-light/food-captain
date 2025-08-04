@@ -19,7 +19,7 @@ export function MobileHeader(props: Props) {
 
         <div className={classes.logoFlex}>
           <LogoSvg />
-          <Typography bold>Food Captain</Typography>
+          <Typography weight="bold">Food Captain</Typography>
         </div>
       </div>
 

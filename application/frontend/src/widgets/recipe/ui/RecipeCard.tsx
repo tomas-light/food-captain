@@ -1,4 +1,4 @@
-import type { Recipe } from '~/entities/recipe';
+import { CookingTime, type Recipe } from '~/entities/recipe';
 import { LikeRecipeIconButton } from '~/features/like-recipe';
 import { Image } from '~/shared/ui';
 import classes from './RecipeCard.module.scss';
@@ -20,12 +20,10 @@ export function RecipeCard(props: Props) {
           className={classes.likeButton}
         />
 
-        {/* Difficulty Badge */}
-        {/* <div
-          className={`${styles.difficultyBadge} ${getDifficultyClass(recipe.difficulty)}`}
-        >
-          {recipe.difficulty}
-        </div>*/}
+        <CookingTime
+          cookingTime={recipe.cookingTimeInMinutes}
+          className={classes.cookingTime}
+        />
       </div>
     </div>
   );

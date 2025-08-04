@@ -1,0 +1,22 @@
+.root {
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--radius-full);
+}
+
+.notDefined {
+}
+
+.fast {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.medium {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.long {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
