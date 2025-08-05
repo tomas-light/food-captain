@@ -11,18 +11,20 @@ export function MobileHeader(props: Props) {
 
   return (
     <header className={classes.root}>
-      <div className={classes.leftFlex}>
-        <IconButton onClick={toggleMobileSidebarExpanded}>
-          <Menu />
-        </IconButton>
+      <div className={classes.container}>
+        <div className={classes.leftFlex}>
+          <IconButton onClick={toggleMobileSidebarExpanded}>
+            <Menu />
+          </IconButton>
 
-        <div className={classes.logoFlex}>
-          <LogoSvg />
-          <Typography weight="bold">Food Captain</Typography>
+          <div className={classes.logoFlex}>
+            <LogoSvg />
+            <Typography weight="bold">Food Captain</Typography>
+          </div>
         </div>
-      </div>
 
-      <UserAvatar />
+        <UserAvatar />
+      </div>
     </header>
   );
 }

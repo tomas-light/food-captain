@@ -9,12 +9,14 @@ export function DesktopHeader(props: Props) {
 
   return (
     <header className={classes.root}>
-      <div className={classes.logoFlex}>
-        <LogoSvg />
-        <Typography weight="bold">Food Captain</Typography>
-      </div>
+      <div className={classes.container}>
+        <div className={classes.logoFlex}>
+          <LogoSvg />
+          <Typography weight="bold">Food Captain</Typography>
+        </div>
 
-      <UserAvatar />
+        <UserAvatar />
+      </div>
     </header>
   );
 }
