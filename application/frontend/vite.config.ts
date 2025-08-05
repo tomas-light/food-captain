@@ -15,6 +15,9 @@ export const paths = {
   font(fontFileName: string) {
     return path.join(this.__dirname, 'public', 'fonts', fontFileName);
   },
+  get sharedUi() {
+    return path.join(this.__dirname, 'src', 'shared', 'ui');
+  },
 };
 
 export default defineConfig(async ({ mode, isPreview }) => {
@@ -55,6 +58,7 @@ export default defineConfig(async ({ mode, isPreview }) => {
     resolve: {
       alias: {
         ...fontAliases,
+        '@shared': paths.sharedUi,
       },
     },
     build: {

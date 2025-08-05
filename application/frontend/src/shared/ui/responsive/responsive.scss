@@ -1,0 +1,13 @@
+$mobileWidth: 1366px;
+
+@mixin mobile() {
+  @media (width <= #{$mobileWidth}) {
+    @content;
+  }
+}
+
+@mixin desktop() {
+  @media (width > #{$mobileWidth}) {
+    @content;
+  }
+}

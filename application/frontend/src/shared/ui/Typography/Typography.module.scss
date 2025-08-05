@@ -1,3 +1,7 @@
+.root {
+  color: var(--color, currentColor);
+}
+
 .sm {
   font-size: 12px;
 }

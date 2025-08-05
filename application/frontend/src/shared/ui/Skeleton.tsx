@@ -4,19 +4,32 @@ import classes from './Skeleton.module.scss';
 
 type Props = {
   className?: string;
+
+  /** @default '100%' */
   height?: CSSProperties['height'];
+
+  /** @default '100%' */
   width?: CSSProperties['width'];
+
+  /** @default 'var(--radius-md)' */
+  borderRadius?: string;
 };
 
 export function Skeleton(props: Props) {
-  const { width, height, className } = props;
+  const {
+    width = '100%',
+    height = '100%',
+    className,
+    borderRadius = 'var(--radius-md)',
+  } = props;
 
   return (
     <div
       className={clsx(classes.root, className)}
       style={{
-        '--skeleton-width': width ?? '100%',
-        '--skeleton-height': height ?? '100%',
+        width,
+        height,
+        borderRadius,
       }}
     />
   );

@@ -1,0 +1,19 @@
+@use './card';
+
+
+.title {
+  margin-bottom: var(--spacing-2);
+}
+
+.description {
+  margin-bottom: var(--spacing-1);
+}
+
+.description:last-of-type {
+  margin-bottom: var(--spacing-3);
+}
+
+.tags {
+  display: flex;
+  gap: var(--spacing-2);
+}

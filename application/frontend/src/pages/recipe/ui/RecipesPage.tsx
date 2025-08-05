@@ -1,7 +1,7 @@
 import { useRecipesQuery } from '~/entities/recipe';
 import { useTranslation } from '~/shared/locale';
-import { NotFound, Skeleton } from '~/shared/ui';
-import { RecipeCard } from '~/widgets/recipe';
+import { NotFound, Skeleton, Typography } from '~/shared/ui';
+import { RecipeCard, RecipeCardSkeleton } from '~/widgets/recipe';
 import classes from './RecipesPage.module.scss';
 
 export function RecipesPage() {
@@ -14,14 +14,35 @@ export function RecipesPage() {
   const isEmpty = !isLoading && !recipes?.length;
 
   return (
-    <div>
-      <p>{t('title')}</p>
+    <div className={classes.root}>
+      <header>
+        <Typography
+          component="h3"
+          size="xxl"
+          weight="bold"
+          className={classes.title}
+        >
+          {t('title')}
+        </Typography>
+
+        {!isLoading && (
+          <Typography component="p" color="var(--color-muted-text)">
+            {t('subtitle', { count: recipes?.length })}
+          </Typography>
+        )}
+        {isLoading && (
+          <Skeleton height={20} width={200} borderRadius="var(--radius-sm)" />
+        )}
+      </header>
 
       {isEmpty ? (
         <NotFound>{t('notFound')}</NotFound>
       ) : (
-        <div className={classes.cardContainer}>
-          {isLoading && <Skeleton />}
+        <div className={classes.recipesGrid}>
+          {isLoading &&
+            Array.from({ length: 6 }).map((_, index) => (
+              <RecipeCardSkeleton key={index} />
+            ))}
 
           {recipes?.map((recipe) => (
             <RecipeCard key={recipe.id} recipe={recipe} />

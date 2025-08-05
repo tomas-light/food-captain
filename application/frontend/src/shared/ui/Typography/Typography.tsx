@@ -12,6 +12,8 @@ type Props = PropsWithChildren<
 
     /** @default 'normal' */
     weight?: 'normal' | 'medium' | 'semibold' | 'bold';
+
+    color?: string;
   }
 >;
 
@@ -22,12 +24,13 @@ export function Typography(props: Props) {
     size = 'md',
     weight = 'normal',
     className,
+    color,
     ...spanAttributes
   } = props;
 
   return (
     <Component
-      className={clsx(className, {
+      className={clsx(classes.root, className, {
         [classes.sm]: size === 'sm',
         [classes.md]: size === 'md',
         [classes.lg]: size === 'lg',
@@ -36,6 +39,13 @@ export function Typography(props: Props) {
         [classes.xxxl]: size === 'xxxl',
         [classes.bold]: weight === 'bold',
       })}
+      {...(color != null
+        ? {
+            style: {
+              '--color': color,
+            },
+          }
+        : {})}
       {...spanAttributes}
     >
       {children}
