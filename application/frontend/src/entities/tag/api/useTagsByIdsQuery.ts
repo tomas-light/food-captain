@@ -69,7 +69,7 @@ export function useTagsByIdsQuery(options: Options) {
           }
         }
 
-        return tags?.data?.filter((tag) => tagIdsSet.has(tag.id));
+        return tags?.data?.filter((tag) => tagIdsSet.has(tag.id)) ?? null;
       }
     },
   });

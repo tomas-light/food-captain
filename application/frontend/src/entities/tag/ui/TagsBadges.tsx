@@ -16,7 +16,7 @@ export function TagsBadges(props: Props) {
     <div className={classes.root}>
       {tags?.slice(0, 3).map((tag, index) => (
         <Typography
-          size="sm"
+          size="small"
           weight="medium"
           key={index}
           className={classes.tag}

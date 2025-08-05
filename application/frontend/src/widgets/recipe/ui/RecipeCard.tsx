@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router';
 import { CookingTime, type Recipe } from '~/entities/recipe';
 import { TagsBadges } from '~/entities/tag';
 import { LikeRecipeIconButton } from '~/features/like-recipe';
+import { routes } from '~/shared/routes';
 import { Image, Typography } from '~/shared/ui';
 import classes from './RecipeCard.module.scss';
 
@@ -11,8 +13,15 @@ type Props = {
 export function RecipeCard(props: Props) {
   const { recipe } = props;
 
+  const navigate = useNavigate();
+
   return (
-    <div className={classes.root}>
+    <div
+      className={classes.root}
+      onClick={() =>
+        navigate(routes.recipes.recipeId(recipe.id.toString()).url())
+      }
+    >
       <section className={classes.imageContainer}>
         <Image src={recipe.imageUrl} className={classes.image} />
 
@@ -37,7 +46,11 @@ export function RecipeCard(props: Props) {
             {recipe.name}
           </Typography>
 
-          <Typography component="p" size="sm" className={classes.description}>
+          <Typography
+            component="p"
+            size="small"
+            className={classes.description}
+          >
             {recipe.description}
           </Typography>
         </header>

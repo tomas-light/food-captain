@@ -1,11 +1,10 @@
 import clsx from 'clsx';
-import { Heart, HeartOff } from 'lucide-react';
 import type { Recipe } from '~/entities/recipe';
-import { IconButton } from '~/shared/ui';
-import { useDislikeRecipeMutation } from '../api/useDislikeRecipeMutation';
-import { useLikeRecipeMutation } from '../api/useLikeRecipeMutation';
+import { useTranslation } from '~/shared/locale';
+import { IconButton, Skeleton } from '~/shared/ui';
 import { useRecipeLikeQuery } from '../api/useRecipeLikeQuery';
-import { useUnlikeRecipeMutation } from '../api/useUnlikeRecipeMutation';
+import { RecipeLikeIcon } from './RecipeLikeIcon';
+import { useOnClick } from './useOnClick';
 import classes from './LikeRecipeIconButton.module.scss';
 
 type Props = {
@@ -16,47 +15,33 @@ type Props = {
 export function LikeRecipeIconButton(props: Props) {
   const { className, recipeId } = props;
 
+  const { t } = useTranslation('features/like-recipe', {
+    keyPrefix: 'LikeRecipeButton',
+  });
+
   const { data: existedLike, isLoading } = useRecipeLikeQuery({ recipeId });
-  const { mutate: likeRecipe } = useLikeRecipeMutation();
-  const { mutate: unlikeRecipe } = useUnlikeRecipeMutation();
-  const { mutate: dislikeRecipe } = useDislikeRecipeMutation();
+  const onClick = useOnClick(recipeId);
+
+  if (isLoading) {
+    return <Skeleton height={32} width={32} borderRadius="100%" />;
+  }
 
   return (
     <IconButton
       className={clsx(classes.root, className)}
-      disabled={isLoading}
       shape="circle"
-      onClick={() => {
-        switch (existedLike?.status) {
-          case undefined:
-            likeRecipe(recipeId);
-            break;
-
-          case 'like':
-            dislikeRecipe(recipeId);
-            break;
-
-          case 'dislike':
-            unlikeRecipe(recipeId);
-            break;
-        }
-      }}
+      onClick={onClick}
+      title={
+        existedLike?.status === undefined
+          ? t('like')
+          : existedLike.status === 'like'
+            ? t('dislike')
+            : existedLike.status === 'dislike'
+              ? t('unlike')
+              : undefined
+      }
     >
-      {existedLike?.status === 'dislike' && (
-        <HeartOff
-          className={clsx(classes.icon, classes.disliked)}
-          fill="currentColor"
-        />
-      )}
-
-      {existedLike?.status !== 'dislike' && (
-        <Heart
-          className={clsx(classes.icon, {
-            [classes.liked]: existedLike?.status === 'like',
-          })}
-          fill={existedLike?.status === 'like' ? 'currentColor' : 'none'}
-        />
-      )}
+      <RecipeLikeIcon recipeId={recipeId} />
     </IconButton>
   );
 }

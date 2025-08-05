@@ -4,5 +4,9 @@
     "subtitle_one": "Discover {{count}} delicious recipe",
     "subtitle_other": "Discover {{count}} delicious recipes",
     "notFound": "No recipes found matching your criteria"
+  },
+  "RecipeDetailsPage": {
+    "notFound": "We haven't found your recipe",
+    "back": "Back to recipes"
   }
 }

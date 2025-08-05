@@ -1,0 +1,7 @@
+{
+  "LikeRecipeButton": {
+    "like": "Like",
+    "dislike": "Dislike",
+    "unlike": "Reset"
+  }
+}

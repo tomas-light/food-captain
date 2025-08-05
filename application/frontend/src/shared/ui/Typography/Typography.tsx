@@ -7,8 +7,8 @@ type Props = PropsWithChildren<
     /** @default 'span' */
     component?: 'span' | 'p' | 'h1' | 'h2' | 'h3';
 
-    /** @default 'md' */
-    size?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl';
+    /** @default 'medium' */
+    size?: 'small' | 'medium' | 'large' | 'xl' | 'xxl' | 'xxxl';
 
     /** @default 'normal' */
     weight?: 'normal' | 'medium' | 'semibold' | 'bold';
@@ -21,7 +21,7 @@ export function Typography(props: Props) {
   const {
     children,
     component: Component = 'span',
-    size = 'md',
+    size = 'medium',
     weight = 'normal',
     className,
     color,
@@ -30,15 +30,9 @@ export function Typography(props: Props) {
 
   return (
     <Component
-      className={clsx(classes.root, className, {
-        [classes.sm]: size === 'sm',
-        [classes.md]: size === 'md',
-        [classes.lg]: size === 'lg',
-        [classes.xl]: size === 'xl',
-        [classes.xxl]: size === 'xxl',
-        [classes.xxxl]: size === 'xxxl',
-        [classes.bold]: weight === 'bold',
-      })}
+      className={clsx(classes.root, className)}
+      data-size={size}
+      data-weight={weight}
       {...(color != null
         ? {
             style: {

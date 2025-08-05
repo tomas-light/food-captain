@@ -4,16 +4,19 @@
 :root {
   color-scheme: light dark;
 
-  --color-primary: light-dark(#030213, oklch(98.5% 0 0deg));
-  --color-secondary: light-dark(
-    oklch(95% 0.0058 264.53deg),
-    oklch(26.9% 0 0deg)
-  );
+  --color-text: light-dark(#0f0f0f, #fafafa);
+  --color-primary: light-dark(#030213, #fafafa);
+  --color-primary-text: light-dark(#fff, #0f0f0f);
+  --color-secondary: light-dark(#f1f5f9, #262626);
   --color-secondary-text: light-dark(#030213, #fafafa);
-  --color-muted: light-dark(#ececf0, oklch(26.9% 0 0deg));
-  --color-muted-text: #717182;
-  --color-border: rgb(0 0 0 / 10%);
-  --color-destructive: #d4183d;
+  --color-muted: light-dark(#ececf0, #262626);
+  --color-muted-text: light-dark(#717182, #a3a3a3);
+  --color-border: light-dark(rgb(0 0 0 / 10%), #262626);
+  --color-accent: light-dark(#e9ebef, #262626);
+  --color-accent-text: light-dark(#030213, #fafafa);
+  --color-destructive: light-dark(#d4183d, #dc2626);
+  --color-destructive-text: light-dark(#fff, #fafafa);
+  --color-background: light-dark(#fff, #0f0f0f);
 
   /* Radius */
   --radius-sm: 6px;
@@ -48,6 +51,15 @@
   --transition-fast: 150ms ease-in-out;
   --transition-normal: 250ms ease-in-out;
   --transition-slow: 350ms ease-in-out;
+
+  /* Z-index */
+  --z-dropdown: 100;
+  --z-sticky: 120;
+  --z-fixed: 130;
+  --z-modal-backdrop: 140;
+  --z-modal: 150;
+  --z-popover: 160;
+  --z-tooltip: 170;
 }
 
 * {
@@ -67,8 +79,8 @@ body {
 
 body {
   margin: 0 auto;
-  background-color: light-dark(#fff, oklch(14.5% 0 0deg));
-  color: light-dark(oklch(14.5% 0 0deg), oklch(98.5% 0 0deg));
+  background-color: var(--color-background);
+  color: var(--color-text);
   font-weight: 300;
 
   input,

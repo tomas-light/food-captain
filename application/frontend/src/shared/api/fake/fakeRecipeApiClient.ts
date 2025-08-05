@@ -36,4 +36,31 @@ export const fakeRecipeApiClient: Partial<RecipeApiClient> = {
 
     return fakeResponse.ok(recipes);
   },
+
+  getRecipeById: async (recipeId) => {
+    const database = await getFakeDatabase();
+    const recipe = await database.recipe.get(recipeId);
+    if (!recipe) {
+      return fakeResponse.notFound(`Recipe with ID (${recipeId}) not found`);
+    }
+
+    let imageUrl: string | undefined = undefined;
+
+    const image = await database.image.get(recipe.image_id);
+    if (image) {
+      imageUrl = await toBase64(image.content);
+    }
+
+    return fakeResponse.ok<RecipeDto>({
+      id: recipe.id,
+      name: recipe.name,
+      description: recipe.description,
+      formula: recipe.formula,
+      kcal: recipe.kcal,
+      portion_weight_in_grams: recipe.portion_weight_in_grams,
+      cooking_time_in_minutes: recipe.cooking_time_in_minutes,
+      image_url: imageUrl,
+      tag_ids: recipe.tag_ids ?? [],
+    });
+  },
 };

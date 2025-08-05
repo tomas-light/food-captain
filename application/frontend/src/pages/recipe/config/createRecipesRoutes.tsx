@@ -1,6 +1,6 @@
 import { Outlet, type RouteObject } from 'react-router';
 import { AfterLoginRedirector } from '~/entities/user';
-import { makeSuspendedElement, routes } from '~/shared/routes';
+import { makeSuspendedElement, NavigateTo, routes } from '~/shared/routes';
 
 export function createRecipesRoutes(): RouteObject[] {
   return [
@@ -14,6 +14,28 @@ export function createRecipesRoutes(): RouteObject[] {
           )}
         </AfterLoginRedirector>
       ),
+    },
+    {
+      path: routes.recipes.recipeId().url(),
+      children: [
+        {
+          index: true,
+          element: (
+            <NavigateTo
+              to={(routeParams) =>
+                routes.recipes.recipeId(routeParams.recipeId).details.url()
+              }
+            />
+          ),
+        },
+        {
+          path: routes.recipes.recipeId().details.relativeUrl(),
+          element: makeSuspendedElement(
+            async () =>
+              (await import('../ui/RecipeDetailsPage')).RecipeDetailsPage
+          ),
+        },
+      ],
     },
   ];
 }

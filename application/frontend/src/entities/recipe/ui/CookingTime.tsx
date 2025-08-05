@@ -25,7 +25,7 @@ export function CookingTime(props: Props) {
           cookingTime != null && cookingTime > 30 && cookingTime <= 60,
         [classes.long]: cookingTime != null && cookingTime > 60,
       })}
-      size="sm"
+      size="small"
       weight="medium"
       {...htmlAttributes}
     >

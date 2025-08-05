@@ -1,0 +1,129 @@
+.root {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 8px;
+  border: none;
+  border-radius: var(--radius-md);
+  background-color: transparent;
+  color: var(--color-primary);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+
+  &:hover {
+    background-color: light-dark(#e9ebef, #e9ebef);
+  }
+
+  &:focus-visible {
+    outline: 2px solid light-dark(#666, #737373);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &[data-size='small'] {
+    height: 36px;
+    gap: var(--spacing-2);
+    padding: 0 var(--spacing-3);
+    font-size: var(--font-size-sm);
+  }
+
+  &[data-size='medium'] {
+    height: 40px;
+    gap: var(--spacing-2);
+    padding: 0 var(--spacing-4);
+  }
+
+  &[data-size='large'] {
+    height: 44px;
+    gap: var(--spacing-2);
+    padding: 0 var(--spacing-6);
+  }
+
+  &[data-variant='default'] {
+    background-color: var(--color-primary);
+    color: var(--color-primary-text);
+
+    &:hover {
+      background-color: var(--color-primary);
+      opacity: 0.9;
+    }
+  }
+
+  &[data-variant='secondary'] {
+    background-color: var(--color-secondary);
+    color: var(--color-secondary-foreground);
+
+    &:hover {
+      background-color: var(--color-secondary);
+      opacity: 0.8;
+    }
+  }
+
+  &[data-variant='outline'] {
+    border: 1px solid var(--color-border);
+    background-color: var(--color-background);
+    color: var(--color-text);
+
+    &:hover {
+      background-color: var(--color-accent);
+      color: var(--color-accent-text);
+    }
+  }
+
+  &[data-variant='ghost'] {
+    background-color: transparent;
+    color: var(--color-text);
+
+    &:hover {
+      background-color: var(--color-accent);
+      color: var(--color-accent-text);
+    }
+  }
+
+  &[data-variant='destructive'] {
+    background-color: var(--color-destructive);
+    color: var(--color-destructive-foreground);
+
+    &:hover {
+      background-color: var(--color-destructive);
+      opacity: 0.9;
+    }
+  }
+
+  &[data-loading='true'] {
+    color: transparent;
+
+    &:after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 16px;
+      height: 16px;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      border-top: 2px solid currentColor;
+      margin-top: -8px;
+      margin-left: -8px;
+      animation: spin 1s linear infinite;
+      content: '';
+    }
+  }
+
+  &[data-elevated='true'] {
+    &:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
+  }
+}
