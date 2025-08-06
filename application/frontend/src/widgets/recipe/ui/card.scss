@@ -2,7 +2,7 @@
   overflow: hidden;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  background-color: light-dark(#fff, #0f0f0f);
+  background-color: var(--color-surface);
 }
 
 .imageContainer {
@@ -17,6 +17,12 @@
   }
 
   .likeButton {
+    position: absolute;
+    top: var(--spacing-2);
+    right: var(--spacing-12);
+  }
+
+  .dislikeButton {
     position: absolute;
     top: var(--spacing-2);
     right: var(--spacing-2);

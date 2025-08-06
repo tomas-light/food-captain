@@ -42,7 +42,7 @@ export function useTagsByIdsQuery(options: Options) {
 
         if (!inProgressRequest.current) {
           await new Promise((resolve) => {
-            setTimeout(resolve, 1000);
+            setTimeout(resolve, 50);
           });
 
           if (idsToRequest.size > 0) {

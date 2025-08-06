@@ -11,3 +11,5 @@ export { type MenuApiClient } from './real/MenuApiClient';
 export { type RecipeApiClient } from './real/RecipeApiClient';
 export { type TagApiClient } from './real/TagApiClient';
 export { type UserApiClient } from './real/UserApiClient';
+
+export type * from './dto';

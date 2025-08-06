@@ -2,10 +2,10 @@ import clsx from 'clsx';
 import type { Recipe } from '~/entities/recipe';
 import { useTranslation } from '~/shared/locale';
 import { IconButton, Skeleton } from '~/shared/ui';
-import { useRecipeLikeQuery } from '../api/useRecipeLikeQuery';
-import { RecipeLikeIcon } from './RecipeLikeIcon';
-import { useOnClick } from './useOnClick';
-import classes from './LikeRecipeIconButton.module.scss';
+import { useRecipeLikeQuery } from '../../api/useRecipeLikeQuery';
+import { RecipeLikeIcon } from '../icon/RecipeLikeIcon';
+import { useOnLikeClick } from '../useOnLikeClick';
+import classes from './IconButton.module.scss';
 
 type Props = {
   className?: string;
@@ -19,8 +19,8 @@ export function LikeRecipeIconButton(props: Props) {
     keyPrefix: 'LikeRecipeButton',
   });
 
-  const { data: existedLike, isLoading } = useRecipeLikeQuery({ recipeId });
-  const onClick = useOnClick(recipeId);
+  const { isLoading } = useRecipeLikeQuery({ recipeId });
+  const onLikeClick = useOnLikeClick(recipeId);
 
   if (isLoading) {
     return <Skeleton height={32} width={32} borderRadius="100%" />;
@@ -30,16 +30,9 @@ export function LikeRecipeIconButton(props: Props) {
     <IconButton
       className={clsx(classes.root, className)}
       shape="circle"
-      onClick={onClick}
-      title={
-        existedLike?.status === undefined
-          ? t('like')
-          : existedLike.status === 'like'
-            ? t('dislike')
-            : existedLike.status === 'dislike'
-              ? t('unlike')
-              : undefined
-      }
+      onClick={onLikeClick}
+      title={t('like')}
+      elevated
     >
       <RecipeLikeIcon recipeId={recipeId} />
     </IconButton>

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { convertToMilliseconds } from '~/shared/date';
 import type { Recipe } from '../model/Recipe';
 import { getRecipeByIdQueryKey } from './queryKeys';
+import { selectRecipe } from './selectRecipe';
 import { useRecipeApi } from './useRecipeApi';
 
 type Options = {
@@ -22,18 +23,9 @@ export function useRecipeByIdQuery(options: Options) {
       if (recipeId == null) {
         throw new Error('recipeId is not provided');
       }
-      return await api.getRecipeById(recipeId);
+      const response = await api.getRecipeById(recipeId);
+      return response.data;
     },
-    select: ({ data: dto }) => ({
-      id: dto.id,
-      name: dto.name,
-      imageUrl: dto.image_url,
-      description: dto.description,
-      formula: dto.formula,
-      kcal: dto.kcal,
-      portionWeightInGrams: dto.portion_weight_in_grams,
-      cookingTimeInMinutes: dto.cooking_time_in_minutes,
-      tagIds: dto.tag_ids,
-    }),
+    select: selectRecipe,
   });
 }

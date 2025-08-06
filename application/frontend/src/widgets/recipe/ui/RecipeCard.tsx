@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 import { CookingTime, type Recipe } from '~/entities/recipe';
 import { TagsBadges } from '~/entities/tag';
-import { LikeRecipeIconButton } from '~/features/like-recipe';
+import { DislikeRecipeIconButton, LikeRecipeIconButton } from '~/features/like-recipe';
 import { routes } from '~/shared/routes';
 import { Image, Typography } from '~/shared/ui';
 import classes from './RecipeCard.module.scss';
@@ -28,6 +28,10 @@ export function RecipeCard(props: Props) {
         <LikeRecipeIconButton
           recipeId={recipe.id}
           className={classes.likeButton}
+        />
+        <DislikeRecipeIconButton
+          recipeId={recipe.id}
+          className={classes.dislikeButton}
         />
 
         <CookingTime

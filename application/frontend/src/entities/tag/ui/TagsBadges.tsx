@@ -20,6 +20,9 @@ export function TagsBadges(props: Props) {
           weight="medium"
           key={index}
           className={classes.tag}
+          style={{
+            backgroundColor: tag.color,
+          }}
         >
           {tag.name}
         </Typography>

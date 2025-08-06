@@ -1,0 +1,6 @@
+@use '@shared/responsive/responsive';
+
+.root {
+  max-width: #{responsive.$mobileWidth};
+  margin: 0 auto;
+}

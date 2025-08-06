@@ -15,6 +15,13 @@ export function RecipeCardSkeleton() {
         />
 
         <Skeleton
+          height={32}
+          width={32}
+          borderRadius="100%"
+          className={classes.dislikeButton}
+        />
+
+        <Skeleton
           height={24}
           width={80}
           borderRadius="9999px"

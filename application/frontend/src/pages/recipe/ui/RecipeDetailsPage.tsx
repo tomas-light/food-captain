@@ -1,12 +1,14 @@
 import { useNavigate, useParams } from 'react-router';
-import { useRecipeByIdQuery } from '~/entities/recipe';
-import { LikeRecipeButton } from '~/features/like-recipe';
+import { DislikeRecipeButton, LikeRecipeButton } from '~/features/like-recipe';
 import { useTranslation } from '~/shared/locale';
-import { routes } from '~/shared/routes';
-import { NavigationHeader, NotFound } from '~/shared/ui';
+import { routes, useNumberParameter } from '~/shared/routes';
+import { NavigationHeader } from '~/shared/ui';
+import { RecipeHero } from '~/widgets/recipe';
+import classes from './RecipeDetailsPage.module.scss';
 
 export function RecipeDetailsPage() {
   const { recipeId } = useParams();
+  const sanitizedRecipeId = useNumberParameter(recipeId);
 
   const navigate = useNavigate();
 
@@ -14,24 +16,19 @@ export function RecipeDetailsPage() {
     keyPrefix: 'RecipeDetailsPage',
   });
 
-  const { data: recipe, isLoading } = useRecipeByIdQuery({
-    recipeId: recipeId ? +recipeId : undefined,
-  });
-
-  if (!isLoading && !recipe) {
-    return <NotFound>{t('notFound')}</NotFound>;
-  }
-
   return (
-    <div>
+    <div className={classes.root}>
       <NavigationHeader
         back={{
           text: t('back'),
           onClick: () => navigate(routes.recipes.url()),
         }}
       >
-        <LikeRecipeButton recipeId={recipe?.id} />
+        <LikeRecipeButton recipeId={sanitizedRecipeId} />
+        <DislikeRecipeButton recipeId={sanitizedRecipeId} />
       </NavigationHeader>
+
+      <RecipeHero recipeId={sanitizedRecipeId} />
     </div>
   );
 }

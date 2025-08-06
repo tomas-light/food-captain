@@ -5,5 +5,5 @@ export function getRecipesQueryKey() {
 }
 
 export function getRecipeByIdQueryKey(recipeId: Recipe['id'] | undefined) {
-  return ['recipes', { recipeId }];
+  return ['recipes', recipeId];
 }

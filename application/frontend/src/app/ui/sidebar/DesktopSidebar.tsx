@@ -1,7 +1,5 @@
-type Props = {};
+import classes from './DesktopSidebar.module.scss';
 
-export function DesktopSidebar(props: Props) {
-  const {} = props;
-
-  return <aside>sidebar</aside>;
+export function DesktopSidebar() {
+  return <aside className={classes.root}>sidebar</aside>;
 }

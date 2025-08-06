@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
+import type { RecipeDto } from '~/shared/api';
 import { convertToMilliseconds } from '~/shared/date';
-import type { Recipe } from '../model/Recipe';
 import { getRecipesQueryKey } from './queryKeys';
+import { selectRecipe } from './selectRecipe';
 import { useRecipeApi } from './useRecipeApi';
 
 export function useRecipesQuery() {
@@ -12,21 +13,13 @@ export function useRecipesQuery() {
 
     queryKey: getRecipesQueryKey(),
     queryFn: async () => {
-      return await api.getRecipes();
+      const response = await api.getRecipes();
+      return response.data;
     },
-    select: (response) =>
-      response.data?.map(
-        (dto): Recipe => ({
-          id: dto.id,
-          name: dto.name,
-          imageUrl: dto.image_url,
-          description: dto.description,
-          formula: dto.formula,
-          kcal: dto.kcal,
-          portionWeightInGrams: dto.portion_weight_in_grams,
-          cookingTimeInMinutes: dto.cooking_time_in_minutes,
-          tagIds: dto.tag_ids,
-        })
-      ),
+    select: selectRecipes,
   });
+}
+
+function selectRecipes(recipesDto: RecipeDto[]) {
+  return recipesDto.map(selectRecipe);
 }

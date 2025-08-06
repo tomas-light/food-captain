@@ -1,6 +1,6 @@
 export interface TagTableEntity {
   id: number;
   name: string;
-  /** Цвет в формате HEX */
+  /** Цвет в формате HEX/RGB/RGBA */
   color: string;
 }

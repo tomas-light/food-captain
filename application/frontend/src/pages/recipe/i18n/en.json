@@ -6,7 +6,6 @@
     "notFound": "No recipes found matching your criteria"
   },
   "RecipeDetailsPage": {
-    "notFound": "We haven't found your recipe",
     "back": "Back to recipes"
   }
 }

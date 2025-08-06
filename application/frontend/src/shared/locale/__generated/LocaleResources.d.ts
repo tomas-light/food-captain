@@ -9,8 +9,8 @@ export interface LocaleResources {
   "pages/login.LoginPage.password.label": null,
   "pages/login.LoginPage.password.placeholder": null,
   "pages/recipe.RecipeDetailsPage.back": null,
-  "pages/recipe.RecipeDetailsPage.notFound": null,
   "pages/recipe.RecipesPage.notFound": null,
   "pages/recipe.RecipesPage.subtitle": null,
-  "pages/recipe.RecipesPage.title": null
+  "pages/recipe.RecipesPage.title": null,
+  "widgets/recipe.RecipeHero.notFound": null
 }

@@ -1,15 +1,12 @@
 import { useIsMobileSidebarExpanded } from '../../config/useMobileSidebarConfig';
+import classes from './MobileSidebar.module.scss';
 
-type Props = {};
-
-export function MobileSidebar(props: Props) {
-  const {} = props;
-
+export function MobileSidebar() {
   const expanded = useIsMobileSidebarExpanded();
 
   if (!expanded) {
     return null;
   }
 
-  return <aside>sidebar</aside>;
+  return <aside className={classes.root}>sidebar</aside>;
 }

@@ -1,9 +1,9 @@
 import type { Recipe } from '~/entities/recipe';
 import { useTranslation } from '~/shared/locale';
 import { Button, Skeleton, Typography } from '~/shared/ui';
-import { useRecipeLikeQuery } from '../api/useRecipeLikeQuery';
-import { RecipeLikeIcon } from './RecipeLikeIcon';
-import { useOnClick } from './useOnClick';
+import { useRecipeLikeQuery } from '../../api/useRecipeLikeQuery';
+import { RecipeLikeIcon } from '../icon/RecipeLikeIcon';
+import { useOnLikeClick } from '../useOnLikeClick';
 
 type Props = {
   className?: string;
@@ -17,12 +17,9 @@ export function LikeRecipeButton(props: Props) {
     keyPrefix: 'LikeRecipeButton',
   });
 
-  const {
-    data: existedLike,
-    isLoading,
-    isFetching,
-  } = useRecipeLikeQuery({ recipeId });
-  const onClick = useOnClick(recipeId);
+  const { isLoading, isFetching } = useRecipeLikeQuery({ recipeId });
+
+  const onLikeClick = useOnLikeClick(recipeId);
 
   if (isLoading) {
     return <Skeleton height={40} width={100} />;
@@ -33,15 +30,11 @@ export function LikeRecipeButton(props: Props) {
       variant="outline"
       elevated
       className={className}
-      onClick={onClick}
+      onClick={onLikeClick}
       loading={isFetching}
       icon={<RecipeLikeIcon recipeId={recipeId} />}
     >
-      <Typography>
-        {existedLike?.status === undefined && t('like')}
-        {existedLike?.status === 'like' && t('dislike')}
-        {existedLike?.status === 'dislike' && t('unlike')}
-      </Typography>
+      <Typography>{t('like')}</Typography>
     </Button>
   );
 }

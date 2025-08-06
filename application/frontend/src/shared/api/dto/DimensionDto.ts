@@ -1,3 +1,4 @@
+/** В чем измеряются ингредиенты (кг, граммы, штуки, ложки, литры и т.д.) */
 export interface DimensionDto {
   id: number;
   name: string;
