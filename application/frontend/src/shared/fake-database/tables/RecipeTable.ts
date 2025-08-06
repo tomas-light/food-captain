@@ -58,7 +58,6 @@ export function initRecipeTable(options: {
       Закиньте лавровый лист и мелко порубленную зелень. Накройте кастрюлю крышкой и варите ещё **5–7** минут.
       Для аромата можно добавить в кастрюлю немного измельчённого чеснока, молотой гвоздики или чёрного перца. Оставьте борщ под крышкой настаиваться 5–10 минут.
       `,
-      kcal: 39.9,
       cooking_time_in_minutes: 150,
       portion_weight_in_grams: undefined,
       image_id: undefined,
@@ -68,6 +67,12 @@ export function initRecipeTable(options: {
           max: tags.length,
         })
         .map((tag) => tag.id),
+      nutrition: {
+        calories: 57.7,
+        protein: 3.8,
+        carbs: 4.3,
+        fat: 2.9,
+      },
     },
     {
       id: ++id,
@@ -80,7 +85,6 @@ export function initRecipeTable(options: {
       Добавить на сковороду к овощам отваренные макароны. Тушить 5 минут на среднем огне.
       Перед подачей можно украсить зеленью.
       Приятного аппетита.`,
-      kcal: 295.4,
       cooking_time_in_minutes: 20,
       portion_weight_in_grams: undefined,
       image_id: undefined,
@@ -90,6 +94,12 @@ export function initRecipeTable(options: {
           max: tags.length,
         })
         .map((tag) => tag.id),
+      nutrition: {
+        calories: 302.7,
+        protein: 21.6,
+        carbs: 16.7,
+        fat: 16.4,
+      },
     },
   ];
 

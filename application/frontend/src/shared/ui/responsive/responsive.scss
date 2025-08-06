@@ -1,4 +1,5 @@
-$mobileWidth: 1366px;
+$mobileWidth: 767pxpx;
+$laptopWidth: 1366px;
 
 @mixin mobile() {
   @media (width <= #{$mobileWidth}) {
@@ -6,8 +7,14 @@ $mobileWidth: 1366px;
   }
 }
 
+@mixin laptop() {
+  @media (width > #{$mobileWidth}) and (width <= #{$laptopWidth}) {
+    @content;
+  }
+}
+
 @mixin desktop() {
-  @media (width > #{$mobileWidth}) {
+  @media (width > #{$laptopWidth}) {
     @content;
   }
 }

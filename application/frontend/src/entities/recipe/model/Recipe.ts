@@ -1,4 +1,5 @@
 import type { Tag } from '~/entities/tag/crossExports';
+import type { DishNutrition } from './DishNutrition';
 
 export interface Recipe {
   id: number;
@@ -21,4 +22,6 @@ export interface Recipe {
   cookingTimeInMinutes?: number;
 
   tagIds: Tag['id'][];
+
+  nutrition: Partial<DishNutrition>;
 }

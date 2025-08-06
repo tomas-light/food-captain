@@ -21,4 +21,18 @@ export interface RecipeDto {
   cooking_time_in_minutes?: number;
 
   tag_ids: TagDto['id'][];
+
+  nutrition: Partial<{
+    /** Калорийность блюда на 100гр */
+    calories: number;
+
+    /** Белков на 100гр */
+    protein: number;
+
+    /** Углеводов на 100гр */
+    carbs: number;
+
+    /** Жиров на 100гр */
+    fat: number;
+  }>;
 }

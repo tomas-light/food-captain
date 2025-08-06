@@ -12,9 +12,6 @@ export interface RecipeTableEntity {
   /** пошаговая инструкция приготовления (в формате markdown) */
   formula: string;
 
-  /** Калорийность блюда на 100гр */
-  kcal?: number;
-
   /** Вес одной порции блюда в граммах */
   portion_weight_in_grams?: number;
 
@@ -22,4 +19,21 @@ export interface RecipeTableEntity {
   cooking_time_in_minutes?: number;
 
   tag_ids?: TagTableEntity['id'][];
+
+  nutrition: Partial<{
+    /** Калорийность блюда на 100гр */
+    calories: number;
+
+    /** Белков на 100гр */
+    protein: number;
+
+    /** Углеводов на 100гр */
+    carbs: number;
+
+    /** Жиров на 100гр */
+    fat: number;
+
+    /** Сахара на 100гр */
+    sugar: number;
+  }>;
 }

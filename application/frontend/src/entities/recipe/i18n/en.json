@@ -1,5 +1,15 @@
 {
   "CookingTime": {
     "time": "{{minutes}} min"
+  },
+  "Nutrition": {
+    "title": "Nutrition",
+    "perServing": "Per serving",
+    "calories_one": "Calory",
+    "calories_other": "Calories",
+    "protein": "Protein",
+    "carbs": "Carbs",
+    "fat": "Fat",
+    "gram": "{{count}}g"
   }
 }

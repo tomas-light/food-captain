@@ -3,9 +3,7 @@ import { useTranslation } from '~/shared/locale';
 import { Button, Skeleton, Typography } from '~/shared/ui';
 import { useRecipeLikeQuery } from '../../api/useRecipeLikeQuery';
 import { RecipeDislikeIcon } from '../icon/RecipeDislikeIcon';
-import { RecipeLikeIcon } from '../icon/RecipeLikeIcon';
 import { useOnDislikeClick } from '../useOnDislikeClick';
-import { useOnLikeClick } from '../useOnLikeClick';
 
 type Props = {
   className?: string;

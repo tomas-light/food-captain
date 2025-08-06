@@ -4,3 +4,28 @@
   max-width: #{responsive.$mobileWidth};
   margin: 0 auto;
 }
+
+.contentGrid {
+  display: grid;
+
+  @include responsive.desktop {
+    grid-template-columns: 400px 1fr;
+    gap: var(--spacing-12);
+    padding: var(--spacing-8) var(--spacing-6);
+  }
+
+  @include responsive.laptop {
+    gap: var(--spacing-8);
+    padding: var(--spacing-8) var(--spacing-6);
+  }
+
+  @include responsive.mobile {
+    padding: var(--spacing-6) var(--spacing-4);
+  }
+}
+
+.flex {
+  display: flex;
+  gap: var(--spacing-8);
+  flex-direction: column;
+}

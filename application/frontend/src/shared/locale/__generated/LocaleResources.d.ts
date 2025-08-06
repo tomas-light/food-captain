@@ -1,5 +1,12 @@
 export interface LocaleResources {
   "entities/recipe.CookingTime.time": null,
+  "entities/recipe.Nutrition.calories": null,
+  "entities/recipe.Nutrition.carbs": null,
+  "entities/recipe.Nutrition.fat": null,
+  "entities/recipe.Nutrition.gram": null,
+  "entities/recipe.Nutrition.perServing": null,
+  "entities/recipe.Nutrition.protein": null,
+  "entities/recipe.Nutrition.title": null,
   "features/like-recipe.LikeRecipeButton.dislike": null,
   "features/like-recipe.LikeRecipeButton.like": null,
   "features/like-recipe.LikeRecipeButton.unlike": null,

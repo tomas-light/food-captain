@@ -1,5 +1,17 @@
 {
   "CookingTime": {
     "time": "{{minutes}} мин"
+  },
+  "Nutrition": {
+    "title": "Нутриенты",
+    "perServing": "На одну порцию",
+    "calories_zero": "Калорий",
+    "calories_one": "Калория",
+    "calories_few": "Калорий",
+    "calories_many": "Калорий",
+    "protein": "Белка",
+    "carbs": "Углеводов",
+    "fat": "Жиров",
+    "gram": "{{count}}г"
   }
 }

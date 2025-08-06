@@ -5,6 +5,7 @@ export {
 } from './responsive/useWindowMedia';
 export { Desktop } from './responsive/Desktop';
 export { Mobile } from './responsive/Mobile';
+export { Laptop } from './responsive/Laptop';
 
 export { Button } from './button/Button';
 export { IconButton } from './button/IconButton';

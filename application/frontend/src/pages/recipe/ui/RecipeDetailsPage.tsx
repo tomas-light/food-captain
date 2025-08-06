@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from 'react-router';
+import { RecipeNutrition } from '~/entities/recipe';
 import { DislikeRecipeButton, LikeRecipeButton } from '~/features/like-recipe';
 import { useTranslation } from '~/shared/locale';
 import { routes, useNumberParameter } from '~/shared/routes';
@@ -29,6 +30,12 @@ export function RecipeDetailsPage() {
       </NavigationHeader>
 
       <RecipeHero recipeId={sanitizedRecipeId} />
+
+      <section className={classes.contentGrid}>
+        <div className={classes.flex}>
+          <RecipeNutrition recipeId={sanitizedRecipeId} />
+        </div>
+      </section>
     </div>
   );
 }
