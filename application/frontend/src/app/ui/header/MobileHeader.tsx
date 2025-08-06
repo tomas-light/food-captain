@@ -1,18 +1,15 @@
 import { Menu } from 'lucide-react';
 import { UserAvatar } from '~/entities/user';
+import { SwitchThemeIconButton } from '~/features/switch-theme';
 import { IconButton, LogoSvg, Typography } from '~/shared/ui';
 import { toggleMobileSidebarExpanded } from '../../config/useMobileSidebarConfig';
 import classes from './MobileHeader.module.scss';
 
-type Props = {};
-
-export function MobileHeader(props: Props) {
-  const {} = props;
-
+export function MobileHeader() {
   return (
     <header className={classes.root}>
       <div className={classes.container}>
-        <div className={classes.leftFlex}>
+        <div className={classes.flex}>
           <IconButton onClick={toggleMobileSidebarExpanded}>
             <Menu />
           </IconButton>
@@ -23,7 +20,10 @@ export function MobileHeader(props: Props) {
           </div>
         </div>
 
-        <UserAvatar />
+        <div className={classes.flex}>
+          <UserAvatar />
+          <SwitchThemeIconButton />
+        </div>
       </div>
     </header>
   );

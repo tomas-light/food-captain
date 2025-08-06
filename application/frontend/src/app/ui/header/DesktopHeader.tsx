@@ -1,12 +1,9 @@
 import { UserAvatar } from '~/entities/user';
+import { SwitchThemeIconButton } from '~/features/switch-theme';
 import { LogoSvg, Typography } from '~/shared/ui';
 import classes from './DesktopHeader.module.scss';
 
-type Props = {};
-
-export function DesktopHeader(props: Props) {
-  const {} = props;
-
+export function DesktopHeader() {
   return (
     <header className={classes.root}>
       <div className={classes.container}>
@@ -15,7 +12,10 @@ export function DesktopHeader(props: Props) {
           <Typography weight="bold">Food Captain</Typography>
         </div>
 
-        <UserAvatar />
+        <div className={classes.flex}>
+          <UserAvatar />
+          <SwitchThemeIconButton />
+        </div>
       </div>
     </header>
   );

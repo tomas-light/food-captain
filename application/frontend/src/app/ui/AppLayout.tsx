@@ -7,14 +7,14 @@ export function AppLayout(props: PropsWithChildren) {
   const { children } = props;
 
   return (
-    <div className={classes.root}>
+    <>
       <Header />
 
       <main>
-        <section>{children}</section>
+        <section className={classes.page}>{children}</section>
 
         <Sidebar />
       </main>
-    </div>
+    </>
   );
 }

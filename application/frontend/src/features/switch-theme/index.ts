@@ -1,0 +1,1 @@
+export { SwitchThemeIconButton } from './ui/SwitchThemeIconButton';

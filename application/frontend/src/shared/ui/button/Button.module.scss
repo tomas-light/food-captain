@@ -17,10 +17,6 @@
   transition: all var(--transition-fast);
   white-space: nowrap;
 
-  &:hover {
-    background-color: light-dark(#e9ebef, #e9ebef);
-  }
-
   &:focus-visible {
     outline: 2px solid light-dark(#666, #737373);
     outline-offset: 2px;

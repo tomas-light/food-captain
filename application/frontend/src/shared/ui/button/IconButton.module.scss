@@ -10,7 +10,8 @@
   cursor: pointer;
 
   &:hover {
-    background-color: light-dark(#e9ebef, #e9ebef);
+    background-color: var(--color-accent);
+    color: var(--color-accent-text);
   }
 
   &.circle {
