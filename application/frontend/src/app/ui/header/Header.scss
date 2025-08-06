@@ -1,0 +1,31 @@
+.root {
+  position: sticky;
+  z-index: var(--z-sticky);
+  top: 0;
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--color-border);
+  backdrop-filter: blur(5px);
+  background-color: light-dark(rgb(255 255 255 / 50%), rgb(20 20 20 / 70%));
+}
+
+.container {
+  max-width: 1280px;
+  height: 40px;
+  display: flex;
+  column-gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+  column-gap: 16px;
+  align-items: center;
+}
+
+.logoFlex {
+  display: flex;
+  column-gap: 4px;
+  align-items: center;
+}

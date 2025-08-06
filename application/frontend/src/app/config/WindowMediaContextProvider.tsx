@@ -9,6 +9,8 @@ export function WindowMediaContextProvider(props: PropsWithChildren) {
   const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
+    setIsDesktop(windowWidthMediaQuery.matches);
+
     windowWidthMediaQuery.addEventListener('change', (event) => {
       setIsDesktop(event.matches);
     });
