@@ -40,7 +40,7 @@ export function RecipesPage() {
       ) : (
         <div className={classes.recipesGrid}>
           {isLoading &&
-            Array.from({ length: 12 }).map((_, index) => (
+            Array.from({ length: 5 }).map((_, index) => (
               <RecipeCardSkeleton key={index} />
             ))}
 
