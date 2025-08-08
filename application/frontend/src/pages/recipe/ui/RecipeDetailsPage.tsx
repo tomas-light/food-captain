@@ -36,9 +36,7 @@ export function RecipeDetailsPage() {
           <RecipeNutrition recipeId={sanitizedRecipeId} />
         </div>
 
-        <div className={classes.formula}>
-          <RecipeFormulaViewer recipeId={sanitizedRecipeId} />
-        </div>
+        <RecipeFormulaViewer recipeId={sanitizedRecipeId} />
       </section>
     </div>
   );

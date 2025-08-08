@@ -1,0 +1,25 @@
+@use '@shared/responsive/responsive';
+
+.root {
+  padding: var(--spacing-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background-color: var(--color-surface);
+
+  @include responsive.mobile {
+    padding: var(--spacing-4);
+  }
+
+  > header {
+    display: flex;
+    align-items: center;
+    padding-bottom: var(--spacing-4);
+    border-bottom: 2px solid var(--color-border);
+    margin-bottom: var(--spacing-6);
+  }
+
+  ul,
+  ol {
+    padding-left: 20px;
+  }
+}

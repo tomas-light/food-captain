@@ -7,6 +7,7 @@ export interface LocaleResources {
   "entities/recipe.Nutrition.perServing": null,
   "entities/recipe.Nutrition.protein": null,
   "entities/recipe.Nutrition.title": null,
+  "entities/recipe.RecipeFormulaViewer.title": null,
   "features/like-recipe.LikeRecipeButton.dislike": null,
   "features/like-recipe.LikeRecipeButton.like": null,
   "features/like-recipe.LikeRecipeButton.unlike": null,

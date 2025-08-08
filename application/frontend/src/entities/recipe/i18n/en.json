@@ -11,5 +11,8 @@
     "carbs": "Carbs",
     "fat": "Fat",
     "gram": "{{count}}g"
+  },
+  "RecipeFormulaViewer": {
+    "title": "Instruction"
   }
 }

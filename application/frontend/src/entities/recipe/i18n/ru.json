@@ -13,5 +13,8 @@
     "carbs": "Углеводов",
     "fat": "Жиров",
     "gram": "{{count}}г"
+  },
+  "RecipeFormulaViewer": {
+    "title": "Инструкция"
   }
 }
