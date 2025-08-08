@@ -27,6 +27,11 @@
     padding: var(--spacing-8) var(--spacing-6);
   }
 
+  @include responsive.laptop {
+    grid-template-columns: 1fr 1fr;
+    padding: var(--spacing-8) var(--spacing-6);
+  }
+
   @include responsive.mobile {
     padding: var(--spacing-6) var(--spacing-4);
   }

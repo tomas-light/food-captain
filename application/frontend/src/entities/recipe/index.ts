@@ -6,4 +6,5 @@ export { type DishNutrition } from './model/DishNutrition';
 export { type Recipe } from './model/Recipe';
 
 export { CookingTime } from './ui/CookingTime';
+export { RecipeFormulaViewer } from './ui/RecipeFormulaViewer';
 export { RecipeNutrition } from './ui/RecipeNutrition';
