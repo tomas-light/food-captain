@@ -1,7 +1,7 @@
-import type { ApiBaseClient } from '../real/ApiBaseClient';
+import type { ApiBase } from '../real/ApiBase';
 import type { ApiMiddleware } from './ApiMiddleware';
 
-export function fakeApiMiddleware<TApi extends ApiBaseClient>(pluginOptions: {
+export function fakeApiMiddleware<TApi extends ApiBase>(pluginOptions: {
   importFakeApi: () => Promise<Partial<TApi>>;
   shouldFake: () => boolean | undefined;
 }): ApiMiddleware<TApi> {

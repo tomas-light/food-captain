@@ -1,10 +1,10 @@
 import { getFakeDatabase } from '../../fake-database/getFakeDatabase';
 import type { UserRecipeLikesTableEntity } from '../../fake-database/tables/UserRecipeLikesTable.entity';
 import type { UserRecipeLikeDto } from '../dto/UserRecipeLikeDto';
-import type { UserApiClient } from '../real/UserApiClient';
+import type { UserApi } from '../real/UserApi';
 import { fakeResponse } from './fakeResponse';
 
-export const fakeUserApiClient: Partial<UserApiClient> = {
+export const fakeUserApi: Partial<UserApi> = {
   getUserRecipeLikes: async (userId, recipeIds) => {
     const database = await getFakeDatabase();
 

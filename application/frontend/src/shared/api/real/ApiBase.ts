@@ -5,7 +5,7 @@ import type {
   GenericAbortSignal,
 } from 'axios';
 
-export class ApiBaseClient {
+export class ApiBase {
   constructor(protected instance: AxiosInstance) {}
 
   public request = async <ResponseData = unknown>(

@@ -1,9 +1,9 @@
 import { getFakeDatabase } from '../../fake-database/getFakeDatabase';
 import type { UserDto } from '../dto/UserDto';
-import type { AuthApiClient } from '../real/AuthApiClient';
+import type { AuthApi } from '../real/AuthApi';
 import { fakeResponse } from './fakeResponse';
 
-export const fakeAuthApiClient: Partial<AuthApiClient> = {
+export const fakeAuthApi: Partial<AuthApi> = {
   getMe: async () => {
     const database = await getFakeDatabase();
     const userId = await database.activeAuth.get('authorizedUserId');

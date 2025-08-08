@@ -3,13 +3,13 @@ export { createApiClient } from './createApiClient';
 export { useApiClient } from './useApiClient';
 export { type ApiError } from './ApiError';
 
-export { type AuthApiClient } from './real/AuthApiClient';
-export { type DimensionApiClient } from './real/DimensionApiClient';
-export { type IngredientApiClient } from './real/IngredientApiClient';
-export { type ImageApiClient } from './real/ImageApiClient';
-export { type MenuApiClient } from './real/MenuApiClient';
-export { type RecipeApiClient } from './real/RecipeApiClient';
-export { type TagApiClient } from './real/TagApiClient';
-export { type UserApiClient } from './real/UserApiClient';
+export { type AuthApi } from './real/AuthApi';
+export { type DimensionApi } from './real/DimensionApi';
+export { type IngredientApi } from './real/IngredientApi';
+export { type ImageApi } from './real/ImageApi';
+export { type MenuApi } from './real/MenuApi';
+export { type RecipeApi } from './real/RecipeApi';
+export { type TagApi } from './real/TagApi';
+export { type UserApi } from './real/UserApi';
 
 export type * from './dto';

@@ -1,6 +1,6 @@
-import { ApiBaseClient, ContentType } from './ApiBaseClient';
+import { ApiBase, ContentType } from './ApiBase';
 
-export class ImageApiClient extends ApiBaseClient {
+export class ImageApi extends ApiBase {
   getImageUrlById = async (imageId: number) => {
     return this.request<string>({
       method: 'GET',

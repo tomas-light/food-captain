@@ -1,7 +1,7 @@
 import type { DimensionDto } from '../dto/DimensionDto';
-import { ApiBaseClient, ContentType } from './ApiBaseClient';
+import { ApiBase, ContentType } from './ApiBase';
 
-export class DimensionApiClient extends ApiBaseClient {
+export class DimensionApi extends ApiBase {
   getDimensions = async () => {
     return this.request<DimensionDto[]>({
       method: 'GET',

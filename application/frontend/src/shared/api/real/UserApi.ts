@@ -2,9 +2,9 @@ import { DefaultUrlBuilder } from 'nice-web-routes';
 import type { RecipeDto } from '../dto/RecipeDto';
 import type { UserDto } from '../dto/UserDto';
 import type { UserRecipeLikeDto } from '../dto/UserRecipeLikeDto';
-import { ApiBaseClient, ContentType } from './ApiBaseClient';
+import { ApiBase, ContentType } from './ApiBase';
 
-export class UserApiClient extends ApiBaseClient {
+export class UserApi extends ApiBase {
   getUsers = async () => {
     return this.request<UserDto[]>({
       method: 'GET',

@@ -1,19 +1,19 @@
-import { type AuthApiClient } from './real/AuthApiClient';
-import { type DimensionApiClient } from './real/DimensionApiClient';
-import { type ImageApiClient } from './real/ImageApiClient';
-import { type IngredientApiClient } from './real/IngredientApiClient';
-import { type MenuApiClient } from './real/MenuApiClient';
-import { type RecipeApiClient } from './real/RecipeApiClient';
-import { type TagApiClient } from './real/TagApiClient';
-import { type UserApiClient } from './real/UserApiClient';
+import { type AuthApi } from './real/AuthApi';
+import { type DimensionApi } from './real/DimensionApi';
+import { type ImageApi } from './real/ImageApi';
+import { type IngredientApi } from './real/IngredientApi';
+import { type MenuApi } from './real/MenuApi';
+import { type RecipeApi } from './real/RecipeApi';
+import { type TagApi } from './real/TagApi';
+import { type UserApi } from './real/UserApi';
 
 export interface ApiClient {
-  auth: AuthApiClient;
-  dimension: DimensionApiClient;
-  image: ImageApiClient;
-  ingredient: IngredientApiClient;
-  menu: MenuApiClient;
-  recipe: RecipeApiClient;
-  tag: TagApiClient;
-  user: UserApiClient;
+  auth: AuthApi;
+  dimension: DimensionApi;
+  image: ImageApi;
+  ingredient: IngredientApi;
+  menu: MenuApi;
+  recipe: RecipeApi;
+  tag: TagApi;
+  user: UserApi;
 }

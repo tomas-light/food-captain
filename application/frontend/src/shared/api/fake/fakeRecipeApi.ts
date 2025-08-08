@@ -1,10 +1,10 @@
 import { getFakeDatabase } from '../../fake-database/getFakeDatabase';
 import type { RecipeDto } from '../dto/RecipeDto';
-import type { RecipeApiClient } from '../real/RecipeApiClient';
+import type { RecipeApi } from '../real/RecipeApi';
 import { fakeResponse } from './fakeResponse';
 import { toBase64 } from './utils/toBase64';
 
-export const fakeRecipeApiClient: Partial<RecipeApiClient> = {
+export const fakeRecipeApi: Partial<RecipeApi> = {
   getRecipes: async () => {
     const database = await getFakeDatabase();
     const allRecipes = await database.recipe.getAll();

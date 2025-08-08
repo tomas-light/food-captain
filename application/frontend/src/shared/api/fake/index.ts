@@ -3,15 +3,13 @@ import type { ApiClient } from '../ApiClient';
 export const fakeApiLazyImports: {
   [key in keyof ApiClient]: () => Promise<Partial<ApiClient[key]>>;
 } = {
-  auth: async () => (await import('./fakeAuthApiClient')).fakeAuthApiClient,
-  dimension: async () =>
-    (await import('./fakeDimensionApiClient')).fakeDimensionApiClient,
-  image: async () => (await import('./fakeImageApiClient')).fakeImageApiClient,
+  auth: async () => (await import('./fakeAuthApi')).fakeAuthApi,
+  dimension: async () => (await import('./fakeDimensionApi')).fakeDimensionApi,
+  image: async () => (await import('./fakeImageApi')).fakeImageApi,
   ingredient: async () =>
-    (await import('./fakeIngredientApiClient')).fakeIngredientApiClient,
-  menu: async () => (await import('./fakeMenuApiClient')).fakeMenuApiClient,
-  recipe: async () =>
-    (await import('./fakeRecipeApiClient')).fakeRecipeApiClient,
-  tag: async () => (await import('./fakeTagApiClient')).fakeTagApiClient,
-  user: async () => (await import('./fakeUserApiClient')).fakeUserApiClient,
+    (await import('./fakeIngredientApi')).fakeIngredientApi,
+  menu: async () => (await import('./fakeMenuApi')).fakeMenuApi,
+  recipe: async () => (await import('./fakeRecipeApi')).fakeRecipeApi,
+  tag: async () => (await import('./fakeTagApi')).fakeTagApi,
+  user: async () => (await import('./fakeUserApi')).fakeUserApi,
 };

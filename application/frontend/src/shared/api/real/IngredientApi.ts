@@ -1,7 +1,7 @@
 import type { IngredientDto } from '../dto/IngredientDto';
-import { ApiBaseClient, ContentType } from './ApiBaseClient';
+import { ApiBase, ContentType } from './ApiBase';
 
-export class IngredientApiClient extends ApiBaseClient {
+export class IngredientApi extends ApiBase {
   getIngredients = async () => {
     return this.request<IngredientDto[]>({
       method: 'GET',

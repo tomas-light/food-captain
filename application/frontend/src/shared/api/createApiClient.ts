@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { type ApiClient } from './ApiClient';
-import { AuthApiClient } from './real/AuthApiClient';
-import { DimensionApiClient } from './real/DimensionApiClient';
-import { ImageApiClient } from './real/ImageApiClient';
-import { IngredientApiClient } from './real/IngredientApiClient';
-import { MenuApiClient } from './real/MenuApiClient';
-import { RecipeApiClient } from './real/RecipeApiClient';
-import { TagApiClient } from './real/TagApiClient';
-import { UserApiClient } from './real/UserApiClient';
+import { AuthApi } from './real/AuthApi';
+import { DimensionApi } from './real/DimensionApi';
+import { ImageApi } from './real/ImageApi';
+import { IngredientApi } from './real/IngredientApi';
+import { MenuApi } from './real/MenuApi';
+import { RecipeApi } from './real/RecipeApi';
+import { TagApi } from './real/TagApi';
+import { UserApi } from './real/UserApi';
 
 export const createApiClient = (baseUrl: string): ApiClient => {
   const axiosInstance = axios.create({
@@ -15,14 +15,14 @@ export const createApiClient = (baseUrl: string): ApiClient => {
     withCredentials: true,
   });
 
-  const auth = new AuthApiClient(axiosInstance);
-  const dimension = new DimensionApiClient(axiosInstance);
-  const image = new ImageApiClient(axiosInstance);
-  const ingredient = new IngredientApiClient(axiosInstance);
-  const menu = new MenuApiClient(axiosInstance);
-  const recipe = new RecipeApiClient(axiosInstance);
-  const tag = new TagApiClient(axiosInstance);
-  const user = new UserApiClient(axiosInstance);
+  const auth = new AuthApi(axiosInstance);
+  const dimension = new DimensionApi(axiosInstance);
+  const image = new ImageApi(axiosInstance);
+  const ingredient = new IngredientApi(axiosInstance);
+  const menu = new MenuApi(axiosInstance);
+  const recipe = new RecipeApi(axiosInstance);
+  const tag = new TagApi(axiosInstance);
+  const user = new UserApi(axiosInstance);
 
   return {
     auth,

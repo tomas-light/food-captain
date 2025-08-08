@@ -2,7 +2,7 @@ import type { IngredientDto } from '../dto/IngredientDto';
 import type { RecipeDto } from '../dto/RecipeDto';
 import type { TagDto } from '../dto/TagDto';
 import type { UserDto } from '../dto/UserDto';
-import { ApiBaseClient, ContentType } from './ApiBaseClient';
+import { ApiBase, ContentType } from './ApiBase';
 
 interface RecipeFilters {
   tagIds?: TagDto['id'][];
@@ -12,7 +12,7 @@ interface RecipeFilters {
   cookingTimeLimit?: RecipeDto['cooking_time_in_minutes'];
 }
 
-export class RecipeApiClient extends ApiBaseClient {
+export class RecipeApi extends ApiBase {
   getRecipes = async (filters?: RecipeFilters) => {
     return this.request<RecipeDto[]>({
       method: 'GET',

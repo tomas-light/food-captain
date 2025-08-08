@@ -1,8 +1,8 @@
 import { getFakeDatabase } from '../../fake-database/getFakeDatabase';
-import type { TagApiClient } from '../real/TagApiClient';
+import type { TagApi } from '../real/TagApi';
 import { fakeResponse } from './fakeResponse';
 
-export const fakeTagApiClient: Partial<TagApiClient> = {
+export const fakeTagApi: Partial<TagApi> = {
   getTagsByIds: async (tagIds) => {
     const database = await getFakeDatabase();
     const allTags = await database.tag.getAll();

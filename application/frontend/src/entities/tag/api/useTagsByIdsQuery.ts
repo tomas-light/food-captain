@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { type TagApiClient } from '~/shared/api';
+import { type TagApi } from '~/shared/api';
 import { convertToMilliseconds } from '~/shared/date';
 import type { Tag } from '../model/Tag';
 import { getTagsByIdsQueryKey } from './queryKeys';
@@ -7,7 +7,7 @@ import { useTagApi } from './useTagApi';
 
 const idsToRequest = new Set<Tag['id']>([]);
 const inProgressRequest: {
-  current: null | ReturnType<TagApiClient['getTagsByIds']>;
+  current: null | ReturnType<TagApi['getTagsByIds']>;
 } = {
   current: null,
 };

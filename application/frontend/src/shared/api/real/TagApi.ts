@@ -1,7 +1,7 @@
 import type { TagDto } from '../dto/TagDto';
-import { ApiBaseClient, ContentType } from './ApiBaseClient';
+import { ApiBase, ContentType } from './ApiBase';
 
-export class TagApiClient extends ApiBaseClient {
+export class TagApi extends ApiBase {
   getTags = async () => {
     return this.request<TagDto[]>({
       method: 'GET',

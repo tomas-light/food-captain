@@ -1,7 +1,7 @@
 import type { UserDto } from '../dto/UserDto';
-import { ApiBaseClient, ContentType } from './ApiBaseClient';
+import { ApiBase, ContentType } from './ApiBase';
 
-export class AuthApiClient extends ApiBaseClient {
+export class AuthApi extends ApiBase {
   getMe = async () => {
     return this.request<UserDto>({
       method: 'GET',

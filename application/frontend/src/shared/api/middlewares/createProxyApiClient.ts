@@ -1,7 +1,7 @@
-import { type ApiBaseClient } from '../real/ApiBaseClient';
+import { type ApiBase } from '../real/ApiBase';
 import { type ApiMiddleware, type ApiMiddlewareOptions } from './ApiMiddleware';
 
-export function createProxyApiClient<TApi extends ApiBaseClient>(
+export function createProxyApiClient<TApi extends ApiBase>(
   api: TApi,
   ...middlewares: ApiMiddleware<TApi>[]
 ) {

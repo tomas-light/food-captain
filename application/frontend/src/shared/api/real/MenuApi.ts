@@ -1,8 +1,8 @@
 import type { MenuDto } from '../dto/MenuDto';
 import type { UserDto } from '../dto/UserDto';
-import { ApiBaseClient, ContentType } from './ApiBaseClient';
+import { ApiBase, ContentType } from './ApiBase';
 
-export class MenuApiClient extends ApiBaseClient {
+export class MenuApi extends ApiBase {
   getMenus = async () => {
     return this.request<MenuDto[]>({
       method: 'GET',
