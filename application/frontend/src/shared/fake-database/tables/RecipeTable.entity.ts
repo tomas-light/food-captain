@@ -1,5 +1,6 @@
 import type { ImageTableEntity } from './ImageTable.entity';
 import type { TagTableEntity } from './TagTable.entity';
+import type { UserTableEntity } from './UserTable.entity';
 
 export interface RecipeTableEntity {
   id: number;
@@ -36,4 +37,9 @@ export interface RecipeTableEntity {
     /** Сахара на 100гр */
     sugar: number;
   }>;
+
+  author_id: UserTableEntity['id'];
+
+  /** iso */
+  created_at: string;
 }

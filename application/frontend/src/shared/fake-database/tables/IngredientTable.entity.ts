@@ -5,4 +5,7 @@ export interface IngredientTableEntity {
   id: number;
   name?: string;
   image_id?: ImageTableEntity['id'];
+
+  /** iso */
+  created_at: string;
 }

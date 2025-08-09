@@ -29,6 +29,8 @@ export const fakeRecipeApi: Partial<RecipeApi> = {
         image_url: imageUrl,
         tag_ids: recipe.tag_ids ?? [],
         nutrition: recipe.nutrition,
+        author_id: recipe.author_id,
+        created_at: recipe.created_at,
       });
     });
 
@@ -61,6 +63,8 @@ export const fakeRecipeApi: Partial<RecipeApi> = {
       image_url: imageUrl,
       tag_ids: recipe.tag_ids ?? [],
       nutrition: recipe.nutrition,
+      author_id: recipe.author_id,
+      created_at: recipe.created_at,
     });
   },
 };

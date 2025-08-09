@@ -1,4 +1,5 @@
 import type { TagDto } from './TagDto';
+import type { UserDto } from './UserDto';
 
 export interface RecipeDto {
   id: number;
@@ -35,4 +36,9 @@ export interface RecipeDto {
     /** Жиров на 100гр */
     fat: number;
   }>;
+
+  author_id: UserDto['id'];
+
+  /** iso */
+  created_at: string;
 }

@@ -23,6 +23,7 @@ export const fakeIngredientApi: Partial<IngredientApi> = {
         id: ingredient.id,
         name: ingredient.name,
         image_url: imageUrl,
+        created_at: ingredient.created_at,
       });
     });
 

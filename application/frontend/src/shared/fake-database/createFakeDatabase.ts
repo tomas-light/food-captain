@@ -38,9 +38,14 @@ export async function createFakeDatabase() {
     }),
 
     initialTransactions: async (database) => {
+      const { users, saveUsers } = initUserTable({ database });
       const { dimensions, saveDimensions } = initDimensionTable({ database });
       const { tags, saveTags } = initTagTable({ database });
-      const { recipes, saveRecipes } = initRecipeTable({ database, tags });
+      const { recipes, saveRecipes } = initRecipeTable({
+        database,
+        tags,
+        users,
+      });
       const { ingredients, saveIngredients } = initIngredientTable({
         database,
       });
@@ -54,7 +59,6 @@ export async function createFakeDatabase() {
         dimensions,
         ingredients,
       });
-      const { users, saveUsers } = initUserTable({ database });
       const { saveRoles } = initRoleTable({ database });
       const { saveUserRoles } = initUserRoleTable({ database });
       const { saveMenus } = initMenuTable({ database, users });
