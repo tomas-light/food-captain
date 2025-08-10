@@ -8,6 +8,10 @@
     padding: var(--spacing-4);
   }
 
+  @include responsive.laptop {
+    padding: var(--spacing-6);
+  }
+
   @include responsive.desktop {
     padding: var(--spacing-6);
   }
@@ -19,6 +23,12 @@
       margin-bottom: var(--spacing-2);
     }
   }
+}
+
+.titleFlex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .recipesGrid {

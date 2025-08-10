@@ -1,0 +1,24 @@
+.root {
+  position: fixed;
+  z-index: var(--z-dialog-overlay);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: url('/svg/close-modal.svg'), auto;
+
+  // &:before {
+  //  position: absolute;
+  //  top: 0;
+  //  left: 0;
+  //  width: 100%;
+  //  height: 100%;
+  //  border-radius: inherit;
+  //  background: var(--color-background-inverted);
+  //  content: '';
+  //  opacity: 0.1;
+  // }
+}

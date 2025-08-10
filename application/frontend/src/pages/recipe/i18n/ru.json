@@ -1,5 +1,6 @@
 {
   "RecipesPage": {
+    "addRecipeButton": "Новый рецепт",
     "title": "Все рецепты",
     "subtitle_one": "Откройте для себя {{count}} вкусный рецепт",
     "subtitle_few": "Откройте для себя {{count}} вкусных рецепта",

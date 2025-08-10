@@ -1,3 +1,4 @@
+export { invalidateRecipesQuery } from './api/queryKeys';
 export { useRecipeApi } from './api/useRecipeApi';
 export { useRecipesQuery } from './api/useRecipesQuery';
 export { useRecipeByIdQuery } from './api/useRecipeByIdQuery';

@@ -1,0 +1,1 @@
+export const DIALOG_ANIMATION_DURATION = 200;

@@ -17,6 +17,7 @@
   --color-destructive: light-dark(#d4183d, #dc2626);
   --color-destructive-text: light-dark(#fff, #fafafa);
   --color-background: light-dark(#fff, #141414ff);
+  --color-background-inverted: light-dark(#141414ff, #fff);
   --color-surface: light-dark(#fff, #333030);
   --color-surface-90: light-dark(rgb(255 255 255 / 90%), rgb(51 48 48 / 90%));
 
@@ -58,8 +59,8 @@
   --z-dropdown: 100;
   --z-sticky: 120;
   --z-fixed: 130;
-  --z-modal-backdrop: 140;
-  --z-modal: 150;
+  --z-dialog-overlay: 140;
+  --z-dialog: 150;
   --z-popover: 160;
   --z-tooltip: 170;
 }
@@ -88,7 +89,6 @@ body {
 
 body > main {
   width: 100%;
-  height: 100%;
   display: grid;
   grid-template-areas: 'sidebar main';
   grid-template-columns: auto 1fr;

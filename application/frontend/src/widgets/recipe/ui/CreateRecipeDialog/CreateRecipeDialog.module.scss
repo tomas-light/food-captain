@@ -1,0 +1,12 @@
+@use '@shared/responsive/responsive';
+
+.root {
+  width: 400px;
+  height: 400px;
+}
+
+.content {
+  display: flex;
+  row-gap: var(--spacing-6);
+  flex-direction: column;
+}

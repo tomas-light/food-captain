@@ -1,0 +1,12 @@
+.root {
+  position: relative;
+  flex-shrink: 0;
+  padding: var(--spacing-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.closeButton {
+  position: absolute;
+  top: var(--spacing-2);
+  right: var(--spacing-2);
+}

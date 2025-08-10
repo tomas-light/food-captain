@@ -1,5 +1,20 @@
 {
   "RecipeHero": {
     "notFound": "We haven't found your recipe"
+  },
+  "CreateRecipeDialog": {
+    "header": {
+      "title": "Create recipe",
+      "step": "Step {{number}} of {{totalNumber}}: {{name}}",
+      "progress": "{{percent}}% Completed"
+    },
+    "form": {
+      "name": "Recipe name",
+      "description": "Description",
+      "formula": "Instruction",
+      "image": "Image",
+      "cookingTime": "Cooking time (minutes)",
+      "tags": "Tags"
+    }
   }
 }

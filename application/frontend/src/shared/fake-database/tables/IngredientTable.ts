@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import type { Database } from '../../database';
 import type { IngredientTableEntity } from './IngredientTable.entity';
 
@@ -38,6 +39,7 @@ export function initIngredientTable(options: {
       id: ++id,
       name,
       image_id: undefined,
+      created_at: faker.date.past().toISOString(),
     };
   }
 

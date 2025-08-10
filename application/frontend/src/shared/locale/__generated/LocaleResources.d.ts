@@ -17,8 +17,18 @@ export interface LocaleResources {
   "pages/login.LoginPage.password.label": null,
   "pages/login.LoginPage.password.placeholder": null,
   "pages/recipe.RecipeDetailsPage.back": null,
+  "pages/recipe.RecipesPage.addRecipeButton": null,
   "pages/recipe.RecipesPage.notFound": null,
   "pages/recipe.RecipesPage.subtitle": null,
   "pages/recipe.RecipesPage.title": null,
+  "widgets/recipe.CreateRecipeDialog.form.cookingTime": null,
+  "widgets/recipe.CreateRecipeDialog.form.description": null,
+  "widgets/recipe.CreateRecipeDialog.form.formula": null,
+  "widgets/recipe.CreateRecipeDialog.form.image": null,
+  "widgets/recipe.CreateRecipeDialog.form.name": null,
+  "widgets/recipe.CreateRecipeDialog.form.tags": null,
+  "widgets/recipe.CreateRecipeDialog.header.progress": null,
+  "widgets/recipe.CreateRecipeDialog.header.step": null,
+  "widgets/recipe.CreateRecipeDialog.header.title": null,
   "widgets/recipe.RecipeHero.notFound": null
 }

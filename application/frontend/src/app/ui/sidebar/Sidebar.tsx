@@ -1,4 +1,4 @@
-import { Desktop, Mobile } from '~/shared/ui';
+import { Desktop, Laptop, Mobile } from '~/shared/ui';
 import { DesktopSidebar } from './DesktopSidebar';
 import { MobileSidebar } from './MobileSidebar';
 
@@ -8,6 +8,10 @@ export function Sidebar() {
       <Mobile>
         <MobileSidebar />
       </Mobile>
+
+      <Laptop>
+        <DesktopSidebar />
+      </Laptop>
 
       <Desktop>
         <DesktopSidebar />

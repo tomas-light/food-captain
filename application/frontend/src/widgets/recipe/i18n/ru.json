@@ -1,5 +1,20 @@
 {
   "RecipeHero": {
     "notFound": "Мы не нашли ваш рецепт"
+  },
+  "CreateRecipeDialog": {
+    "header": {
+      "title": "Создание рецепта",
+      "step": "Шаг {{number}} из {{totalNumber}}: {{name}}",
+      "progress": "{{percent}}% Завершено"
+    },
+    "form": {
+      "name": "Название рецепта",
+      "description": "Описание",
+      "formula": "Инструкция",
+      "image": "Изображение",
+      "cookingTime": "Время готовки (в минутах)",
+      "tags": "Теги"
+    }
   }
 }

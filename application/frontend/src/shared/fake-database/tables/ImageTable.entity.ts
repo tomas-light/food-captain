@@ -1,5 +1,5 @@
 export interface ImageTableEntity {
   id: number;
-  tags?: string; // tag arrays joined with ','
+  associated_name?: string;
   content: File;
 }

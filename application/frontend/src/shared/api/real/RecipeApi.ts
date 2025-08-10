@@ -1,7 +1,7 @@
 import type { IngredientDto } from '../dto/IngredientDto';
+import type { NewRecipeDto } from '../dto/NewRecipeDto';
 import type { RecipeDto } from '../dto/RecipeDto';
 import type { TagDto } from '../dto/TagDto';
-import type { UserDto } from '../dto/UserDto';
 import { ApiBase, ContentType } from './ApiBase';
 
 interface RecipeFilters {
@@ -52,15 +52,11 @@ export class RecipeApi extends ApiBase {
     });
   };
 
-  addRecipe = async (recipe: {
-    name?: string;
-    author_id?: UserDto['id'];
-    order_number?: number;
-  }) => {
+  addRecipe = async (newRecipe: NewRecipeDto) => {
     return this.request<RecipeDto>({
       method: 'POST',
       url: '/recipe',
-      data: JSON.stringify(recipe),
+      data: JSON.stringify(newRecipe),
       type: ContentType.Json,
       responseType: 'json',
     });
