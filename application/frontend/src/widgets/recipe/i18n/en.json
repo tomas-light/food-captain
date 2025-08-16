@@ -14,7 +14,38 @@
       "formula": "Instruction",
       "image": "Image",
       "cookingTime": "Cooking time (minutes)",
-      "tags": "Tags"
+      "tags": "Tags",
+
+      "validation": {
+        "name": {
+          "required": "Name is required",
+          "maxLength": "Name exceeds max length ({{length}}/{{maxLength}})"
+        },
+        "description": {
+          "maxLength": "Description exceeds max length ({{length}}/{{maxLength}})"
+        },
+        "formula": {
+          "required": "Formula is required",
+          "maxLength": "Formula exceeds max length ({{length}}/{{maxLength}})"
+        },
+        "kcal": {
+          "min": "Value is less than minimum: {{min}}",
+          "max": "Value exceeds maximum: {{max}}"
+        },
+        "portionWeightInGrams": {
+          "min": "Value is less than minimum: {{min}}",
+          "max": "Value exceeds maximum: {{max}}"
+        },
+        "cookingTimeInMinutes": {
+          "min": "Value is less than minimum: {{min}}",
+          "max": "Value exceeds maximum: {{max}}"
+        }
+      }
+    },
+    "footer": {
+      "cancel": "Cancel",
+      "nextStep": "Next step",
+      "submit": "Submit"
     }
   }
 }

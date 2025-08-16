@@ -9,12 +9,15 @@
   border-radius: var(--radius-md);
   background-color: transparent;
   color: var(--color-primary);
-  cursor: pointer;
   font-size: 14px;
   font-weight: 500;
   line-height: 1.5;
   text-decoration: none;
   white-space: nowrap;
+
+  &:not([data-loading='true']):not(.disabled) {
+    cursor: pointer;
+  }
 
   &:focus-visible {
     outline: 2px solid light-dark(#666, #737373);
@@ -49,7 +52,7 @@
     background-color: var(--color-primary);
     color: var(--color-primary-text);
 
-    &:hover:not([data-elevated='true']) {
+    &:hover:not([data-elevated='true']):not([data-loading='true']) {
       background-color: var(--color-primary);
       opacity: 0.9;
     }
@@ -59,7 +62,7 @@
     background-color: var(--color-secondary);
     color: var(--color-secondary-foreground);
 
-    &:hover:not([data-elevated='true']) {
+    &:hover:not([data-elevated='true']):not([data-loading='true']) {
       background-color: var(--color-secondary);
       opacity: 0.8;
     }
@@ -70,7 +73,7 @@
     background-color: var(--color-surface);
     color: var(--color-text);
 
-    &:hover:not([data-elevated='true']) {
+    &:hover:not([data-elevated='true']):not([data-loading='true']) {
       background-color: var(--color-accent);
       color: var(--color-accent-text);
     }
@@ -80,7 +83,7 @@
     background-color: transparent;
     color: var(--color-text);
 
-    &:hover:not([data-elevated='true']) {
+    &:hover:not([data-elevated='true']):not([data-loading='true']) {
       background-color: var(--color-accent);
       color: var(--color-accent-text);
     }
@@ -90,7 +93,7 @@
     background-color: var(--color-destructive);
     color: var(--color-destructive-foreground);
 
-    &:hover:not([data-elevated='true']) {
+    &:hover:not([data-elevated='true']):not([data-loading='true']) {
       background-color: var(--color-destructive);
       opacity: 0.9;
     }
@@ -100,22 +103,40 @@
     color: transparent;
 
     &:after {
+      $size: 16px;
+
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 16px;
-      height: 16px;
+      width: $size;
+      height: $size;
       border: 2px solid transparent;
       border-radius: 50%;
       border-top: 2px solid currentColor;
-      margin-top: -8px;
-      margin-left: -8px;
       animation: spin 1s linear infinite;
       content: '';
     }
+
+    &[data-variant='default']:after {
+      color: var(--color-primary-text);
+    }
+
+    &[data-variant='secondary']:after {
+      color: var(--color-secondary-foreground);
+    }
+
+    &[data-variant='outline']:after {
+      color: var(--color-text);
+    }
+
+    &[data-variant='ghost']:after {
+      color: var(--color-text);
+    }
+
+    &[data-variant='destructive']:after {
+      color: var(--color-destructive-foreground);
+    }
   }
 
-  &[data-elevated='true'] {
+  &[data-elevated='true']:not([data-loading='true']) {
     transition:
       transform var(--transition-fast),
       box-shadow var(--transition-fast);
@@ -124,5 +145,14 @@
       box-shadow: var(--shadow-md);
       transform: translateY(-1px);
     }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
