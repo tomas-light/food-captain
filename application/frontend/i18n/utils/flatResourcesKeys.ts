@@ -1,3 +1,5 @@
+import { sortFlattenKeys } from './sortFlattenKeys';
+
 export function flatResourcesKeys(resources: object, path?: string) {
   const flatKeys: Record<string, null> = {};
 
@@ -13,15 +15,7 @@ export function flatResourcesKeys(resources: object, path?: string) {
     }
   }
 
-  return Object.keys(flatKeys)
-    .sort()
-    .reduce(
-      (newObject, key) => {
-        newObject[key] = flatKeys[key];
-        return newObject;
-      },
-      {} as Record<string, unknown>
-    );
+  return sortFlattenKeys(flatKeys);
 }
 
 const pluralSuffixes = ['_zero', '_one', '_two', '_few', '_many', '_other'];

@@ -1,19 +1,18 @@
 import { readFile } from 'fs/promises';
-import path from 'path';
 import { getNamespace } from './getNamespace';
 
-export async function grabResources(srcDirectoryPath: string, relativeFilePaths: string[]) {
+export async function grabResources(filePaths: string[]) {
   const resources: Record<string, Record<string, unknown>> = {};
   const readPromises: Promise<{
     slice: string;
     content: string;
   }>[] = [];
 
-  for (const relativeFilePath of relativeFilePaths) {
-    const slice = getNamespace(relativeFilePath);
+  for (const filePath of filePaths) {
+    const slice = getNamespace(filePath);
 
     readPromises.push(
-      readFile(path.join(srcDirectoryPath, relativeFilePath), 'utf-8').then((content) => ({
+      readFile(filePath, 'utf-8').then((content) => ({
         slice,
         content,
       }))
