@@ -1,0 +1,50 @@
+.root {
+  $borderWidth: 1px;
+
+  position: relative;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border: $borderWidth solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-secondary);
+  cursor: pointer;
+
+  > span {
+    z-index: 1; // to place over overlap
+    padding: 0 var(--spacing-4);
+
+    &:first-of-type {
+      padding-right: var(--spacing-2);
+    }
+
+    &:last-of-type {
+      padding-left: var(--spacing-2);
+    }
+  }
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+
+  .overlap {
+    position: absolute;
+    top: $borderWidth;
+    width: 40px;
+    height: calc(100% - #{$borderWidth} * 2);
+    background-color: var(--color-background);
+    transition: all var(--transition-fast);
+
+    &[data-at-the-left] {
+      border-bottom-left-radius: var(--radius-md);
+      border-top-left-radius: var(--radius-md);
+    }
+
+    &[data-at-the-right] {
+      border-bottom-right-radius: var(--radius-md);
+      border-top-right-radius: var(--radius-md);
+    }
+  }
+}

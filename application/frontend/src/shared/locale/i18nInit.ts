@@ -54,10 +54,10 @@ export function i18nInit<TLocale extends string>() {
       },
 
       detection: {
-        order: ['path', 'localStorage'],
+        order: ['localStorage', 'path'],
         lookupLocalStorage: 'i18nextLng',
         lookupFromPathIndex: 0,
-        caches: [],
+        caches: ['localStorage'], // Store detected language in localStorage
       },
     });
 }

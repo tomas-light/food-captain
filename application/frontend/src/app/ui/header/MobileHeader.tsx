@@ -1,5 +1,6 @@
 import { Menu } from 'lucide-react';
 import { UserAvatar } from '~/entities/user';
+import { LanguageButton } from '~/features/switch-language';
 import { SwitchThemeIconButton } from '~/features/switch-theme';
 import { IconButton, LogoSvg, Typography } from '~/shared/ui';
 import { toggleMobileSidebarExpanded } from '../../config/useMobileSidebarConfig';
@@ -22,6 +23,7 @@ export function MobileHeader() {
 
         <div className={classes.flex}>
           <UserAvatar />
+          <LanguageButton />
           <SwitchThemeIconButton />
         </div>
       </div>

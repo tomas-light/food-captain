@@ -1,4 +1,5 @@
 import { UserAvatar } from '~/entities/user';
+import { LanguageButton } from '~/features/switch-language';
 import { SwitchThemeIconButton } from '~/features/switch-theme';
 import { LogoSvg, Typography } from '~/shared/ui';
 import classes from './DesktopHeader.module.scss';
@@ -14,6 +15,7 @@ export function DesktopHeader() {
 
         <div className={classes.flex}>
           <UserAvatar />
+          <LanguageButton />
           <SwitchThemeIconButton />
         </div>
       </div>

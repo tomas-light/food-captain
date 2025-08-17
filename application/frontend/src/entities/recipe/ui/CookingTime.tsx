@@ -16,6 +16,10 @@ export function CookingTime(props: Props) {
     keyPrefix: 'CookingTime',
   });
 
+  if (cookingTime == null) {
+    return null;
+  }
+
   return (
     <Typography
       className={clsx(classes.root, className, {

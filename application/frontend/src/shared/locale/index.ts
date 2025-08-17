@@ -6,3 +6,4 @@ export { type LocaleLayerSlice } from './types/LocaleLayerSlice';
 export { type LocaleKeyPrefix } from './types/LocaleKeyPrefix';
 export { type LocaleTFunction } from './types/LocaleTFunction';
 export { defaultI18nConfig } from './defaultI18nConfig';
+export { locales, type Locale } from './Locale';

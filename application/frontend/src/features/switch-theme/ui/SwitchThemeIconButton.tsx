@@ -1,4 +1,4 @@
-import { Sun } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 import { useEffect } from 'react';
 import { useBoolean } from '~/shared/state';
 import { IconButton } from '~/shared/ui';
@@ -20,6 +20,7 @@ export function SwitchThemeIconButton() {
 
   return (
     <IconButton
+      elevated
       onClick={() => {
         const pseudoRoot = document.querySelector(
           ':root'
@@ -35,7 +36,7 @@ export function SwitchThemeIconButton() {
         toggleTheme();
       }}
     >
-      {isDarkTheme ? <Sun /> : <Sun />}
+      {isDarkTheme ? <Moon /> : <Sun />}
     </IconButton>
   );
 }

@@ -15,7 +15,7 @@
   text-decoration: none;
   white-space: nowrap;
 
-  &:not([data-loading='true']):not(.disabled) {
+  &:not([data-loading='true'], .disabled) {
     cursor: pointer;
   }
 
@@ -52,7 +52,7 @@
     background-color: var(--color-primary);
     color: var(--color-primary-text);
 
-    &:hover:not([data-elevated='true']):not([data-loading='true']) {
+    &:hover:not([data-elevated='true'], [data-loading='true']) {
       background-color: var(--color-primary);
       opacity: 0.9;
     }
@@ -62,7 +62,7 @@
     background-color: var(--color-secondary);
     color: var(--color-secondary-foreground);
 
-    &:hover:not([data-elevated='true']):not([data-loading='true']) {
+    &:hover:not([data-elevated='true'], [data-loading='true']) {
       background-color: var(--color-secondary);
       opacity: 0.8;
     }
@@ -73,7 +73,7 @@
     background-color: var(--color-surface);
     color: var(--color-text);
 
-    &:hover:not([data-elevated='true']):not([data-loading='true']) {
+    &:hover:not([data-elevated='true'], [data-loading='true']) {
       background-color: var(--color-accent);
       color: var(--color-accent-text);
     }
@@ -83,7 +83,7 @@
     background-color: transparent;
     color: var(--color-text);
 
-    &:hover:not([data-elevated='true']):not([data-loading='true']) {
+    &:hover:not([data-elevated='true'], [data-loading='true']) {
       background-color: var(--color-accent);
       color: var(--color-accent-text);
     }
@@ -93,7 +93,7 @@
     background-color: var(--color-destructive);
     color: var(--color-destructive-foreground);
 
-    &:hover:not([data-elevated='true']):not([data-loading='true']) {
+    &:hover:not([data-elevated='true'], [data-loading='true']) {
       background-color: var(--color-destructive);
       opacity: 0.9;
     }
@@ -152,6 +152,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

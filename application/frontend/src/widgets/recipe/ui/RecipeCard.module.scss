@@ -20,7 +20,7 @@
     margin-bottom: var(--spacing-2);
     -webkit-box-orient: vertical;
     color: light-dark(#0f0f0f, #fafafa);
-    -webkit-line-clamp: 2;
+    line-clamp: 2;
   }
 
   .description {
@@ -28,6 +28,6 @@
     overflow: hidden;
     -webkit-box-orient: vertical;
     color: var(--color-muted-text);
-    -webkit-line-clamp: 2;
+    line-clamp: 2;
   }
 }
