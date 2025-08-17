@@ -20,7 +20,7 @@ export function CreateRecipeDialog(props: Props) {
     keyPrefix: 'CreateRecipeDialog',
   });
 
-  const form = useNewRecipeForm();
+  const form = useNewRecipeForm(onClose);
 
   return (
     <Dialog onClose={onClose} className={classes.root}>

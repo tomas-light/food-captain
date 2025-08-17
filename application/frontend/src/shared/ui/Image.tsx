@@ -10,7 +10,7 @@ export function Image(props: Props) {
 
   const { value: hasError, setTrue: fail } = useBoolean(false);
 
-  if (hasError) {
+  if (hasError || !src) {
     return (
       <div className={clsx(classes.error, className)}>
         <img

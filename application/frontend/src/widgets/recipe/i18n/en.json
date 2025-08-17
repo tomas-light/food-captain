@@ -46,6 +46,7 @@
       "cancel": "Cancel",
       "nextStep": "Next step",
       "submit": "Submit"
-    }
+    },
+    "successCreated": "The recipe is created"
   }
 }

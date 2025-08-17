@@ -44,5 +44,6 @@ export interface LocaleResources {
   "widgets/recipe.CreateRecipeDialog.header.progress": null,
   "widgets/recipe.CreateRecipeDialog.header.step": null,
   "widgets/recipe.CreateRecipeDialog.header.title": null,
+  "widgets/recipe.CreateRecipeDialog.successCreated": null,
   "widgets/recipe.RecipeHero.notFound": null
 }

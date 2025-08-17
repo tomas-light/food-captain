@@ -1,12 +1,26 @@
 import { useMemo } from 'react';
+import { toast } from 'react-toastify';
 import { ValidationError } from 'yup';
 import { useTranslation } from '~/shared/locale';
 import { transformYupErrorsIntoObject, useAppForm } from '~/shared/ui';
+import { useCreateRecipeMutation } from '../api/useCreateRecipeMutation';
 import { NewRecipe } from './NewRecipe';
 
-export function useNewRecipeForm() {
+export function useNewRecipeForm(onSuccess?: VoidFunction) {
   const { t } = useTranslation('widgets/recipe', {
     keyPrefix: 'CreateRecipeDialog.form.validation',
+  });
+  const { t: tToast } = useTranslation('widgets/recipe', {
+    keyPrefix: 'CreateRecipeDialog',
+  });
+
+  const { mutate: createRecipe } = useCreateRecipeMutation({
+    onSuccess: () => {
+      toast(tToast('successCreated'), {
+        type: 'success',
+      });
+      onSuccess?.();
+    },
   });
 
   const schema = useMemo(
@@ -61,7 +75,7 @@ export function useNewRecipeForm() {
       },
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
+      createRecipe(value);
     },
   });
 }
