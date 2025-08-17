@@ -1,8 +1,7 @@
-import { useForm } from '@tanstack/react-form';
 import { useMemo } from 'react';
 import { ValidationError } from 'yup';
 import { useTranslation } from '~/shared/locale';
-import { transformYupErrorsIntoObject } from '~/shared/ui';
+import { transformYupErrorsIntoObject, useAppForm } from '~/shared/ui';
 import { NewRecipe } from './NewRecipe';
 
 export function useNewRecipeForm() {
@@ -43,7 +42,7 @@ export function useNewRecipeForm() {
     [t]
   );
 
-  return useForm({
+  return useAppForm({
     defaultValues: new NewRecipe(),
     validators: {
       onChangeAsync: async ({ value }) => {

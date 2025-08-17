@@ -1,0 +1,1 @@
+export { useSuspense } from './useSuspense';

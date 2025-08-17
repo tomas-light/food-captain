@@ -8,6 +8,8 @@ type Props = {
   /** @default '100%' */
   height?: CSSProperties['height'];
 
+  minHeight?: CSSProperties['minHeight'];
+
   /** @default '100%' */
   width?: CSSProperties['width'];
 
@@ -19,6 +21,7 @@ export function Skeleton(props: Props) {
   const {
     width = '100%',
     height = '100%',
+    minHeight,
     className,
     borderRadius = 'var(--radius-md)',
   } = props;
@@ -29,6 +32,7 @@ export function Skeleton(props: Props) {
       style={{
         width,
         height,
+        minHeight,
         borderRadius,
       }}
     />

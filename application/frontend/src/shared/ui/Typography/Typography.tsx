@@ -1,11 +1,17 @@
 import clsx from 'clsx';
-import type { HTMLAttributes, PropsWithChildren } from 'react';
+import type {
+  HTMLAttributes,
+  LabelHTMLAttributes,
+  PropsWithChildren,
+} from 'react';
 import classes from './Typography.module.scss';
 
-type Props = PropsWithChildren<
-  HTMLAttributes<HTMLSpanElement> & {
+type HtmlComponent = 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'label' | 'em';
+
+type Props<THtmlComponent extends HtmlComponent> = PropsWithChildren<
+  {
     /** @default 'span' */
-    component?: 'span' | 'p' | 'h1' | 'h2' | 'h3';
+    component?: THtmlComponent;
 
     /** @default 'medium' */
     size?: 'small' | 'medium' | 'large' | 'xl' | 'xxl' | 'xxxl';
@@ -14,10 +20,14 @@ type Props = PropsWithChildren<
     weight?: 'normal' | 'medium' | 'semibold' | 'bold';
 
     color?: string;
-  }
+  } & (THtmlComponent extends 'label'
+    ? LabelHTMLAttributes<HTMLLabelElement>
+    : HTMLAttributes<HTMLSpanElement>)
 >;
 
-export function Typography(props: Props) {
+export function Typography<THtmlComponent extends HtmlComponent>(
+  props: Props<THtmlComponent>
+) {
   const {
     children,
     component: Component = 'span',
@@ -25,7 +35,7 @@ export function Typography(props: Props) {
     weight = 'normal',
     className,
     color,
-    ...spanAttributes
+    ...attributes
   } = props;
 
   return (
@@ -40,7 +50,7 @@ export function Typography(props: Props) {
             },
           }
         : {})}
-      {...spanAttributes}
+      {...(attributes as HTMLAttributes<HTMLSpanElement>)}
     >
       {children}
     </Component>

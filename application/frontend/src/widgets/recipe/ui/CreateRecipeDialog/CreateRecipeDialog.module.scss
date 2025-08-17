@@ -10,4 +10,10 @@
   row-gap: var(--spacing-6);
   flex-direction: column;
   flex-grow: 1;
+
+  > form {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--spacing-4);
+  }
 }

@@ -5,7 +5,6 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  FieldValidationError,
 } from '~/shared/ui';
 import { useNewRecipeForm } from '../../model/useNewRecipeForm';
 import classes from './CreateRecipeDialog.module.scss';
@@ -35,38 +34,19 @@ export function CreateRecipeDialog(props: Props) {
             void form.handleSubmit();
           }}
         >
-          <form.Field
+          <form.AppField
             name="name"
             children={(field) => (
-              <div>
-                <label htmlFor={field.name}>{t('form.name')}</label>
-                <input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(event) => field.handleChange(event.target.value)}
-                  autoComplete="recipe name"
-                />
-                <FieldValidationError field={field} />
-              </div>
+              <field.Text label={t('form.name')} autoComplete="recipe name" />
             )}
           />
-          <form.Field
+          <form.AppField
             name="description"
             children={(field) => (
-              <div>
-                <label htmlFor={field.name}>{t('form.description')}</label>
-                <input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(event) => field.handleChange(event.target.value)}
-                  autoComplete="recipe description"
-                />
-                <FieldValidationError field={field} />
-              </div>
+              <field.Text
+                label={t('form.description')}
+                autoComplete="recipe description"
+              />
             )}
           />
         </form>
@@ -79,22 +59,9 @@ export function CreateRecipeDialog(props: Props) {
               {t('footer.cancel')}
             </Button>
 
-            <form.Subscribe
-              selector={(state) => [state.canSubmit, state.isSubmitting]}
-              children={([canSubmit, isSubmitting]) => (
-                <Button
-                  variant="default"
-                  elevated
-                  loading={isSubmitting}
-                  onClick={() => {
-                    void form.handleSubmit();
-                  }}
-                  disabled={!canSubmit}
-                >
-                  {t('footer.submit')}
-                </Button>
-              )}
-            />
+            <form.AppForm>
+              <form.SubmitButton label={t('footer.submit')} />
+            </form.AppForm>
           </>
         )}
       </DialogFooter>

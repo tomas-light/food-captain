@@ -18,8 +18,11 @@ export function RecipesPage() {
 
   const isEmpty = !isLoading && !recipes?.length;
 
-  const { show: showCreateRecipeModal, CreateRecipeDialog } =
-    useCreateRecipeDialog();
+  const {
+    show: showCreateRecipeModal,
+    CreateRecipeDialog,
+    isSuspending,
+  } = useCreateRecipeDialog();
 
   return (
     <>
@@ -40,6 +43,7 @@ export function RecipesPage() {
               variant="outline"
               elevated
               icon={<Plus />}
+              loading={isSuspending}
             >
               {t('addRecipeButton')}
             </Button>

@@ -17,6 +17,7 @@ export { DialogHeader } from './dialog/DialogHeader';
 export { DialogOverlay } from './dialog/DialogOverlay';
 
 export { FieldValidationError } from './form/FieldValidationError';
+export { useAppForm } from './form/useAppForm';
 
 export { Image } from './Image';
 export { LogoSvg } from './LogoSvg';
