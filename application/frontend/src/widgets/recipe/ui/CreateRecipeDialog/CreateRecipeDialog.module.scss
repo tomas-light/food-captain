@@ -1,8 +1,11 @@
 @use '@shared/responsive/responsive';
 
 .root {
-  width: 400px;
-  height: 400px;
+  // width: calc(100% - var(--spacing-24));
+  max-width: 1360px;
+
+  // height: calc(100% - var(--spacing-24));
+  max-height: 800px;
 }
 
 .content {
@@ -15,5 +18,11 @@
     display: flex;
     row-gap: var(--spacing-4);
     flex-direction: column;
+  }
+
+  .numbersSection {
+    display: flex;
+    gap: var(--spacing-4);
+    flex-wrap: wrap;
   }
 }

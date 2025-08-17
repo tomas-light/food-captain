@@ -44,13 +44,13 @@ export function useNewRecipeForm(onSuccess?: VoidFunction) {
           min: (min) => t('kcal.min', { min }),
           max: (max) => t('kcal.min', { max }),
         },
-        portionWeightInGrams: {
-          min: (min) => t('portionWeightInGrams.min', { min }),
-          max: (max) => t('portionWeightInGrams.min', { max }),
+        portionWeight: {
+          min: (min) => t('portionWeight.min', { min }),
+          max: (max) => t('portionWeight.min', { max }),
         },
-        cookingTimeInMinutes: {
-          min: (min) => t('cookingTimeInMinutes.min', { min }),
-          max: (max) => t('cookingTimeInMinutes.min', { max }),
+        cookingTime: {
+          min: (min) => t('cookingTime.min', { min }),
+          max: (max) => t('cookingTime.min', { max }),
         },
       }),
     [t]
@@ -60,6 +60,20 @@ export function useNewRecipeForm(onSuccess?: VoidFunction) {
     defaultValues: new NewRecipe(),
     validators: {
       onChangeAsync: async ({ value }) => {
+        try {
+          await schema.validate(value, {
+            abortEarly: false,
+          });
+        } catch (validationError) {
+          if (validationError instanceof ValidationError) {
+            const errors = transformYupErrorsIntoObject(validationError);
+            return {
+              fields: errors,
+            };
+          }
+        }
+      },
+      onSubmitAsync: async ({ value }) => {
         try {
           await schema.validate(value, {
             abortEarly: false,

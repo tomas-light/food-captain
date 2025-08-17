@@ -50,11 +50,11 @@ export class NewRecipe {
       min: (min: number) => string;
       max: (max: number) => string;
     };
-    portionWeightInGrams: {
+    portionWeight: {
       min: (min: number) => string;
       max: (max: number) => string;
     };
-    cookingTimeInMinutes: {
+    cookingTime: {
       min: (min: number) => string;
       max: (max: number) => string;
     };
@@ -87,13 +87,13 @@ export class NewRecipe {
       portionWeightInGrams: yup
         .number()
         .optional()
-        .min(0, ({ min }) => resources.portionWeightInGrams.min(min))
-        .max(10000, ({ max }) => resources.portionWeightInGrams.max(max)),
+        .min(0, ({ min }) => resources.portionWeight.min(min))
+        .max(10000, ({ max }) => resources.portionWeight.max(max)),
       cookingTimeInMinutes: yup
         .number()
         .optional()
-        .min(0, ({ min }) => resources.cookingTimeInMinutes.min(min))
-        .max(1000, ({ max }) => resources.cookingTimeInMinutes.max(max)),
+        .min(0, ({ min }) => resources.cookingTime.min(min))
+        .max(1000, ({ max }) => resources.cookingTime.max(max)),
       tagIds: yup.array(yup.number()).optional(),
       nutrition: yup
         .object<NewRecipe['nutrition']>()

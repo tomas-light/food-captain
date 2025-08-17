@@ -12,7 +12,7 @@ export function FormSubmitButton(props: Props) {
 
   return (
     <form.Subscribe
-      selector={(state) => [state.canSubmit, state.isSubmitting]}
+      selector={(state) => [state.canSubmit, state.isSubmitting] as const}
       children={([canSubmit, isSubmitting]) => (
         <Button
           variant="default"

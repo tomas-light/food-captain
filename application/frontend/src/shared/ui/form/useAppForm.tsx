@@ -7,6 +7,9 @@ import { FormSubmitButton } from './FormSubmitButton';
 const FormTextField = lazy(async () => ({
   default: (await import('./FormTextField')).FormTextField,
 }));
+const FormNumberField = lazy(async () => ({
+  default: (await import('./FormNumberField')).FormNumberField,
+}));
 
 export const { useAppForm } = createFormHook({
   fieldContext,
@@ -18,6 +21,15 @@ export const { useAppForm } = createFormHook({
       return (
         <Suspense fallback={<TextFieldSkeleton />}>
           <FormTextField {...props} />
+        </Suspense>
+      );
+    },
+    Number: function LazyFormNumberField(
+      props: ComponentProps<typeof FormNumberField>
+    ) {
+      return (
+        <Suspense fallback={<TextFieldSkeleton />}>
+          <FormNumberField {...props} />
         </Suspense>
       );
     },

@@ -14,6 +14,8 @@
       "formula": "Instruction",
       "image": "Image",
       "cookingTime": "Cooking time (minutes)",
+      "portionWeight": "Portion weight (gramms)",
+      "kcal": "Calorie content of the dish (per 100g)",
       "tags": "Tags",
 
       "validation": {
@@ -32,11 +34,11 @@
           "min": "Value is less than minimum: {{min}}",
           "max": "Value exceeds maximum: {{max}}"
         },
-        "portionWeightInGrams": {
+        "portionWeight": {
           "min": "Value is less than minimum: {{min}}",
           "max": "Value exceeds maximum: {{max}}"
         },
-        "cookingTimeInMinutes": {
+        "cookingTime": {
           "min": "Value is less than minimum: {{min}}",
           "max": "Value exceeds maximum: {{max}}"
         }

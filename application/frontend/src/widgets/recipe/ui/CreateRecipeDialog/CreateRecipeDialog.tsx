@@ -23,48 +23,89 @@ export function CreateRecipeDialog(props: Props) {
   const form = useNewRecipeForm(onClose);
 
   return (
-    <Dialog onClose={onClose} className={classes.root}>
-      <DialogHeader>{t('header.title')}</DialogHeader>
+    <form.AppForm>
+      <Dialog onClose={onClose} className={classes.root}>
+        <DialogHeader>{t('header.title')}</DialogHeader>
 
-      <DialogContent className={classes.content}>
-        <form
-          onSubmit={(event) => {
-            event.stopPropagation();
-            event.preventDefault();
-            void form.handleSubmit();
-          }}
-        >
-          <form.AppField
-            name="name"
-            children={(field) => (
-              <field.Text label={t('form.name')} autoComplete="recipe name" />
-            )}
-          />
-          <form.AppField
-            name="description"
-            children={(field) => (
-              <field.Text
-                label={t('form.description')}
-                autoComplete="recipe description"
+        <DialogContent className={classes.content}>
+          <form
+            onSubmit={(event) => {
+              event.stopPropagation();
+              event.preventDefault();
+              void form.handleSubmit();
+            }}
+          >
+            <form.AppField
+              name="name"
+              children={(field) => (
+                <field.Text label={t('form.name')} autoComplete="recipe name" />
+              )}
+            />
+            <form.AppField
+              name="description"
+              children={(field) => (
+                <field.Text
+                  label={t('form.description')}
+                  autoComplete="recipe description"
+                />
+              )}
+            />
+            <form.AppField
+              name="formula"
+              children={(field) => (
+                <field.Text
+                  label={t('form.formula')}
+                  autoComplete="recipe formula"
+                />
+              )}
+            />
+
+            <section className={classes.numbersSection}>
+              <form.AppField
+                name="cookingTimeInMinutes"
+                children={(field) => (
+                  <field.Number
+                    label={t('form.cookingTime')}
+                    autoComplete="recipe cooking time"
+                  />
+                )}
               />
-            )}
-          />
-        </form>
-      </DialogContent>
 
-      <DialogFooter>
-        {({ onClose }) => (
-          <>
-            <Button onClick={onClose} variant="outline" elevated>
-              {t('footer.cancel')}
-            </Button>
+              <form.AppField
+                name="portionWeightInGrams"
+                children={(field) => (
+                  <field.Number
+                    label={t('form.portionWeight')}
+                    autoComplete="recipe portion weight"
+                  />
+                )}
+              />
 
-            <form.AppForm>
+              <form.AppField
+                name="kcal"
+                children={(field) => (
+                  <field.Number
+                    label={t('form.kcal')}
+                    autoComplete="recipe kcal"
+                  />
+                )}
+              />
+            </section>
+          </form>
+        </DialogContent>
+
+        <DialogFooter>
+          {({ onClose }) => (
+            <>
+              <Button onClick={onClose} variant="outline" elevated>
+                {t('footer.cancel')}
+              </Button>
+
               <form.SubmitButton label={t('footer.submit')} />
-            </form.AppForm>
-          </>
-        )}
-      </DialogFooter>
-    </Dialog>
+            </>
+          )}
+        </DialogFooter>
+      </Dialog>
+    </form.AppForm>
   );
 }
