@@ -3,7 +3,6 @@ import { readFile } from 'fs/promises';
 import { findFilePaths } from './utils/findFilePaths';
 import { getNamespace } from './utils/getNamespace';
 import { flatResourcesKeys } from './utils/flatResourcesKeys';
-import { grabResources } from './utils/grabResources';
 import { writeInterface } from './utils/writeInterface';
 import { srcRegex } from './utils/regexes';
 import { sortFlattenKeys } from './utils/sortFlattenKeys';
