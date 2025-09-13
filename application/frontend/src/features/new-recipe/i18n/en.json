@@ -1,0 +1,27 @@
+{
+  "validation": {
+    "name": {
+      "required": "Name is required",
+      "maxLength": "Name exceeds max length ({{length}}/{{maxLength}})"
+    },
+    "description": {
+      "maxLength": "Description exceeds max length ({{length}}/{{maxLength}})"
+    },
+    "formula": {
+      "required": "Formula is required",
+      "maxLength": "Formula exceeds max length ({{length}}/{{maxLength}})"
+    },
+    "kcal": {
+      "min": "Value is less than minimum: {{min}}",
+      "max": "Value exceeds maximum: {{max}}"
+    },
+    "portionWeight": {
+      "min": "Value is less than minimum: {{min}}",
+      "max": "Value exceeds maximum: {{max}}"
+    },
+    "cookingTime": {
+      "min": "Value is less than minimum: {{min}}",
+      "max": "Value exceeds maximum: {{max}}"
+    }
+  }
+}

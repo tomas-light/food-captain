@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { useTranslation } from '~/shared/locale';
 import {
   Button,
@@ -6,7 +7,7 @@ import {
   DialogFooter,
   DialogHeader,
 } from '~/shared/ui';
-import { useNewRecipeForm } from '../../model/useNewRecipeForm';
+import { useNewRecipeForm } from '~/features/new-recipe';
 import classes from './CreateRecipeDialog.module.scss';
 
 type Props = {
@@ -20,7 +21,10 @@ export function CreateRecipeDialog(props: Props) {
     keyPrefix: 'CreateRecipeDialog',
   });
 
-  const form = useNewRecipeForm(onClose);
+  const form = useNewRecipeForm(() => {
+    toast(t('successCreated'), { type: 'success' });
+    onClose();
+  });
 
   return (
     <form.AppForm>
